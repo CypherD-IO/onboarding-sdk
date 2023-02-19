@@ -60,6 +60,21 @@ export const hasSufficientBalance = async (chainId: string, tokenContractAddress
   return false;
 }
 
-// export const fetchRequiredTokenDetails = async (chainId: string, tokenContractAddress: string,) => {
-//   return;
-// }
+export const fetchRequiredTokenDetails = async (chainId: string, tokenContractAddress: string,) => {
+  const tokenHoldings = store.getState().portfolioStore;
+  if (_.get(tokenHoldings, ['portfolioState'], '') === PORTFOLIO_NOT_EMPTY) {
+    const totalHoldings = _.get(tokenHoldings, ['tokenPortfolio', 'totalHoldings']);
+
+    const tokenRequired = totalHoldings.find((token: any) => _.get(token, ['contractAddress']).toLowerCase() === tokenContractAddress.toLowerCase() && _.get(token, ['chainDetails', 'chain_id']) === chainId);
+    console.log('the token requested : ', tokenRequired);
+    if (tokenRequired !== undefined) {
+      return tokenRequired;
+    } else {
+      // call coinGecko to get token details
+      return undefined;
+    }
+  } else {
+    // call coinGecko to get token details
+    return undefined;
+  }
+}

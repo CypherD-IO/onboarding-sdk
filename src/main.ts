@@ -1,7 +1,7 @@
 import store from "./store";
-import { fetchTokenData, hasSufficientBalance } from "./utils/portfolio";
+import { fetchRequiredTokenDetails, fetchTokenData, hasSufficientBalance } from "./utils/portfolio";
 import _ from "lodash";
-import { noBalanceHTML } from "./htmlContents/demo";
+import { noBalanceHTML, noBalanceScript } from "./htmlContents/demo";
 import { noBalanceCSS } from "./cssContents/demo";
 // import Swal from 'sweetalert2'
 
@@ -29,15 +29,16 @@ export const Cypher = async (address: string, fromChainId: string, fromTokenCont
   // }
 
   const sheet = document.createElement('style');
-  const script = document.createElement('script');
+  // const script = document.createElement('script');
 
   popupBackground.addEventListener('click', function(event) {
-    // Check if the clicked element is the background element
     if (event.target == popupBackground) {
       console.log('pressed background');
       popupBackground.remove();
     }
   });
+
+  const requiredTokenDetails = await fetchRequiredTokenDetails(fromChainId, fromTokenContractAddress);
 
   if (await hasSufficientBalance(fromChainId, fromTokenContractAddress, fromTokenRequiredBalance)) {
     // Swal.fire({
@@ -56,15 +57,19 @@ export const Cypher = async (address: string, fromChainId: string, fromTokenCont
     //   }
     // })
 
-    popupBackground.innerHTML = noBalanceHTML(_.get(tokenHoldings, ['tokenPortfolio', 'totalHoldings']));
+    popupBackground.innerHTML = noBalanceHTML(_.get(tokenHoldings, ['tokenPortfolio', 'totalHoldings']), requiredTokenDetails);
     sheet.innerHTML = noBalanceCSS;
-    script.type = 'text/javascript';
-    script.onload = function () { console.log('final try') };
+    // script.innerHTML =  '<script defer>console.log("final try")</script>';
+    const range = document.createRange()
+    range.setStart(globalThis.document.body, 0)
+    globalThis.document.body.appendChild(
+    range.createContextualFragment(noBalanceScript())
+)
   }
 
   globalThis.document.body.appendChild(popupBackground);
-  globalThis.document.head.appendChild(sheet);
-  globalThis.document.body.appendChild(script);
+  globalThis.document.body.appendChild(sheet);
+  // globalThis.document.body.appendChild(script);
 
   // const closePopupButton = globalThis.document.getElementById('closePopup');
 
