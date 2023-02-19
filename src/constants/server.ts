@@ -3,20 +3,6 @@ import { Chain } from "../interface";
 export const ARCH_HOST = 'https://arch.cypherd.io';
 // import AppImages from '../../public/assets/appImages';
 
-// export interface Chain {
-//   chainName: string
-//   name: string
-//   symbol: string
-//   id: number
-//   logo_url?: any
-//   backendName: ChainBackendNames | 'ALL'
-//   chain_id: string
-//   native_token_address: string
-//   secondaryAddress?: string
-//   chainIdNumber: number
-//   coinGeckoId?: string
-// }
-
 export enum ChainBackendNames {
   ETH = 'ETH',
   POLYGON = 'POLYGON',

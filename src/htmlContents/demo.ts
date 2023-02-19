@@ -12,6 +12,28 @@ export const noBalanceScript = () => {
         console.log("Pressed", tokenName, tokenContractAddress, actualBalance, price, tokenSymbol, tokenLogoUrl, chainName, chainId);
         document.getElementById("popupBackground").innerHTML = ${bridgeInputHTML};
       }
+      const parentElement = document.querySelector("#popupBackground");
+      parentElement.addEventListener("input", event => {
+        if (event.target && event.target.matches("input[type='text']")) {
+          const tokenValueElement = document.querySelector("#bp-token-value");
+          const price = document.querySelector("#bp-balance-detail-token-value").textContent;
+          console.log('val', price);
+          const newValue = (parseFloat(event.target.value) / price).toFixed(6);
+          tokenValueElement.innerHTML = newValue.toString();
+        }
+      });
+      function bridgeSubmit () {
+        console.log('bridge submit pressed');
+        const usdValueEntered = document.querySelector("#bp-amount-value").value;
+        const usdBalance = document.querySelector("#bp-balance-detail-usd-value");
+        const numericUsdBalance = parseFloat(usdBalance.textContent.slice(1));
+        console.log(parseFloat(numericUsdBalance), parseFloat(usdValueEntered));
+        if (parseFloat(numericUsdBalance) >= parseFloat(usdValueEntered)) {
+          console.log('Bridge Eligible');
+        } else {
+          console.log('Bridge Not Possible');
+        }
+      }
     </script>`;
   // const value = `<script defer>function bridgePopup (tokenDetail) {console.log("Pressed", JSON.parse(decodeURIComponent(tokenDetail)).name);"}</script>`;
 
@@ -86,7 +108,7 @@ export const bridgeInputHTML = `'<div id="bridge-popup-css">'+
     '</div>'+
     '<div id="bp-amount-input">'+
       '<p>USD</p>'+
-      '<h1 id="bp-amount-value">0.00</h1>'+
+      '<input type="text" id="bp-amount-value" placeholder="0.00">'+
       '<div id="bp-token-value-flex-box">'+
         '<p id="bp-token-value">00</p>'+
         '<p>' + tokenSymbol + '</p>'+
@@ -103,15 +125,22 @@ export const bridgeInputHTML = `'<div id="bridge-popup-css">'+
     '<div id="bp-balance-detail">'+
       '<div id="bp-balance-detail-usd">'+
         '<p>' + chainName + '</p>'+
-        '<p>$' + (actualBalance * price).toFixed(4) + '</p>'+
+        '<p id="bp-balance-detail-usd-value">$' + (actualBalance * price).toFixed(4) + '</p>'+
       '</div>'+
       '<div id="bp-balance-detail-token">'+
         '<p>' + tokenSymbol + '</p>'+
         '<p>' + parseFloat(actualBalance).toFixed(6) + '</p>'+
+        '<p id="bp-balance-detail-token-value">' + parseFloat(price).toFixed(6) + '</p>'+
       '</div>'+
     '</div>'+
   '</div>'+
   '<div id="bp-submit-button-container">'+
-    '<button class="blue-button">Submit</button>'+
+    '<button class="blue-button" onclick="bridgeSubmit()">Submit</button>'+
   '</div>'+
 '</div>'`;
+
+// const inputField = document.getElementById("bp-amount-value");
+
+// inputField?.addEventListener("input", () => {
+//   console.log('inputing ....');
+// });

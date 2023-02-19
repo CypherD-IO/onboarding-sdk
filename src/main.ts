@@ -60,17 +60,17 @@ export const Cypher = async (address: string, fromChainId: string, fromTokenCont
     popupBackground.innerHTML = noBalanceHTML(_.get(tokenHoldings, ['tokenPortfolio', 'totalHoldings']), requiredTokenDetails);
     sheet.innerHTML = noBalanceCSS;
     // script.innerHTML =  '<script defer>console.log("final try")</script>';
-    const range = document.createRange()
-    range.setStart(globalThis.document.body, 0)
-    globalThis.document.body.appendChild(
-    range.createContextualFragment(noBalanceScript())
-)
+
   }
 
   globalThis.document.body.appendChild(popupBackground);
   globalThis.document.body.appendChild(sheet);
   // globalThis.document.body.appendChild(script);
-
+  const range = document.createRange()
+  range.setStart(globalThis.document.body, 0)
+  globalThis.document.body.appendChild(
+    range.createContextualFragment(noBalanceScript())
+  )
   // const closePopupButton = globalThis.document.getElementById('closePopup');
 
   // closePopupButton!.addEventListener('click', function() {

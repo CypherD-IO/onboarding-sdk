@@ -91,18 +91,21 @@ export const noBalanceCSS = `
 
 #bp-max-button {
   width: 80px;
+  text-align: center;
 }
 
 #bp-amount-input {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  text-align: center;
   align-items: stretch;
-  width: 80px;
+  width: 120px;
 }
 
 #bp-switch-button {
   width: 80px;
+  text-align: center;
 }
 
 #bp-token-value-flex-box {
@@ -141,5 +144,17 @@ export const noBalanceCSS = `
   justify-content: space-between;
   height: 25px;
   align-items: center;
+}
+
+#bp-amount-value {
+  border: none;
+  background-color: white;
+  font-size: 44px;
+  text-align: center;
+  outline: none;
+}
+
+#bp-balance-detail-token-value {
+  display: none;
 }
 `;
