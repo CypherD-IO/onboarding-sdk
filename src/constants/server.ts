@@ -166,3 +166,112 @@ export const CHAIN_STARGAZE: Chain = {
   chainIdNumber: 0,
   coinGeckoId: 'stargaze'
 };
+
+export type NetworkInterface = {
+  [key: string]: any;
+};
+
+export const addChainData: Record<string, NetworkInterface> = {
+  ETH: {
+    chainId: `0x${Number(1).toString(16)}`,
+    chainName: 'Ethereum Mainnet',
+    nativeCurrency: {
+      name: 'Ether',
+      symbol: 'ETH',
+      decimals: 18,
+    },
+    rpcUrls: ['https://api.mycryptoapi.com/eth', 'https://cloudflare-eth.com'],
+    blockExplorerUrls: ['https://etherscan.io'],
+  },
+  POLYGON: {
+    chainId: `0x${Number(137).toString(16)}`,
+    chainName: 'Polygon Mainnet',
+    nativeCurrency: {
+      name: 'MATIC',
+      symbol: 'MATIC',
+      decimals: 18,
+    },
+    rpcUrls: ['https://polygon-rpc.com/'],
+    blockExplorerUrls: ['https://polygonscan.com/'],
+  },
+  BSC: {
+    chainId: `0x${Number(56).toString(16)}`,
+    chainName: 'Binance Smart Chain Mainnet',
+    nativeCurrency: {
+      name: 'Binance Chain Native Token',
+      symbol: 'BNB',
+      decimals: 18,
+    },
+    rpcUrls: [
+      'https://bsc-dataseed1.binance.org',
+      'https://bsc-dataseed2.binance.org',
+      'https://bsc-dataseed3.binance.org',
+      'https://bsc-dataseed4.binance.org',
+      'https://bsc-dataseed1.defibit.io',
+      'https://bsc-dataseed2.defibit.io',
+      'https://bsc-dataseed3.defibit.io',
+      'https://bsc-dataseed4.defibit.io',
+      'https://bsc-dataseed1.ninicoin.io',
+      'https://bsc-dataseed2.ninicoin.io',
+      'https://bsc-dataseed3.ninicoin.io',
+      'https://bsc-dataseed4.ninicoin.io',
+      'wss://bsc-ws-node.nariox.org',
+    ],
+    blockExplorerUrls: ['https://bscscan.com'],
+  },
+  AVALANCHE: {
+    chainId: `0x${Number(43114).toString(16)}`,
+    chainName: 'Avalanche Mainnet',
+    nativeCurrency: {
+      name: 'Avalanche',
+      symbol: 'AVAX',
+      decimals: 18,
+    },
+    rpcUrls: ['https://api.avax.network/ext/bc/C/rpc'],
+    blockExplorerUrls: ['https://snowtrace.io'],
+  },
+  FANTOM: {
+    chainId: `0x${Number(250).toString(16)}`,
+    chainName: 'Fantom Opera',
+    nativeCurrency: {
+      name: 'Fantom',
+      symbol: 'FTM',
+      decimals: 18,
+    },
+    rpcUrls: ['https://fantom-mainnet.gateway.pokt.network/v1/lb/62759259ea1b320039c9e7ac'],
+    blockExplorerUrls: ['https://ftmscan.com'],
+  },
+  ARBITRUM: {
+    chainId: `0x${Number(42161).toString(16)}`,
+    chainName: 'Arbitrum One',
+    nativeCurrency: {
+      name: 'Arbitrum One Ether',
+      symbol: 'ETH',
+      decimals: 18,
+    },
+    rpcUrls: ['https://rpc.ankr.com/arbitrum'],
+    blockExplorerUrls: ['https://arbiscan.io/'],
+  },
+  OPTIMISM: {
+    chainId: `0x${Number(10).toString(16)}`,
+    chainName: 'Optimism',
+    nativeCurrency: {
+      name: 'Optimism Ether',
+      symbol: 'ETH',
+      decimals: 18,
+    },
+    rpcUrls: ['https://mainnet.optimism.io'],
+    blockExplorerUrls: ['https://optimistic.etherscan.io/'],
+  },
+  EVMOS: {
+    chainId: `0x${Number(9001).toString(16)}`,
+    chainName: 'Evmos',
+    nativeCurrency: {
+      name: 'Evmos',
+      symbol: 'EVMOS',
+      decimals: 18,
+    },
+    rpcUrls: ['https://eth.bd.evmos.org:8545'],
+    blockExplorerUrls: ['https://evm.evmos.org'],
+  },
+};

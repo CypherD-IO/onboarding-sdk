@@ -157,4 +157,22 @@ export const noBalanceCSS = `
 #bp-balance-detail-token-value {
   display: none;
 }
+
+#bp-switch-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  align-items: center;
+}
+
+#bp-switch-chain-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+}
+
+
 `;

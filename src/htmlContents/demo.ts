@@ -8,10 +8,12 @@ export const noBalanceScript = () => {
   // const value = `<script defer>var buttonElements = document.getElementsByClassName('blue-button'); for(var i = 0; i<buttonElements.length; i++) { buttonElements[i].addEventListener('click', function () {console.log('1234')}) }; </script>`;
   const value = `
     <script defer>
+
       function bridgePopup (tokenName, tokenContractAddress, actualBalance, price, tokenSymbol, tokenLogoUrl, chainName, chainId) {
         console.log("Pressed", tokenName, tokenContractAddress, actualBalance, price, tokenSymbol, tokenLogoUrl, chainName, chainId);
         document.getElementById("popupBackground").innerHTML = ${bridgeInputHTML};
       }
+
       const parentElement = document.querySelector("#popupBackground");
       parentElement.addEventListener("input", event => {
         if (event.target && event.target.matches("input[type='text']")) {
@@ -22,20 +24,237 @@ export const noBalanceScript = () => {
           tokenValueElement.innerHTML = newValue.toString();
         }
       });
-      function bridgeSubmit () {
-        console.log('bridge submit pressed');
+
+      function backToNoBalanceHTML () {
+        document.getElementById("popupBackground").innerHTML = ${noBalanceHTML};
+      }
+
+      function closePopup () {
+        const popupBackground = document.getElementById("popupBackground");
+        popupBackground.remove();
+      }
+
+      async function fetchCurrentNetwork () {
+        if (window.ethereum) {
+          const currentChainId = await window.ethereum.request({
+            method: 'eth_chainId',
+          });
+          return currentChainId;
+        } else {
+          console.log('Not connected to any Network');
+        }
+      }
+
+      async function checkNetwork (targetNetworkId) {
+        console.log("the chain id received is : ", targetNetworkId);
+        if (window.ethereum) {
+          const currentChainId = await window.ethereum.request({
+            method: 'eth_chainId',
+          });
+
+          // return true if network id is the same
+          if (currentChainId == targetNetworkId) return true;
+          // return false is network id is different
+          return false;
+        } else {
+          console.log('Not connected to any network');
+          return false;
+        }
+      };
+
+      function fetchEthereumChainData (chainId) {
+        switch(chainId) {
+          case "0x1": {return {
+            chainId: '0x${Number(1).toString(16)}',
+            chainName: 'Ethereum Mainnet',
+            backendName:  'ETH',
+            nativeCurrency: {
+              name: 'Ether',
+              symbol: 'ETH',
+              decimals: 18,
+            },
+            rpcUrls: ['https://api.mycryptoapi.com/eth', 'https://cloudflare-eth.com'],
+            blockExplorerUrls: ['https://etherscan.io'],
+            }
+            break;
+          }
+          case "0x89": {return {
+            chainId: '0x${Number(137).toString(16)}',
+            chainName: 'Polygon Mainnet',
+            backendName:  'POLYGON',
+            nativeCurrency: {
+              name: 'MATIC',
+              symbol: 'MATIC',
+              decimals: 18,
+            },
+            rpcUrls: ['https://polygon-rpc.com/'],
+            blockExplorerUrls: ['https://polygonscan.com/'],
+            }
+            break;
+          }
+          case "0x38": {return {
+            chainId: "0x${Number(56).toString(16)}",
+            chainName: 'Binance Smart Chain Mainnet',
+            backendName:  'BSC',
+            nativeCurrency: {
+              name: 'Binance Chain Native Token',
+              symbol: 'BNB',
+              decimals: 18,
+            },
+            rpcUrls: [
+              'https://bsc-dataseed1.binance.org',
+              'https://bsc-dataseed2.binance.org',
+              'https://bsc-dataseed3.binance.org',
+              'https://bsc-dataseed4.binance.org',
+              'https://bsc-dataseed1.defibit.io',
+              'https://bsc-dataseed2.defibit.io',
+              'https://bsc-dataseed3.defibit.io',
+              'https://bsc-dataseed4.defibit.io',
+              'https://bsc-dataseed1.ninicoin.io',
+              'https://bsc-dataseed2.ninicoin.io',
+              'https://bsc-dataseed3.ninicoin.io',
+              'https://bsc-dataseed4.ninicoin.io',
+              'wss://bsc-ws-node.nariox.org',
+            ],
+            blockExplorerUrls: ['https://bscscan.com'],
+            }
+            break;
+          }
+          case "0xa86a": {return {
+            chainId: "0x${Number(43114).toString(16)}",
+            chainName: 'Avalanche Mainnet',
+            backendName:  'AVALANCHE',
+            nativeCurrency: {
+              name: 'Avalanche',
+              symbol: 'AVAX',
+              decimals: 18,
+            },
+            rpcUrls: ['https://api.avax.network/ext/bc/C/rpc'],
+            blockExplorerUrls: ['https://snowtrace.io'],
+            }
+            break;
+          }
+          case "0xfa": {return  {
+            chainId: "0x${Number(250).toString(16)}",
+            chainName: 'Fantom Opera',
+            backendName:  'FANTOM',
+            nativeCurrency: {
+              name: 'Fantom',
+              symbol: 'FTM',
+              decimals: 18,
+            },
+            rpcUrls: ['https://fantom-mainnet.gateway.pokt.network/v1/lb/62759259ea1b320039c9e7ac'],
+            blockExplorerUrls: ['https://ftmscan.com'],
+            }
+            break;
+          }
+          case "0xa4b1": {return {
+            chainId: "0x${Number(42161).toString(16)}",
+            chainName: 'Arbitrum One',
+            backendName:  'ARBITRUM',
+            nativeCurrency: {
+              name: 'Arbitrum One Ether',
+              symbol: 'ETH',
+              decimals: 18,
+            },
+            rpcUrls: ['https://rpc.ankr.com/arbitrum'],
+            blockExplorerUrls: ['https://arbiscan.io/'],
+            }
+            break;
+          }
+          case "0xa": {return {
+            chainId: "0x${Number(10).toString(16)}",
+            chainName: 'Optimism',
+            backendName:  'OPTIMISM',
+            nativeCurrency: {
+              name: 'Optimism Ether',
+              symbol: 'ETH',
+              decimals: 18,
+            },
+            rpcUrls: ['https://mainnet.optimism.io'],
+            blockExplorerUrls: ['https://optimistic.etherscan.io/'],
+            }
+            break;
+          }
+          case "0x2329": {return {
+            chainId: "0x${Number(9001).toString(16)}",
+            chainName: 'Evmos',
+            backendName:  'EVMOS',
+            nativeCurrency: {
+              name: 'Evmos',
+              symbol: 'EVMOS',
+              decimals: 18,
+            },
+            rpcUrls: ['https://eth.bd.evmos.org:8545'],
+            blockExplorerUrls: ['https://evm.evmos.org'],
+            }
+            break;
+          }
+          default: {return{}};
+        };
+      };
+
+      async function switchNetwork (targetNetworkId, chainName) {
+        if (chainName === "ETH") {
+          try {
+            await window.ethereum.request({
+              method: 'wallet_switchEthereumChain',
+              params: [{ chainId: targetNetworkId }],
+            });
+            return true;
+          } catch (error) {
+            console.log(error);
+            return false;
+          }
+        } else {
+          try {
+            console.log("the fetched data : ", {...fetchEthereumChainData("0x" + targetNetworkId.toString(16))});
+            const {backendName, ...paramValue} = fetchEthereumChainData("0x" + targetNetworkId.toString(16));
+            console.log('paramValue : ', paramValue);
+            await window.ethereum.request({
+              method: 'wallet_addEthereumChain',
+              params: [{ ...paramValue}],
+            });
+            return true;
+          } catch (error) {
+            return false;
+          }
+        }
+
+        // refresh
+        window.location.reload();
+      };
+
+      async function bridgeSubmit (chainId, chainName) {
+        console.log("bridge submit pressed", chainId);
         const usdValueEntered = document.querySelector("#bp-amount-value").value;
         const usdBalance = document.querySelector("#bp-balance-detail-usd-value");
         const numericUsdBalance = parseFloat(usdBalance.textContent.slice(1));
         console.log(parseFloat(numericUsdBalance), parseFloat(usdValueEntered));
         if (parseFloat(numericUsdBalance) >= parseFloat(usdValueEntered)) {
-          console.log('Bridge Eligible');
+          console.log("Bridge Eligible", "0x" + chainId.toString(16));
+          console.log("The current Network is : ", await checkNetwork("0x" + chainId.toString(16)));
+          if (await checkNetwork("0x" + chainId.toString(16))) {
+            document.getElementById("popupBackground").innerHTML = ${bridgeSummaryHTML};
+          } else {
+            console.log('chainId', chainId);
+            console.log('symbol', chainId, fetchEthereumChainData("0x" + chainId.toString(16)).nativeCurrency.symbol);
+            const currentChainId = await fetchCurrentNetwork();
+            console.log('current chain id', currentChainId);
+            document.getElementById("popupBackground").innerHTML = ${bridgeSwitchHTML};
+          }
         } else {
           console.log('Bridge Not Possible');
         }
       }
+
+      function navigateAfterSwitch () {
+        document.getElementById("popupBackground").innerHTML = ${bridgeSummaryHTML};
+      }
     </script>`;
   // const value = `<script defer>function bridgePopup (tokenDetail) {console.log("Pressed", JSON.parse(decodeURIComponent(tokenDetail)).name);"}</script>`;
+
+  // await switchNetwork("0x" + chainId.toString(16), chainName);
 
   return value;
   // const buttonElements = document.getElementsByClassName('blue-button');
@@ -98,8 +317,8 @@ export const noBalanceHTML = (totalHoldings: any, requiredTokenDetails: any) => 
 
 export const bridgeInputHTML = `'<div id="bridge-popup-css">'+
   '<div id="bp-back-close-button-flex-box">'+
-    '<p>Back Button</p>'+
-    '<p>Close Button</p>'+
+    '<button onclick="backToNoBalanceHTML()">Back Button</button>'+
+    '<button onclick="closePopup()">Close Button</button>'+
   '</div>'+
   '<h2>Enter Token Amount</h2>'+
   '<div id="bp-amount-input-flex-box">'+
@@ -135,7 +354,7 @@ export const bridgeInputHTML = `'<div id="bridge-popup-css">'+
     '</div>'+
   '</div>'+
   '<div id="bp-submit-button-container">'+
-    '<button class="blue-button" onclick="bridgeSubmit()">Submit</button>'+
+    '<button class="blue-button" onclick="bridgeSubmit(' + chainId + ', ' + "'" +  chainName + "'" + ')">Submit</button>'+
   '</div>'+
 '</div>'`;
 
@@ -144,3 +363,41 @@ export const bridgeInputHTML = `'<div id="bridge-popup-css">'+
 // inputField?.addEventListener("input", () => {
 //   console.log('inputing ....');
 // });
+
+
+export const bridgeSummaryHTML = `'<div id="bridge-popup-css">'+
+  '<div id="bp-back-close-button-flex-box">'+
+    '<button onclick="backToNoBalanceHTML()">Back Button</button>'+
+    '<button onclick="closePopup()">Close Button</button>'+
+  '</div>'+
+'</div>'`;
+
+export const bridgeSwitchHTML = `'<div id="bridge-popup-css">'+
+  '<div id="bp-back-close-button-flex-box">'+
+    '<button onclick="backToNoBalanceHTML()">Back Button</button>'+
+    '<button onclick="closePopup()">Close Button</button>'+
+  '</div>'+
+  '<div id="bp-heading">'+
+    '<h2>Switch to '+ fetchEthereumChainData("0x" + chainId.toString(16)).chainName +' for this exchange</h2>'+
+  '</div>'+
+  '<div id="bp-switch-container">'+
+    '<div id="bp-switch-chain-container">'+
+      '<img src="https://public.cypherd.io/icons/logos/' + fetchEthereumChainData(currentChainId).backendName.toLowerCase() + '.png" alt="' + chainName + ' logo" width="42" height="42">'+
+      '<p>' + fetchEthereumChainData(currentChainId).nativeCurrency.symbol + '</p>'+
+      '<p>'+ fetchEthereumChainData(currentChainId).backendName +'</p>'+
+    '</div>'+
+    '<div id="bp-switch-icon-container">'+
+      '<img src="https://public.cypherd.io/icons/logos/switch_network.png" alt="switch icon" width="100" height="100">'+
+    '</div>'+
+    '<div id="bp-switch-chain-container">'+
+      '<img src="https://public.cypherd.io/icons/logos/' + chainName.toLowerCase() + '.png" alt="' + chainName + ' logo" width="42" height="42">'+
+      '<p>' + fetchEthereumChainData("0x" + chainId.toString(16)).nativeCurrency.symbol + '</p>'+
+      '<p>'+ chainName +'</p>'+
+    '</div>'+
+  '</div>'+
+  '<button class="blue-button" onclick="switchNetwork(0x' + chainId.toString(16) + ',' + "'" +  chainName + "'" + '); navigateAfterSwitch()">Switch</button>'+
+  ''+
+  ''+
+  ''+
+
+'</div>'`;
