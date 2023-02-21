@@ -7,7 +7,7 @@ import { get } from './fetch';
 
 export const fetchTokenData = async (address: any) => {
 
-  const cosmosPortfolioUrl = `${ARCH_HOST}/v1/portfolio/balances?ankr=true`;
+  const cosmosPortfolioUrl = `${ARCH_HOST}/v1/portfolio/balances?`;
   const params = {
     'address[]': [address]
   };

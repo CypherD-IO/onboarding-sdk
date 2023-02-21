@@ -9,6 +9,9 @@
     display: block; /* Changed from "none" to "block" */
   }
 
+  .sedhu{
+    color: red;
+  }
 
   #popup h2 {
     margin-top: 0;

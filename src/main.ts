@@ -3,7 +3,7 @@ import { fetchRequiredTokenDetails, fetchTokenData, hasSufficientBalance } from 
 import _ from "lodash";
 import { noBalanceHTML, noBalanceScript } from "./htmlContents/demo";
 import { noBalanceCSS } from "./cssContents/demo";
-// import Swal from 'sweetalert2'
+import styles from "./cssContents/style.module.css";
 
 export const delayMillis = (delayMs: number): Promise<void> => new Promise(resolve => setTimeout(resolve, delayMs));
 
@@ -16,7 +16,7 @@ export const Cypher = async (address: string, fromChainId: string, fromTokenCont
 
   const popupBackground = document.createElement('div');
   popupBackground.id = 'popupBackground';
-
+  popupBackground.className = styles.sedhu;
   const logBalances = await fetchTokenData(address);
   console.log('balances logged', logBalances);
 
