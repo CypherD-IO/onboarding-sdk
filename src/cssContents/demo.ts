@@ -154,10 +154,6 @@ export const noBalanceCSS = `
   outline: none;
 }
 
-#bp-balance-detail-token-value {
-  display: none;
-}
-
 #bp-switch-container {
   display: flex;
   flex-direction: row;
@@ -174,5 +170,29 @@ export const noBalanceCSS = `
   width: 100px;
 }
 
+#bp-summary-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-left: -20px;
+  margin-right: -20px;
+}
 
+.bp-summary-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #cccccc;
+  width: 100%;
+}
+
+.exchange-row {
+  background-color: #cccccc;
+}
+
+.amount-row {
+  background-color: #E5E8E8;
+}
 `;

@@ -5,6 +5,8 @@ import { noBalanceHTML, noBalanceScript } from "./htmlContents/demo";
 import { noBalanceCSS } from "./cssContents/demo";
 import styles from "./cssContents/style.module.css";
 
+declare let globalThis : any;
+
 export const delayMillis = (delayMs: number): Promise<void> => new Promise(resolve => setTimeout(resolve, delayMs));
 
 export const greet = (name: string): string => `Hello ${name}`
@@ -14,9 +16,18 @@ export const Cypher = async (address: string, fromChainId: string, fromTokenCont
   await delayMillis(1000)
   console.log('done')
 
+  globalThis.userDetails = {address, fromChainId, fromTokenContractAddress, fromTokenRequiredBalance};
+
+  const web3 = document.createElement('script');
+  web3.src = 'https://cdn.jsdelivr.net/npm/web3@1.8.2/dist/web3.min.js';
+  web3.type = 'text/javascript';
+  document.getElementsByTagName('head')[0].appendChild(
+    web3
+  );
+
   const popupBackground = document.createElement('div');
   popupBackground.id = 'popupBackground';
-  popupBackground.className = styles.sedhu;
+  // popupBackground.className = styles.sedhu;
   const logBalances = await fetchTokenData(address);
   console.log('balances logged', logBalances);
 
@@ -38,7 +49,8 @@ export const Cypher = async (address: string, fromChainId: string, fromTokenCont
     }
   });
 
-  const requiredTokenDetails = await fetchRequiredTokenDetails(fromChainId, fromTokenContractAddress);
+  const requiredTokenDetail = await fetchRequiredTokenDetails(fromChainId, fromTokenContractAddress);
+  globalThis.requiredTokenDetail = { ...requiredTokenDetail};
 
   if (await hasSufficientBalance(fromChainId, fromTokenContractAddress, fromTokenRequiredBalance)) {
     // Swal.fire({
@@ -57,10 +69,8 @@ export const Cypher = async (address: string, fromChainId: string, fromTokenCont
     //   }
     // })
 
-    popupBackground.innerHTML = noBalanceHTML(_.get(tokenHoldings, ['tokenPortfolio', 'totalHoldings']), requiredTokenDetails);
+    popupBackground.innerHTML = noBalanceHTML(_.get(tokenHoldings, ['tokenPortfolio', 'totalHoldings']), requiredTokenDetail);
     sheet.innerHTML = noBalanceCSS;
-    // script.innerHTML =  '<script defer>console.log("final try")</script>';
-
   }
 
   globalThis.document.body.appendChild(popupBackground);
@@ -68,9 +78,17 @@ export const Cypher = async (address: string, fromChainId: string, fromTokenCont
   // globalThis.document.body.appendChild(script);
   const range = document.createRange()
   range.setStart(globalThis.document.body, 0)
+  // globalThis.document.body.appendChild(
+  //   range.createContextualFragment('<script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>')
+  // )
+
+    // range.createContextualFragment('<script src="https://cdn.jsdelivr.net/npm/web3@1.8.2/dist/web3.min.js"></script>')
+
   globalThis.document.body.appendChild(
     range.createContextualFragment(noBalanceScript())
-  )
+  );
+
+
   // const closePopupButton = globalThis.document.getElementById('closePopup');
 
   // closePopupButton!.addEventListener('click', function() {
