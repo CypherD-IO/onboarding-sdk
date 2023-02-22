@@ -1,13 +1,12 @@
-import _ from "lodash";
-import { ARCH_HOST, ChainBackendNames } from "../constants/server";
-import { demoFunction, onGetQuote } from "../utils/bridge";
+import { ARCH_HOST, ChainBackendNames, CONTRACT_DECIMAL_TO_ETHER_UNITS, EVM_CHAINS_NATIVE_TOKEN_MAP } from "../constants/server";
+import { bridgeInputHTML, bridgeSummaryHTML, bridgeSwitchHTML, noBalanceHTML } from "../htmlContents";
+import { onGetQuote } from "../utils/bridge";
 
-export const demo = (address: string) => {
-  return `<div id="popup"><h2 id="header2">Hello!</h2><p>Welcome ${address}</p><p>Oops! you don't have sufficient balance in the token. Do u wish to Bridge or Buy ?</p><button id="closePopup">Close</button></div>`;
-}
+declare let globalThis : any;
+
+// document.getElementById("popupBackground").innerHTML = ${bridgeInputHTML};
 
 export const noBalanceScript = () => {
-  // const value = `<script defer>var buttonElements = document.getElementsByClassName('blue-button'); for(var i = 0; i<buttonElements.length; i++) { buttonElements[i].addEventListener('click', function () {console.log('1234')}) }; </script>`;
   const value = `
     <script defer>
 
@@ -18,8 +17,9 @@ export const noBalanceScript = () => {
         console.log('pressed token details is', JSON.parse(tokenDetail));
       }
 
-      function bridgePopup (tokenName, tokenContractAddress, actualBalance, price, tokenSymbol, tokenLogoUrl, chainName, chainId) {
-        console.log("Pressed", tokenName, tokenContractAddress, actualBalance, price, tokenSymbol, tokenLogoUrl, chainName, chainId);
+      function bridgePopup (tokenDetail) {
+        globalThis.exchangingTokenDetail = tokenDetail;
+        console.log("Pressed", tokenDetail);
         document.getElementById("popupBackground").innerHTML = ${bridgeInputHTML};
       }
 
@@ -413,6 +413,7 @@ export const noBalanceScript = () => {
             .then(function(data)
             {
               console.log('the data from bridge : ', data);
+              globalThis.bridgeQuote = data;
               document.getElementById("token-received").textContent = data.transferAmount.toFixed(6) + ' ' + globalThis.requiredTokenDetail.chainDetails.symbol;
               document.getElementById("usd-received").textContent = '$ ' + data.usdValue.toFixed(2);
             });
@@ -426,262 +427,189 @@ export const noBalanceScript = () => {
         }
       }
 
-      </script>`;
+      async function getGasPrice(chain) {
+        fetch('/v1/prices/gas/' + chain).then( response => response.json() )
+        const response = fetch('/v1/prices/gas/' + chain).then( response => response.json() );
+        console.log(response);
+        return response;
+      }
 
-    //   async function send({
-    //     chain,
-    //     amountToSend,
-    //     toAddress,
-    //     contractAddress,
-    //     contractDecimal,
-    //   }: SendInEvmInterface): Promise<{ isError: boolean; hash?: string; error?: any }> {
-    //     try {
-    //       const rpcEndpoint = fetchChainDetails(globalThis.exchangingTokenDetail.chainDetails.chain_id);
+      async function estimateGasLimit({
+        amountToSend,
+        contractAddress,
+        fromAddress,
+        toAddress,
+        web3,
+      }) {
+        const contract = new web3.eth.Contract(
+          [
+            {
+              name: 'transfer',
+              type: 'function',
+              inputs: [
+                {
+                  name: '_to',
+                  type: 'address',
+                },
+                {
+                  type: 'uint256',
+                  name: '_tokens',
+                },
+              ],
+              constant: false,
+              outputs: [],
+              payable: false,
+            },
+          ],
+          contractAddress,
+        );
 
-    //       const web3 = new Web3(rpcEndpoint);
+        const contractData = contract.methods.transfer(toAddress, amountToSend).encodeABI();
 
-    //       let userAddress = globalThis.userDetails.address;
+        const gasLimit = await web3.eth.estimateGas({
+          from: fromAddress,
+          to: contractAddress,
+          value: '0x0',
+          data: contractData,
+        });
 
-    //       if (userAddress) {
-    //         if (chain === ${ChainBackendNames.EVMOS}) {
-    //           userAddress = web3.utils.toChecksumAddress(userAddress);
-    //         }
-    //         const gasPrice = await getGasPrice(chain);
+        return gasLimit;
+      }
 
-    //         const etherUnit = get(CONTRACT_DECIMAL_TO_ETHER_UNITS, contractDecimal);
-    //         const parsedSendingAmount = web3.utils.toWei(amountToSend, etherUnit).toString();
+      async function sendNativeCoin({
+        fromAddress,
+        toAddress,
+        gasPrice,
+        gasLimit,
+        amountToSend,
+      }) {
+        const tx = {
+          from: fromAddress,
+          to: toAddress,
+          value: amountToSend,
+          gasLimit: gasLimit,
+          gasPrice: gasPrice,
+        };
 
-    //         const isNativeToken = EVM_CHAINS_NATIVE_TOKEN_MAP.get(chain) === contractAddress;
-    //         await switchNetwork(chain);
-    //         const gasLimit = await estimateGasLimit({
-    //           amountToSend: parsedSendingAmount,
-    //           contractAddress,
-    //           fromAddress: userAddress,
-    //           toAddress,
-    //           web3,
-    //         });
-    //         if (isNativeToken) {
-    //           const txnHash = await sendNativeCoin({
-    //             fromAddress: userAddress,
-    //             toAddress,
-    //             gasPrice: web3.utils.toWei(gasPrice.toString(), 'gwei').toString(),
-    //             gasLimit: gasLimit.toString(),
-    //             amountToSend: parsedSendingAmount,
-    //           });
-    //           return { isError: false, hash: txnHash };
-    //         } else {
-    //           const txnHash = await sendToken({ contractAddress, toAddress, amount: parsedSendingAmount, gasLimit });
-    //           return { isError: false, hash: txnHash };
-    //         }
-    //       } else {
-    //         navigate('/');
-    //       }
-    //     } catch (error) {
-    //       return { isError: true, error: error };
-    //     }
-    //     return { isError: true };
-    //   }
+        const provider = new ethers.BrowserProvider(window.ethereum);
+        const signer = await provider.getSigner();
 
+        const response = await signer.sendTransaction(tx);
 
+        const receipt = await response.wait();
+        return receipt?.hash;
+      }
 
-    //   async function bridge () {
-    //     const resp = await send({
-    //       amountToSend: cryptoAmount,
-    //       contractAddress: fromToken.value.contractAddress,
-    //       toAddress: quoteData.step1TargetWallet,
-    //       chain: fromChain.value.backendName,
-    //       contractDecimal: fromToken.value.contractDecimals,
-    //     });
-    //     if (!resp.isError && resp.hash) {
-    //       resolve(resp);
-    //       await onDepositFund(resp?.hash);
-    //     } else {
-    //       setLoading(false);
-    //       reject(true);
-    //       setQuoteVisible(false);
-    //       await errorModal({ titleText: resp?.error?.message.toString() });
-    //     }
-    //   }
-    // </script>`;
+      async function sendToken({
+        contractAddress,
+        toAddress,
+        amount,
+        gasLimit,
+      }) {
+        const provider = new ethers.BrowserProvider(window.ethereum);
+        const signer = await provider.getSigner();
 
-  // const value = `<script defer>function bridgePopup (tokenDetail) {console.log("Pressed", JSON.parse(decodeURIComponent(tokenDetail)).name);"}</script>`;
+        const contractAbiFragment = [
+          {
+            name: 'transfer',
+            type: 'function',
+            inputs: [
+              {
+                name: '_to',
+                type: 'address',
+              },
+              {
+                type: 'uint256',
+                name: '_tokens',
+              },
+            ],
+            constant: false,
+            outputs: [],
+            payable: false,
+            gas: gasLimit,
+          },
+        ];
 
-  // await switchNetwork("0x" + chainId.toString(16), chainName);
+        const contract = new ethers.Contract(contractAddress, contractAbiFragment, signer);
 
+        const response = await contract.transfer(toAddress, amount);
+
+        const receipt = await response.wait();
+
+        return receipt?.hash;
+      }
+
+      async function send({
+        chain,
+        amountToSend,
+        toAddress,
+        contractAddress,
+        contractDecimal,
+      }) {
+        try {
+          if (${globalThis.exchangingTokenDetail} !== undefined) {
+            console.log('printing ... ', ${globalThis.exchangingTokenDetail});
+            const rpcEndpoint = fetchChainDetails(globalThis.exchangingTokenDetail.chainDetails.chain_id);
+
+            const web3 = new Web3(rpcEndpoint);
+
+            let userAddress = globalThis.userDetails.address;
+
+            if (chain === ${ChainBackendNames.EVMOS}) {
+              userAddress = web3.utils.toChecksumAddress(userAddress);
+            }
+            const gasPrice = await getGasPrice(chain);
+
+            const etherUnit = ${CONTRACT_DECIMAL_TO_ETHER_UNITS[globalThis.exchangingTokenDetail?.contractDecimal]};
+            const parsedSendingAmount = web3.utils.toWei(amountToSend, etherUnit).toString();
+
+            const isNativeToken = ${EVM_CHAINS_NATIVE_TOKEN_MAP.get(globalThis.exchangingTokenDetail?.chainDetails?.backendName) === globalThis.exchangingTokenDetail?.contractAddress};
+            await switchNetwork(${globalThis.exchangingTokenDetail?.chainDetails?.chain_id}, chain);
+            const gasLimit = await estimateGasLimit({
+              amountToSend: parsedSendingAmount,
+              contractAddress,
+              fromAddress: userAddress,
+              toAddress,
+              web3,
+            });
+            if (isNativeToken) {
+              const txnHash = await sendNativeCoin({
+                fromAddress: userAddress,
+                toAddress,
+                gasPrice: web3.utils.toWei(gasPrice.toString(), 'gwei').toString(),
+                gasLimit: gasLimit.toString(),
+                amountToSend: parsedSendingAmount,
+              });
+              return { isError: false, hash: txnHash };
+            } else {
+              const txnHash = await sendToken({ contractAddress, toAddress, amount: parsedSendingAmount, gasLimit });
+              return { isError: false, hash: txnHash };
+            }
+          }
+        } catch (error) {
+          return { isError: true, error: error };
+        }
+        return { isError: true };
+      }
+
+      async function bridge () {
+        const resp = await send({
+          amountToSend: cryptoAmount,
+          contractAddress: fromToken.value.contractAddress,
+          toAddress: quoteData.step1TargetWallet,
+          chain: fromChain.value.backendName,
+          contractDecimal: fromToken.value.contractDecimals,
+        });
+        if (!resp.isError && resp.hash) {
+          resolve(resp);
+          await onDepositFund(resp?.hash);
+        } else {
+          setLoading(false);
+          reject(true);
+          setQuoteVisible(false);
+          await errorModal({ titleText: resp?.error?.message.toString() });
+        }
+      }
+    </script>`;
   return value;
-  // const buttonElements = document.getElementsByClassName('blue-button');
-  // for(let i = 0; i<buttonElements.length; i++) {
-  //   buttonElements[i].addEventListener('click', function () { console.log('1234') })
-  // }
 }
-
-
-// const bridgePopup = (index: number) => {
-//  console.log('pressed', index);
-// }
-
-export const noBalanceHTML = (totalHoldings: any, requiredTokenDetail: any) => {
-
-  // function bridgePopup(index: number) {
-  //   console.log('pressed ', _.get(totalHoldings[index], ['name']));
-  // }
-
-  const tokensAvailableList = totalHoldings.map((tokenDetail: any, index: number) => `
-    <div id="token-detail-${index%2}">
-      <img id="td-chain-icon" src="https://public.cypherd.io/icons/logos/${_.get(tokenDetail, ['chainDetails', 'backendName']).toLowerCase()}.png" alt="${_.get(tokenDetail, ['chainDetails', 'backendName']).toLowerCase()} logo" width="20" height="20"/>
-      <p>${_.get(tokenDetail, ['chainDetails', 'backendName'])}</p>
-      <img id="td-token-icon" src="${_.get(tokenDetail, ['logoUrl'])}" alt="${_.get(tokenDetail, ['name'])} logo" width="20" height="20">
-      <p>${_.get(tokenDetail, ['name'])}</p>
-      <p id="td-usd-value">${_.get(tokenDetail, ['actualBalance']) * _.get(tokenDetail, ['price'])}</p>
-      <p id="td-token-balance">${_.get(tokenDetail, ['actualBalance'])}</p>
-      <button class="blue-button" onclick='(function () {globalThis.exchangingTokenDetail = ${JSON.stringify(tokenDetail)}; bridgePopup("${_.get(tokenDetail, ['name'])}", "${_.get(tokenDetail, ['contractAddress'])}", "${_.get(tokenDetail, ['actualBalance'])}", "${_.get(tokenDetail, ['price'])}", "${_.get(tokenDetail, ['symbol'])}", "${_.get(tokenDetail, ['logoUrl'])}", "${_.get(tokenDetail, ['chainDetails', 'backendName'])}", "${_.get(tokenDetail, ['chainDetails', 'chain_id'])}")})()'>Exchange</button>
-    </div>
-  `).join(' ');
-
-  // <button class="blue-button" onclick="bridgePopup('${_.get(tokenDetail, ['name'])}', '${_.get(tokenDetail, ['contractAddress'])}', '${_.get(tokenDetail, ['actualBalance'])}', '${_.get(tokenDetail, ['price'])}', '${_.get(tokenDetail, ['symbol'])}', '${_.get(tokenDetail, ['logoUrl'])}', '${_.get(tokenDetail, ['chainDetails', 'backendName'])}', '${_.get(tokenDetail, ['chainDetails', 'chain_id'])}')">Exchange</button>
-  // <button class="blue-button" onclick='(function () {globalThis.exchangingTokenDetail = ${JSON.stringify(tokenDetail)}; bridgePopup("${_.get(tokenDetail, ['name'])}", "${_.get(tokenDetail, ['contractAddress'])}", "${_.get(tokenDetail, ['actualBalance'])}", "${_.get(tokenDetail, ['price'])}", "${_.get(tokenDetail, ['symbol'])}", "${_.get(tokenDetail, ['logoUrl'])}", "${_.get(tokenDetail, ['chainDetails', 'backendName'])}", "${_.get(tokenDetail, ['chainDetails', 'chain_id'])}")})()'>Exchange</button>
-
-  const htmlValue = `
-    <div id="popup">
-      <div id="icon-flex-box">
-        <img src="https://public.cypherd.io/icons/logos/${_.get(requiredTokenDetail, ['chainDetails', 'backendName']).toLowerCase()}.png" alt="${_.get(requiredTokenDetail, ['chainDetails', 'backendName']).toLowerCase()} logo" width="42" height="42">
-        <img src="${_.get(requiredTokenDetail, ['logoUrl'])}" alt="Arbitrum logo" width="42" height="42">
-      </div>
-      <div>
-        <h2>You need ETH in BSC to use this dApp</h2>
-        <p>You can exchange with below tokens in your wallet  </p>
-      </div>
-      <div id="tokens-available-flex-box">
-        ${tokensAvailableList}
-      </div>
-    </div>
-  `;
-
-  return htmlValue;
-};
-
-// tokenName, tokenContractAddress, actualBalance, price, tokenSymbol, tokenLogoUrl, chainName, chainId
-
-// export const bridgeInputHTML = `'<div id="bp-back-close-button-flex-box"><p>' + tokenSymbol + '</p></div>'`;
-
-// export const bridgeInputHTML = `'<div id="bridgePopupCSS">' +
-//  '<h2>Enter Token Amount</h2>' +
-//  '</div>'`;
-
-// export const bridgeInputHTML = ` '<div id="bridgePopupCSS"> <div id="bp-back-close-button-flex-box"> <p>Back Button</p>  <p>Close Button</p> </div>  <h2>Enter Token Amount</h2>  <div id="bp-amount-input-flex-box"> <div id="bp-max-button"> <p>MAX</p> </div> <div id="bp-amount-input"> <p>USD</p> <h1 id="bp-amount-value">0.00</h1> <div id="bp-token-value-flex-box"> <p id="bp-token-value">00</p> <p>tokenSymbol</p> </div> </div> <div id="bp-switch-button"> <p>SWITCH</p> </div> </div> <div id="bp-balance-flex-box"> <div id="bp-balance-logo"> <p>img</p> </div> <div id="bp-balance-detail"> <div id="bp-balance-detail-usd"> <p>chainName</p> <p>$ actualBalance * price </p> </div> <div id="bp-balance-detail-token"> <p>tokenSymbol</p> <p>actualBalance</p> </div> </div> </div> <div id="bp-submit-button-container"> <button class="blue-button">Submit</button> </div> </div>'`;
-
-export const bridgeInputHTML = `'<div id="bridge-popup-css">'+
-  '<div id="bp-back-close-button-flex-box">'+
-    '<button onclick="backToNoBalanceHTML()">Back Button</button>'+
-    '<button onclick="closePopup()">Close Button</button>'+
-  '</div>'+
-  '<h2>Enter Token Amount</h2>'+
-  '<div id="bp-amount-input-flex-box">'+
-    '<div id="bp-max-button">'+
-      '<p>MAX</p>'+
-    '</div>'+
-    '<div id="bp-amount-input">'+
-      '<p>USD</p>'+
-      '<input type="text" id="bp-amount-value" placeholder="0.00">'+
-      '<div id="bp-token-value-flex-box">'+
-        '<p id="bp-token-value">00</p>'+
-        '<p>' + tokenSymbol + '</p>'+
-      '</div>'+
-    '</div>'+
-    '<div id="bp-switch-button">'+
-      '<p>SWITCH</p>'+
-    '</div>'+
-  '</div>'+
-  '<div id="bp-balance-flex-box">'+
-    '<div id="bp-balance-logo">'+
-      '<img src="' + tokenLogoUrl + '" alt="' + tokenLogoUrl + '" width="42" height="42">'+
-    '</div>'+
-    '<div id="bp-balance-detail">'+
-      '<div id="bp-balance-detail-usd">'+
-        '<p>' + chainName + '</p>'+
-        '<p id="bp-balance-detail-usd-value">$' + (actualBalance * price).toFixed(4) + '</p>'+
-      '</div>'+
-      '<div id="bp-balance-detail-token">'+
-        '<p>' + tokenSymbol + '</p>'+
-        '<p id="bp-balance-detail-token-value">' + parseFloat(actualBalance).toFixed(6) + '</p>'+
-      '</div>'+
-    '</div>'+
-  '</div>'+
-  '<div id="bp-submit-button-container">'+
-    '<button class="blue-button" onclick="bridgeSubmit(' + chainId + ', ' + "'" +  chainName + "'" + ')">Submit</button>'+
-  '</div>'+
-'</div>'`;
-
-// tokenName, tokenContractAddress, actualBalance, price, tokenSymbol, tokenLogoUrl, chainName, chainId
-
-// const inputField = document.getElementById("bp-amount-value");
-
-// inputField?.addEventListener("input", () => {
-//   console.log('inputing ....');
-// });
-
-
-export const bridgeSummaryHTML = `'<div id="bridge-popup-css">'+
-  '<div id="bp-back-close-button-flex-box">'+
-    '<button onclick="backToNoBalanceHTML()">Back Button</button>'+
-    '<button onclick="closePopup()">Close Button</button>'+
-  '</div>'+
-  '<div id="bp-heading">'+
-    '<h2>Summary</h2>'+
-  '</div>'+
-  '<div id="bp-summary-container">'+
-    '<div class="bp-summary-row exchange-row">'+
-      '<p>Exchange from</p>'+
-      '<img src="https://public.cypherd.io/icons/logos/' + globalThis.exchangingTokenDetail.chainDetails.backendName.toLowerCase() + '.png" alt="' + chainName + ' logo" width="22" height="22">'+
-      '<p>'+ globalThis.exchangingTokenDetail.chainDetails.backendName +'</p>'+
-      '<img src="' + globalThis.exchangingTokenDetail.logoUrl + '" alt="' + globalThis.exchangingTokenDetail.name + ' logo" width="22" height="22">'+
-      '<p>'+ globalThis.exchangingTokenDetail.name +'</p>'+
-    '</div>'+
-    '<div class="bp-summary-row amount-row">'+
-      '<p>Amount Sending</p>'+
-      '<p>' + parseFloat(globalThis.bridgeInputDetails.tokenValueEntered).toFixed(6) + ' ' + globalThis.exchangingTokenDetail.chainDetails.symbol + '</p>'+
-      '<p>$' + parseFloat(globalThis.bridgeInputDetails.usdValueEntered).toFixed(2) +'</p>'+
-    '</div>'+
-    '<div class="bp-summary-row exchange-row">'+
-      '<p>Exchange to</p>'+
-      '<img src="https://public.cypherd.io/icons/logos/' + globalThis.requiredTokenDetail.chainDetails.backendName.toLowerCase() + '.png" alt="' + chainName + ' logo" width="22" height="22">'+
-      '<p>'+ globalThis.requiredTokenDetail.chainDetails.backendName +'</p>'+
-      '<img src="' + globalThis.requiredTokenDetail.logoUrl + '" alt="' + globalThis.requiredTokenDetail.name + ' logo" width="22" height="22">'+
-      '<p>'+ globalThis.requiredTokenDetail.name +'</p>'+
-    '</div>'+
-    '<div class="bp-summary-row amount-row">'+
-      '<p>Amount Receiving</p>'+
-      '<p id="token-received"> ...' + globalThis.requiredTokenDetail.chainDetails.symbol + '</p>'+
-      '<p id="usd-received">$ ... </p>'+
-    '</div>'+
-  '</div>'+
-  '<div>'+
-    '<button id="blue-button" onclick="demoCall(1)">Exchange</button>'+
-  '</div>'+
-'</div>'`;
-
-export const bridgeSwitchHTML = `'<div id="bridge-popup-css">'+
-  '<div id="bp-back-close-button-flex-box">'+
-    '<button onclick="backToNoBalanceHTML()">Back Button</button>'+
-    '<button onclick="closePopup()">Close Button</button>'+
-  '</div>'+
-  '<div id="bp-heading">'+
-    '<h2>Switch to '+ fetchEthereumChainData("0x" + chainId.toString(16)).chainName +' for this exchange</h2>'+
-  '</div>'+
-  '<div id="bp-switch-container">'+
-    '<div id="bp-switch-chain-container">'+
-      '<img src="https://public.cypherd.io/icons/logos/' + fetchChainDetails(currentChainId).backendName.toLowerCase() + '.png" alt="' + chainName + ' logo" width="42" height="42">'+
-      '<p>' + fetchEthereumChainData(currentChainId).nativeCurrency.symbol + '</p>'+
-      '<p>'+ fetchEthereumChainData(currentChainId).chainName +'</p>'+
-    '</div>'+
-    '<div id="bp-switch-icon-container">'+
-      '<img src="https://public.cypherd.io/icons/logos/switch_network.png" alt="switch icon" width="100" height="100">'+
-    '</div>'+
-    '<div id="bp-switch-chain-container">'+
-      '<img src="https://public.cypherd.io/icons/logos/' + chainName.toLowerCase() + '.png" alt="' + chainName + ' logo" width="42" height="42">'+
-      '<p>' + fetchEthereumChainData("0x" + chainId.toString(16)).nativeCurrency.symbol + '</p>'+
-      '<p>'+ chainName +'</p>'+
-    '</div>'+
-  '</div>'+
-  '<button class="blue-button" onclick="navigateAfterSwitch(' + "'0x" + chainId.toString(16) + "'" + ', ' + "'" +  chainName + "'" + ')">Switch</button>'+
-'</div>'`;

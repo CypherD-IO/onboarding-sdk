@@ -6,7 +6,7 @@ const cssModulesPlugin = require("esbuild-css-modules-plugin");
   await esbuild.build({
     entryPoints: ['src/browser.ts'],
     bundle: true,
-    minify: true,
+    minify: false,
     sourcemap: 'external',
     outfile: 'dist/esbuild/browser.js',
     plugins: [cssModulesPlugin()],

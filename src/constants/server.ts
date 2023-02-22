@@ -275,3 +275,20 @@ export const addChainData: Record<string, NetworkInterface> = {
     blockExplorerUrls: ['https://evm.evmos.org'],
   },
 };
+
+export const CONTRACT_DECIMAL_TO_ETHER_UNITS: any = {
+  6: 'picoether',
+  9: 'gwei',
+  18: 'ether',
+};
+
+export const EVM_CHAINS_NATIVE_TOKEN_MAP = new Map([
+  ['ETH', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'],
+  ['ARBITRUM', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'],
+  ['OPTIMISM', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'],
+  ['POLYGON', '0x0000000000000000000000000000000000001010'],
+  ['AVALANCHE', '0xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'],
+  ['BSC', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'],
+  ['FANTOM', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'],
+  ['EVMOS', '0x93581991f68dbae1ea105233b67f7fa0d6bdee7b'], // representation didnt work 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee so used ethereum address
+]);
