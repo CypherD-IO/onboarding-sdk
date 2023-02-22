@@ -1,4 +1,4 @@
-import axios from "axios";
+// import axios from "axios";
 
 declare let globalThis : any;
 
@@ -21,8 +21,8 @@ export function onGetQuote () {
     toTokenCoingeckoId: globalThis.requiredTokenDetail.coinGeckoId,
   };
   console.log('reqQuoteData', reqQuoteData);
-  const result = axios.post('/v1/bridge/quote', reqQuoteData).then;
-  console.log('result from POST', result);
+  // const result = axios.post('/v1/bridge/quote', reqQuoteData).then;
+  // console.log('result from POST', result);
   // if (!isError && data.status !== 'FAILED') {
   //   setQuoteData({ ...quoteData, ...data });
   //   setQuoteVisible(true);

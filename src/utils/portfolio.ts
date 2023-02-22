@@ -1,4 +1,3 @@
-import axios from 'axios';
 import _ from 'lodash';
 import { ARCH_HOST } from '../constants/server';
 import { getPortfolioModel } from '../core/portfolio';
@@ -11,31 +10,9 @@ export const fetchTokenData = async (address: any) => {
   const params = {
     'address[]': [address]
   };
-
-  console.log('trying fetch :: ', get(cosmosPortfolioUrl, params));
-
-  const archCall = axios
-      .get(cosmosPortfolioUrl, {
-        params,
-        timeout: 25000,
-      });
-
-  const promiseArray: Array<Promise<any>> = [archCall];
-  let result, archBackend;
-  try {
-    result = await Promise.all(promiseArray);
-    archBackend = result[0];
-    console.log('result from the call : ', result[0])
-  } catch (e) {
-    console.log({
-      type: 'error',
-      text1: 'Network Timeout Error',
-      text2: 'Try refreshing in a while!',
-      position: 'bottom'
-    });
-  }
-
-  const portfolio = await getPortfolioModel(archBackend?.data?.chain_portfolios);
+  const response = await get(cosmosPortfolioUrl, params);
+  const portfolio = await getPortfolioModel(response.chain_portfolios);
+  console.log('portfolio', portfolio);
 
   if (portfolio && portfolio?.totalUnverifiedBalance > 0) {
     store.dispatch(setPortfolioStore({ tokenPortfolio: portfolio, portfolioState: PORTFOLIO_NOT_EMPTY, }));

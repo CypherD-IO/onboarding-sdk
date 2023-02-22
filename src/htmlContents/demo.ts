@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { ARCH_HOST } from "../constants/server";
+import { ARCH_HOST, ChainBackendNames } from "../constants/server";
 import { demoFunction, onGetQuote } from "../utils/bridge";
 
 export const demo = (address: string) => {
@@ -440,10 +440,10 @@ export const noBalanceScript = () => {
 
     //       const web3 = new Web3(rpcEndpoint);
 
-    //       let userAddress = getWalletAddress();
+    //       let userAddress = globalThis.userDetails.address;
 
-    //       if (userAddress && isAuthenticated()) {
-    //         if (chain === evmChainEnum.EVMOS) {
+    //       if (userAddress) {
+    //         if (chain === ${ChainBackendNames.EVMOS}) {
     //           userAddress = web3.utils.toChecksumAddress(userAddress);
     //         }
     //         const gasPrice = await getGasPrice(chain);
