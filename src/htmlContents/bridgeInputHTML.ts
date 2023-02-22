@@ -13,7 +13,7 @@ export const bridgeInputHTML = `'<div id="bridge-popup-css">'+
       '<input type="text" id="bp-amount-value" placeholder="0.00">'+
       '<div id="bp-token-value-flex-box">'+
         '<p id="bp-token-value">00</p>'+
-        '<p>' + tokenSymbol + '</p>'+
+        '<p>' + tokenDetail.chainDetails.symbol + '</p>'+
       '</div>'+
     '</div>'+
     '<div id="bp-switch-button">'+
@@ -22,20 +22,20 @@ export const bridgeInputHTML = `'<div id="bridge-popup-css">'+
   '</div>'+
   '<div id="bp-balance-flex-box">'+
     '<div id="bp-balance-logo">'+
-      '<img src="' + tokenLogoUrl + '" alt="' + tokenLogoUrl + '" width="42" height="42">'+
+      '<img src="' + tokenDetail.logoUrl + '" alt="' + tokenDetail.logoUrl + '" width="42" height="42">'+
     '</div>'+
     '<div id="bp-balance-detail">'+
       '<div id="bp-balance-detail-usd">'+
-        '<p>' + chainName + '</p>'+
-        '<p id="bp-balance-detail-usd-value">$' + (actualBalance * price).toFixed(4) + '</p>'+
+        '<p>' + tokenDetail.chainDetails.backendName + '</p>'+
+        '<p id="bp-balance-detail-usd-value">$' + (tokenDetail.actualBalance * tokenDetail.price).toFixed(4) + '</p>'+
       '</div>'+
       '<div id="bp-balance-detail-token">'+
-        '<p>' + tokenSymbol + '</p>'+
-        '<p id="bp-balance-detail-token-value">' + parseFloat(actualBalance).toFixed(6) + '</p>'+
+        '<p>' + tokenDetail.chainDetails.symbol + '</p>'+
+        '<p id="bp-balance-detail-token-value">' + parseFloat(tokenDetail.actualBalance).toFixed(6) + '</p>'+
       '</div>'+
     '</div>'+
   '</div>'+
   '<div id="bp-submit-button-container">'+
-    '<button class="blue-button" onclick="bridgeSubmit(' + chainId + ', ' + "'" +  chainName + "'" + ')">Submit</button>'+
+    '<button class="blue-button" onclick="bridgeSubmit(' + tokenDetail.chainDetails.chain_id + ', ' + "'" +  tokenDetail.chainDetails.backendName + "'" + ')">Submit</button>'+
   '</div>'+
 '</div>'`;

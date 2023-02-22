@@ -4,6 +4,8 @@ import { onGetQuote } from "../utils/bridge";
 
 declare let globalThis : any;
 
+// document.getElementById("popupBackground").innerHTML = ${bridgeInputHTML};
+
 export const noBalanceScript = () => {
   const value = `
     <script defer>
@@ -15,8 +17,9 @@ export const noBalanceScript = () => {
         console.log('pressed token details is', JSON.parse(tokenDetail));
       }
 
-      function bridgePopup (tokenName, tokenContractAddress, actualBalance, price, tokenSymbol, tokenLogoUrl, chainName, chainId) {
-        console.log("Pressed", tokenName, tokenContractAddress, actualBalance, price, tokenSymbol, tokenLogoUrl, chainName, chainId);
+      function bridgePopup (tokenDetail) {
+        globalThis.exchangingTokenDetail = tokenDetail;
+        console.log("Pressed", tokenDetail);
         document.getElementById("popupBackground").innerHTML = ${bridgeInputHTML};
       }
 

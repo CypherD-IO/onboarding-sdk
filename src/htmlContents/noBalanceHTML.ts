@@ -16,7 +16,7 @@ export const noBalanceHTML = (totalHoldings: any) => {
       <p>${_.get(tokenDetail, ['name'])}</p>
       <p id="td-usd-value">${_.get(tokenDetail, ['actualBalance']) * _.get(tokenDetail, ['price'])}</p>
       <p id="td-token-balance">${_.get(tokenDetail, ['actualBalance'])}</p>
-      <button class="blue-button" onclick='(function () {globalThis.exchangingTokenDetail = ${JSON.stringify(tokenDetail)}; bridgePopup("${_.get(tokenDetail, ['name'])}", "${_.get(tokenDetail, ['contractAddress'])}", "${_.get(tokenDetail, ['actualBalance'])}", "${_.get(tokenDetail, ['price'])}", "${_.get(tokenDetail, ['symbol'])}", "${_.get(tokenDetail, ['logoUrl'])}", "${_.get(tokenDetail, ['chainDetails', 'backendName'])}", "${_.get(tokenDetail, ['chainDetails', 'chain_id'])}")})()'>Exchange</button>
+      <button class="blue-button" onclick='bridgePopup(${JSON.stringify(tokenDetail)})'>Exchange</button>
     </div>
   `).join(' ');
 
