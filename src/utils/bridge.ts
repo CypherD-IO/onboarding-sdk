@@ -2,7 +2,7 @@
 
 declare let globalThis : any;
 
-export async function onGetQuote () {
+export function onGetQuote () {
   const reqQuoteData = {
     fromAddress: globalThis.userDetails.address,
     toAddress: globalThis.userDetails.address,
