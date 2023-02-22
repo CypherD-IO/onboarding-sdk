@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { ARCH_HOST, ChainBackendNames } from "../constants/server";
+import { ARCH_HOST, ChainBackendNames, CONTRACT_DECIMAL_TO_ETHER_UNITS, EVM_CHAINS_NATIVE_TOKEN_MAP } from "../constants/server";
 import { demoFunction, onGetQuote } from "../utils/bridge";
 
 export const demo = (address: string) => {
@@ -413,6 +413,7 @@ export const noBalanceScript = () => {
             .then(function(data)
             {
               console.log('the data from bridge : ', data);
+              globalThis.bridgeQuote = data;
               document.getElementById("token-received").textContent = data.transferAmount.toFixed(6) + ' ' + globalThis.requiredTokenDetail.chainDetails.symbol;
               document.getElementById("usd-received").textContent = '$ ' + data.usdValue.toFixed(2);
             });
@@ -425,8 +426,123 @@ export const noBalanceScript = () => {
           await (${onGetQuote})();
         }
       }
-
       </script>`;
+    //   async function getGasPrice(chain) {
+    //     fetch('/v1/prices/gas/' + chain).then( response => response.json() )
+    //     const response = fetch('/v1/prices/gas/' + chain).then( response => response.json() );
+    //     console.log(response);
+    //     return response;
+    //   }
+
+    //   async function estimateGasLimit({
+    //     amountToSend,
+    //     contractAddress,
+    //     fromAddress,
+    //     toAddress,
+    //     web3,
+    //   }) {
+    //     const contract = new web3.eth.Contract(
+    //       [
+    //         {
+    //           name: 'transfer',
+    //           type: 'function',
+    //           inputs: [
+    //             {
+    //               name: '_to',
+    //               type: 'address',
+    //             },
+    //             {
+    //               type: 'uint256',
+    //               name: '_tokens',
+    //             },
+    //           ],
+    //           constant: false,
+    //           outputs: [],
+    //           payable: false,
+    //         },
+    //       ],
+    //       contractAddress,
+    //     );
+
+    //     const contractData = contract.methods.transfer(toAddress, amountToSend).encodeABI();
+
+    //     const gasLimit = await web3.eth.estimateGas({
+    //       from: fromAddress,
+    //       to: contractAddress,
+    //       value: '0x0',
+    //       data: contractData,
+    //     });
+
+    //     return gasLimit;
+    //   }
+
+    //   async function sendNativeCoin({
+    //     fromAddress,
+    //     toAddress,
+    //     gasPrice,
+    //     gasLimit,
+    //     amountToSend,
+    //   }) {
+    //     const tx = {
+    //       from: fromAddress,
+    //       to: toAddress,
+    //       value: amountToSend,
+    //       gasLimit: gasLimit,
+    //       gasPrice: gasPrice,
+    //     };
+
+    //     const provider = new ethers.BrowserProvider(window.ethereum);
+    //     const signer = await provider.getSigner();
+
+    //     const response = await signer.sendTransaction(tx);
+
+    //     const receipt = await response.wait();
+    //     return receipt?.hash;
+    //   }
+
+    //   async function sendToken({
+    //     contractAddress,
+    //     toAddress,
+    //     amount,
+    //     gasLimit,
+    //   }: {
+    //     contractAddress: string;
+    //     toAddress: string;
+    //     amount: string;
+    //     gasLimit: string;
+    //   }) {
+    //     const provider = new ethers.BrowserProvider(window.ethereum);
+    //     const signer = await provider.getSigner();
+
+    //     const contractAbiFragment = [
+    //       {
+    //         name: 'transfer',
+    //         type: 'function',
+    //         inputs: [
+    //           {
+    //             name: '_to',
+    //             type: 'address',
+    //           },
+    //           {
+    //             type: 'uint256',
+    //             name: '_tokens',
+    //           },
+    //         ],
+    //         constant: false,
+    //         outputs: [],
+    //         payable: false,
+    //         gas: gasLimit,
+    //       },
+    //     ];
+
+    //     const contract = new ethers.Contract(contractAddress, contractAbiFragment, signer);
+
+    //     const response = await contract.transfer(toAddress, amount);
+
+    //     const receipt = await response.wait();
+
+    //     return receipt?.hash;
+    //   }
 
     //   async function send({
     //     chain,
@@ -442,40 +558,37 @@ export const noBalanceScript = () => {
 
     //       let userAddress = globalThis.userDetails.address;
 
-    //       if (userAddress) {
-    //         if (chain === ${ChainBackendNames.EVMOS}) {
-    //           userAddress = web3.utils.toChecksumAddress(userAddress);
-    //         }
-    //         const gasPrice = await getGasPrice(chain);
+    //       if (chain === ${ChainBackendNames.EVMOS}) {
+    //         userAddress = web3.utils.toChecksumAddress(userAddress);
+    //       }
+    //       const gasPrice = await getGasPrice(chain);
 
-    //         const etherUnit = get(CONTRACT_DECIMAL_TO_ETHER_UNITS, contractDecimal);
-    //         const parsedSendingAmount = web3.utils.toWei(amountToSend, etherUnit).toString();
+    //       const etherUnit = ${CONTRACT_DECIMAL_TO_ETHER_UNITS[globalThis.exchangingTokenDetail.contractDecimal]};
+    //       const parsedSendingAmount = web3.utils.toWei(amountToSend, etherUnit).toString();
 
-    //         const isNativeToken = EVM_CHAINS_NATIVE_TOKEN_MAP.get(chain) === contractAddress;
-    //         await switchNetwork(chain);
-    //         const gasLimit = await estimateGasLimit({
-    //           amountToSend: parsedSendingAmount,
-    //           contractAddress,
+    //       const isNativeToken = ${EVM_CHAINS_NATIVE_TOKEN_MAP.get(globalThis.exchangingTokenDetail.chainDetails.backendName) === globalThis.exchangingTokenDetail.contractAddress};
+    //       await switchNetwork(${globalThis.exchangingTokenDetail.chainDetails.chain_id}, chain);
+    //       const gasLimit = await estimateGasLimit({
+    //         amountToSend: parsedSendingAmount,
+    //         contractAddress,
+    //         fromAddress: userAddress,
+    //         toAddress,
+    //         web3,
+    //       });
+    //       if (isNativeToken) {
+    //         const txnHash = await sendNativeCoin({
     //           fromAddress: userAddress,
     //           toAddress,
-    //           web3,
+    //           gasPrice: web3.utils.toWei(gasPrice.toString(), 'gwei').toString(),
+    //           gasLimit: gasLimit.toString(),
+    //           amountToSend: parsedSendingAmount,
     //         });
-    //         if (isNativeToken) {
-    //           const txnHash = await sendNativeCoin({
-    //             fromAddress: userAddress,
-    //             toAddress,
-    //             gasPrice: web3.utils.toWei(gasPrice.toString(), 'gwei').toString(),
-    //             gasLimit: gasLimit.toString(),
-    //             amountToSend: parsedSendingAmount,
-    //           });
-    //           return { isError: false, hash: txnHash };
-    //         } else {
-    //           const txnHash = await sendToken({ contractAddress, toAddress, amount: parsedSendingAmount, gasLimit });
-    //           return { isError: false, hash: txnHash };
-    //         }
+    //         return { isError: false, hash: txnHash };
     //       } else {
-    //         navigate('/');
+    //         const txnHash = await sendToken({ contractAddress, toAddress, amount: parsedSendingAmount, gasLimit });
+    //         return { isError: false, hash: txnHash };
     //       }
+
     //     } catch (error) {
     //       return { isError: true, error: error };
     //     }

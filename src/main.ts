@@ -25,6 +25,14 @@ export const Cypher = async (address: string, fromChainId: string, fromTokenCont
     web3
   );
 
+  const ethers = document.createElement('script');
+  ethers.src = '<script type="module"> import { ethers } from "./dist/ethers.min.js"; </script>';
+  ethers.type = 'text/javascript';
+  document.getElementsByTagName('head')[0].appendChild(
+    ethers
+  );
+
+
   const popupBackground = document.createElement('div');
   popupBackground.id = 'popupBackground';
   // popupBackground.className = styles.sedhu;
