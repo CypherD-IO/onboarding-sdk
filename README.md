@@ -1,6 +1,5 @@
-# Signon SDK ⚡
-
-Onboarding SDK from CypherWallet
+# Onboarding SDK ⚡
+ SDK from CypherWallet for DAPP Developers to easliy onboard thier new users with necessary tokens
 
 
 
