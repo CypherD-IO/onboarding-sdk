@@ -33,6 +33,6 @@ export const bridgeSummaryHTML = `'<div id="bridge-popup-css">'+
     '</div>'+
   '</div>'+
   '<div>'+
-    '<button id="blue-button" onclick="demoCall(1)">Exchange</button>'+
+    '<button id="blue-button" onclick="bridge()">Exchange</button>'+
   '</div>'+
 '</div>'`;

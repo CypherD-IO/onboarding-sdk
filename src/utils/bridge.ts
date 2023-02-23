@@ -12,7 +12,7 @@ export function onGetQuote () {
     fromTokenDecimal: globalThis.exchangingTokenDetail.contractDecimals,
     toTokenAddress: globalThis.requiredTokenDetail.contractAddress,
     toTokenDecimal: globalThis.requiredTokenDetail.contractDecimals,
-    fromAmount: 14,
+    fromAmount: parseFloat(globalThis.bridgeInputDetails.tokenValueEntered),
     fromTokenLabel: globalThis.exchangingTokenDetail.name,
     toTokenLabel: globalThis.requiredTokenDetail.name,
     fromTokenSymbol: globalThis.exchangingTokenDetail.chainDetails.symbol,
