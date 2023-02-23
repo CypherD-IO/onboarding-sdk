@@ -1,6 +1,9 @@
-# Thunder ⚡
+# Signon SDK ⚡
 
 Onboarding SDK from CypherWallet
+
+
+
 
 
 * [TypeScript 4](https://www.typescriptlang.org/)
@@ -13,6 +16,32 @@ Onboarding SDK from CypherWallet
 
 
 ## Getting Started
+
+### To Integrate 
+
+
+#### Web 
+
+Inject the CypherWallet Signon-SDK from the CDN link `https://public.cypherd.io/js/signon-sdk.js` 
+
+```
+
+
+```
+
+### Npm
+
+1. Install the singon-sdk 
+`npm i -S @cypher` 
+2. Import the Cypher into Code 
+
+
+
+
+
+### To Contribute 
+
+
 
 ```bash
 
