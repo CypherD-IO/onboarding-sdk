@@ -119,11 +119,9 @@ You can publish the documentation through CI:
 * [GitHub pages](https://pages.github.com/): See [`.github/workflows/deploy-gh-pages.yml`]
 * [GitLab pages](https://docs.gitlab.com/ee/user/project/pages/): [`.gitlab-ci.yml`]()
 
-This is the documentation for this boilerplate project: https://metachris.github.io/typescript-boilerplate/
 
 ## References
 
-* **[Blog post: Starting a TypeScript Project in 2021](https://www.metachris.com/2021/03/bootstrapping-a-typescript-node.js-project/)**
 * [TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/intro.html)
 * [tsconfig docs](https://www.typescriptlang.org/tsconfig)
 * [esbuild docs](https://esbuild.github.io/)
