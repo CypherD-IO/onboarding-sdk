@@ -25,12 +25,13 @@ export const noBalanceHTML = (totalHoldings: any) => {
 
   const htmlValue = `
     <div id="popup">
+      <button onclick="ConnectMetaMask()">Connect Wallet</button>
       <div id="icon-flex-box">
         <img src="https://public.cypherd.io/icons/logos/${_.get(globalThis.requiredTokenDetail, ['chainDetails', 'backendName']).toLowerCase()}.png" alt="${_.get(globalThis.requiredTokenDetail, ['chainDetails', 'backendName']).toLowerCase()} logo" width="42" height="42">
         <img src="${_.get(globalThis.requiredTokenDetail, ['logoUrl'])}" alt="Arbitrum logo" width="42" height="42">
       </div>
       <div>
-        <h2>You need ETH in BSC to use this dApp</h2>
+        <h2>You need ${_.get(globalThis.requiredTokenDetail, ['name'])} in ${_.get(globalThis.requiredTokenDetail, ['chainDetails', 'backendName'])} to use this dApp</h2>
         <p>You can exchange with below tokens in your wallet  </p>
       </div>
       <div id="tokens-available-flex-box">

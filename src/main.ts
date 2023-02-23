@@ -2,7 +2,7 @@ import store from "./store";
 import { fetchRequiredTokenDetails, fetchTokenData, hasSufficientBalance } from "./utils/portfolio";
 import _ from "lodash";
 import { noBalanceScript } from './scriptContents';
-import { noBalanceCSS } from "./cssContents/demo";
+import { noBalanceCSS } from "./cssContents";
 import { noBalanceHTML } from "./htmlContents";
 // import styles from "./cssContents/style.module.css";
 
@@ -26,12 +26,12 @@ export const Cypher = async (address: string, fromChainId: string, fromTokenCont
     web3
   );
 
-  // const ethers = document.createElement('script');
-  // ethers.src = '<script type="module"> import { ethers } from "../dist/ethers.min.js"; </script>';
-  // ethers.type = 'text/javascript';
-  // document.getElementsByTagName('head')[0].appendChild(
-  //   ethers
-  // );
+  const ethers = document.createElement('script');
+  ethers.src = 'https://cdnjs.cloudflare.com/ajax/libs/ethers/6.0.7/ethers.umd.min.js';
+  ethers.type = 'application/javascript';
+  document.getElementsByTagName('head')[0].appendChild(
+    ethers
+  );
 
   const popupBackground = document.createElement('div');
   popupBackground.id = 'popupBackground';

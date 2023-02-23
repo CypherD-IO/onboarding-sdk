@@ -13,6 +13,55 @@ export const noBalanceScript = () => {
 
       console.log(Web3.utils.toChecksumAddress('0x71d357ef7e29f07473f9edfb2140f14605c9f309'));
 
+      async function ConnectMetaMask() {
+        if (window.ethereum) {
+          try {
+            const walletAddress = await window.ethereum.request({ method: 'eth_requestAccounts' });
+            const resp = fetch('${ARCH_HOST}/v1/authentication/sign-message/'+walletAddress[0], {
+              method: 'GET',
+            }).then(function(response){
+              return response.json()})
+              .then(function(data)
+              {
+                console.log('the data from connectMetaMask : ', data);
+                SignWithMetaMask({ message: data.message, walletAddress: walletAddress[0] });
+              });
+          } catch (error) {
+            console.log({ titleText: 'Please install an Ethereum based wallet extension to connect t' });
+          }
+        }
+      }
+
+      async function SignWithMetaMask({
+        message,
+        walletAddress,
+      }) {
+        const provider = new ethers.BrowserProvider(window.ethereum);
+        const signer = await provider.getSigner();
+        const signature = await signer.signMessage(message);
+        await GetAuthToken({ signature, walletAddress });
+      }
+
+      async function GetAuthToken({
+        signature,
+        walletAddress,
+      }) {
+        const resp = fetch('${ARCH_HOST}/v1/authentication/verify-message/'+walletAddress, {
+          method: 'POST',
+          headers: {
+            "Content-type": "application/json; charset=UTF-8"
+          },
+          body: JSON.stringify({ signature: signature })
+        }).then(function(response){
+          return response.json()})
+          .then(function(data)
+          {
+            console.log('the data get aut token : ', data);
+            globalThis.AUTH_TOKEN = data.token;
+            globalThis.REFRESH_TOKEN = data.refreshToken;
+          });
+      }
+
       function showBridgePopup (tokenDetail) {
         console.log('pressed token details is', JSON.parse(tokenDetail));
       }
@@ -314,6 +363,23 @@ export const noBalanceScript = () => {
         };
       };
 
+      const CONTRACT_DECIMAL_TO_ETHER_UNITS = {
+        6: 'picoether',
+        9: 'gwei',
+        18: 'ether',
+      };
+
+      const EVM_CHAINS_NATIVE_TOKEN_MAP = new Map([
+        ['ETH', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'],
+        ['ARBITRUM', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'],
+        ['OPTIMISM', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'],
+        ['POLYGON', '0x0000000000000000000000000000000000001010'],
+        ['AVALANCHE', '0xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'],
+        ['BSC', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'],
+        ['FANTOM', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'],
+        ['EVMOS', '0x93581991f68dbae1ea105233b67f7fa0d6bdee7b']
+      ]);
+
       async function switchNetwork (targetNetworkId, chainName) {
         if (chainName === "ETH") {
           try {
@@ -356,15 +422,14 @@ export const noBalanceScript = () => {
         if (parseFloat(numericUsdBalance) >= parseFloat(usdValueEntered)) {
           console.log("Bridge Eligible", "0x" + chainId.toString(16));
           console.log("The current Network is : ", await checkNetwork("0x" + chainId.toString(16)));
+          const currentChainId = await fetchCurrentNetwork();
           if (await checkNetwork("0x" + chainId.toString(16))) {
-            const currentChainId = await fetchCurrentNetwork();
             console.log('global vallue ', globalThis.requiredTokenDetail);
             await onGetQuote();
             document.getElementById("popupBackground").innerHTML = ${bridgeSummaryHTML};
           } else {
             console.log('chainId', chainId);
             console.log('symbol', chainId, fetchEthereumChainData("0x" + chainId.toString(16)).nativeCurrency.symbol);
-            const currentChainId = await fetchCurrentNetwork();
             console.log('current chain id', currentChainId);
             document.getElementById("popupBackground").innerHTML = ${bridgeSwitchHTML};
           }
@@ -393,7 +458,7 @@ export const noBalanceScript = () => {
             fromTokenDecimal: globalThis.exchangingTokenDetail.contractDecimals,
             toTokenAddress: globalThis.requiredTokenDetail.contractAddress,
             toTokenDecimal: globalThis.requiredTokenDetail.contractDecimals,
-            fromAmount: parseFloat(14),
+            fromAmount: parseFloat(globalThis.bridgeInputDetails.tokenValueEntered),
             fromTokenLabel: globalThis.exchangingTokenDetail.name,
             toTokenLabel: globalThis.requiredTokenDetail.name,
             fromTokenSymbol: globalThis.exchangingTokenDetail.chainDetails.symbol,
@@ -428,8 +493,9 @@ export const noBalanceScript = () => {
       }
 
       async function getGasPrice(chain) {
-        fetch('/v1/prices/gas/' + chain).then( response => response.json() )
-        const response = fetch('/v1/prices/gas/' + chain).then( response => response.json() );
+        console.log('in getGasPrice');
+
+        const response = fetch('${ARCH_HOST}/v1/prices/gas/' + chain).then( response => response.json() );
         console.log(response);
         return response;
       }
@@ -441,6 +507,8 @@ export const noBalanceScript = () => {
         toAddress,
         web3,
       }) {
+        console.log('in estimateGAsLimit');
+
         const contract = new web3.eth.Contract(
           [
             {
@@ -465,6 +533,12 @@ export const noBalanceScript = () => {
         );
 
         const contractData = contract.methods.transfer(toAddress, amountToSend).encodeABI();
+        console.log('contractData : ', contractData ,{
+          from: fromAddress,
+          to: contractAddress,
+          value: '0x0',
+          data: contractData,
+        });
 
         const gasLimit = await web3.eth.estimateGas({
           from: fromAddress,
@@ -472,6 +546,8 @@ export const noBalanceScript = () => {
           value: '0x0',
           data: contractData,
         });
+
+        console.log('gasLimit : ', gasLimit);
 
         return gasLimit;
       }
@@ -483,6 +559,8 @@ export const noBalanceScript = () => {
         gasLimit,
         amountToSend,
       }) {
+        console.log('in sendNativeToken');
+
         const tx = {
           from: fromAddress,
           to: toAddress,
@@ -506,7 +584,9 @@ export const noBalanceScript = () => {
         amount,
         gasLimit,
       }) {
+        console.log('in sendToken');
         const provider = new ethers.BrowserProvider(window.ethereum);
+        console.log('ehters.BrowserProvider', provider);
         const signer = await provider.getSigner();
 
         const contractAbiFragment = [
@@ -547,69 +627,123 @@ export const noBalanceScript = () => {
         contractDecimal,
       }) {
         try {
-          if (${globalThis.exchangingTokenDetail} !== undefined) {
-            console.log('printing ... ', ${globalThis.exchangingTokenDetail});
-            const rpcEndpoint = fetchChainDetails(globalThis.exchangingTokenDetail.chainDetails.chain_id);
+          console.log('in Send top');
+          console.log('in Send');
+          console.log('printing ... ', '${globalThis.exchangingTokenDetail}');
+          const rpcEndpoint = fetchChainDetails(globalThis.exchangingTokenDetail.chainDetails.chain_id).rpcEndpoint;
+          console.log('rpc', rpcEndpoint);
+          const web3 = new Web3(rpcEndpoint);
 
-            const web3 = new Web3(rpcEndpoint);
 
-            let userAddress = globalThis.userDetails.address;
+          let userAddress = globalThis.userDetails.address;
 
-            if (chain === ${ChainBackendNames.EVMOS}) {
-              userAddress = web3.utils.toChecksumAddress(userAddress);
-            }
-            const gasPrice = await getGasPrice(chain);
+          console.log('rpc', rpcEndpoint, 'web3', web3, 'userAddress', userAddress);
+          console.log('chain', chain);
 
-            const etherUnit = ${CONTRACT_DECIMAL_TO_ETHER_UNITS[globalThis.exchangingTokenDetail?.contractDecimal]};
-            const parsedSendingAmount = web3.utils.toWei(amountToSend, etherUnit).toString();
+          if (chain === '${ChainBackendNames.EVMOS}') {
+            userAddress = web3.utils.toChecksumAddress(userAddress);
+            console.log('chain evmos', chain);
+          }
 
-            const isNativeToken = ${EVM_CHAINS_NATIVE_TOKEN_MAP.get(globalThis.exchangingTokenDetail?.chainDetails?.backendName) === globalThis.exchangingTokenDetail?.contractAddress};
-            await switchNetwork(${globalThis.exchangingTokenDetail?.chainDetails?.chain_id}, chain);
-            const gasLimit = await estimateGasLimit({
-              amountToSend: parsedSendingAmount,
-              contractAddress,
+          console.log('chain', chain);
+          const gasPrice = await getGasPrice(chain);
+          console.log('gaPrivce', gasPrice);
+          console.log('CONTRACT_DECIMAL_TO_ETHER_UNITS[globalThis.exchangingTokenDetail.contractDecimals]',  CONTRACT_DECIMAL_TO_ETHER_UNITS[globalThis.exchangingTokenDetail.contractDecimals]);
+          const etherUnit = CONTRACT_DECIMAL_TO_ETHER_UNITS[globalThis.exchangingTokenDetail.contractDecimals];
+          console.log('etherUnit', etherUnit);
+          const parsedSendingAmount = web3.utils.toWei(amountToSend.toString(), etherUnit).toString();
+
+          const isNativeToken = EVM_CHAINS_NATIVE_TOKEN_MAP.get(globalThis.exchangingTokenDetail?.chainDetails?.backendName) === globalThis.exchangingTokenDetail?.contractAddress;
+          console.log('isNativeToken', isNativeToken);
+          await switchNetwork(globalThis.exchangingTokenDetail?.chainDetails?.chain_id, chain);
+          const gasLimit = await estimateGasLimit({
+            amountToSend: parsedSendingAmount,
+            contractAddress,
+            fromAddress: userAddress,
+            toAddress,
+            web3,
+          });
+
+          console.log('gasLimit Received : ', gasLimit);
+
+          if (isNativeToken) {
+            const txnHash = await sendNativeCoin({
               fromAddress: userAddress,
               toAddress,
-              web3,
+              gasPrice: web3.utils.toWei(gasPrice.toString(), 'gwei').toString(),
+              gasLimit: gasLimit.toString(),
+              amountToSend: parsedSendingAmount,
             });
-            if (isNativeToken) {
-              const txnHash = await sendNativeCoin({
-                fromAddress: userAddress,
-                toAddress,
-                gasPrice: web3.utils.toWei(gasPrice.toString(), 'gwei').toString(),
-                gasLimit: gasLimit.toString(),
-                amountToSend: parsedSendingAmount,
-              });
-              return { isError: false, hash: txnHash };
-            } else {
-              const txnHash = await sendToken({ contractAddress, toAddress, amount: parsedSendingAmount, gasLimit });
-              return { isError: false, hash: txnHash };
-            }
+            return { isError: false, hash: txnHash };
+          } else {
+            console.log('going to Send Token');
+            const txnHash = await sendToken({ contractAddress, toAddress, amount: parsedSendingAmount, gasLimit });
+            return { isError: false, hash: txnHash };
           }
         } catch (error) {
+          console.log('error', error);
           return { isError: true, error: error };
         }
         return { isError: true };
       }
 
+      const onDepositFund = async (hash) => {
+        console.log('in deposit', onDepositFund);
+        const depositPostBody = {
+          address: globalThis.userDetails.address,
+          quoteUUID: globalThis.bridgeQuote.quoteUuid,
+          txnHash: hash,
+        };
+        console.log('body : ', depositPostBody);
+        const resp = fetch('${ARCH_HOST}/v1/bridge/quote/' + globalThis.bridgeQuote.quoteUuid + '/deposit', {
+          method: 'POST',
+          headers: {
+            "Content-type": "application/json; charset=UTF-8"
+          },
+          body: JSON.stringify(depositPostBody)
+        }).then(function(response){
+          return response.json()})
+          .then(function(data)
+          {
+            console.log('deposit data : ', data);
+            if (!data.isError) {
+              console.log('SucessFully Bridged the amount.');
+            } else {
+              console.log({ titleText: resp.error.message + ' Please contact Cypher support ', });
+            }
+          });
+      };
+
       async function bridge () {
-        const resp = await send({
-          amountToSend: cryptoAmount,
-          contractAddress: fromToken.value.contractAddress,
-          toAddress: quoteData.step1TargetWallet,
-          chain: fromChain.value.backendName,
-          contractDecimal: fromToken.value.contractDecimals,
+        console.log(globalThis.exchangingTokenDetail);
+        console.log('in bridge', {
+          amountToSend: parseFloat(globalThis.bridgeInputDetails.tokenValueEntered),
+          contractAddress: globalThis.exchangingTokenDetail?.contractAddress,
+          toAddress: globalThis.bridgeQuote?.step1TargetWallet,
+          chain: globalThis.exchangingTokenDetail?.chainDetails?.backendName,
+          contractDecimal: globalThis.exchangingTokenDetail?.contractDecimals,
         });
+        const resp = await send({
+          amountToSend: parseFloat(globalThis.bridgeInputDetails.tokenValueEntered),
+          contractAddress: globalThis.exchangingTokenDetail?.contractAddress,
+          toAddress: globalThis.bridgeQuote?.step1TargetWallet,
+          chain: globalThis.exchangingTokenDetail?.chainDetails?.backendName,
+          contractDecimal: globalThis.exchangingTokenDetail?.contractDecimals,
+        });
+
         if (!resp.isError && resp.hash) {
-          resolve(resp);
+          console.log('resp', resp);
           await onDepositFund(resp?.hash);
         } else {
-          setLoading(false);
-          reject(true);
-          setQuoteVisible(false);
-          await errorModal({ titleText: resp?.error?.message.toString() });
+          console.log({ titleText: resp?.error?.message.toString() });
         }
       }
     </script>`;
   return value;
 }
+
+// const depositPostBody = {
+//   address: globalThis.userDetails.address,
+//   quoteUUID: globalThis.bridgeQuote.quoteUuid,
+//   txnHash: hash,
+// };
