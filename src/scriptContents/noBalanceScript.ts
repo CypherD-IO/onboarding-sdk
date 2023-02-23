@@ -695,27 +695,23 @@ export const noBalanceScript = () => {
           txnHash: hash,
         };
         console.log('body : ', depositPostBody);
-        const resp = fetch('${ARCH_HOST}/v1/bridge/deposit', {
+        const resp = fetch('${ARCH_HOST}/v1/bridge/quote/' + globalThis.bridgeQuote.quoteUuid + '/deposit', {
           method: 'POST',
           headers: {
-            "Content-type": "application/json; charset=UTF-8";
-            "Authorization": "Bearer " + globalThis.AUTH_TOKEN),
+            "Content-type": "application/json; charset=UTF-8"
           },
           body: JSON.stringify(depositPostBody)
         }).then(function(response){
           return response.json()})
           .then(function(data)
           {
-            console.log('the data from bridge : ', data);
-            globalThis.bridgeQuote = data;
-            document.getElementById("token-received").textContent = data.transferAmount.toFixed(6) + ' ' + globalThis.requiredTokenDetail.chainDetails.symbol;
-            document.getElementById("usd-received").textContent = '$ ' + data.usdValue.toFixed(2);
+            console.log('deposit data : ', data);
+            if (!data.isError) {
+              console.log('SucessFully Bridged the amount.');
+            } else {
+              console.log({ titleText: resp.error.message + ' Please contact Cypher support ', });
+            }
           });
-        if (!resp.isError) {
-          console.log('SucessFully Bridged the amount.');
-        } else {
-          console.log({ titleText: resp.error.message + ' Please contact Cypher support ', });
-        }
       };
 
       async function bridge () {
