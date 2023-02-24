@@ -13,7 +13,14 @@ export const delayMillis = (delayMs: number): Promise<void> => new Promise(resol
 
 export const greet = (name: string): string => `Hello ${name}`
 
-export const Cypher = async (address: string, fromChainId: string, fromTokenContractAddress: string, fromTokenRequiredBalance: number): Promise<void> => {
+interface DappDetails{
+  address: string,
+  fromChainId: string,
+  fromTokenContractAddress: string,
+  fromTokenRequiredBalance: number
+}
+
+export const Cypher = async ({address, fromChainId, fromTokenContractAddress, fromTokenRequiredBalance}: DappDetails): Promise<void> => {
   console.log(greet('World'))
   await delayMillis(1000)
   console.log('done')
@@ -50,6 +57,13 @@ export const Cypher = async (address: string, fromChainId: string, fromTokenCont
   tailwind.type = 'application/javascript';
   document.getElementsByTagName('head')[0].appendChild(
     tailwind
+  );
+
+  const sweetAlert2 = document.createElement('script');
+  ethers.src = 'https://cdn.jsdelivr.net/npm/sweetalert2@11';
+  ethers.type = 'application/javascript';
+  document.getElementsByTagName('head')[0].appendChild(
+    sweetAlert2
   );
 
   const popupBackground = document.createElement('div');
