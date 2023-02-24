@@ -1,5 +1,5 @@
 import { ARCH_HOST, ChainBackendNames } from "../constants/server";
-import { bridgeInputHTML, bridgeSummaryHTML, bridgeSwitchHTML, noBalanceHTML } from "../htmlContents";
+import { bridgeInputHTML, bridgeLoadingHTML , bridgeSuccessHTML, bridgeSummaryHTML, bridgeSwitchHTML, noBalanceHTML, switchBackHTML } from "../htmlContents";
 
 declare let globalThis : any;
 
@@ -109,10 +109,16 @@ export const noBalanceScript = () => {
             method: 'eth_chainId',
           });
 
+          console.log("the current chain id : ", currentChainId);
+          console.log('check', currentChainId === targetNetworkId);
           // return true if network id is the same
-          if (currentChainId == targetNetworkId) return true;
+          if (currentChainId === targetNetworkId) {
+
+            return true;
+          } else {
+            return false;
+          }
           // return false is network id is different
-          return false;
         } else {
           console.log('Not connected to any network');
           return false;
@@ -381,6 +387,7 @@ export const noBalanceScript = () => {
 
       async function switchNetwork (targetNetworkId, chainName) {
           try {
+            console.log("the chainId sb : ", targetNetworkId);
             await window.ethereum.request({
               method: 'wallet_switchEthereumChain',
               params: [{ chainId: targetNetworkId }],
@@ -435,7 +442,6 @@ export const noBalanceScript = () => {
 
       async function navigateAfterSwitch (chainId, chainName) {
         console.log('insde switch call', chainId, chainName);
-        console.log('insde switch call', await switchNetwork(chainId, chainName));
         if (await switchNetwork(chainId, chainName)) {
           await onGetQuote();
           document.getElementById("popupBackground").innerHTML = ${bridgeSummaryHTML};
@@ -724,6 +730,20 @@ export const noBalanceScript = () => {
           await onDepositFund(resp?.hash);
         } else {
           console.log({ titleText: resp?.error?.message.toString() });
+        }
+      }
+
+      async function onBridgeClick () {
+        bridge();
+        document.getElementById("popupBackground").innerHTML = ${bridgeLoadingHTML};
+
+        // implement check the satus of bridge and call this on Success
+        if(await checkNetwork(globalThis.requiredTokenDetail.chainDetails.chain_id)) {
+          console.log('true state');
+          document.getElementById("popupBackground").innerHTML = ${bridgeSuccessHTML};
+        } else {
+          console.log('false state');
+          document.getElementById("popupBackground").innerHTML = ${switchBackHTML};
         }
       }
     </script>`;

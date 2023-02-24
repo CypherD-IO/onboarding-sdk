@@ -18,7 +18,7 @@ export const checkNetwork = async (targetNetworkId: string) => {
     });
 
     // return true if network id is the same
-    if (currentChainId == targetNetworkId) return true;
+    if (currentChainId === targetNetworkId) return true;
     // return false is network id is different
     return false;
   } else {
