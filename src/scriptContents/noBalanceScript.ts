@@ -72,15 +72,18 @@ export const noBalanceScript = () => {
       }
 
       const parentElement = document.querySelector("#popupBackground");
-      parentElement.addEventListener("input", event => {
+      function updateUsdValue (event) {
+        console.log('event', event.target);
         if (event.target && event.target.matches("input[type='text']")) {
+          console.log('iniside');
           const tokenValueElement = document.querySelector("#bp-token-value");
           const price = parseFloat(globalThis.exchangingTokenDetail.price);
-          console.log('val', price);
           const newValue = (parseFloat(event.target.value) / price).toFixed(6);
+          console.log('newValue', newValue);
           tokenValueElement.innerHTML = newValue.toString();
         }
-      });
+      };
+      parentElement.addEventListener("input",updateUsdValue);
 
       function backToNoBalanceHTML () {
         document.getElementById("popupBackground").innerHTML = ${noBalanceHTML};
@@ -123,6 +126,21 @@ export const noBalanceScript = () => {
           console.log('Not connected to any network');
           return false;
         }
+      };
+
+      const gasFeeReservation = {
+        AVALANCHE: 0.001,
+        BSC: 0.001,
+        COSMOS: 0.1,
+        EVMOS: 0.1,
+        FANTOM: 0.1,
+        JUNO: 0.1,
+        OSMOSIS: 0.1,
+        POLYGON: 0.1,
+        ETH: 0.001,
+        ARBITRUM: 0.001,
+        OPTIMISM: 0.001,
+        STARGAZE: 0.1,
       };
 
       function fetchChainDetails (chainId) {
@@ -779,6 +797,22 @@ export const noBalanceScript = () => {
           }
         });
       }
+
+      async function onMax () {
+        const reserve = gasFeeReservation[globalThis.exchangingTokenDetail.chainDetails.backendName];
+        if (globalThis.exchangingTokenDetail.contractAddress === EVM_CHAINS_NATIVE_TOKEN_MAP.get(globalThis.exchangingTokenDetail.chainDetails.backendName)) {
+          if (reserve && (globalThis.exchangingTokenDetail.actualBalance * globalThis.exchangingTokenDetail.price - reserve)) {
+            const usdValueAfterReduction = (globalThis.exchangingTokenDetail.actualBalance * globalThis.exchangingTokenDetail.price - reserve);
+            document.getElementById("bp-amount-value").value = usdValueAfterReduction.toFixed(2).toString();
+            document.getElementById("bp-token-value").textContent = (parseFloat(usdValueAfterReduction) / globalThis.exchangingTokenDetail.price).toFixed(6).toString();
+          } else {
+            console.log({ titleText: 'Insufficient funds for gas' });
+          }
+        } else {
+          document.getElementById("bp-amount-value").value = (globalThis.exchangingTokenDetail.actualBalance * globalThis.exchangingTokenDetail.price).toFixed(2).toString();
+          document.getElementById("bp-token-value").textContent = (parseFloat(globalThis.exchangingTokenDetail.actualBalance) / globalThis.exchangingTokenDetail.price).toFixed(6).toString();
+        }
+      };
     </script>`;
   return value;
 }

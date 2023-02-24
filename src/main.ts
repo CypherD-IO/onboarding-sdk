@@ -3,7 +3,7 @@ import { fetchRequiredTokenDetails, fetchTokenData, hasSufficientBalance, getNat
 import _ from "lodash";
 import { noBalanceScript } from './scriptContents';
 import { noBalanceCSS } from "./cssContents";
-import { bridgeLoadingHTML, bridgeSuccessHTML, noBalanceHTML } from "./htmlContents";
+import { noBalanceHTML } from "./htmlContents";
 import {SUPPORTED_CHAINID_LIST_HEX} from "./constants/server";
 // import styles from "./cssContents/style.module.css";
 
