@@ -305,3 +305,14 @@ export const CHAIN_ID_HEX_TO_ENUM_MAPPING = new Map([
   ['0xa4b1', ChainBackendNames.ARBITRUM],
   ['0xa', ChainBackendNames.OPTIMISM],
 ]);
+
+export const CHAIN_ID_HEX_TO_CDN_IMAGE_CHAIN_NAME = new Map([
+  ['0x1', 'ethereum'],
+  ['0x89', 'polygon'],
+  ['0x38', 'binance'],
+  ['0xa86a', 'avalanchec'],
+  ['0xfa', 'fantom'],
+  ['0x2329', 'evmos'],
+  ['0xa4b1', 'arbitrum'],
+  ['0xa', 'optimism'],
+]);

@@ -1,8 +1,25 @@
 import _ from 'lodash';
-import { ARCH_HOST, CHAIN_ID_HEX_TO_ENUM_MAPPING, EVM_CHAINS_NATIVE_TOKEN_MAP } from '../constants/server';
+import { ARCH_HOST,
+  CHAIN_ID_HEX_TO_ENUM_MAPPING,
+  EVM_CHAINS_NATIVE_TOKEN_MAP,
+  CHAIN_ID_HEX_TO_CDN_IMAGE_CHAIN_NAME } from '../constants/server';
 import { getPortfolioModel } from '../core/portfolio';
 import store, { PORTFOLIO_EMPTY, PORTFOLIO_NOT_EMPTY, setPortfolioStore } from '../store';
 import { get } from './fetch';
+
+/*
+  Function to generate token image CDN URL for a given chainId and tokenContract Address
+*/
+export function getImageForToken(chainId: string, tokenContract: string){
+  //Logic to convert hexadecimal
+  const xyzChainNameForLogos = (CHAIN_ID_HEX_TO_CDN_IMAGE_CHAIN_NAME.get(chainId) == undefined)
+  ? 'ethereum': CHAIN_ID_HEX_TO_CDN_IMAGE_CHAIN_NAME.get(chainId);
+  //If Native Token Contract
+  if(Array.from(EVM_CHAINS_NATIVE_TOKEN_MAP.values()).includes(tokenContract.toLowerCase())){
+    return `https://public.cypherd.io/assets/blockchains/${xyzChainNameForLogos}/info/logo.png`;
+  }
+  return `https://public.cypherd.io/assets/blockchains/${xyzChainNameForLogos}/assets/${tokenContract}/logo.png`;
+}
 
 export function getNativeTokenAddressForHexChainId(chainId: string) {
   const enumName = CHAIN_ID_HEX_TO_ENUM_MAPPING.get(chainId);
@@ -57,11 +74,13 @@ export const fetchRequiredTokenDetails = async (chainId: string, tokenContractAd
     if (tokenRequired !== undefined) {
       return tokenRequired;
     } else {
-      // call coinGecko to get token details
-      return undefined;
+      //Incomplete Implementation with only the image and the tokenContractAdress of the token
+      return {logoUrl: `${getImageForToken(chainId, tokenContractAddress)}`, contractAddress: `${tokenContractAddress}`,
+      chainDetails: {backendName: `${CHAIN_ID_HEX_TO_ENUM_MAPPING.get(chainId)}`}};
     }
   } else {
-    // call coinGecko to get token details
-    return undefined;
+    //Incomplete Implementation with only the image and the tokenContractAdress of the token
+    return {logoUrl: `${getImageForToken(chainId, tokenContractAddress)}`, contractAddress: `${tokenContractAddress}`,
+      chainDetails: {backendName: `${CHAIN_ID_HEX_TO_ENUM_MAPPING.get(chainId)}`}};
   }
 }
