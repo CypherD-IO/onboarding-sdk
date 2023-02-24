@@ -1,25 +1,30 @@
-export const bridgeSwitchHTML = `'<div id="bridge-popup-css">'+
-  '<div id="bp-back-close-button-flex-box">'+
-    '<button onclick="backToNoBalanceHTML()">Back Button</button>'+
-    '<button onclick="closePopup()">Close Button</button>'+
-  '</div>'+
-  '<div id="bp-heading">'+
-    '<h2>Switch to '+ fetchEthereumChainData("0x" + chainId.toString(16)).chainName +' for this exchange</h2>'+
-  '</div>'+
-  '<div id="bp-switch-container">'+
-    '<div id="bp-switch-chain-container">'+
-      '<img src="https://public.cypherd.io/icons/logos/' + fetchChainDetails(currentChainId).backendName.toLowerCase() + '.png" alt="' + chainName + ' logo" width="42" height="42">'+
-      '<p>' + fetchEthereumChainData(currentChainId).nativeCurrency.symbol + '</p>'+
-      '<p>'+ fetchEthereumChainData(currentChainId).chainName +'</p>'+
+export const bridgeSwitchHTML =`'<div class="rounded-2xl z-50" id="bridge-popup-css">'+
+  '<div class=" !bg-[#F5F5F5] rounded-t-2xl p-5 flex flex-col justify-center items-center w-full h-full">'+
+    '<div class="flex justify-between w-full ">'+
+      '<img onclick="backToNoBalanceHTML()" src="https://public.cypherd.io/icons/back_arrow.svg" class="cursor-pointer"/>'+
+      '<img onclick="closePopup()" src="https://public.cypherd.io/icons/close_icon.svg" class="cursor-pointer">'+
     '</div>'+
-    '<div id="bp-switch-icon-container">'+
-      '<img src="https://public.cypherd.io/icons/logos/switch_network.png" alt="switch icon" width="100" height="100">'+
+    '<div id="bp-heading">'+
+      '<h2 class="font-semibold text-[28px] my-10 text-[#434343] text-center">Switch to '+ fetchEthereumChainData("0x" + chainId.toString(16)).chainName +' for this exchange</h2>'+
     '</div>'+
-    '<div id="bp-switch-chain-container">'+
-      '<img src="https://public.cypherd.io/icons/logos/' + chainName.toLowerCase() + '.png" alt="' + chainName + ' logo" width="42" height="42">'+
-      '<p>' + fetchEthereumChainData("0x" + chainId.toString(16)).nativeCurrency.symbol + '</p>'+
-      '<p>'+ chainName +'</p>'+
+    '<div class="flex items-start justify-evenly w-3/4">'+
+      '<div id="bp-switch-chain-container">'+
+        '<img src="https://public.cypherd.io/icons/logos/' + fetchChainDetails(currentChainId).backendName.toLowerCase() + '.png" alt="' + chainName + ' logo" width="42" height="42">'+
+        '<p class="text-[#929292] font-normal text-[16px] text-center mt-2 mb-1">' + fetchEthereumChainData(currentChainId).nativeCurrency.symbol + '</p>'+
+        '<p class="text-[#474747] font-semibold text-[18px] text-center">' + fetchEthereumChainData(currentChainId).chainName +'</p>'+
+      '</div>'+
+      '<div id="bp-switch-icon-container">'+
+        '<img src="https://public.cypherd.io/icons/logos/switch_network.png" alt="switch icon" width="100" height="100">'+
+      '</div>'+
+      '<div id="bp-switch-chain-container">'+
+        '<img src="https://public.cypherd.io/icons/logos/' + chainName.toLowerCase() + '.png" alt="' + chainName + ' logo" width="42" height="42">'+
+        '<p class="text-[#929292] font-normal text-[16px] text-center mt-2 mb-">' + fetchEthereumChainData("0x" + chainId.toString(16)).nativeCurrency.symbol + '</p>'+
+        '<p class="text-[#474747] font-semibold text-[18px] text-center">'+ chainName +'</p>'+
+      '</div>'+
     '</div>'+
   '</div>'+
-  '<button class="blue-button" onclick="navigateAfterSwitch(' + "'0x" + chainId.toString(16) + "'" + ', ' + "'" +  chainName + "'" + ')">Switch</button>'+
+
+  '<div class="bg-white py-10 w-full flex items-center justify-center rounded-b-2xl">'+
+    '<button class="bg-[#2081E2] w-2/3 p-4 rounded-lg text-[#D2E6F9] text-[18px] font-semibold" onclick="navigateAfterSwitch(' + "'0x" + chainId.toString(16) + "'" + ', ' + "'" +  chainName + "'" + ')">Switch</button>'+
+  '</div>'+
 '</div>'`;
