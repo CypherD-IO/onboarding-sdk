@@ -32,6 +32,17 @@ export function getNativeTokenAddressForHexChainId(chainId: string) {
   return nativeContractAddress;
 }
 
+export const fetchRequiredTokenData = async(chainId: string, tokenContractAddress: string) => {
+  const tokenDetailUrl = `${ARCH_HOST}/v1/portfolio/tokenDetail?`;
+  const params = {
+    'chain': CHAIN_ID_HEX_TO_ENUM_MAPPING.get(chainId),
+    'tokenAddress': tokenContractAddress
+  }
+  const response = await get(tokenDetailUrl, params);
+  console.log(response);
+  return response;
+};
+
 export const fetchTokenData = async (address: any) => {
 
   const cosmosPortfolioUrl = `${ARCH_HOST}/v1/portfolio/balances?`;
@@ -76,19 +87,33 @@ export const fetchRequiredTokenDetails = async (chainId: string, tokenContractAd
       return tokenRequired;
     } else {
 
-      //TBD Get TokenDetails for Non Native Tokens from CoinGecko
-
-      //Incomplete Implementation with only the image and the tokenContractAdress of the token
-      const tokenName = (Array.from(EVM_CHAINS_NATIVE_TOKEN_MAP.values()).includes(tokenContractAddress.toLowerCase())) ?
-      CHAIN_ID_HEX_TO_NATIVE_TOKEN_NAME.get(chainId): '';
-      return {name: `${tokenName}`, logoUrl: `${getImageForToken(chainId, tokenContractAddress)}`, contractAddress: `${tokenContractAddress}`,
-      chainDetails: {backendName: `${CHAIN_ID_HEX_TO_ENUM_MAPPING.get(chainId)}`}};
+      const tokenDetail = await fetchRequiredTokenData(chainId, tokenContractAddress);
+      return {name: tokenDetail.name,
+        logoUrl: tokenDetail.logo_url,
+        contractDecimals: tokenDetail.contract_decimals,
+        symbol: tokenDetail.symbol,
+        coinGeckoId: tokenDetail.coin_gecko_id,
+        contractAddress: tokenContractAddress,
+        price: tokenDetail.price,
+        chainDetails: {
+          backendName: `${CHAIN_ID_HEX_TO_ENUM_MAPPING.get(chainId)}`,
+          chainName: '',
+          chain_id: `${chainId}`,
+        }};
     }
   } else {
-    //Incomplete Implementation with only the image and the tokenContractAdress of the token
-    const tokenName = (Array.from(EVM_CHAINS_NATIVE_TOKEN_MAP.values()).includes(tokenContractAddress.toLowerCase())) ?
-    CHAIN_ID_HEX_TO_NATIVE_TOKEN_NAME.get(chainId): '';
-    return {name: `${tokenName}`, logoUrl: `${getImageForToken(chainId, tokenContractAddress)}`, contractAddress: `${tokenContractAddress}`,
-      chainDetails: {backendName: `${CHAIN_ID_HEX_TO_ENUM_MAPPING.get(chainId)}`}};
+    const tokenDetail = await fetchRequiredTokenData(chainId, tokenContractAddress);
+      return {name: tokenDetail.name,
+        logoUrl: tokenDetail.logo_url,
+        contractDecimals: tokenDetail.contract_decimals,
+        symbol: tokenDetail.symbol,
+        coinGeckoId: tokenDetail.coin_gecko_id,
+        contractAddress: tokenContractAddress,
+        price: tokenDetail.price,
+        chainDetails: {
+          backendName: `${CHAIN_ID_HEX_TO_ENUM_MAPPING.get(chainId)}`,
+          chainName: '',
+          chain_id: `${chainId}`,
+        }};
   }
 }
