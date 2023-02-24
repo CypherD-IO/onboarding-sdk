@@ -19,7 +19,7 @@ export const bridgeInputHTML = `'<div class="rounded-2xl z-50" id="bridge-popup-
     '</div>'+
     '<div class="flex">'+
       '<p class="mr-2 text-[18px] text-black" id="bp-token-value">00</p>'+
-      '<p class="text-[18px] text-black">' + tokenDetail.chainDetails.symbol + '</p>'+
+      '<p class="text-[18px] text-black">' + tokenDetail.symbol + '</p>'+
     '</div>'+
     '<div class="bg-white border border-[#E4E4E4] p-2 flex rounded-2xl w-3/4 mt-6">'+
       '<img src="' + tokenDetail.logoUrl + '" alt="' + tokenDetail.logoUrl + '"  class="h-[55px] w-[55px] rounded-lg">'+
@@ -29,7 +29,7 @@ export const bridgeInputHTML = `'<div class="rounded-2xl z-50" id="bridge-popup-
           '<p class="text-[#474747] text-[18px] font-semibold" id="bp-balance-detail-usd-value">$' + (tokenDetail.actualBalance * tokenDetail.price).toFixed(4) + '</p>'+
         '</div>'+
         '<div id="bp-balance-detail-token" class="flex justify-between">'+
-          '<p class="text-[#929292] text-[16px] font-normal">' + tokenDetail.chainDetails.symbol + '</p>'+
+          '<p class="text-[#929292] text-[16px] font-normal">' + tokenDetail.symbol + '</p>'+
           '<p class="text-[#929292] text-[16px] font-normal" id="bp-balance-detail-token-value">' + parseFloat(tokenDetail.actualBalance).toFixed(6) + '</p>'+
         '</div>'+
       '</div>'+

@@ -55,8 +55,8 @@ export const Cypher = async (address: string, fromChainId: string, fromTokenCont
   const popupBackground = document.createElement('div');
   popupBackground.id = 'popupBackground';
   // popupBackground.className = styles.sedhu;
-  const logBalances = await fetchTokenData(address);
-  console.log('balances logged', logBalances);
+  const fetchBalances = await fetchTokenData(address);
+  console.log('balances logged', fetchBalances);
   const tokenHoldings = store.getState().portfolioStore;
   console.log('token holdings from store : ', tokenHoldings);
   const sheet = document.createElement('style');

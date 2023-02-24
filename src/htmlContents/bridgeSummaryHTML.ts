@@ -20,7 +20,7 @@ export const bridgeSummaryHTML = `'<div class="flex flex-col justify-evenly item
     '</div>'+
     '<div class="bp-summary-row amount-row py-[15px] px-[10px] bg-[#fafafa]">'+
       '<p class="w-[30%] text-[14px]">Amount Sending</p>'+
-      '<p class="w-[30%] text-[14px]">' + parseFloat(globalThis.bridgeInputDetails.tokenValueEntered).toFixed(6) + ' ' + globalThis.exchangingTokenDetail.chainDetails.symbol + '</p>'+
+      '<p class="w-[30%] text-[14px]">' + parseFloat(globalThis.bridgeInputDetails.tokenValueEntered).toFixed(6) + ' ' + globalThis.exchangingTokenDetail.symbol + '</p>'+
       '<p class="w-[30%] text-[14px]">$' + parseFloat(globalThis.bridgeInputDetails.usdValueEntered).toFixed(2) +'</p>'+
     '</div>'+
     '<div class="bp-summary-row exchange-row py-[15px] px-[10px] bg-[#f5f5f5]">'+
@@ -36,7 +36,7 @@ export const bridgeSummaryHTML = `'<div class="flex flex-col justify-evenly item
     '</div>'+
     '<div class="bp-summary-row amount-row py-[15px] px-[10px] bg-[#fafafa]">'+
       '<p class="w-[30%] text-[14px]">Amount Receiving</p>'+
-      '<p id="token-received" class="w-[30%] text-[14px]"> ...' + globalThis.requiredTokenDetail.chainDetails.symbol + '</p>'+
+      '<p id="token-received" class="w-[30%] text-[14px]"> ...' + globalThis.requiredTokenDetail.symbol + '</p>'+
       '<p id="usd-received" class="w-[30%] text-[14px]">$ ... </p>'+
     '</div>'+
   '</div>'+

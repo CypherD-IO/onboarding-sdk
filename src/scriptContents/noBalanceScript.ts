@@ -1,6 +1,5 @@
 import { ARCH_HOST, ChainBackendNames } from "../constants/server";
 import { bridgeInputHTML, bridgeSummaryHTML, bridgeSwitchHTML, noBalanceHTML } from "../htmlContents";
-import { onGetQuote } from "../utils/bridge";
 
 declare let globalThis : any;
 
@@ -381,7 +380,6 @@ export const noBalanceScript = () => {
       ]);
 
       async function switchNetwork (targetNetworkId, chainName) {
-        if (chainName === "ETH") {
           try {
             await window.ethereum.request({
               method: 'wallet_switchEthereumChain',
@@ -390,24 +388,21 @@ export const noBalanceScript = () => {
             return true;
           } catch (error) {
             console.log(error);
+            try {
+              console.log("the chainId : ", targetNetworkId);
+              console.log("the fetched data : ", {...fetchEthereumChainData(targetNetworkId)});
+              await window.ethereum.request({
+                method: 'wallet_addEthereumChain',
+                params: [{...fetchEthereumChainData(targetNetworkId)}],
+              });
+              return true;
+            } catch (error) {
+              return false;
+            }
             return false;
           }
-        } else {
-          try {
-            console.log("the chainId : ", targetNetworkId);
-            console.log("the fetched data : ", {...fetchEthereumChainData(targetNetworkId)});
-            await window.ethereum.request({
-              method: 'wallet_addEthereumChain',
-              params: [{...fetchEthereumChainData(targetNetworkId)}],
-            });
-            return true;
-          } catch (error) {
-            return false;
-          }
-        }
 
         // refresh
-        window.location.reload();
       };
 
       async function bridgeSubmit (chainId, chainName) {
@@ -461,7 +456,7 @@ export const noBalanceScript = () => {
             fromAmount: parseFloat(globalThis.bridgeInputDetails.tokenValueEntered),
             fromTokenLabel: globalThis.exchangingTokenDetail.name,
             toTokenLabel: globalThis.requiredTokenDetail.name,
-            fromTokenSymbol: globalThis.exchangingTokenDetail.chainDetails.symbol,
+            fromTokenSymbol: globalThis.exchangingTokenDetail.symbol,
             toTokenSymbol: globalThis.requiredTokenDetail.symbol.toUpperCase(),
             fromTokenCoingeckoId: globalThis.exchangingTokenDetail.coinGeckoId,
             toTokenCoingeckoId: globalThis.requiredTokenDetail.coinGeckoId,
@@ -479,17 +474,10 @@ export const noBalanceScript = () => {
             {
               console.log('the data from bridge : ', data);
               globalThis.bridgeQuote = data;
-              document.getElementById("token-received").textContent = data.transferAmount.toFixed(6) + ' ' + globalThis.requiredTokenDetail.chainDetails.symbol;
+              document.getElementById("token-received").textContent = data.transferAmount.toFixed(6) + ' ' + globalThis.requiredTokenDetail.symbol;
               document.getElementById("usd-received").textContent = '$ ' + data.usdValue.toFixed(2);
             });
           console.log('result from POST', result);
-      }
-
-      async function demoCall (val=0) {
-        console.log('called ....');
-        if(val){
-          await (${onGetQuote})();
-        }
       }
 
       async function getGasPrice(chain) {
