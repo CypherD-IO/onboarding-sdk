@@ -670,7 +670,7 @@ export const noBalanceScript = () => {
             const txnHash = await sendNativeCoin({
               fromAddress: userAddress,
               toAddress,
-              gasPrice: web3.utils.toWei(gasPrice.toString(), 'gwei').toString(),
+              gasPrice: web3.utils.toWei(gasPrice.gasPrice.toString(), 'gwei').toString(),
               gasLimit: gasLimit.toString(),
               amountToSend: parsedSendingAmount,
             });
