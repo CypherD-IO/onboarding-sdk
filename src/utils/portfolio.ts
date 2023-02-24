@@ -1,8 +1,18 @@
 import _ from 'lodash';
-import { ARCH_HOST } from '../constants/server';
+import { ARCH_HOST, CHAIN_ID_HEX_TO_ENUM_MAPPING, EVM_CHAINS_NATIVE_TOKEN_MAP } from '../constants/server';
 import { getPortfolioModel } from '../core/portfolio';
 import store, { PORTFOLIO_EMPTY, PORTFOLIO_NOT_EMPTY, setPortfolioStore } from '../store';
 import { get } from './fetch';
+
+export function getNativeTokenAddressForHexChainId(chainId: string) {
+  const enumName = CHAIN_ID_HEX_TO_ENUM_MAPPING.get(chainId);
+  if (enumName == undefined)
+    return '';
+  const nativeContractAddress = EVM_CHAINS_NATIVE_TOKEN_MAP.get(enumName);
+  if(nativeContractAddress == undefined)
+    return '';
+  return nativeContractAddress;
+}
 
 export const fetchTokenData = async (address: any) => {
 

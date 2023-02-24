@@ -292,3 +292,16 @@ export const EVM_CHAINS_NATIVE_TOKEN_MAP = new Map([
   ['FANTOM', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'],
   ['EVMOS', '0x93581991f68dbae1ea105233b67f7fa0d6bdee7b'], // representation didnt work 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee so used ethereum address
 ]);
+
+export const SUPPORTED_CHAINID_LIST_HEX = ['0x1', '0x89', '0x38', '0xa86a', '0xfa', '0x2329', '0xa4b1', '0xa'];
+
+export const CHAIN_ID_HEX_TO_ENUM_MAPPING = new Map([
+  ['0x1', ChainBackendNames.ETH],
+  ['0x89', ChainBackendNames.POLYGON],
+  ['0x38', ChainBackendNames.BSC],
+  ['0xa86a', ChainBackendNames.AVALANCHE],
+  ['0xfa', ChainBackendNames.FANTOM],
+  ['0x2329', ChainBackendNames.EVMOS],
+  ['0xa4b1', ChainBackendNames.ARBITRUM],
+  ['0xa', ChainBackendNames.OPTIMISM],
+]);

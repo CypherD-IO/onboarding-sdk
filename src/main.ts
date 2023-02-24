@@ -1,9 +1,10 @@
 import store from "./store";
-import { fetchRequiredTokenDetails, fetchTokenData, hasSufficientBalance } from "./utils/portfolio";
+import { fetchRequiredTokenDetails, fetchTokenData, hasSufficientBalance, getNativeTokenAddressForHexChainId } from "./utils/portfolio";
 import _ from "lodash";
 import { noBalanceScript } from './scriptContents';
 import { noBalanceCSS } from "./cssContents";
 import { noBalanceHTML } from "./htmlContents";
+import {SUPPORTED_CHAINID_LIST_HEX} from "./constants/server";
 // import styles from "./cssContents/style.module.css";
 
 declare let globalThis : any;
@@ -16,6 +17,17 @@ export const Cypher = async (address: string, fromChainId: string, fromTokenCont
   console.log(greet('World'))
   await delayMillis(1000)
   console.log('done')
+
+  //chainId is a required field
+  if(! SUPPORTED_CHAINID_LIST_HEX.includes(fromChainId)){
+    console.log(fromChainId + "not supported");
+  return;
+  }
+
+  //intialize fromTokenContractAddress for native token
+  if(fromTokenContractAddress === undefined || fromTokenContractAddress === ''){
+    fromTokenContractAddress = getNativeTokenAddressForHexChainId(fromChainId);
+  }
 
   globalThis.userDetails = {address, fromChainId, fromTokenContractAddress, fromTokenRequiredBalance};
 
