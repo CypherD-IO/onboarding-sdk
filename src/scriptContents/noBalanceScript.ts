@@ -1,4 +1,4 @@
-import { ARCH_HOST, ChainBackendNames, CONTRACT_DECIMAL_TO_ETHER_UNITS, EVM_CHAINS_NATIVE_TOKEN_MAP } from "../constants/server";
+import { ARCH_HOST, ChainBackendNames } from "../constants/server";
 import { bridgeInputHTML, bridgeSummaryHTML, bridgeSwitchHTML, noBalanceHTML } from "../htmlContents";
 import { onGetQuote } from "../utils/bridge";
 

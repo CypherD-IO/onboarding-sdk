@@ -65,30 +65,8 @@ export const noBalanceCSS = `
   justify-content: space-between;
   align-items: center;
   margin: auto;
-  padding: 20px;
   width: 30%;
-  height: 50%;
   background-color: #fefefe;
-}
-
-#bp-back-close-button-flex-box {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 100%;
-}
-
-#bp-amount-input-flex-box {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-}
-
-#bp-max-button {
-  width: 80px;
-  text-align: center;
 }
 
 #bp-amount-input {
@@ -97,12 +75,7 @@ export const noBalanceCSS = `
   justify-content: center;
   text-align: center;
   align-items: stretch;
-  width: 120px;
-}
-
-#bp-switch-button {
-  width: 80px;
-  text-align: center;
+  width: 250px;
 }
 
 #bp-token-value-flex-box {
@@ -112,19 +85,11 @@ export const noBalanceCSS = `
   align-items: center;
 }
 
-#bp-balance-flex-box {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: 200px;
-  height: 50px;
-}
 
 #bp-balance-detail {
   display: flex;
   flex-direction: column;
   height: 100%;
-  width: 150;
 }
 
 #bp-balance-detail-usd {
@@ -143,13 +108,6 @@ export const noBalanceCSS = `
   align-items: center;
 }
 
-#bp-amount-value {
-  border: none;
-  background-color: white;
-  font-size: 44px;
-  text-align: center;
-  outline: none;
-}
 
 #bp-switch-container {
   display: flex;
