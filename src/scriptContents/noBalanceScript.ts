@@ -462,7 +462,7 @@ export const noBalanceScript = () => {
             fromTokenLabel: globalThis.exchangingTokenDetail.name,
             toTokenLabel: globalThis.requiredTokenDetail.name,
             fromTokenSymbol: globalThis.exchangingTokenDetail.chainDetails.symbol,
-            toTokenSymbol: globalThis.requiredTokenDetail.symbol,
+            toTokenSymbol: globalThis.requiredTokenDetail.symbol.toUpperCase(),
             fromTokenCoingeckoId: globalThis.exchangingTokenDetail.coinGeckoId,
             toTokenCoingeckoId: globalThis.requiredTokenDetail.coinGeckoId,
           };
