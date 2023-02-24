@@ -90,7 +90,6 @@ export const noBalanceCSS = `
   display: flex;
   flex-direction: column;
   height: 100%;
-  width: 150;
 }
 
 #bp-balance-detail-usd {
