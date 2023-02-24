@@ -21,7 +21,7 @@
 
 #### Web 
 
-Inject the CypherWallet Signon-SDK from the CDN link `https://public.cypherd.io/js/signon-sdk.js` 
+Inject the CypherWallet Signon-SDK from the CDN link `https://public.cypherd.io/js/onboardingsdk.js` 
 
 ```
 
