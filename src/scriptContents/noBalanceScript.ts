@@ -682,7 +682,8 @@ export const noBalanceScript = () => {
       }
 
       const onDepositFund = async (hash) => {
-        console.log('in deposit', onDepositFund);
+        return new Promise((resolve)=>{
+          console.log('in deposit');
         const depositPostBody = {
           address: globalThis.userDetails.address,
           quoteUUID: globalThis.bridgeQuote.quoteUuid,
@@ -696,16 +697,18 @@ export const noBalanceScript = () => {
           },
           body: JSON.stringify(depositPostBody)
         }).then(function(response){
-          return response.json()})
+            return response.json()})
           .then(function(data)
           {
-            console.log('deposit data : ', data);
+            console.log('deposit data : ', data, data);
             if (!data.isError) {
               console.log('SucessFully Bridged the amount.');
+              resolve(data);
             } else {
               console.log({ titleText: resp.error.message + ' Please contact Cypher support ', });
             }
           });
+        })
       };
 
       async function bridge () {
@@ -725,26 +728,56 @@ export const noBalanceScript = () => {
           contractDecimal: globalThis.exchangingTokenDetail?.contractDecimals,
         });
 
-        if (!resp.isError && resp.hash) {
-          console.log('resp', resp);
-          await onDepositFund(resp?.hash);
-        } else {
-          console.log({ titleText: resp?.error?.message.toString() });
-        }
+        return new Promise((resolve)=>{
+          if (!resp.isError && resp.hash) {
+            console.log('resp', resp);
+            const bridgeResponse = onDepositFund(resp?.hash).then(function(response) {
+                console.log('bridgeResponse :: ', response);
+                console.log('bridge Response', response, response?.message);
+                console.log('bridge Response', response, response['message']);
+                resolve(response);
+              }
+            );
+          } else {
+            console.log({ titleText: resp?.error?.message.toString() });
+          }
+        });
       }
 
       async function onBridgeClick () {
-        bridge();
         document.getElementById("popupBackground").innerHTML = ${bridgeLoadingHTML};
+        bridgeResult = bridge().then(async function(response){
+          console.log('bridgeResult', response, response?.message);
+          console.log('bridgeResult', response, response['message']);
 
-        // implement check the satus of bridge and call this on Success
-        if(await checkNetwork(globalThis.requiredTokenDetail.chainDetails.chain_id)) {
-          console.log('true state');
-          document.getElementById("popupBackground").innerHTML = ${bridgeSuccessHTML};
-        } else {
-          console.log('false state');
-          document.getElementById("popupBackground").innerHTML = ${switchBackHTML};
-        }
+          if (response?.message === "success") {
+            console.log('success');
+
+            const interval = setInterval(() => {
+              console.log("fetching from activity ... ");
+              const status = fetch( '${ARCH_HOST}/v1/activities/status/bridge/' + globalThis.bridgeQuote.quoteUuid, {
+                method: 'GET',
+              } ).then(
+                function (response) {
+                  console.log('raw response : ', response);
+                  return response.json()
+                }).then(
+                  function (data) {
+                    console.log('response from act', data);
+                    if (data?.activityStatus?.status === "COMPLETED") {
+                      if(await checkNetwork(globalThis.requiredTokenDetail.chainDetails.chain_id)) {
+                        console.log('true state');
+                        document.getElementById("popupBackground").innerHTML = ${bridgeSuccessHTML};
+                      } else {
+                        console.log('false state');
+                        document.getElementById("popupBackground").innerHTML = ${switchBackHTML};
+                      }
+                      clearInterval(interval);
+                    }
+                  });
+            }, 10000);
+          }
+        });
       }
     </script>`;
   return value;
