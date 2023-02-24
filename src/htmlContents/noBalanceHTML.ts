@@ -59,7 +59,7 @@ export const noBalanceHTML = (totalHoldings: any) => {
         <img src="https://public.cypherd.io/icons/logos/${_.get(globalThis.requiredTokenDetail, ['chainDetails', 'backendName']).toLowerCase()}.png" alt="${_.get(globalThis.requiredTokenDetail, ['chainDetails', 'backendName']).toLowerCase()} logo" width="52" height="52">
         <img src="${_.get(globalThis.requiredTokenDetail, ['logoUrl'])}" alt="Arbitrum logo" width="52" height="52">
       </div>
-      <div id=cyd-tokenList-header class='py-[20]'>
+      <div id=cyd-tokenList-header class='my-[20px]'>
         <h2 class='text-[23px] font-semibold'>You need ${_.get(globalThis.requiredTokenDetail, ['name'])} in ${_.get(globalThis.requiredTokenDetail, ['chainDetails', 'backendName'])} to use this dApp</h2>
         <p class='text-[16px] font-semibold'>You can exchange with below tokens in your wallet  </p>
       </div>

@@ -3,9 +3,9 @@ export const noBalanceCSS = `
   display: block;
   position: fixed;
   z-index: 999;
-  padding-top: 70;
+  margin-top: 25px;
   left: 0;
-  top: 20;
+  top: 0;
   width: 100%;
   height: 100%;
   overflow: auto;
@@ -21,7 +21,7 @@ export const noBalanceCSS = `
   align-items: center;
   margin: auto;
   width: 60%;
-  height: 95%;
+  height: 92%;
   border-radius: 30px
 }
 
