@@ -762,7 +762,7 @@ export const noBalanceScript = () => {
                   console.log('raw response : ', response);
                   return response.json()
                 }).then(
-                  function (data) {
+                  async function (data) {
                     console.log('response from act', data);
                     if (data?.activityStatus?.status === "COMPLETED") {
                       if(await checkNetwork(globalThis.requiredTokenDetail.chainDetails.chain_id)) {
