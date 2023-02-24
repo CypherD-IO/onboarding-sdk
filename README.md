@@ -29,6 +29,8 @@ window.Cypher('0x1f6388a695f82aa4e4cee4b79ef63d4f8758fdc2', '0xa4b1', '', 65);
 
 ```
 
+Detailed documentation available at https://developer.cypherwallet.io/
+
 ### Npm
 
 1. Install the singon-sdk 
