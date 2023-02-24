@@ -2,6 +2,10 @@ import _ from "lodash";
 
 declare let globalThis: any;
 
+function __capitalize(str: string){
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 export const noBalanceHTML = (totalHoldings: any) => {
 
   // function bridgePopup(index: number) {
@@ -60,7 +64,7 @@ export const noBalanceHTML = (totalHoldings: any) => {
         <img src="${_.get(globalThis.requiredTokenDetail, ['logoUrl'])}" alt="Arbitrum logo" width="52" height="52">
       </div>
       <div id=cyd-tokenList-header class='my-[20px]'>
-        <h2 class='text-[23px] font-semibold'>You need ${_.get(globalThis.requiredTokenDetail, ['name'])} in ${_.get(globalThis.requiredTokenDetail, ['chainDetails', 'backendName'])} to use this dApp</h2>
+        <h2 class='text-[23px] font-semibold'>You need ${_.get(globalThis.requiredTokenDetail, ['symbol']).toUpperCase()} in ${__capitalize(_.get(globalThis.requiredTokenDetail, ['chainDetails', 'backendName']).toLowerCase())} to use this dApp</h2>
         <p class='text-[16px] font-semibold'>You can exchange with below tokens in your wallet  </p>
       </div>
       <div id="tokens-available-flex-box">
