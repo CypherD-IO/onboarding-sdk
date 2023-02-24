@@ -59,7 +59,7 @@ export const noBalanceHTML = (totalHoldings: any) => {
         <img src="https://public.cypherd.io/icons/logos/${_.get(globalThis.requiredTokenDetail, ['chainDetails', 'backendName']).toLowerCase()}.png" alt="${_.get(globalThis.requiredTokenDetail, ['chainDetails', 'backendName']).toLowerCase()} logo" width="52" height="52">
         <img src="${_.get(globalThis.requiredTokenDetail, ['logoUrl'])}" alt="Arbitrum logo" width="52" height="52">
       </div>
-      <div id=cyd-tokenList-header class='py-[20]'>
+      <div id=cyd-tokenList-header class='my-[20px]'>
         <h2 class='text-[23px] font-semibold'>You need ${_.get(globalThis.requiredTokenDetail, ['name'])} in ${_.get(globalThis.requiredTokenDetail, ['chainDetails', 'backendName'])} to use this dApp</h2>
         <p class='text-[16px] font-semibold'>You can exchange with below tokens in your wallet  </p>
       </div>
@@ -69,9 +69,9 @@ export const noBalanceHTML = (totalHoldings: any) => {
         </table>
       </div>
       <div class='flex flex-row justify-center w-[100%] py-[25px] bg-[#3C4143] rounded-b-[30px] mt-[15px]'>
-        <div class='flex flex-row items-center text-[14px] text-white'>
+        <a class='flex flex-row items-center text-[14px] text-white' href="https://www.cypherwallet.io/" target="_blank">
           Powered by  <img src="https://public.cypherd.io/icons/logos/cypher.png" class="ml-[10px] mr-[3px]" alt="Arbitrum logo" width="18" height="18" resizeMode="contain"> Cypher
-        </div>
+        </a>
       </div>
     </div>
   `;

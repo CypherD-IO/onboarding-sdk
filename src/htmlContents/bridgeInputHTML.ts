@@ -1,7 +1,7 @@
-export const bridgeInputHTML = `'<div class="rounded-2xl z-50" id="bridge-popup-css">'+
-  '<div class=" !bg-[#F5F5F5] rounded-t-2xl p-5 flex flex-col justify-center items-center w-full h-full">'+
-    '<div class="flex justify-between w-full ">'+
-      '<img onclick="backToNoBalanceHTML()" src="https://public.cypherd.io/icons/back_arrow.svg" class="cursor-pointer"/>'+
+// '<img onclick="backToNoBalanceHTML()" src="https://public.cypherd.io/icons/back_arrow.svg" class="cursor-pointer"/>'+
+export const bridgeInputHTML = `'<div class="rounded-[30px] z-50" id="bridge-popup-css">'+
+  '<div class=" !bg-[#F5F5F5] rounded-t-[30px] p-5 flex flex-col justify-center items-center w-full h-full">'+
+    '<div class="flex justify-end w-full mt-[5px] ">'+
       '<img onclick="closePopup()" src="https://public.cypherd.io/icons/close_icon.svg" class="cursor-pointer">'+
     '</div>'+
     '<h2 class="font-semibold text-[28px] my-10 text-[#434343]">Enter Token Amount</h2>'+
@@ -21,6 +21,9 @@ export const bridgeInputHTML = `'<div class="rounded-2xl z-50" id="bridge-popup-
       '<p class="mr-2 text-[18px] text-black" id="bp-token-value">00</p>'+
       '<p class="text-[18px] text-black">' + tokenDetail.symbol + '</p>'+
     '</div>'+
+    '<div class="flex my-[3]">'+
+      '<p class="text-[14px] text-black">Min amount: $10</p>'+
+    '</div>'+
     '<div class="bg-white border border-[#E4E4E4] p-2 flex rounded-2xl w-3/4 mt-6">'+
       '<img src="' + tokenDetail.logoUrl + '" alt="' + tokenDetail.logoUrl + '"  class="h-[55px] w-[55px] rounded-lg">'+
       '<div class="w-full ml-3" id="bp-balance-detail">'+
@@ -36,7 +39,7 @@ export const bridgeInputHTML = `'<div class="rounded-2xl z-50" id="bridge-popup-
     '</div>'+
   '</div>'+
 
-  '<div id="bp-submit-button-container" class="bg-white py-10 w-full flex items-center justify-center rounded-b-2xl">'+
-    '<button class="bg-[#2081E2] w-2/3 p-4 rounded-lg text-[#D2E6F9] text-[18px] font-semibold" onclick="bridgeSubmit(' + tokenDetail.chainDetails.chain_id + ', ' + "'" +  tokenDetail.chainDetails.backendName + "'" + ')">Submit</button>'+
+  '<div id="bp-submit-button-container" class="bg-white py-10 w-full flex items-center justify-center rounded-b-[30px]">'+
+    '<button class="bg-[#2081E2] h-[45px] w-[60%] rounded-lg text-white text-[16px] font-semibold" onclick="bridgeSubmit(' + tokenDetail.chainDetails.chain_id + ', ' + "'" +  tokenDetail.chainDetails.backendName + "'" + ')">Submit</button>'+
   '</div>'+
 '</div>'`;

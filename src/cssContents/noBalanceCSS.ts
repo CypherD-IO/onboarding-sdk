@@ -2,13 +2,14 @@ export const noBalanceCSS = `
 #popupBackground {
   display: block;
   position: fixed;
-  z-index: 1;
-  padding-top: 70;
+  z-index: 999;
+  margin-top: 25px;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
   overflow: auto;
+  color: black;
   background-color: rgb(0,0,0);
   background-color: rgba(0,0,0,0.4);
 }
@@ -20,7 +21,7 @@ export const noBalanceCSS = `
   align-items: center;
   margin: auto;
   width: 60%;
-  height: 95%;
+  height: 92%;
   border-radius: 30px
 }
 
