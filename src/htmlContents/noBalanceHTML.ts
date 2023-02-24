@@ -68,8 +68,10 @@ export const noBalanceHTML = (totalHoldings: any) => {
           ${tokensAvailableList}
         </table>
       </div>
-      <div class='flex flex-row justify-center w-[100%] py-[15px] bg-[#3C4143] rounded-b-[30px] mt-[15px]'>
-        <button onclick="ConnectMetaMask()" class='text-[14px] py-[12px] px-[15px] rounded-[10px] border-[1px] bg-white rounded-[30px]'>Connect Wallet</button>
+      <div class='flex flex-row justify-center w-[100%] py-[25px] bg-[#3C4143] rounded-b-[30px] mt-[15px]'>
+        <div class='flex flex-row items-center text-[14px] text-white'>
+          Powered by  <img src="https://public.cypherd.io/icons/logos/cypher.png" class="ml-[10px] mr-[3px]" alt="Arbitrum logo" width="18" height="18" resizeMode="contain"> Cypher
+        </div>
       </div>
     </div>
   `;

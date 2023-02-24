@@ -99,7 +99,7 @@ tr:nth-child(odd) {
 }
 
 .blue-button{
-  background-color: #1C85EA;
+  background-color: #2081E2;
   border: none;
   color: white;
   height: 35px;
@@ -189,15 +189,6 @@ tr:nth-child(odd) {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  background-color: #cccccc;
   width: 100%;
-}
-
-.exchange-row {
-  background-color: #cccccc;
-}
-
-.amount-row {
-  background-color: #E5E8E8;
 }
 `;
