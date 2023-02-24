@@ -1,4 +1,4 @@
-export const bridgeSummaryHTML = `'<div class="flex flex-col justify-evenly items-center w-[30%] h-[45%] m-auto bg-[#fefefe] rounded-[30px]">'+
+export const bridgeSummaryHTML = `'<div class="flex flex-col justify-evenly items-center w-[33%] h-[45%] m-auto bg-[#fefefe] rounded-[30px]">'+
   '<div class="flex justify-end w-full px-[20px] ">'+
     '<img onclick="closePopup()" src="https://public.cypherd.io/icons/close_icon.svg" class="cursor-pointer">'+
   '</div>'+

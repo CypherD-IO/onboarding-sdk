@@ -1,9 +1,10 @@
 export const noBalanceCSS = `
 #popupBackground {
-  display: block;
+  display: flex;
   position: fixed;
+  justify-content: center;
+  align-items: center;
   z-index: 999;
-  margin-top: 25px;
   left: 0;
   top: 0;
   width: 100%;
