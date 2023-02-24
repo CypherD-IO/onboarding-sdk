@@ -69,9 +69,9 @@ export const noBalanceHTML = (totalHoldings: any) => {
         </table>
       </div>
       <div class='flex flex-row justify-center w-[100%] py-[25px] bg-[#3C4143] rounded-b-[30px] mt-[15px]'>
-        <div class='flex flex-row items-center text-[14px] text-white'>
+        <a class='flex flex-row items-center text-[14px] text-white' href="https://www.cypherwallet.io/" target="_blank">
           Powered by  <img src="https://public.cypherd.io/icons/logos/cypher.png" class="ml-[10px] mr-[3px]" alt="Arbitrum logo" width="18" height="18" resizeMode="contain"> Cypher
-        </div>
+        </a>
       </div>
     </div>
   `;

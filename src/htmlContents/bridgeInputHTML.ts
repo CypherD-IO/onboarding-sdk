@@ -1,7 +1,7 @@
+// '<img onclick="backToNoBalanceHTML()" src="https://public.cypherd.io/icons/back_arrow.svg" class="cursor-pointer"/>'+
 export const bridgeInputHTML = `'<div class="rounded-2xl z-50" id="bridge-popup-css">'+
   '<div class=" !bg-[#F5F5F5] rounded-t-2xl p-5 flex flex-col justify-center items-center w-full h-full">'+
-    '<div class="flex justify-between w-full ">'+
-      '<img onclick="backToNoBalanceHTML()" src="https://public.cypherd.io/icons/back_arrow.svg" class="cursor-pointer"/>'+
+    '<div class="flex justify-end w-full ">'+
       '<img onclick="closePopup()" src="https://public.cypherd.io/icons/close_icon.svg" class="cursor-pointer">'+
     '</div>'+
     '<h2 class="font-semibold text-[28px] my-10 text-[#434343]">Enter Token Amount</h2>'+
@@ -37,6 +37,6 @@ export const bridgeInputHTML = `'<div class="rounded-2xl z-50" id="bridge-popup-
   '</div>'+
 
   '<div id="bp-submit-button-container" class="bg-white py-10 w-full flex items-center justify-center rounded-b-2xl">'+
-    '<button class="bg-[#2081E2] w-2/3 p-4 rounded-lg text-[#D2E6F9] text-[18px] font-semibold" onclick="bridgeSubmit(' + tokenDetail.chainDetails.chain_id + ', ' + "'" +  tokenDetail.chainDetails.backendName + "'" + ')">Submit</button>'+
+    '<button class="bg-[#2081E2] h-[45px] w-[60%] rounded-lg text-white text-[16px] font-semibold" onclick="bridgeSubmit(' + tokenDetail.chainDetails.chain_id + ', ' + "'" +  tokenDetail.chainDetails.backendName + "'" + ')">Submit</button>'+
   '</div>'+
 '</div>'`;

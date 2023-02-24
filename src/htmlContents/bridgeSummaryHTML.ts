@@ -1,6 +1,5 @@
 export const bridgeSummaryHTML = `'<div class="flex flex-col justify-evenly items-center w-[30%] h-[45%] m-auto bg-[#fefefe] rounded-[30px]">'+
-  '<div class="flex justify-between w-full px-[20px] ">'+
-    '<img onclick="backToNoBalanceHTML()" src="https://public.cypherd.io/icons/back_arrow.svg" class="cursor-pointer"/>'+
+  '<div class="flex justify-end w-full px-[20px] ">'+
     '<img onclick="closePopup()" src="https://public.cypherd.io/icons/close_icon.svg" class="cursor-pointer">'+
   '</div>'+
   '<div id="bp-heading">'+
@@ -41,10 +40,12 @@ export const bridgeSummaryHTML = `'<div class="flex flex-col justify-evenly item
     '</div>'+
   '</div>'+
   '<div class=" flex flex-row justify-center items-center w-[100%]">'+
-    '<button id="blue-button" class="bg-[#2081E2] border-none text-white h-[40px] w-[60%] rounded-[3px]" onclick="bridge()">Exchange</button>'+
+    '<button id="blue-button" class="bg-[#2081E2] text-[16px] font-semibold border-none text-white h-[45px] w-[60%] rounded-[3px]" onclick="bridge()">Exchange</button>'+
   '</div>'+
 '</div>'`;
 
+
+// '<img onclick="backToNoBalanceHTML()" src="https://public.cypherd.io/icons/back_arrow.svg" class="cursor-pointer"/>'+
 // export const bridgeSummaryHTML = `<div id="bridge-popup-css">
 //   <div id="bp-back-close-button-flex-box">
 //     <button onclick="backToNoBalanceHTML()">Back Button</button>

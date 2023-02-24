@@ -1,7 +1,7 @@
+// '<img onclick="backToNoBalanceHTML()" src="https://public.cypherd.io/icons/back_arrow.svg" class="cursor-pointer"/>'+
 export const bridgeSwitchHTML =`'<div class="rounded-2xl z-50" id="bridge-popup-css">'+
   '<div class=" !bg-[#F5F5F5] rounded-t-2xl p-5 flex flex-col justify-center items-center w-full h-full">'+
     '<div class="flex justify-between w-full ">'+
-      '<img onclick="backToNoBalanceHTML()" src="https://public.cypherd.io/icons/back_arrow.svg" class="cursor-pointer"/>'+
       '<img onclick="closePopup()" src="https://public.cypherd.io/icons/close_icon.svg" class="cursor-pointer">'+
     '</div>'+
     '<div id="bp-heading">'+
@@ -25,6 +25,6 @@ export const bridgeSwitchHTML =`'<div class="rounded-2xl z-50" id="bridge-popup-
   '</div>'+
 
   '<div class="bg-white py-10 w-full flex items-center justify-center rounded-b-2xl">'+
-    '<button class="bg-[#2081E2] w-2/3 p-4 rounded-lg text-[#D2E6F9] text-[18px] font-semibold" onclick="navigateAfterSwitch(' + "'0x" + chainId.toString(16) + "'" + ', ' + "'" +  chainName + "'" + ')">Switch</button>'+
+    '<button class="bg-[#2081E2] w-2/3 p-4 rounded-[3px] text-[#D2E6F9] text-[16px] font-semibold" onclick="navigateAfterSwitch(' + "'0x" + chainId.toString(16) + "'" + ', ' + "'" +  chainName + "'" + ')">Switch</button>'+
   '</div>'+
 '</div>'`;
