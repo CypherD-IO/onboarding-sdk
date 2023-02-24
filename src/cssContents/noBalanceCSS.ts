@@ -3,7 +3,7 @@ export const noBalanceCSS = `
   display: block;
   position: fixed;
   z-index: 1;
-  padding-top: 100px;
+  padding-top: 70;
   left: 0;
   top: 0;
   width: 100%;
@@ -17,46 +17,96 @@ export const noBalanceCSS = `
   background-color: #fefefe;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
   margin: auto;
-  padding: 20px;
-  width: 80%;
-  height: 80%;
+  width: 60%;
+  height: 95%;
+  border-radius: 30px
 }
 
 #icon-flex-box {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  width: 120px;
+  margin-top: 30px;
 }
 
 #tokens-available-flex-box {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   width: 80%;
-  height: 30%;
+  overflow: scroll;
+  border: 1px solid #f2f2f2;
+  border-radius: 10px;
+}
+
+#cyd-tokenList-header{
+  text-align: center
 }
 
 #token-detail-1 {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: space-between;
+  align-items: center;
   height: 40px;
-  width: 100%;
+  padding: 10px;
 }
 
 #token-detail-0 {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: space-between;
+  align-items: center;
   height: 40px;
-  width: 100%;
-  background-color: #cccccc;
+  background-color: #f5f5f5;
+  padding: 10px;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+tr{
+  height: 75px;
+}
+
+td{
+  padding-left: 10px;
+}
+
+tr:nth-child(odd) {
+  background-color: #f5f5f5;
+}
+
+#cyd-chain{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+#cyd-token{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+#td-chain-icon {
+  margin-right: 10px
+}
+
+#td-token-icon {
+  margin-right: 10px
+}
+
+.blue-button{
+  background-color: #2081E2;
+  border: none;
+  color: white;
+  height: 35px;
+  width: 90px;
+  border-radius: 3px;
+  float: right;
+  margin-right: 10px
 }
 
 #bridge-popup-css {
@@ -139,15 +189,6 @@ export const noBalanceCSS = `
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  background-color: #cccccc;
   width: 100%;
-}
-
-.exchange-row {
-  background-color: #cccccc;
-}
-
-.amount-row {
-  background-color: #E5E8E8;
 }
 `;
