@@ -2,7 +2,8 @@ import _ from 'lodash';
 import { ARCH_HOST,
   CHAIN_ID_HEX_TO_ENUM_MAPPING,
   EVM_CHAINS_NATIVE_TOKEN_MAP,
-  CHAIN_ID_HEX_TO_CDN_IMAGE_CHAIN_NAME } from '../constants/server';
+  CHAIN_ID_HEX_TO_CDN_IMAGE_CHAIN_NAME, 
+  CHAIN_ID_HEX_TO_NATIVE_TOKEN_NAME} from '../constants/server';
 import { getPortfolioModel } from '../core/portfolio';
 import store, { PORTFOLIO_EMPTY, PORTFOLIO_NOT_EMPTY, setPortfolioStore } from '../store';
 import { get } from './fetch';
@@ -74,13 +75,20 @@ export const fetchRequiredTokenDetails = async (chainId: string, tokenContractAd
     if (tokenRequired !== undefined) {
       return tokenRequired;
     } else {
+
+      //TBD Get TokenDetails for Non Native Tokens from CoinGecko
+
       //Incomplete Implementation with only the image and the tokenContractAdress of the token
-      return {logoUrl: `${getImageForToken(chainId, tokenContractAddress)}`, contractAddress: `${tokenContractAddress}`,
+      const tokenName = (Array.from(EVM_CHAINS_NATIVE_TOKEN_MAP.values()).includes(tokenContractAddress.toLowerCase())) ?
+      CHAIN_ID_HEX_TO_NATIVE_TOKEN_NAME.get(chainId): '';
+      return {name: `${tokenName}`, logoUrl: `${getImageForToken(chainId, tokenContractAddress)}`, contractAddress: `${tokenContractAddress}`,
       chainDetails: {backendName: `${CHAIN_ID_HEX_TO_ENUM_MAPPING.get(chainId)}`}};
     }
   } else {
     //Incomplete Implementation with only the image and the tokenContractAdress of the token
-    return {logoUrl: `${getImageForToken(chainId, tokenContractAddress)}`, contractAddress: `${tokenContractAddress}`,
+    const tokenName = (Array.from(EVM_CHAINS_NATIVE_TOKEN_MAP.values()).includes(tokenContractAddress.toLowerCase())) ?
+    CHAIN_ID_HEX_TO_NATIVE_TOKEN_NAME.get(chainId): '';
+    return {name: `${tokenName}`, logoUrl: `${getImageForToken(chainId, tokenContractAddress)}`, contractAddress: `${tokenContractAddress}`,
       chainDetails: {backendName: `${CHAIN_ID_HEX_TO_ENUM_MAPPING.get(chainId)}`}};
   }
 }

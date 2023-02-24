@@ -316,3 +316,14 @@ export const CHAIN_ID_HEX_TO_CDN_IMAGE_CHAIN_NAME = new Map([
   ['0xa4b1', 'arbitrum'],
   ['0xa', 'optimism'],
 ]);
+
+export const CHAIN_ID_HEX_TO_NATIVE_TOKEN_NAME = new Map([
+  ['0x1', 'ETH'],
+  ['0x89', 'MATIC'],
+  ['0x38', 'BnB'],
+  ['0xa86a', 'AVAX'],
+  ['0xfa', 'FTM'],
+  ['0x2329', 'EVMOS'],
+  ['0xa4b1', 'Arbitrum ETH'],
+  ['0xa', 'Optimism ETH'],
+]);
