@@ -3,7 +3,7 @@ import { fetchRequiredTokenDetails, fetchTokenData, hasSufficientBalance, getNat
 import _ from "lodash";
 import { noBalanceScript } from './scriptContents';
 import { noBalanceCSS } from "./cssContents";
-import { noBalanceHTML } from "./htmlContents";
+import { bridgeLoadingHTML, bridgeSuccessHTML, noBalanceHTML } from "./htmlContents";
 import {SUPPORTED_CHAINID_LIST_HEX} from "./constants/server";
 // import styles from "./cssContents/style.module.css";
 
@@ -55,6 +55,7 @@ export const Cypher = async (address: string, fromChainId: string, fromTokenCont
   const popupBackground = document.createElement('div');
   popupBackground.id = 'popupBackground';
   // popupBackground.className = styles.sedhu;
+  // popupBackground.innerHTML = bridgeSuccessHTML;
   const fetchBalances = await fetchTokenData(address);
   console.log('balances logged', fetchBalances);
   const tokenHoldings = store.getState().portfolioStore;
