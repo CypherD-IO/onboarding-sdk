@@ -4,7 +4,7 @@ export const noBalanceCSS = `
   position: fixed;
   justify-content: center;
   align-items: center;
-  z-index: 999;
+  z-index: 2147483647;
   left: 0;
   top: 0;
   width: 100%;
@@ -13,6 +13,7 @@ export const noBalanceCSS = `
   color: black;
   background-color: rgb(0,0,0);
   background-color: rgba(0,0,0,0.4);
+  backdrop-filter: blur(3px);
 }
 
 #popup {
@@ -23,7 +24,7 @@ export const noBalanceCSS = `
   margin: auto;
   width: 60%;
   height: 92%;
-  border-radius: 30px
+  border-radius: 30px;
 }
 
 #icon-flex-box {
