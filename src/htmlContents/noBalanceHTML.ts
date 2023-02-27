@@ -8,32 +8,13 @@ function __capitalize(str: string){
 
 export const noBalanceHTML = (totalHoldings: any) => {
 
-  // function bridgePopup(index: number) {
-  //   console.log('pressed ', _.get(totalHoldings[index], ['name']));
-  // }
-
-  // <div id="token-detail-${index%2}">
-      // <div id="cyd-chain">
-      //   <img id="td-chain-icon" src="https://public.cypherd.io/icons/logos/${_.get(tokenDetail, ['chainDetails', 'backendName']).toLowerCase()}.png" alt="${_.get(tokenDetail, ['chainDetails', 'backendName']).toLowerCase()} logo" width="20" height="20"/>
-      //   <p>${_.get(tokenDetail, ['chainDetails', 'backendName'])}</p>
-      // </div>
-      // <div id="cyd-token">
-      //   <img id="td-token-icon" src="${_.get(tokenDetail, ['logoUrl'])}" alt="${_.get(tokenDetail, ['name'])} logo" width="20" height="20">
-      //   <p>${_.get(tokenDetail, ['name'])}</p>
-      // </div>
-  //     <p>|</p>
-  //     <p id="td-usd-value">${_.get(tokenDetail, ['actualBalance']) * _.get(tokenDetail, ['price'])}</p>
-  //     <p id="td-token-balance">${_.get(tokenDetail, ['actualBalance'])}</p>
-  //     <p>|</p>
-  //     <button class="blue-button" onclick='bridgePopup(${JSON.stringify(tokenDetail)})'>Exchange</button>
-  //   </div>
 
   const tokensAvailableList = totalHoldings.map((tokenDetail: any, index: number) => `
     <tr>
       <td>
         <div id="cyd-chain">
-          <img id="td-chain-icon" src="https://public.cypherd.io/icons/logos/${_.get(tokenDetail, ['chainDetails', 'backendName']).toLowerCase()}.png" alt="${_.get(tokenDetail, ['chainDetails', 'backendName']).toLowerCase()} logo" width="20" height="20"/>
-          <p class='text-[14px]'>${_.get(tokenDetail, ['chainDetails', 'backendName'])}</p>
+          <img id="td-chain-icon" src="https://public.cypherd.io/icons/logos/${_.get(tokenDetail, ['chainDetails', 'backendName'], '').toLowerCase()}.png" alt="${_.get(tokenDetail, ['chainDetails', 'backendName'], '').toLowerCase()} logo" width="20" height="20"/>
+          <p class='text-[14px]'>${_.get(tokenDetail, ['chainDetails', 'backendName'], '')}</p>
         </div>
       </td>
       <td>
@@ -49,13 +30,10 @@ export const noBalanceHTML = (totalHoldings: any) => {
         <p id="td-token-balance" class='text-[14px]'>${Number(_.get(tokenDetail, ['actualBalance'])).toFixed(5)}</p>
       </td>
       <td>
-        <button class="blue-button text-[14px]" onclick='bridgePopup(${JSON.stringify(tokenDetail)})'>Exchange</button>
+        <button class="blue-button text-[14px]" onclick='bridgePopup(${JSON.stringify(_.omit(tokenDetail, ['about']))})'>Exchange</button>
       </td>
     </tr>
   `).join(' ');
-
-  // <button class="blue-button" onclick="bridgePopup('${_.get(tokenDetail, ['name'])}', '${_.get(tokenDetail, ['contractAddress'])}', '${_.get(tokenDetail, ['actualBalance'])}', '${_.get(tokenDetail, ['price'])}', '${_.get(tokenDetail, ['symbol'])}', '${_.get(tokenDetail, ['logoUrl'])}', '${_.get(tokenDetail, ['chainDetails', 'backendName'])}', '${_.get(tokenDetail, ['chainDetails', 'chain_id'])}')">Exchange</button>
-  // <button class="blue-button" onclick='(function () {globalThis.exchangingTokenDetail = ${JSON.stringify(tokenDetail)}; bridgePopup("${_.get(tokenDetail, ['name'])}", "${_.get(tokenDetail, ['contractAddress'])}", "${_.get(tokenDetail, ['actualBalance'])}", "${_.get(tokenDetail, ['price'])}", "${_.get(tokenDetail, ['symbol'])}", "${_.get(tokenDetail, ['logoUrl'])}", "${_.get(tokenDetail, ['chainDetails', 'backendName'])}", "${_.get(tokenDetail, ['chainDetails', 'chain_id'])}")})()'>Exchange</button>
 
   const htmlValue = `
     <div id="popup">

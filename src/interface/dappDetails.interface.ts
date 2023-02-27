@@ -1,7 +1,8 @@
 export interface DappDetails{
   address: string;
-  fromChainId: string;
-  fromTokenContractAddress: string;
-  fromTokenRequiredBalance?: number;
+  targetChainIdHex: string;
+  requiredTokenContractAddress?: string;
+  requiredTokenBalance: number;
+  isTestnet?: boolean;
   callBack?: () => void;
 }

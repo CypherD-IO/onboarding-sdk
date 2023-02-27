@@ -27,7 +27,7 @@ export const noBalanceCSS = `
   align-items: center;
   margin: auto;
   width: 60%;
-  height: 92%;
+  height: auto;
   border-radius: 30px;
 }
 

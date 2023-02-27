@@ -1,5 +1,5 @@
 import { get } from 'lodash';
-import { CHAIN_ETH, CHAIN_POLYGON, CHAIN_BSC, CHAIN_AVALANCHE, CHAIN_FTM, CHAIN_ARBITRUM, CHAIN_OPTIMISM, CHAIN_EVMOS, CHAIN_COSMOS, CHAIN_JUNO, CHAIN_OSMOSIS, CHAIN_STARGAZE } from '../constants/server';
+import { CHAIN_ETH, CHAIN_POLYGON, CHAIN_BSC, CHAIN_AVALANCHE, CHAIN_FTM, CHAIN_ARBITRUM, CHAIN_OPTIMISM, CHAIN_EVMOS, CHAIN_COSMOS, CHAIN_JUNO, CHAIN_OSMOSIS, CHAIN_STARGAZE, CHAIN_ETH_GOERLI, CHAIN_POLYGON_MUMBAI } from '../constants/server';
 import { WalletHoldings, Holding, ChainHoldings } from '../interface';
 
 export function sortDesc(a: any, b: any) {
@@ -28,6 +28,8 @@ export const getPortfolioModel = (holdings: any) => {
   let junoHoldings;
   let stargazeHoldings;
   let osmosisHoldings;
+  let ethGoerliHoldings;
+  let polyonMumbaiHoldings;
 
   const totalHoldings: Holding[] = [];
   for (let i = 0; i < holdings.length; i++) {
@@ -52,6 +54,12 @@ export const getPortfolioModel = (holdings: any) => {
           price24h: holding.price24h,
         };
         switch (holdings[i]?.chain_id) {
+          case CHAIN_ETH_GOERLI.backendName:
+            tokenHolding.chainDetails = CHAIN_ETH_GOERLI;
+            break;
+          case CHAIN_POLYGON_MUMBAI.backendName:
+            tokenHolding.chainDetails = CHAIN_POLYGON_MUMBAI;
+            break;
           case CHAIN_ETH.backendName:
             tokenHolding.chainDetails = CHAIN_ETH;
             break;
@@ -113,6 +121,12 @@ export const getPortfolioModel = (holdings: any) => {
       case CHAIN_ETH.backendName:
         ethHoldings = chainHoldings;
         break;
+      case CHAIN_ETH_GOERLI.backendName:
+        ethGoerliHoldings = chainHoldings;
+      break;
+      case CHAIN_POLYGON_MUMBAI.backendName:
+        polyonMumbaiHoldings = chainHoldings;
+        break;
       case CHAIN_POLYGON.backendName:
         maticHoldings = chainHoldings;
         break;
@@ -167,6 +181,8 @@ export const getPortfolioModel = (holdings: any) => {
     osmosis: osmosisHoldings,
     juno: junoHoldings,
     stargaze: stargazeHoldings,
+    ethGoerli: ethGoerliHoldings,
+    polygonMumbai: polyonMumbaiHoldings,
   };
   return portfolio;
 };

@@ -16,5 +16,7 @@ export interface WalletHoldings {
   osmosis: ChainHoldings | undefined
   juno: ChainHoldings | undefined
   stargaze: ChainHoldings | undefined
+  ethGoerli: ChainHoldings | undefined
+  polygonMumbai: ChainHoldings | undefined
   totalHoldings: Holding[];
 }
