@@ -4,5 +4,5 @@ export interface DappDetails{
   requiredTokenContractAddress?: string;
   requiredTokenBalance: number;
   isTestnet?: boolean;
-  callBack?: () => void;
+  callBack?: (status: boolean) => void;
 }

@@ -78,7 +78,7 @@ export const fetchTokenData = async (address: any) => {
   const portfolio = await getPortfolioModel(response.chain_portfolios);
   console.log('portfolio', portfolio);
 
-  if (portfolio && portfolio?.totalUnverifiedBalance > 0) {
+  if (portfolio && (portfolio.totalUnverifiedBalance > 0 || portfolio.totalBalance > 0 )) {
     store.dispatch(setPortfolioStore({ tokenPortfolio: portfolio, portfolioState: PORTFOLIO_NOT_EMPTY, }));
   } else {
     store.dispatch(setPortfolioStore({ tokenPortfolio: portfolio, portfolioState: PORTFOLIO_EMPTY, }));

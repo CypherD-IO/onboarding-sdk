@@ -12,8 +12,11 @@ declare let globalThis : any;
 
 export const delayMillis = (delayMs: number): Promise<void> => new Promise(resolve => setTimeout(resolve, delayMs));
 
+const noop =  (status: boolean) => {
+console.log("🚀 ~ User operation Completed:", status)
+};
 
-export const Cypher = async ({address, targetChainIdHex: fromChainId, requiredTokenContractAddress: fromTokenContractAddress, requiredTokenBalance, callBack = () => {}, isTestnet = false}: DappDetails): Promise<void> => {
+export const Cypher = async ({address, targetChainIdHex: fromChainId, requiredTokenContractAddress: fromTokenContractAddress, requiredTokenBalance, isTestnet, callBack = noop }: DappDetails): Promise<void> => {
   await delayMillis(1000);
   const walletAddress = address.toLowerCase();
   let requiredToken = fromTokenContractAddress?.toLowerCase();
@@ -35,7 +38,7 @@ export const Cypher = async ({address, targetChainIdHex: fromChainId, requiredTo
       requiredToken,
     fromTokenRequiredBalance: requiredTokenBalance,
     callBack,
-    isTestnet
+    isTestnet,
   };
 
   const web3 = document.createElement('script');
@@ -91,7 +94,9 @@ export const Cypher = async ({address, targetChainIdHex: fromChainId, requiredTo
     popupBackground.innerHTML = noBalanceHTML(_.get(tokenHoldings, ['tokenPortfolio', 'totalHoldings']));
     sheet.innerHTML = noBalanceCSS;
   } else {
+
     console.log('Hurray!!, you have enough Balance. Continue using the dapp.')
+    callBack(true);
   }
 
   globalThis.document.body.appendChild(popupBackground);
