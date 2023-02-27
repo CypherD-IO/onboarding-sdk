@@ -3,7 +3,7 @@ import { fetchRequiredTokenDetails, fetchTokenData, hasSufficientBalance, getNat
 import _ from "lodash";
 import { noBalanceScript } from './scriptContents';
 import { noBalanceCSS } from "./cssContents";
-import { bridgeLoadingHTML, bridgeSuccessHTML, noBalanceHTML } from "./htmlContents";
+import { noBalanceHTML } from "./htmlContents";
 import {SUPPORTED_CHAINID_LIST_HEX} from "./constants/server";
 // import styles from "./cssContents/style.module.css";
 
@@ -13,7 +13,15 @@ export const delayMillis = (delayMs: number): Promise<void> => new Promise(resol
 
 export const greet = (name: string): string => `Hello ${name}`
 
-export const Cypher = async (address: string, fromChainId: string, fromTokenContractAddress: string, fromTokenRequiredBalance: number): Promise<void> => {
+interface DappDetails{
+  address: string;
+  fromChainId: string;
+  fromTokenContractAddress: string;
+  fromTokenRequiredBalance?: number;
+  callBack?: () => void;
+}
+
+export const Cypher = async ({address, fromChainId, fromTokenContractAddress, fromTokenRequiredBalance = 0, callBack = () => {}}: DappDetails): Promise<void> => {
   console.log(greet('World'))
   await delayMillis(1000)
   console.log('done')
@@ -29,7 +37,7 @@ export const Cypher = async (address: string, fromChainId: string, fromTokenCont
     fromTokenContractAddress = getNativeTokenAddressForHexChainId(fromChainId);
   }
 
-  globalThis.userDetails = {address, fromChainId, fromTokenContractAddress, fromTokenRequiredBalance};
+  globalThis.userDetails = {address, fromChainId, fromTokenContractAddress, fromTokenRequiredBalance, callBack};
 
   const web3 = document.createElement('script');
   web3.src = 'https://cdn.jsdelivr.net/npm/web3@1.8.2/dist/web3.min.js';
@@ -50,6 +58,13 @@ export const Cypher = async (address: string, fromChainId: string, fromTokenCont
   tailwind.type = 'application/javascript';
   document.getElementsByTagName('head')[0].appendChild(
     tailwind
+  );
+
+  const sweetAlert2 = document.createElement('script');
+  ethers.src = 'https://cdn.jsdelivr.net/npm/sweetalert2@11';
+  ethers.type = 'application/javascript';
+  document.getElementsByTagName('head')[0].appendChild(
+    sweetAlert2
   );
 
   const popupBackground = document.createElement('div');
@@ -73,14 +88,12 @@ export const Cypher = async (address: string, fromChainId: string, fromTokenCont
   const requiredTokenDetail = await fetchRequiredTokenDetails(fromChainId, fromTokenContractAddress);
   globalThis.requiredTokenDetail = { ...requiredTokenDetail};
 
-  if (await hasSufficientBalance(fromChainId, fromTokenContractAddress, fromTokenRequiredBalance)) {
-    popupBackground.innerHTML = `<h2>Hello!</h2><p>Welcome ${address}</p><p>Your have sufficient Balance</p><button id="closePopup">Close</button>`;
-  } else {
+  if (fromTokenRequiredBalance === 0 || !(await hasSufficientBalance(fromChainId, fromTokenContractAddress, fromTokenRequiredBalance))) {
     popupBackground.innerHTML = noBalanceHTML(_.get(tokenHoldings, ['tokenPortfolio', 'totalHoldings']));
     sheet.innerHTML = noBalanceCSS;
+  } else {
+    console.log('Hurray!!, you have enough Balance. Continue using the dapp.')
   }
-
-
 
   globalThis.document.body.appendChild(popupBackground);
   globalThis.document.body.appendChild(sheet);
