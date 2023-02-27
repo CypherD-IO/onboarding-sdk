@@ -17,7 +17,7 @@ export const noBalanceCSS = `
   color: black;
   background-color: rgb(0,0,0);
   background-color: rgba(0,0,0,0.4);
-  backdrop-filter: blur(3px);
+  backdrop-filter: blur(5px);
 }
 
 #popup {
