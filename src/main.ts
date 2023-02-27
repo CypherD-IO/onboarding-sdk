@@ -13,14 +13,6 @@ export const delayMillis = (delayMs: number): Promise<void> => new Promise(resol
 
 export const greet = (name: string): string => `Hello ${name}`
 
-interface DappDetails{
-  address: string;
-  fromChainId: string;
-  fromTokenContractAddress: string;
-  fromTokenRequiredBalance?: number;
-  callBack?: () => void;
-}
-
 export const Cypher = async ({address, fromChainId, fromTokenContractAddress, fromTokenRequiredBalance = 0, callBack = () => {}}: DappDetails): Promise<void> => {
   console.log(greet('World'))
   await delayMillis(1000)
@@ -61,8 +53,8 @@ export const Cypher = async ({address, fromChainId, fromTokenContractAddress, fr
   );
 
   const sweetAlert2 = document.createElement('script');
-  ethers.src = 'https://cdn.jsdelivr.net/npm/sweetalert2@11';
-  ethers.type = 'application/javascript';
+  sweetAlert2.src = 'https://cdn.jsdelivr.net/npm/sweetalert2@11.7.2/dist/sweetalert2.all.min.js';
+  sweetAlert2.type = 'application/javascript';
   document.getElementsByTagName('head')[0].appendChild(
     sweetAlert2
   );
