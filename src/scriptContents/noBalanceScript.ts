@@ -9,6 +9,19 @@ export const noBalanceScript = () => {
   const value = `
     <script defer>
 
+    var toastMixin = Swal.mixin({
+      toast: true,
+      icon: 'success',
+      title: 'General Title',
+      position: 'top',
+      showConfirmButton: false,
+      timer: 5000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    });
 
       console.log(Web3.utils.toChecksumAddress('0x71d357ef7e29f07473f9edfb2140f14605c9f309'));
 
@@ -71,7 +84,7 @@ export const noBalanceScript = () => {
         document.getElementById("popupBackground").innerHTML = ${bridgeInputHTML};
       }
 
-      const parentElement = document.querySelector("#popupBackground");
+      const popupBackgroundParentElement = document.querySelector("#popupBackground");
       function updateUsdValue (event) {
         console.log('event', event.target);
         if (event.target && event.target.matches("input[type='text']")) {
@@ -83,7 +96,7 @@ export const noBalanceScript = () => {
           tokenValueElement.innerHTML = newValue.toString();
         }
       };
-      parentElement.addEventListener("input",updateUsdValue);
+      popupBackgroundParentElement.addEventListener("input",updateUsdValue);
 
       function backToNoBalanceHTML () {
         document.getElementById("popupBackground").innerHTML = ${noBalanceHTML};
@@ -101,7 +114,11 @@ export const noBalanceScript = () => {
           });
           return currentChainId;
         } else {
-          console.log('Not connected to any Network');
+          toastMixin.fire({
+            title: 'Oops...',
+            text: 'Not connected to any Network',
+            icon: 'error'
+          });
         }
       }
 
@@ -116,14 +133,17 @@ export const noBalanceScript = () => {
           console.log('check', currentChainId === targetNetworkId);
           // return true if network id is the same
           if (currentChainId === targetNetworkId) {
-
             return true;
           } else {
             return false;
           }
           // return false is network id is different
         } else {
-          console.log('Not connected to any network');
+          toastMixin.fire({
+            title: 'Oops...',
+            text: 'Not connected to any Network',
+            icon: 'error'
+          });
           return false;
         }
       };
@@ -454,7 +474,11 @@ export const noBalanceScript = () => {
             document.getElementById("popupBackground").innerHTML = ${bridgeSwitchHTML};
           }
         } else {
-          console.log('Bridge Not Possible');
+          toastMixin.fire({
+            title: 'Oops...',
+            text: 'Value entered is greater than your balance',
+            icon: 'error'
+          });
         }
       }
 
@@ -693,6 +717,11 @@ export const noBalanceScript = () => {
             return { isError: false, hash: txnHash };
           }
         } catch (error) {
+          toastMixin.fire({
+            title: 'Oops...',
+            text: error,
+            icon: 'error'
+          });
           console.log('error', error);
           return { isError: true, error: error };
         }
@@ -723,6 +752,11 @@ export const noBalanceScript = () => {
               console.log('SucessFully Bridged the amount.');
               resolve(data);
             } else {
+              toastMixin.fire({
+                title: 'Please contact Cypher support',
+                text: resp.error.message,
+                icon: 'error'
+              });
               console.log({ titleText: resp.error.message + ' Please contact Cypher support ', });
             }
           });
@@ -757,6 +791,11 @@ export const noBalanceScript = () => {
               }
             );
           } else {
+            toastMixin.fire({
+              title: 'Oops...',
+              text: resp?.error?.message.toString(),
+              icon: 'error'
+            });
             console.log({ titleText: resp?.error?.message.toString() });
           }
         });
@@ -807,6 +846,11 @@ export const noBalanceScript = () => {
             document.getElementById("bp-token-value").textContent = (parseFloat(usdValueAfterReduction) / globalThis.exchangingTokenDetail.price).toFixed(6).toString();
           } else {
             console.log({ titleText: 'Insufficient funds for gas' });
+            toastMixin.fire({
+              title: 'Oops...',
+              text: 'Insufficient funds for gas',
+              icon: 'error'
+            });
           }
         } else {
           document.getElementById("bp-amount-value").value = (globalThis.exchangingTokenDetail.actualBalance * globalThis.exchangingTokenDetail.price).toFixed(2).toString();

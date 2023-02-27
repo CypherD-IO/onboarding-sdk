@@ -1,10 +1,14 @@
 export const noBalanceCSS = `
+.swal2-container {
+  z-index: 2147483647;
+}
+
 #popupBackground {
   display: flex;
   position: fixed;
   justify-content: center;
   align-items: center;
-  z-index: 2147483647;
+  z-index: 2147483646;
   left: 0;
   top: 0;
   width: 100%;
@@ -13,7 +17,7 @@ export const noBalanceCSS = `
   color: black;
   background-color: rgb(0,0,0);
   background-color: rgba(0,0,0,0.4);
-  backdrop-filter: blur(3px);
+  backdrop-filter: blur(5px);
 }
 
 #popup {
