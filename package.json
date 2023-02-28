@@ -4,7 +4,7 @@
   "description": "Onboarding SDK from Cypher Wallet with OnRamp / Bridge Support",
   "author": "Sedhu <sedhu@cypherd.io>",
   "repository": "https://github.com/CypherD-IO/thunder",
-  "license": "",
+  "license": "GNU GPL v3.0",
   "keywords": [
     "typescript",
     "esbuild"
