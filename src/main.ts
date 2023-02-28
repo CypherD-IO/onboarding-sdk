@@ -24,7 +24,13 @@ export const Cypher = async ({address, targetChainIdHex: fromChainId, requiredTo
   //chainId is a required field
   if(! SUPPORTED_CHAINID_LIST_HEX.includes(fromChainId)){
     console.log(fromChainId + "not supported");
-  return;
+    return;
+  }
+
+   //Testnet validation
+   if( isTestnet && ( !['0x5','0x13881'].includes(fromChainId))){
+    console.log(fromChainId + "not supported for testnet operations");
+    return;
   }
 
   //intialize fromTokenContractAddress for native token
