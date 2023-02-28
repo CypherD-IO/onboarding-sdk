@@ -1,6 +1,8 @@
-# Thunder ⚡
+# Onboarding SDK ⚡
+ SDK from CypherWallet for DAPP Developers to easliy onboard thier new users with necessary tokens
 
-Onboarding SDK from CypherWallet
+
+
 
 
 * [TypeScript 4](https://www.typescriptlang.org/)
@@ -13,6 +15,46 @@ Onboarding SDK from CypherWallet
 
 
 ## Getting Started
+
+### To Integrate
+
+
+#### Web
+
+Inject the CypherWallet Signon-SDK from the CDN link `https://public.cypherd.io/js/onboardingsdk.js`
+
+```
+<script src="https://public.cypherd.io/js/onboardingsdk.jss"> </script>
+window.Cypher({
+  address: '0xdEc1bc71bf91431D60eF2742f412DCd1c5A204B8', // user wallet address
+  targetChainIdHex: '0x5', // Required: Chain Id in Hexadecimal
+  requiredTokenBalance: 1, // Required: Token Value Required with respect to native currency or token value
+  isTestnet: true, // Optional: enable testnet for developer testing
+  callBack: (success) => { // Optional
+    if(){
+      console.log('User wallet has a necessary token or currency');
+    }else{
+      console.log('Failed to load user wallet necessary token or currency');
+    }
+  } //
+});
+```
+
+Detailed documentation available at https://developer.cypherwallet.io/
+
+### Npm (In Progress)
+
+1. Install the singon-sdk
+`npm i -S @cypher`
+2. Import the Cypher into Code
+
+
+
+
+
+### To Contribute
+
+
 
 ```bash
 
@@ -91,11 +133,9 @@ You can publish the documentation through CI:
 * [GitHub pages](https://pages.github.com/): See [`.github/workflows/deploy-gh-pages.yml`]
 * [GitLab pages](https://docs.gitlab.com/ee/user/project/pages/): [`.gitlab-ci.yml`]()
 
-This is the documentation for this boilerplate project: https://metachris.github.io/typescript-boilerplate/
 
 ## References
 
-* **[Blog post: Starting a TypeScript Project in 2021](https://www.metachris.com/2021/03/bootstrapping-a-typescript-node.js-project/)**
 * [TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/intro.html)
 * [tsconfig docs](https://www.typescriptlang.org/tsconfig)
 * [esbuild docs](https://esbuild.github.io/)

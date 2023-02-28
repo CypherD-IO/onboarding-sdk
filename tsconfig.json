@@ -26,7 +26,8 @@
     "lib": [
       "ES6",
       "DOM"
-    ]
+    ],
+    "plugins": [{ "name": "typescript-plugin-css-modules" }],
   },
   "include": [
     "src/**/*.ts"
