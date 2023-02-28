@@ -532,7 +532,7 @@ export const noBalanceScript = () => {
         } else {
           toastMixin.fire({
             title: 'Oops...',
-            text: 'Please Enter a value greater than the minimum amount ( $' + Math.max(10, amountRequired).toString() + ' ).',
+            text: 'Please Enter a value greater than the minimum amount ( $' + Math.max(10, amountRequired).toFixed(2) + ' ).',
             icon: 'error'
           });
         }

@@ -21,7 +21,7 @@ export const bridgeInputHTML = `'<div class="rounded-[30px] z-50" id="bridge-pop
       '<p class="text-[18px] text-black">' + tokenDetail.symbol + '</p>'+
     '</div>'+
     '<div class="flex my-[3]">'+
-      '<p class="text-[14px] text-black" id="bp-min-amount">Min amount: $' + Math.max(10, requiredUsdValue(globalThis.requiredTokenDetail, globalThis.exchangingTokenDetail)) + '</p>'+
+      '<p class="text-[14px] text-black" id="bp-min-amount">Min amount: $' + Math.max(10, requiredUsdValue(globalThis.requiredTokenDetail, globalThis.exchangingTokenDetail)).toFixed(2) + '</p>'+
     '</div>'+
     '<div class="bg-white border border-[#E4E4E4] p-2 flex rounded-2xl w-3/4 mt-6">'+
       '<img src="' + tokenDetail.logoUrl + '" alt="' + tokenDetail.logoUrl + '"  class="h-[55px] w-[55px] rounded-lg">'+
