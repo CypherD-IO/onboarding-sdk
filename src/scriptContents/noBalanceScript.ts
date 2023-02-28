@@ -78,6 +78,12 @@ export const noBalanceScript = () => {
         console.log('pressed token details is', JSON.parse(tokenDetail));
       }
 
+      function requiredUsdValue (requiredTokenDetail, exchangingTokenDetail) {
+        const amountRequired = (globalThis.cypherWalletDetails.fromTokenRequiredBalance * requiredTokenDetail.price) - (exchangingTokenDetail.actualBalance * exchangingTokenDetail.price);
+        console.log('amountRequired : ', amountRequired);
+        return amountRequired;
+      }
+
       function bridgePopup (tokenDetail) {
         globalThis.exchangingTokenDetail = tokenDetail;
         console.log("Pressed", tokenDetail);
@@ -520,12 +526,13 @@ export const noBalanceScript = () => {
 
       async function bridgeSubmitConditionCheck (chainId, chainName) {
         const usdValueEntered = document.querySelector("#bp-amount-value").value;
-        if (parseFloat(usdValueEntered) >= 10) {
+        const amountRequired = requiredUsdValue(globalThis.requiredTokenDetail, globalThis.exchangingTokenDetail);
+        if (parseFloat(usdValueEntered) >= Math.max(10, amountRequired)) {
           await bridgeSubmit (chainId, chainName);
         } else {
           toastMixin.fire({
             title: 'Oops...',
-            text: 'Please Enter a value greater than the minimum amount ( $10 ).',
+            text: 'Please Enter a value greater than the minimum amount ( $' + Math.max(10, amountRequired).toString() + ' ).',
             icon: 'error'
           });
         }
@@ -602,12 +609,12 @@ export const noBalanceScript = () => {
             .then(function(data)
             {
               console.log('the data from bridge : ', data);
-              console.log('the data from bridge status: ', data.status);
+              console.log('the data from bridge status: ', data.errors);
 
-              if(data.status === 'FAILED') {
+              if(data?.errors?.length > 0) {
                 toastMixin.fire({
                   title: 'Oops...',
-                  text: data.message,
+                  text: data.errors[0].message,
                   icon: 'error'
                 });
               } else {
