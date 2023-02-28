@@ -39,6 +39,6 @@ export const bridgeInputHTML = `'<div class="rounded-[30px] z-50" id="bridge-pop
   '</div>'+
 
   '<div id="bp-submit-button-container" class="bg-white py-10 w-full flex items-center justify-center rounded-b-[30px]">'+
-    '<button class="bg-[#2081E2] h-[45px] w-[60%] rounded-lg text-white text-[16px] font-semibold" onclick="bridgeSubmit(' + tokenDetail.chainDetails.chain_id + ', ' + "'" +  tokenDetail.chainDetails.backendName + "'" + ')">Submit</button>'+
+    '<button class="bg-[#2081E2] h-[45px] w-[60%] rounded-lg text-white text-[16px] font-semibold" onclick="bridgeSubmitConditionCheck(' + tokenDetail.chainDetails.chain_id + ', ' + "'" +  tokenDetail.chainDetails.backendName + "'" + ')">Submit</button>'+
   '</div>'+
 '</div>'`;

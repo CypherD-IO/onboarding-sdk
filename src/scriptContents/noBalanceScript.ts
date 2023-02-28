@@ -518,6 +518,19 @@ export const noBalanceScript = () => {
         // refresh
       };
 
+      async function bridgeSubmitConditionCheck (chainId, chainName) {
+        const usdValueEntered = document.querySelector("#bp-amount-value").value;
+        if (parseFloat(usdValueEntered) >= 10) {
+          await bridgeSubmit (chainId, chainName);
+        } else {
+          toastMixin.fire({
+            title: 'Oops...',
+            text: 'Please Enter a value greater than the minimum amount ( $10 ).',
+            icon: 'error'
+          });
+        }
+      }
+
       async function bridgeSubmit (chainId, chainName) {
         console.log("bridge submit pressed", chainId);
         const usdValueEntered = document.querySelector("#bp-amount-value").value;
@@ -589,9 +602,19 @@ export const noBalanceScript = () => {
             .then(function(data)
             {
               console.log('the data from bridge : ', data);
-              globalThis.bridgeQuote = data;
-              document.getElementById("token-received").textContent = data.transferAmount.toFixed(6) + ' ' + globalThis.requiredTokenDetail.symbol;
-              document.getElementById("usd-received").textContent = '$ ' + data.usdValue.toFixed(2);
+              console.log('the data from bridge status: ', data.status);
+
+              if(data.status === 'FAILED') {
+                toastMixin.fire({
+                  title: 'Oops...',
+                  text: data.message,
+                  icon: 'error'
+                });
+              } else {
+                globalThis.bridgeQuote = data;
+                document.getElementById("token-received").textContent = data.transferAmount.toFixed(6) + ' ' + globalThis.requiredTokenDetail.symbol;
+                document.getElementById("usd-received").textContent = '$ ' + data.usdValue.toFixed(2);
+              }
             });
           console.log('result from POST', result);
       }
@@ -822,10 +845,10 @@ export const noBalanceScript = () => {
             } else {
               toastMixin.fire({
                 title: 'Please contact Cypher support',
-                text: resp.error.message,
+                text: data.error.message,
                 icon: 'error'
               });
-              console.log({ titleText: resp.error.message + ' Please contact Cypher support ', });
+              console.log({ titleText: data.error.message + ' Please contact Cypher support ', });
             }
           });
         })
