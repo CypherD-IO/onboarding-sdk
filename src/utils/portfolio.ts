@@ -2,8 +2,7 @@ import _ from 'lodash';
 import { ARCH_HOST,
   CHAIN_ID_HEX_TO_ENUM_MAPPING,
   EVM_CHAINS_NATIVE_TOKEN_MAP,
-  CHAIN_ID_HEX_TO_CDN_IMAGE_CHAIN_NAME, 
-  CHAIN_ID_HEX_TO_NATIVE_TOKEN_NAME} from '../constants/server';
+  CHAIN_ID_HEX_TO_CDN_IMAGE_CHAIN_NAME} from '../constants/server';
 import { getPortfolioModel } from '../core/portfolio';
 import store, { PORTFOLIO_EMPTY, PORTFOLIO_NOT_EMPTY, setPortfolioStore } from '../store';
 import { get } from './fetch';
@@ -34,26 +33,52 @@ export function getNativeTokenAddressForHexChainId(chainId: string) {
 
 export const fetchRequiredTokenData = async(chainId: string, tokenContractAddress: string) => {
   const tokenDetailUrl = `${ARCH_HOST}/v1/portfolio/tokenDetail?`;
-  const params = {
-    'chain': CHAIN_ID_HEX_TO_ENUM_MAPPING.get(chainId),
-    'tokenAddress': tokenContractAddress
-  }
+  const params = [
+    {
+      key: 'chain',
+      value:CHAIN_ID_HEX_TO_ENUM_MAPPING.get(chainId)
+    },
+    {
+      key: 'tokenAddress',
+      value:tokenContractAddress
+    }
+];
   const response = await get(tokenDetailUrl, params);
   console.log(response);
   return response;
 };
 
+declare let globalThis : any;
 export const fetchTokenData = async (address: any) => {
 
-  const cosmosPortfolioUrl = `${ARCH_HOST}/v1/portfolio/balances?`;
-  const params = {
-    'address[]': [address]
-  };
-  const response = await get(cosmosPortfolioUrl, params);
+  const portfolioUrl = `${ARCH_HOST}/v1/portfolio/balances?`;
+  let params:any = [{
+    key: 'address[]',
+    value: [address]
+  }];
+
+  if (globalThis.cypherWalletDetails?.isTestnet) {
+    params = [
+      {
+      key: 'address[]',
+      value: [address]
+      },
+      {
+        key: 'chains[]',
+        value: ['ETH_GOERLI'],
+      },
+      {
+        key: 'chains[]',
+        value: ['POLYGON_MUMBAI'],
+      }
+    ];
+  }
+
+  const response = await get(portfolioUrl, params);
   const portfolio = await getPortfolioModel(response.chain_portfolios);
   console.log('portfolio', portfolio);
 
-  if (portfolio && portfolio?.totalUnverifiedBalance > 0) {
+  if (portfolio && (portfolio.totalUnverifiedBalance > 0 || portfolio.totalBalance > 0 )) {
     store.dispatch(setPortfolioStore({ tokenPortfolio: portfolio, portfolioState: PORTFOLIO_NOT_EMPTY, }));
   } else {
     store.dispatch(setPortfolioStore({ tokenPortfolio: portfolio, portfolioState: PORTFOLIO_EMPTY, }));
@@ -97,13 +122,14 @@ export const fetchRequiredTokenDetails = async (chainId: string, tokenContractAd
         price: tokenDetail.price,
         chainDetails: {
           backendName: `${CHAIN_ID_HEX_TO_ENUM_MAPPING.get(chainId)}`,
-          chainName: '',
+          chainName: `${CHAIN_ID_HEX_TO_ENUM_MAPPING.get(chainId)}`,
           chain_id: `${chainId}`,
         }};
     }
   } else {
     const tokenDetail = await fetchRequiredTokenData(chainId, tokenContractAddress);
-      return {name: tokenDetail.name,
+    return {
+      name: tokenDetail.name,
         logoUrl: tokenDetail.logo_url,
         contractDecimals: tokenDetail.contract_decimals,
         symbol: tokenDetail.symbol,
@@ -112,8 +138,9 @@ export const fetchRequiredTokenDetails = async (chainId: string, tokenContractAd
         price: tokenDetail.price,
         chainDetails: {
           backendName: `${CHAIN_ID_HEX_TO_ENUM_MAPPING.get(chainId)}`,
-          chainName: '',
+          chainName: `${CHAIN_ID_HEX_TO_ENUM_MAPPING.get(chainId)}`,
           chain_id: `${chainId}`,
-        }};
+        }
+    };
   }
 }

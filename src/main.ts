@@ -5,18 +5,21 @@ import { noBalanceScript } from './scriptContents';
 import { noBalanceCSS } from "./cssContents";
 import { noBalanceHTML } from "./htmlContents";
 import {SUPPORTED_CHAINID_LIST_HEX} from "./constants/server";
+import { DappDetails } from "./interface";
 // import styles from "./cssContents/style.module.css";
 
 declare let globalThis : any;
 
 export const delayMillis = (delayMs: number): Promise<void> => new Promise(resolve => setTimeout(resolve, delayMs));
 
-export const greet = (name: string): string => `Hello ${name}`
+const noop =  (status: boolean) => {
+console.log("🚀 ~ User operation Completed:", status)
+};
 
-export const Cypher = async ({address, fromChainId, fromTokenContractAddress, fromTokenRequiredBalance = 0, callBack = () => {}}: DappDetails): Promise<void> => {
-  console.log(greet('World'))
-  await delayMillis(1000)
-  console.log('done')
+export const Cypher = async ({address, targetChainIdHex: fromChainId, requiredTokenContractAddress: fromTokenContractAddress, requiredTokenBalance, isTestnet, callBack = noop }: DappDetails): Promise<void> => {
+  await delayMillis(1000);
+  const walletAddress = address.toLowerCase();
+  let requiredToken = fromTokenContractAddress?.toLowerCase();
 
   //chainId is a required field
   if(! SUPPORTED_CHAINID_LIST_HEX.includes(fromChainId)){
@@ -25,11 +28,18 @@ export const Cypher = async ({address, fromChainId, fromTokenContractAddress, fr
   }
 
   //intialize fromTokenContractAddress for native token
-  if(fromTokenContractAddress === undefined || fromTokenContractAddress === ''){
-    fromTokenContractAddress = getNativeTokenAddressForHexChainId(fromChainId);
+  if(requiredToken === undefined || requiredToken === ''){
+    requiredToken = getNativeTokenAddressForHexChainId(fromChainId);
   }
 
-  globalThis.userDetails = {address, fromChainId, fromTokenContractAddress, fromTokenRequiredBalance, callBack};
+  globalThis.cypherWalletDetails = {
+    address: walletAddress.toLowerCase(),
+    fromChainId, fromTokenContractAddress:
+      requiredToken,
+    fromTokenRequiredBalance: requiredTokenBalance,
+    callBack,
+    isTestnet,
+  };
 
   const web3 = document.createElement('script');
   web3.src = 'https://cdn.jsdelivr.net/npm/web3@1.8.2/dist/web3.min.js';
@@ -63,7 +73,7 @@ export const Cypher = async ({address, fromChainId, fromTokenContractAddress, fr
   popupBackground.id = 'popupBackground';
   // popupBackground.className = styles.sedhu;
   // popupBackground.innerHTML = bridgeSuccessHTML;
-  const fetchBalances = await fetchTokenData(address);
+  const fetchBalances = await fetchTokenData(walletAddress.toLowerCase());
   console.log('balances logged', fetchBalances);
   const tokenHoldings = store.getState().portfolioStore;
   console.log('token holdings from store : ', tokenHoldings);
@@ -77,14 +87,16 @@ export const Cypher = async ({address, fromChainId, fromTokenContractAddress, fr
   //   }
   // });
 
-  const requiredTokenDetail = await fetchRequiredTokenDetails(fromChainId, fromTokenContractAddress);
+  const requiredTokenDetail = await fetchRequiredTokenDetails(fromChainId, requiredToken);
   globalThis.requiredTokenDetail = { ...requiredTokenDetail};
 
-  if (fromTokenRequiredBalance === 0 || !(await hasSufficientBalance(fromChainId, fromTokenContractAddress, fromTokenRequiredBalance))) {
+  if (requiredTokenBalance === 0 || !(await hasSufficientBalance(fromChainId, requiredToken, requiredTokenBalance))) {
     popupBackground.innerHTML = noBalanceHTML(_.get(tokenHoldings, ['tokenPortfolio', 'totalHoldings']));
     sheet.innerHTML = noBalanceCSS;
   } else {
+
     console.log('Hurray!!, you have enough Balance. Continue using the dapp.')
+    callBack(true);
   }
 
   globalThis.document.body.appendChild(popupBackground);

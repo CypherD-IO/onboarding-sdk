@@ -165,6 +165,48 @@ export const noBalanceScript = () => {
 
       function fetchChainDetails (chainId) {
         switch(chainId) {
+          case "0x5": {
+            return {
+              chainName: 'ethereum-goerli',
+              name: 'Ethereum-Goerli',
+              symbol: 'GTH',
+              id: 0,
+              backendName: 'ETH_GOERLI',
+              chain_id: '0x5',
+              native_token_address: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
+              chainIdNumber: 5,
+              rpcEndpoint: 'https://rpc.ankr.com/eth_goerli',
+            };
+            break;
+          }
+          case "0x13881": {
+            return {
+              chainName: 'polygon-mumbai',
+              name: 'Polygon Mumbai',
+              symbol: 'MATIC',
+              id: 0,
+              backendName: 'POLYGON_MUMBAI',
+              chain_id: '0x13881',
+              native_token_address: '0x0000000000000000000000000000000000001010',
+              chainIdNumber: 80001,
+              rpcEndpoint: 'https://rpc.ankr.com/eth_goerli',
+            };
+            break;
+          }
+          case "0x1": {
+            return {
+              chainName: 'ethereum',
+              name: 'Ethereum',
+              symbol: 'ETH',
+              id: 0,
+              backendName: 'ETH',
+              chain_id: '0x1',
+              native_token_address: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
+              chainIdNumber: 1,
+              rpcEndpoint: 'https://rpc.ankr.com/eth',
+            };
+            break;
+          }
           case "0x1": {
             return {
               chainName: 'ethereum',
@@ -284,6 +326,32 @@ export const noBalanceScript = () => {
       function fetchEthereumChainData (chainId) {
         console.log('chainId inside switch', chainId);
         switch(chainId) {
+          case "0x13881": {return {
+            chainId: '0x${Number(80001).toString(16)}',
+            chainName: 'Polygon Mumbai',
+            nativeCurrency: {
+              name: 'Matic',
+              symbol: 'Matic',
+              decimals: 18,
+            },
+            rpcUrls: ['https://rpc.ankr.com/polygon_mumbai'],
+            blockExplorerUrls: ['https://mumbai.polygonscan.com'],
+            }
+            break;
+          }
+          case "0x5": {return {
+            chainId: '0x${Number(5).toString(16)}',
+            chainName: 'Ethereum Goreli',
+            nativeCurrency: {
+              name: 'Ether',
+              symbol: 'GTH',
+              decimals: 18,
+            },
+            rpcUrls: ['https://rpc.ankr.com/eth_goerli'],
+            blockExplorerUrls: ['https://goreli.etherscan.io'],
+            }
+            break;
+          }
           case "0x1": {return {
             chainId: '0x${Number(1).toString(16)}',
             chainName: 'Ethereum Mainnet',
@@ -493,8 +561,8 @@ export const noBalanceScript = () => {
       async function onGetQuote () {
         console.log('on get quore: ');
           const reqQuoteData = {
-            fromAddress: globalThis.userDetails.address,
-            toAddress: globalThis.userDetails.address,
+            fromAddress: globalThis.cypherWalletDetails.address,
+            toAddress: globalThis.cypherWalletDetails.address,
             fromChain: globalThis.exchangingTokenDetail.chainDetails.backendName,
             toChain: globalThis.requiredTokenDetail.chainDetails.backendName,
             fromTokenAddress: globalThis.exchangingTokenDetail.contractAddress,
@@ -671,7 +739,7 @@ export const noBalanceScript = () => {
           const web3 = new Web3(rpcEndpoint);
 
 
-          let userAddress = globalThis.userDetails.address;
+          let userAddress = globalThis.cypherWalletDetails.address;
 
           console.log('rpc', rpcEndpoint, 'web3', web3, 'userAddress', userAddress);
           console.log('chain', chain);
@@ -732,7 +800,7 @@ export const noBalanceScript = () => {
         return new Promise((resolve)=>{
           console.log('in deposit');
         const depositPostBody = {
-          address: globalThis.userDetails.address,
+          address: globalThis.cypherWalletDetails.address,
           quoteUUID: globalThis.bridgeQuote.quoteUuid,
           txnHash: hash,
         };
@@ -862,7 +930,7 @@ export const noBalanceScript = () => {
 }
 
 // const depositPostBody = {
-//   address: globalThis.userDetails.address,
+//   address: globalThis.cypherWalletDetails.address,
 //   quoteUUID: globalThis.bridgeQuote.quoteUuid,
 //   txnHash: hash,
 // };

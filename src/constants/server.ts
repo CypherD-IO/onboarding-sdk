@@ -5,6 +5,8 @@ export const ARCH_HOST = 'https://arch.cypherd.io';
 
 export enum ChainBackendNames {
   ETH = 'ETH',
+  ETH_GOERLI = 'ETH_GOERLI',
+  POLYGON_MUMBAI = 'POLYGON_MUMBAI',
   POLYGON = 'POLYGON',
   AVALANCHE = 'AVALANCHE',
   FANTOM = 'FANTOM',
@@ -18,12 +20,35 @@ export enum ChainBackendNames {
   STARGAZE = 'STARGAZE'
 }
 
+export const CHAIN_ETH_GOERLI: Chain = {
+  chainName: 'ethereum-goerli',
+  name: 'Ethereum-Goerli',
+  symbol: 'GTH',
+  id: 0,
+  backendName: ChainBackendNames.ETH_GOERLI,
+  chain_id: '0x5',
+  native_token_address: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
+  chainIdNumber: 5
+};
+
+export const CHAIN_POLYGON_MUMBAI: Chain = {
+  chainName: 'polygon-mumbai',
+  name: 'Polygon Mumbai',
+  symbol: 'MATIC',
+  id: 0,
+  backendName: ChainBackendNames.POLYGON_MUMBAI,
+  chain_id: '0x13881',
+  native_token_address: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
+  chainIdNumber: 80001
+};
+
+
+
 export const CHAIN_ETH: Chain = {
   chainName: 'ethereum',
   name: 'Ethereum',
   symbol: 'ETH',
   id: 0,
-  // logo_url: AppImages.ETHEREUM,
   backendName: ChainBackendNames.ETH,
   chain_id: '0x1',
   native_token_address: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
@@ -35,7 +60,6 @@ export const CHAIN_POLYGON: Chain = {
   name: 'Polygon',
   symbol: 'MATIC',
   id: 1,
-  // logo_url: AppImages.POLYGON,
   backendName: ChainBackendNames.POLYGON,
   chain_id: '0x89',
   native_token_address: '0x0000000000000000000000000000000000001010',
@@ -47,12 +71,12 @@ export const CHAIN_BSC: Chain = {
   name: 'Binance Smart Chain',
   symbol: 'BNB',
   id: 2,
-  // logo_url: AppImages.BINANCE,
   backendName: ChainBackendNames.BSC,
   chain_id: '0x38',
   native_token_address: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
   chainIdNumber: 56
 };
+
 
 export const CHAIN_AVALANCHE: Chain = {
   chainName: 'ethereum',
@@ -71,7 +95,6 @@ export const CHAIN_FTM: Chain = {
   name: 'Fantom',
   symbol: 'FTM',
   id: 5,
-  // logo_url: AppImages.FANTOM,
   backendName: ChainBackendNames.FANTOM,
   chain_id: '0xfa',
   native_token_address: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
@@ -83,7 +106,6 @@ export const CHAIN_EVMOS: Chain = {
   name: 'Evmos',
   symbol: 'EVMOS',
   id: 6,
-  // logo_url: AppImages.EVMOS,
   backendName: ChainBackendNames.EVMOS,
   chain_id: '0x2329',
   native_token_address: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
@@ -108,7 +130,6 @@ export const CHAIN_COSMOS: Chain = {
   name: 'Cosmos',
   symbol: 'COSMOS',
   id: 7,
-  // logo_url: AppImages.COSMOS,
   backendName: ChainBackendNames.COSMOS,
   chain_id: '0x0',
   native_token_address: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
@@ -121,7 +142,6 @@ export const CHAIN_OSMOSIS: Chain = {
   name: 'Osmosis',
   symbol: 'OSMO',
   id: 8,
-  // logo_url: AppImages.OSMOSIS,
   backendName: ChainBackendNames.OSMOSIS,
   chain_id: '0x1',
   native_token_address: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
@@ -134,7 +154,6 @@ export const CHAIN_JUNO: Chain = {
   name: 'Juno',
   symbol: 'JUNO',
   id: 9,
-  // logo_url: AppImages.JUNO,
   backendName: ChainBackendNames.JUNO,
   chain_id: 'juno-1',
   native_token_address: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
@@ -147,7 +166,6 @@ export const CHAIN_OPTIMISM: Chain = {
   name: 'Optimism',
   symbol: 'ETH',
   id: 11,
-  // logo_url: AppImages.OPTIMISM,
   backendName: ChainBackendNames.OPTIMISM,
   chain_id: '0xa',
   native_token_address: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
@@ -159,7 +177,6 @@ export const CHAIN_STARGAZE: Chain = {
   name: 'Stargaze',
   symbol: 'STARS',
   id: 12,
-  // logo_url: AppImages.STARGAZE,
   backendName: ChainBackendNames.STARGAZE,
   chain_id: 'stargaze-1',
   native_token_address: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
@@ -172,6 +189,28 @@ export type NetworkInterface = {
 };
 
 export const addChainData: Record<string, NetworkInterface> = {
+  POLYGON_MUMBAI: {
+    chainId: `0x${Number(80001).toString(16)}`,
+    chainName: 'POLYGON MUMBAI',
+    nativeCurrency: {
+      name: 'MATIC TESTNET',
+      symbol: 'MATIC',
+      decimals: 18,
+    },
+    rpcUrls: ['https://rpc.ankr.com/polygon_mumbai'],
+    blockExplorerUrls: ['https://mumbai.polygonscan.com'],
+  },
+  ETH_GOERLI: {
+    chainId: `0x${Number(5).toString(16)}`,
+    chainName: 'Ethereum GOERLI',
+    nativeCurrency: {
+      name: 'Ether goerli',
+      symbol: 'GTH',
+      decimals: 18,
+    },
+    rpcUrls: ['https://rpc.ankr.com/eth_goerli'],
+    blockExplorerUrls: ['https://goerli.etherscan.io'],
+  },
   ETH: {
     chainId: `0x${Number(1).toString(16)}`,
     chainName: 'Ethereum Mainnet',
@@ -284,6 +323,8 @@ export const CONTRACT_DECIMAL_TO_ETHER_UNITS: any = {
 
 export const EVM_CHAINS_NATIVE_TOKEN_MAP = new Map([
   ['ETH', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'],
+  ['ETH_GOERLI', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'],
+  ['POLYGON_MUMBAI', '0x0000000000000000000000000000000000001010'],
   ['ARBITRUM', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'],
   ['OPTIMISM', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'],
   ['POLYGON', '0x0000000000000000000000000000000000001010'],
@@ -293,10 +334,13 @@ export const EVM_CHAINS_NATIVE_TOKEN_MAP = new Map([
   ['EVMOS', '0x93581991f68dbae1ea105233b67f7fa0d6bdee7b'], // representation didnt work 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee so used ethereum address
 ]);
 
-export const SUPPORTED_CHAINID_LIST_HEX = ['0x1', '0x89', '0x38', '0xa86a', '0xfa', '0x2329', '0xa4b1', '0xa'];
+export const SUPPORTED_CHAINID_LIST_HEX = ['0x1', '0x89', '0x38', '0xa86a', '0xfa', '0x2329', '0xa4b1', '0xa', '0x13881', '0x5'];
+
 
 export const CHAIN_ID_HEX_TO_ENUM_MAPPING = new Map([
   ['0x1', ChainBackendNames.ETH],
+  ['0x5', ChainBackendNames.ETH_GOERLI],
+  ['0x13881', ChainBackendNames.POLYGON_MUMBAI],
   ['0x89', ChainBackendNames.POLYGON],
   ['0x38', ChainBackendNames.BSC],
   ['0xa86a', ChainBackendNames.AVALANCHE],
@@ -309,6 +353,8 @@ export const CHAIN_ID_HEX_TO_ENUM_MAPPING = new Map([
 export const CHAIN_ID_HEX_TO_CDN_IMAGE_CHAIN_NAME = new Map([
   ['0x1', 'ethereum'],
   ['0x89', 'polygon'],
+  ['0x5', 'ethereum'],
+  ['0x13881', 'polygon'],
   ['0x38', 'binance'],
   ['0xa86a', 'avalanchec'],
   ['0xfa', 'fantom'],
@@ -318,6 +364,8 @@ export const CHAIN_ID_HEX_TO_CDN_IMAGE_CHAIN_NAME = new Map([
 ]);
 
 export const CHAIN_ID_HEX_TO_NATIVE_TOKEN_NAME = new Map([
+  ['0x5', 'GTH'],
+  ['0x13881', 'MATIC-TESTNET'],
   ['0x1', 'ETH'],
   ['0x89', 'MATIC'],
   ['0x38', 'BnB'],

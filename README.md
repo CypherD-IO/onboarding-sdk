@@ -16,32 +16,43 @@
 
 ## Getting Started
 
-### To Integrate 
+### To Integrate
 
 
-#### Web 
+#### Web
 
-Inject the CypherWallet Signon-SDK from the CDN link `https://public.cypherd.io/js/onboardingsdk.js` 
+Inject the CypherWallet Signon-SDK from the CDN link `https://public.cypherd.io/js/onboardingsdk.js`
 
 ```
-<script src="https://public.cypherd.io/js/onboardingsdk.js"> </script>
-window.Cypher('0x1f6388a695f82aa4e4cee4b79ef63d4f8758fdc2', '0xa4b1', '', 65);
-
+<script src="https://public.cypherd.io/js/onboardingsdk.jss"> </script>
+window.Cypher({
+  address: '0xdEc1bc71bf91431D60eF2742f412DCd1c5A204B8', // user wallet address
+  targetChainIdHex: '0x5', // Required: Chain Id in Hexadecimal
+  requiredTokenBalance: 1, // Required: Token Value Required with respect to native currency or token value
+  isTestnet: true, // Optional: enable testnet for developer testing
+  callBack: (success) => { // Optional
+    if(){
+      console.log('User wallet has a necessary token or currency');
+    }else{
+      console.log('Failed to load user wallet necessary token or currency');
+    }
+  } //
+});
 ```
 
 Detailed documentation available at https://developer.cypherwallet.io/
 
-### Npm
+### Npm (In Progress)
 
-1. Install the singon-sdk 
-`npm i -S @cypher` 
-2. Import the Cypher into Code 
-
-
+1. Install the singon-sdk
+`npm i -S @cypher`
+2. Import the Cypher into Code
 
 
 
-### To Contribute 
+
+
+### To Contribute
 
 
 

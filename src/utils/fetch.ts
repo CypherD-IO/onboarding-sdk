@@ -1,10 +1,9 @@
-const request = ( url: string, params: any = {}, method = 'GET' ) => {
+const request = ( url: string, params:{key:string, value: string}[] = [], method = 'GET' ) => {
   const options = {
       method
   };
   if ( 'GET' === method ) {
-    const query = Object.keys(params)
-    .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
+    const query = params.map(({ key,value }) => encodeURIComponent(key) + '=' + encodeURIComponent(value))
     .join('&');
 
     url += query;
