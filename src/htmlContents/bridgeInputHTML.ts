@@ -21,7 +21,7 @@ export const bridgeInputHTML = `'<div class="rounded-[30px] z-50" id="bridge-pop
       '<p class="text-[18px] text-black">' + tokenDetail.symbol + '</p>'+
     '</div>'+
     '<div class="flex my-[3]">'+
-      '<p class="text-[14px] text-black">Min amount: $10</p>'+
+      '<p class="text-[14px] text-black" id="bp-min-amount">Min amount: $' + Math.max(10, requiredUsdValue(globalThis.requiredTokenDetail, globalThis.exchangingTokenDetail)).toFixed(2) + '</p>'+
     '</div>'+
     '<div class="bg-white border border-[#E4E4E4] p-2 flex rounded-2xl w-3/4 mt-6">'+
       '<img src="' + tokenDetail.logoUrl + '" alt="' + tokenDetail.logoUrl + '"  class="h-[55px] w-[55px] rounded-lg">'+
@@ -39,6 +39,6 @@ export const bridgeInputHTML = `'<div class="rounded-[30px] z-50" id="bridge-pop
   '</div>'+
 
   '<div id="bp-submit-button-container" class="bg-white py-10 w-full flex items-center justify-center rounded-b-[30px]">'+
-    '<button class="bg-[#2081E2] h-[45px] w-[60%] rounded-lg text-white text-[16px] font-semibold" onclick="bridgeSubmit(' + tokenDetail.chainDetails.chain_id + ', ' + "'" +  tokenDetail.chainDetails.backendName + "'" + ')">Submit</button>'+
+    '<button class="bg-[#2081E2] h-[45px] w-[60%] rounded-lg text-white text-[16px] font-semibold" onclick="bridgeSubmitConditionCheck(' + tokenDetail.chainDetails.chain_id + ', ' + "'" +  tokenDetail.chainDetails.backendName + "'" + ')">Submit</button>'+
   '</div>'+
 '</div>'`;

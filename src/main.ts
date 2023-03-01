@@ -40,8 +40,8 @@ export const Cypher = async ({address, targetChainIdHex: fromChainId, requiredTo
 
   globalThis.cypherWalletDetails = {
     address: walletAddress.toLowerCase(),
-    fromChainId, fromTokenContractAddress:
-      requiredToken,
+    fromChainId,
+    fromTokenContractAddress: requiredToken,
     fromTokenRequiredBalance: requiredTokenBalance,
     callBack,
     isTestnet,

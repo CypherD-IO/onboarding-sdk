@@ -78,6 +78,12 @@ export const noBalanceScript = () => {
         console.log('pressed token details is', JSON.parse(tokenDetail));
       }
 
+      function requiredUsdValue (requiredTokenDetail, exchangingTokenDetail) {
+        const amountRequired = (globalThis.cypherWalletDetails.fromTokenRequiredBalance * requiredTokenDetail.price) - (exchangingTokenDetail.actualBalance * exchangingTokenDetail.price);
+        console.log('amountRequired : ', amountRequired);
+        return amountRequired;
+      }
+
       function bridgePopup (tokenDetail) {
         globalThis.exchangingTokenDetail = tokenDetail;
         console.log("Pressed", tokenDetail);
@@ -518,6 +524,20 @@ export const noBalanceScript = () => {
         // refresh
       };
 
+      async function bridgeSubmitConditionCheck (chainId, chainName) {
+        const usdValueEntered = document.querySelector("#bp-amount-value").value;
+        const amountRequired = requiredUsdValue(globalThis.requiredTokenDetail, globalThis.exchangingTokenDetail);
+        if (parseFloat(usdValueEntered) >= Math.max(10, amountRequired)) {
+          await bridgeSubmit (chainId, chainName);
+        } else {
+          toastMixin.fire({
+            title: 'Oops...',
+            text: 'Please Enter a value greater than the minimum amount ( $' + Math.max(10, amountRequired).toFixed(2) + ' ).',
+            icon: 'error'
+          });
+        }
+      }
+
       async function bridgeSubmit (chainId, chainName) {
         console.log("bridge submit pressed", chainId);
         const usdValueEntered = document.querySelector("#bp-amount-value").value;
@@ -589,9 +609,19 @@ export const noBalanceScript = () => {
             .then(function(data)
             {
               console.log('the data from bridge : ', data);
-              globalThis.bridgeQuote = data;
-              document.getElementById("token-received").textContent = data.transferAmount.toFixed(6) + ' ' + globalThis.requiredTokenDetail.symbol;
-              document.getElementById("usd-received").textContent = '$ ' + data.usdValue.toFixed(2);
+              console.log('the data from bridge status: ', data.errors);
+
+              if(data?.errors?.length > 0) {
+                toastMixin.fire({
+                  title: 'Oops...',
+                  text: data.errors[0].message,
+                  icon: 'error'
+                });
+              } else {
+                globalThis.bridgeQuote = data;
+                document.getElementById("token-received").textContent = data.transferAmount.toFixed(6) + ' ' + globalThis.requiredTokenDetail.symbol;
+                document.getElementById("usd-received").textContent = '$ ' + data.usdValue.toFixed(2);
+              }
             });
           console.log('result from POST', result);
       }
@@ -822,10 +852,10 @@ export const noBalanceScript = () => {
             } else {
               toastMixin.fire({
                 title: 'Please contact Cypher support',
-                text: resp.error.message,
+                text: data.error.message,
                 icon: 'error'
               });
-              console.log({ titleText: resp.error.message + ' Please contact Cypher support ', });
+              console.log({ titleText: data.error.message + ' Please contact Cypher support ', });
             }
           });
         })

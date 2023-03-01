@@ -37,7 +37,7 @@ export const getPortfolioModel = (holdings: any) => {
     const currentHoldings = holdings[i]?.token_holdings || [];
 
     for (const holding of currentHoldings) {
-      if (holding.actual_balance != 0 && holding.is_verified) {
+      if (holding.actual_balance * holding.price >= 10 && holding.is_verified) {
         const tokenHolding: Holding = {
           name: holding.name,
           symbol: holding.symbol,
