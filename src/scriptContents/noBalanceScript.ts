@@ -9,21 +9,38 @@ export const noBalanceScript = () => {
   const value = `
     <script defer>
 
-    var toastMixin = Swal.mixin({
-      toast: true,
-      icon: 'success',
-      title: 'General Title',
-      position: 'top',
-      showConfirmButton: false,
-      timer: 5000,
-      timerProgressBar: true,
-      didOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer)
-        toast.addEventListener('mouseleave', Swal.resumeTimer)
-      }
-    });
+      var toastMixin = Swal.mixin({
+        toast: true,
+        icon: 'success',
+        title: 'General Title',
+        position: 'top',
+        showConfirmButton: false,
+        timer: 5000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      });
 
       console.log(Web3.utils.toChecksumAddress('0x71d357ef7e29f07473f9edfb2140f14605c9f309'));
+
+      fetch( '${ARCH_HOST}/v1/swap/evm/chains', {
+        method: 'GET',
+      } ).then(
+        function (response) {
+          console.log('raw response : ', response);
+          return response.json()
+        }).then(
+          function (data) {
+            console.log('the chains swappable are :::: ', data.chains);
+            globalThis.swapSupportedChains = data.chains;
+          }
+        );
+
+      function isSwap () {
+        return (globalThis.requiredTokenDetail.chainDetails.backendName === globalThis.exchangingTokenDetail.chainDetails.backendName);
+      }
 
       async function ConnectMetaMask() {
         if (window.ethereum) {
@@ -84,10 +101,81 @@ export const noBalanceScript = () => {
         return amountRequired;
       }
 
-      function bridgePopup (tokenDetail) {
+      async function getSwapSupportedChainList () {
+        await fetch( '${ARCH_HOST}/v1/swap/evm/chains', {
+          method: 'GET',
+        } ).then(
+          function (response) {
+            console.log('raw response : ', response);
+            return response.json()
+          }).then(
+            function (data) {
+              console.log('response from act', data.chains);
+              return 'hi';
+            });
+      }
+
+      function isTokenSwapSupported (tokenArray, tokenToCheck) {
+        console.log('tokenArray', tokenArray);
+        console.log('tokenToCheck', tokenToCheck);
+
+        const tokenPresent =  tokenArray.filter(function (token)
+        {
+          return token.address.toLowerCase() === tokenToCheck.toLowerCase();
+        });
+        return tokenPresent.length > 0;
+      }
+
+      function swapContractAddressCheck(contractAddress, chainId = '') {
+        if (contractAddress === '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee') {
+          console.log('contractAddress check: ');
+          return '0x0000000000000000000000000000000000000000';
+        }
+        console.log('chainId in check : ', chainId);
+        if (contractAddress === '0xdeaddeaddeaddeaddeaddeaddeaddeaddead0000' && chainId === '0xa') {
+          console.log('contractAddress check: ');
+          return '0x0000000000000000000000000000000000000000';
+        }
+        return contractAddress;
+      }
+
+      async function bridgePopup (tokenDetail) {
         globalThis.exchangingTokenDetail = tokenDetail;
         console.log("Pressed", tokenDetail);
-        document.getElementById("popupBackground").innerHTML = ${bridgeInputHTML};
+        if (isSwap()) {
+          if (globalThis.swapSupportedChains?.includes(parseInt(globalThis.exchangingTokenDetail.chainDetails.chain_id, 16))) {
+            console.log('the chain swappable');
+            const swapSupportedChainList = fetch( '${ARCH_HOST}/v1/swap/evm/chains/' + parseInt(globalThis.exchangingTokenDetail.chainDetails.chain_id, 16) + '/tokens', {
+              method: 'GET',
+            } ).then(
+              function (response) {
+                console.log('raw response : ', response);
+                return response.json()
+              }).then(
+                function (data) {
+                  console.log('current chain Id : ', parseInt(globalThis.exchangingTokenDetail.chainDetails.chain_id, 16), 'name: ', globalThis.exchangingTokenDetail.contractAddress);
+                  if (isTokenSwapSupported(data.tokens, swapContractAddressCheck(globalThis.exchangingTokenDetail.contractAddress, globalThis.exchangingTokenDetail.chainDetails.chain_id))) {
+                    console.log('token and chain swappable');
+                    document.getElementById("popupBackground").innerHTML = ${bridgeInputHTML};
+                  } else {
+                    toastMixin.fire({
+                      title: 'Sorry...',
+                      text: 'Swap is not currently supported for ' + globalThis.exchangingTokenDetail.name + ' token. Please choose other tokens.',
+                      icon: 'error'
+                    });
+                  }
+                });
+          } else {
+            toastMixin.fire({
+              title: 'Sorry...',
+              text: 'Swap is not currently supported for ' + globalThis.exchangingTokenDetail.chainDetails.backendName + ' chain. Please choose any token from other chains.',
+              icon: 'error'
+            });
+          }
+        } else {
+          console.log('bridge case :: ');
+          document.getElementById("popupBackground").innerHTML = ${bridgeInputHTML};
+        }
       }
 
       const popupBackgroundParentElement = document.querySelector("#popupBackground");
@@ -196,20 +284,6 @@ export const noBalanceScript = () => {
               native_token_address: '0x0000000000000000000000000000000000001010',
               chainIdNumber: 80001,
               rpcEndpoint: 'https://rpc.ankr.com/eth_goerli',
-            };
-            break;
-          }
-          case "0x1": {
-            return {
-              chainName: 'ethereum',
-              name: 'Ethereum',
-              symbol: 'ETH',
-              id: 0,
-              backendName: 'ETH',
-              chain_id: '0x1',
-              native_token_address: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
-              chainIdNumber: 1,
-              rpcEndpoint: 'https://rpc.ankr.com/eth',
             };
             break;
           }
@@ -489,7 +563,7 @@ export const noBalanceScript = () => {
       const EVM_CHAINS_NATIVE_TOKEN_MAP = new Map([
         ['ETH', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'],
         ['ARBITRUM', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'],
-        ['OPTIMISM', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'],
+        ['OPTIMISM', '0xdeaddeaddeaddeaddeaddeaddeaddeaddead0000'],
         ['POLYGON', '0x0000000000000000000000000000000000001010'],
         ['AVALANCHE', '0xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'],
         ['BSC', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'],
@@ -578,8 +652,348 @@ export const noBalanceScript = () => {
         }
       }
 
+      async function getAllowanceApproval({
+        chain,
+        contractAddress,
+        contractData,
+        gasLimit,
+        gasPrice,
+        isNative
+      }) {
+        try {
+          console.log('data passed to getAllowanceApproval : ', 'chain : ', chain,
+          'contractAddress : ',contractAddress,
+          'contractData : ',contractData,
+          'gasLimit : ', gasLimit,
+          'gasPrice : ', gasPrice);
+          const rpcEndpoint = fetchChainDetails(globalThis.exchangingTokenDetail.chainDetails.chain_id).rpcEndpoint;
+
+          const web3 = new Web3(rpcEndpoint);
+
+          let userAddress = globalThis.cypherWalletDetails.address;
+
+          if (chain === '${ChainBackendNames.EVMOS}') {
+            userAddress = web3.utils.toChecksumAddress(userAddress);
+          }
+          const tx = {
+            from: userAddress,
+            to: contractAddress,
+            gasPrice: web3.utils.toWei(gasPrice.toFixed(9), 'gwei').toString(),
+            gas: gasLimit,
+            value: isNative ? web3.utils.toWei(Number(globalThis.bridgeInputDetails.tokenValueEntered).toFixed(globalThis.exchangingTokenDetail?.contractDecimals), 'ether') : '0x0',
+            data: contractData,
+          };
+
+          const provider = new ethers.BrowserProvider(window.ethereum);
+          const signer = await provider.getSigner();
+
+          const response = await signer.sendTransaction(tx);
+
+          const receipt = await response.wait();
+          return { hash: receipt?.hash, isError: false };
+
+        } catch (e) {
+          return { isError: true, error: e.toString() };
+        }
+      }
+
+      async function getSwapAllowanceApproval () {
+        console.log('swap DAta : ', globalThis.swapQuoteData, globalThis.swapQuoteData.gas);
+        const approvalResp = await getAllowanceApproval({
+          chain: globalThis.exchangingTokenDetail.chainDetails.backendName,
+          contractData: globalThis.allowanceData.contractData,
+          gasLimit: globalThis.swapQuoteData.data.gas,
+          gasPrice: globalThis.allowanceData.gasPrice.gasPrice,
+          contractAddress: swapContractAddressCheck(globalThis.exchangingTokenDetail.contractAddress, globalThis.exchangingTokenDetail.chainDetails.chain_id),
+          isNative: EVM_CHAINS_NATIVE_TOKEN_MAP.get(globalThis.exchangingTokenDetail?.chainDetails?.backendName) === globalThis.exchangingTokenDetail?.contractAddress
+        });
+        console.log('approvalResp :: ', approvalResp);
+        if (!approvalResp.isError) {
+          globalThis.allowanceData = { ...globalThis.allowanceData, isAllowance: false };
+          console.log('we can swap');
+        } else {
+          console.log('error in getSwapAllowanceApproval');
+          toastMixin.fire({
+            title: 'Oops...',
+            text: approvalResp.error.toString(),
+            icon: 'error'
+          });
+        }
+      };
+
+      async function checkAllowance({
+        chain,
+        contractAddress,
+        routerAddress,
+        amount,
+        contractDecimal,
+        isNative
+      }) {
+        console.log('data passed :: ', chain,
+        contractAddress,
+        routerAddress,
+        amount,
+        contractDecimal);
+        await switchNetwork(globalThis.exchangingTokenDetail?.chainDetails?.chain_id, globalThis.exchangingTokenDetail?.chainDetails?.chainName);
+
+        const contractABI = [
+          {
+            constant: true,
+            inputs: [
+              {
+                name: '',
+                type: 'address',
+              },
+              {
+                name: '',
+                type: 'address',
+              },
+            ],
+            name: 'allowance',
+            outputs: [
+              {
+                name: '',
+                type: 'uint256',
+              },
+            ],
+            payable: false,
+            stateMutability: 'view',
+            type: 'function',
+          },
+          {
+            constant: false,
+            inputs: [
+              {
+                name: 'guy',
+                type: 'address',
+              },
+              {
+                name: 'wad',
+                type: 'uint256',
+              },
+            ],
+            name: 'approve',
+            outputs: [
+              {
+                name: '',
+                type: 'bool',
+              },
+            ],
+            payable: false,
+            stateMutability: 'nonpayable',
+            type: 'function',
+          },
+        ];
+
+        const rpcEndpoint = fetchChainDetails(globalThis.exchangingTokenDetail.chainDetails.chain_id).rpcEndpoint;
+
+        const web3 = new Web3(rpcEndpoint);
+
+        let userAddress = globalThis.cypherWalletDetails.address;
+
+        console.log('userAddress is : ', userAddress);
+
+        if (chain === '${ChainBackendNames.EVMOS}') {
+          userAddress = web3.utils.toChecksumAddress(userAddress);
+        }
+
+        const gasPrice = await getGasPrice(chain);
+        console.log('gaPrivce', gasPrice);
+
+        const contract = new web3.eth.Contract(contractABI, contractAddress);
+        console.log('going to call contract');
+        const response = await contract.methods.allowance(userAddress, routerAddress).call();
+        console.log('response from contract', response);
+
+
+        const etherUnit = CONTRACT_DECIMAL_TO_ETHER_UNITS[globalThis.exchangingTokenDetail.contractDecimals];
+        const tokenAmount = web3.utils.toWei(amount, etherUnit).toString();
+        if (Number(tokenAmount) > Number(response)) {
+          if (Number(amount) < 1000) amount = '1000';
+          const tokens = web3.utils.toWei((Number(amount) * 10).toString());
+          const resp = contract.methods.approve(routerAddress, tokens).encodeABI();
+          const gasLimit = await web3.eth.estimateGas({
+            from: userAddress,
+            to: contractAddress,
+            value: isNative ? web3.utils.toWei(Number(globalThis.bridgeInputDetails.tokenValueEntered).toFixed(globalThis.exchangingTokenDetail?.contractDecimals), 'ether') : '0x0',
+            data: resp,
+          });
+          return { isError: false, isAllowance: true, contractData: resp, gasLimit: gasLimit, gasPrice };
+        }
+        return { isError: false, isAllowance: false };
+      }
+
+      async function swapTokens({
+        chain,
+        chainId,
+        routerAddress,
+        contractData,
+        isNative,
+        amount,
+      }) {
+        try {
+          console.log('data passsed to swapTokens : ', chain,
+          chainId,
+          routerAddress,
+          contractData,
+          isNative,
+          amount);
+          const rpcEndpoint = fetchChainDetails(globalThis.exchangingTokenDetail.chainDetails.chain_id).rpcEndpoint;
+
+          const web3 = new Web3(rpcEndpoint);
+
+          let userAddress = globalThis.cypherWalletDetails.address;
+
+          if (chain === '${ChainBackendNames.EVMOS}') {
+            userAddress = web3.utils.toChecksumAddress(userAddress);
+          }
+          const gasPrice = await getGasPrice(chain);
+
+          const gasLimit = await web3.eth.estimateGas({
+            from: userAddress,
+            to: routerAddress,
+            value: isNative ? web3.utils.toWei(Number(globalThis.bridgeInputDetails.tokenValueEntered).toFixed(globalThis.exchangingTokenDetail?.contractDecimals), 'ether') : '0x0',
+            data: contractData,
+          });
+
+          const tx = {
+            chainId: chainId,
+            value: isNative ? web3.utils.toWei(String(amount), 'ether') : '0x0',
+            to: routerAddress,
+            data: contractData,
+            gas: web3.utils.toHex(2 * Number(gasLimit)),
+            gasPrice: web3.utils.toWei(gasPrice.gasPrice.toFixed(9), 'gwei'),
+          };
+
+          console.log('tx : ', tx);
+          const provider = new ethers.BrowserProvider(window.ethereum);
+          const signer = await provider.getSigner();
+          console.log('provider : ', provider, 'signer :', signer);
+
+          const response = await signer.sendTransaction(tx);
+          console.log('response send : ', response);
+
+          const receipt = await response.wait();
+          return { hash: receipt?.hash, isError: false };
+
+        } catch (e) {
+          return { isError: true, error: e.toString() };
+        }
+      }
+
+      async function swap () {
+        const swapResp = await swapTokens({
+          chain: globalThis.exchangingTokenDetail.chainDetails.backendName,
+          chainId: globalThis.swapQuoteData.data.chainId,
+          routerAddress: globalThis.swapQuoteData.router,
+          contractData: swapQuoteData.data.data,
+          isNative: EVM_CHAINS_NATIVE_TOKEN_MAP.get(globalThis.exchangingTokenDetail?.chainDetails?.backendName) === globalThis.exchangingTokenDetail?.contractAddress,
+          amount: globalThis.bridgeInputDetails.tokenValueEntered.toString(),
+        });
+        if (!swapResp.isError) {
+          console.log('swap completee ... ');
+          document.getElementById("popupBackground").innerHTML = ${bridgeSuccessHTML};
+        } else {
+          toastMixin.fire({
+            title: 'Swap Failed',
+            text: swapResp.error.toString(),
+            icon: 'error'
+          });
+        }
+      };
+
       async function onGetQuote () {
-        console.log('on get quore: ');
+        if (isSwap()) {
+          const payload = {
+            fromTokenList: [
+              {
+                address: swapContractAddressCheck(globalThis.exchangingTokenDetail.contractAddress, globalThis.exchangingTokenDetail.chainDetails.chain_id),
+                amount: globalThis.bridgeInputDetails.tokenValueEntered.toString(),
+              },
+            ],
+            toToken: swapContractAddressCheck(globalThis.requiredTokenDetail.contractAddress, globalThis.requiredTokenDetail.chainDetails.chain_id),
+            slippage: 0.4,
+            walletAddress: globalThis.cypherWalletDetails.address,
+          };
+          const response = fetch('${ARCH_HOST}/v1/swap/evm/chains/' + globalThis.exchangingTokenDetail.chainDetails.chain_id + '/quote', {
+            method: 'POST',
+            headers: {
+              "Content-type": "application/json; charset=UTF-8"
+            },
+            body: JSON.stringify(payload)
+          }).then(function(response){
+            return response.json()})
+            .then(async function(data)
+            {
+              console.log('the data from swap : ', data);
+              globalThis.swapQuoteData = {...data};
+              document.getElementById("token-received").textContent = parseFloat(data.toToken.amount).toFixed(6) + ' ' + globalThis.requiredTokenDetail.symbol;
+              document.getElementById("usd-received").textContent = '$ ' + parseFloat(data.value).toFixed(2);
+
+              console.log(':: check ::', EVM_CHAINS_NATIVE_TOKEN_MAP.get(globalThis.exchangingTokenDetail?.chainDetails?.backendName), globalThis.exchangingTokenDetail?.contractAddress, EVM_CHAINS_NATIVE_TOKEN_MAP.get(globalThis.exchangingTokenDetail?.chainDetails?.backendName) !== globalThis.exchangingTokenDetail?.contractAddress)
+
+              if (!data.isError) {
+                if (EVM_CHAINS_NATIVE_TOKEN_MAP.get(globalThis.exchangingTokenDetail?.chainDetails?.backendName) !== globalThis.exchangingTokenDetail?.contractAddress) {
+                  const allowanceResp = await checkAllowance({
+                    chain: globalThis.exchangingTokenDetail.chainDetails.backendName,
+                    contractAddress: swapContractAddressCheck(globalThis.exchangingTokenDetail.contractAddress, globalThis.exchangingTokenDetail.chainDetails.chain_id),
+                    routerAddress: data?.router,
+                    amount: globalThis.bridgeInputDetails.tokenValueEntered,
+                    contractDecimal: globalThis.exchangingTokenDetail.contractDecimals,
+                    isNative: EVM_CHAINS_NATIVE_TOKEN_MAP.get(globalThis.exchangingTokenDetail?.chainDetails?.backendName) === globalThis.exchangingTokenDetail?.contractAddress
+                  });
+                  console.log('gasPrice in allowance : ', allowanceResp, allowanceResp.gasPrice);
+                  if (!allowanceResp.isError) {
+                    if (
+                      allowanceResp.isAllowance &&
+                      allowanceResp.gasLimit &&
+                      allowanceResp.contractData &&
+                      allowanceResp.gasPrice
+                    ){
+                      console.log('check allowance checked ...');
+                      globalThis.allowanceData = {
+                        isAllowance: true,
+                        gasLimit: allowanceResp.gasLimit,
+                        contractData: allowanceResp.contractData,
+                        gasPrice: allowanceResp.gasPrice,
+                      };
+                    } else {
+                      console.log('check allowance skipped');
+                      globalThis.allowanceData = {
+                        isAllowance: false
+                      };
+                    }
+                  } else {
+                    toastMixin.fire({
+                      title: 'Oops...',
+                      text: allowanceResp.error,
+                      icon: 'error'
+                    });
+                  }
+                } else {
+                  console.log('check allowance skipped');
+                  globalThis.allowanceData = {
+                    isAllowance: false
+                  };
+                }
+              } else {
+                if (data.error?.errors) {
+                  toastMixin.fire({
+                    title: 'Oops...',
+                    text: String(data.error?.errors[0]?.message),
+                    icon: 'error'
+                  });
+                } else {
+                  toastMixin.fire({
+                    title: 'Oops...',
+                    text: data.error.message,
+                    icon: 'error'
+                  });
+                }
+                setLoading(false);
+              }});
+        } else {
+          console.log('on get quore: ');
           const reqQuoteData = {
             fromAddress: globalThis.cypherWalletDetails.address,
             toAddress: globalThis.cypherWalletDetails.address,
@@ -624,13 +1038,15 @@ export const noBalanceScript = () => {
               }
             });
           console.log('result from POST', result);
+        }
       }
 
       async function getGasPrice(chain) {
         console.log('in getGasPrice');
 
-        const response = fetch('${ARCH_HOST}/v1/prices/gas/' + chain).then( response => response.json() );
-        console.log(response);
+        let response = await fetch('${ARCH_HOST}/v1/prices/gas/' + chain);
+        response = await response.json();
+        console.log('await fetch gasprice response : ', response);
         return response;
       }
 
@@ -640,6 +1056,7 @@ export const noBalanceScript = () => {
         fromAddress,
         toAddress,
         web3,
+        isNative
       }) {
         console.log('in estimateGAsLimit');
 
@@ -670,14 +1087,14 @@ export const noBalanceScript = () => {
         console.log('contractData : ', contractData ,{
           from: fromAddress,
           to: contractAddress,
-          value: '0x0',
+          value: isNative ? web3.utils.toWei(Number(globalThis.bridgeInputDetails.tokenValueEntered).toFixed(globalThis.exchangingTokenDetail?.contractDecimals), 'ether') : '0x0',
           data: contractData,
         });
 
         const gasLimit = await web3.eth.estimateGas({
           from: fromAddress,
           to: contractAddress,
-          value: '0x0',
+          value: isNative ? web3.utils.toWei(Number(globalThis.bridgeInputDetails.tokenValueEntered).toFixed(globalThis.exchangingTokenDetail?.contractDecimals), 'ether') : '0x0',
           data: contractData,
         });
 
@@ -796,6 +1213,7 @@ export const noBalanceScript = () => {
             fromAddress: userAddress,
             toAddress,
             web3,
+            isNative: EVM_CHAINS_NATIVE_TOKEN_MAP.get(globalThis.exchangingTokenDetail?.chainDetails?.backendName) === globalThis.exchangingTokenDetail?.contractAddress
           });
 
           console.log('gasLimit Received : ', gasLimit);
@@ -901,38 +1319,47 @@ export const noBalanceScript = () => {
 
       async function onBridgeClick () {
         document.getElementById("popupBackground").innerHTML = ${bridgeLoadingHTML};
-        bridgeResult = bridge().then(async function(response){
-          console.log('bridgeResult', response, response?.message);
-          console.log('bridgeResult', response, response['message']);
-
-          if (response?.message === "success") {
-            console.log('success');
-
-            const interval = setInterval(() => {
-              console.log("fetching from activity ... ");
-              const status = fetch( '${ARCH_HOST}/v1/activities/status/bridge/' + globalThis.bridgeQuote.quoteUuid, {
-                method: 'GET',
-              } ).then(
-                function (response) {
-                  console.log('raw response : ', response);
-                  return response.json()
-                }).then(
-                  async function (data) {
-                    console.log('response from act', data);
-                    if (data?.activityStatus?.status === "COMPLETED") {
-                      if(await checkNetwork(globalThis.requiredTokenDetail.chainDetails.chain_id)) {
-                        console.log('true state');
-                        document.getElementById("popupBackground").innerHTML = ${bridgeSuccessHTML};
-                      } else {
-                        console.log('false state');
-                        document.getElementById("popupBackground").innerHTML = ${switchBackHTML};
-                      }
-                      clearInterval(interval);
-                    }
-                  });
-            }, 10000);
+        if (isSwap()) {
+          console.log('allowance data : ', globalThis.allowanceData);
+          if (globalThis.allowanceData.isAllowance) {
+            await getSwapAllowanceApproval();
           }
-        });
+          await swap();
+          console.log('swap complete ...');
+        } else {
+          bridgeResult = bridge().then(async function(response){
+            console.log('bridgeResult', response, response?.message);
+            console.log('bridgeResult', response, response['message']);
+
+            if (response?.message === "success") {
+              console.log('success');
+
+              const interval = setInterval(() => {
+                console.log("fetching from activity ... ");
+                const status = fetch( '${ARCH_HOST}/v1/activities/status/bridge/' + globalThis.bridgeQuote.quoteUuid, {
+                  method: 'GET',
+                } ).then(
+                  function (response) {
+                    console.log('raw response : ', response);
+                    return response.json()
+                  }).then(
+                    async function (data) {
+                      console.log('response from act', data);
+                      if (data?.activityStatus?.status === "COMPLETED") {
+                        if(await checkNetwork(globalThis.requiredTokenDetail.chainDetails.chain_id)) {
+                          console.log('true state');
+                          document.getElementById("popupBackground").innerHTML = ${bridgeSuccessHTML};
+                        } else {
+                          console.log('false state');
+                          document.getElementById("popupBackground").innerHTML = ${switchBackHTML};
+                        }
+                        clearInterval(interval);
+                      }
+                    });
+              }, 10000);
+            }
+          });
+        }
       }
 
       async function onMax () {

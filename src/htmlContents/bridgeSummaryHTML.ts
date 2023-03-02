@@ -40,7 +40,7 @@ export const bridgeSummaryHTML = `'<div class="flex flex-col justify-evenly item
     '</div>'+
   '</div>'+
   '<div class=" flex flex-row justify-center items-center w-[100%]">'+
-    '<button id="blue-button" class="bg-[#2081E2] text-[16px] font-semibold border-none text-white h-[45px] w-[60%] rounded-[3px]" onclick="onBridgeClick()">Exchange</button>'+
+    '<button id="bridge-submit-blue-button" class="blue-button bg-[#2081E2] text-[16px] font-semibold border-none text-white h-[45px] w-[60%] rounded-[3px]" onclick="onBridgeClick()">Exchange</button>'+
   '</div>'+
 '</div>'`;
 
