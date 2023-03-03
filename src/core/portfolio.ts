@@ -99,7 +99,7 @@ export const getPortfolioModel = async (holdings: any) => {
       }
 
       if ((chainId === globalThis.cypherWalletDetails.fromChainId && holding.contract_address === globalThis.cypherWalletDetails.fromTokenContractAddress) || chainId !== globalThis.cypherWalletDetails.fromChainId || (chainId === globalThis.cypherWalletDetails.fromChainId && swapSupport)) {
-        if (holding.actual_balance * holding.price >= 0 && holding.is_verified) {
+        if (holding.actual_balance * holding.price >= 10 && holding.is_verified) {
           const tokenHolding: Holding = {
             name: holding.name,
             symbol: holding.symbol,
