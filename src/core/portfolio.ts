@@ -42,6 +42,7 @@ export const getPortfolioModel = async (holdings: any) => {
   const swapSupportedChains = responseData?.chains;
 
   if (!swapSupportedChains?.includes(parseInt(globalThis.cypherWalletDetails.fromChainId, 16))) {
+    console.log('the chain itself is not supported.');
     swapSupport = false;
   }
 
@@ -64,13 +65,17 @@ export const getPortfolioModel = async (holdings: any) => {
     return contractAddress;
   }
 
-  const responseRequiredTokenList = await fetch( `${ARCH_HOST}/v1/swap/evm/chains/` + parseInt(globalThis.cypherWalletDetails.fromChainId, 16) + `/tokens`, {
-    method: 'GET',
-  } );
-  const responseJSONRequiredTokenList = await responseRequiredTokenList.json();
-  const swapSupportedRequiredTokensList = responseJSONRequiredTokenList?.tokens;
+  let swapSupportedRequiredTokensList = [];
 
-  if (!isTokenSwapSupported(swapSupportedRequiredTokensList, swapContractAddressCheck(globalThis.cypherWalletDetails.fromTokenContractAddress, globalThis.cypherWalletDetails.fromChainId))) {
+  if (swapSupport) {
+    const responseRequiredTokenList = await fetch( `${ARCH_HOST}/v1/swap/evm/chains/` + parseInt(globalThis.cypherWalletDetails.fromChainId, 16) + `/tokens`, {
+      method: 'GET',
+    } );
+    const responseJSONRequiredTokenList = await responseRequiredTokenList.json();
+    swapSupportedRequiredTokensList = responseJSONRequiredTokenList?.tokens;
+  }
+
+  if (swapSupport && !isTokenSwapSupported(swapSupportedRequiredTokensList, swapContractAddressCheck(globalThis.cypherWalletDetails.fromTokenContractAddress, globalThis.cypherWalletDetails.fromChainId))) {
     console.log('not supported : ', globalThis.cypherWalletDetails.fromChainId);
     swapSupport = false;
   }
@@ -84,7 +89,7 @@ export const getPortfolioModel = async (holdings: any) => {
       // change to 10
 
       const chainId = BACKEND_NAME_TO_CHAIN_ID_HEX.get(holdings[i]?.chain_id);
-
+      console.log('chain Id is  : ', chainId);
 
       if (chainId === globalThis.cypherWalletDetails.fromChainId && swapSupport) {
         if (!isTokenSwapSupported(swapSupportedRequiredTokensList, swapContractAddressCheck(holding.contract_address, chainId))) {
@@ -93,7 +98,7 @@ export const getPortfolioModel = async (holdings: any) => {
         }
       }
 
-      if (chainId !== globalThis.cypherWalletDetails.fromChainId || (chainId === globalThis.cypherWalletDetails.fromChainId && swapSupport)) {
+      if ((chainId === globalThis.cypherWalletDetails.fromChainId && holding.contract_address === globalThis.cypherWalletDetails.fromTokenContractAddress) || chainId !== globalThis.cypherWalletDetails.fromChainId || (chainId === globalThis.cypherWalletDetails.fromChainId && swapSupport)) {
         if (holding.actual_balance * holding.price >= 0 && holding.is_verified) {
           const tokenHolding: Holding = {
             name: holding.name,

@@ -2,9 +2,9 @@
 // Mainnet
 window.Cypher({
   address: '0x71d357ef7e29f07473f9edfb2140f14605c9f309',
-  targetChainIdHex: '0x89',
-  requiredTokenContractAddress: "0x874e178a2f3f3f9d34db862453cd756e7eab0381",
-  requiredTokenBalance: 13,
+  targetChainIdHex: '0xa',
+  requiredTokenContractAddress: "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+  requiredTokenBalance: 12,
   callBack: () => { console.log('callBack called'); }
 });
 
