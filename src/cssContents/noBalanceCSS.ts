@@ -116,6 +116,11 @@ tr:nth-child(odd) {
   margin-right: 10px
 }
 
+.disabled-button {
+  background-color: gray;
+  color: black;
+}
+
 #bridge-popup-css {
   display: flex;
   flex-direction: column;

@@ -957,11 +957,15 @@ export const noBalanceScript = () => {
                         contractData: allowanceResp.contractData,
                         gasPrice: allowanceResp.gasPrice,
                       };
+                      document.getElementById("bridge-submit-blue-button").disabled = false;
+                      document.getElementById("bridge-submit-blue-button").classList.remove("disabled-button");
                     } else {
                       console.log('check allowance skipped');
                       globalThis.allowanceData = {
                         isAllowance: false
                       };
+                      document.getElementById("bridge-submit-blue-button").disabled = false;
+                      document.getElementById("bridge-submit-blue-button").classList.remove("disabled-button");
                     }
                   } else {
                     toastMixin.fire({
@@ -975,6 +979,8 @@ export const noBalanceScript = () => {
                   globalThis.allowanceData = {
                     isAllowance: false
                   };
+                  document.getElementById("bridge-submit-blue-button").disabled = false;
+                  document.getElementById("bridge-submit-blue-button").classList.remove("disabled-button");
                 }
               } else {
                 if (data.error?.errors) {
@@ -1035,6 +1041,8 @@ export const noBalanceScript = () => {
                 globalThis.bridgeQuote = data;
                 document.getElementById("token-received").textContent = data.transferAmount.toFixed(6) + ' ' + globalThis.requiredTokenDetail.symbol;
                 document.getElementById("usd-received").textContent = '$ ' + data.usdValue.toFixed(2);
+                document.getElementById("bridge-submit-blue-button").disabled = false;
+                document.getElementById("bridge-submit-blue-button").classList.remove("disabled-button");
               }
             });
           console.log('result from POST', result);
