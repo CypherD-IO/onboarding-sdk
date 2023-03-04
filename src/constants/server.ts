@@ -350,6 +350,19 @@ export const CHAIN_ID_HEX_TO_ENUM_MAPPING = new Map([
   ['0xa', ChainBackendNames.OPTIMISM],
 ]);
 
+export const BACKEND_NAME_TO_CHAIN_ID_HEX = new Map([
+  [ChainBackendNames.ETH, '0x1'],
+  [ChainBackendNames.ETH_GOERLI, '0x5'],
+  [ChainBackendNames.POLYGON_MUMBAI, '0x13881'],
+  [ChainBackendNames.POLYGON, '0x89'],
+  [ChainBackendNames.BSC, '0x38'],
+  [ChainBackendNames.AVALANCHE, '0xa86a'],
+  [ChainBackendNames.FANTOM, '0xfa'],
+  [ChainBackendNames.EVMOS, '0x2329'],
+  [ChainBackendNames.ARBITRUM, '0xa4b1'],
+  [ChainBackendNames.OPTIMISM, '0xa'],
+]);
+
 export const CHAIN_ID_HEX_TO_CDN_IMAGE_CHAIN_NAME = new Map([
   ['0x1', 'ethereum'],
   ['0x89', 'polygon'],

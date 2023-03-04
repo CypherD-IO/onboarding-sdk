@@ -20,7 +20,7 @@ export const switchBackHTML = `'<div id="bridge-popup-css" class="rounded-[30px]
   '</div>'+
 '</div>'+
   '<div class=" flex flex-row justify-center items-center w-[100%] mt-[10px]">'+
-    '<button class="bg-[#2081E2] text-[16px] font-semibold border-none text-white h-[45px] w-[60%] rounded-[3px]" onclick="switchNetwork(' + "'" + globalThis.requiredTokenDetail.chainDetails.chain_id.toString(16) + "'" + ', ' + "'" +  globalThis.requiredTokenDetail.chainDetails.backendName + "'" + '); closePopup(); globalThis.callBack()">Switch</button>'+
+    '<button class="bg-[#2081E2] text-[16px] font-semibold border-none text-white h-[45px] w-[60%] rounded-[3px]" onclick="switchNetwork(' + "'" + globalThis.requiredTokenDetail.chainDetails.chain_id.toString(16) + "'" + ', ' + "'" +  globalThis.requiredTokenDetail.chainDetails.backendName + "'" + '); closePopup(); globalThis.callBack(true)">Switch</button>'+
   '</div>'+
 '</div>'`;
 

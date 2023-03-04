@@ -1,6 +1,8 @@
 import { get } from 'lodash';
-import { CHAIN_ETH, CHAIN_POLYGON, CHAIN_BSC, CHAIN_AVALANCHE, CHAIN_FTM, CHAIN_ARBITRUM, CHAIN_OPTIMISM, CHAIN_EVMOS, CHAIN_COSMOS, CHAIN_JUNO, CHAIN_OSMOSIS, CHAIN_STARGAZE, CHAIN_ETH_GOERLI, CHAIN_POLYGON_MUMBAI } from '../constants/server';
+import { CHAIN_ETH, CHAIN_POLYGON, CHAIN_BSC, CHAIN_AVALANCHE, CHAIN_FTM, CHAIN_ARBITRUM, CHAIN_OPTIMISM, CHAIN_EVMOS, CHAIN_COSMOS, CHAIN_JUNO, CHAIN_OSMOSIS, CHAIN_STARGAZE, CHAIN_ETH_GOERLI, CHAIN_POLYGON_MUMBAI, ARCH_HOST, BACKEND_NAME_TO_CHAIN_ID_HEX } from '../constants/server';
 import { WalletHoldings, Holding, ChainHoldings } from '../interface';
+
+declare let globalThis: any;
 
 export function sortDesc(a: any, b: any) {
   const first = parseFloat(get(a, 'totalValue', 0));
@@ -13,7 +15,7 @@ export function sortDesc(a: any, b: any) {
   return 0;
 }
 
-export const getPortfolioModel = (holdings: any) => {
+export const getPortfolioModel = async (holdings: any) => {
   let totalUnverifiedBalance = 0;
   let totalBalance = 0;
   let ethHoldings;
@@ -31,74 +33,135 @@ export const getPortfolioModel = (holdings: any) => {
   let ethGoerliHoldings;
   let polyonMumbaiHoldings;
 
+  let swapSupport = true;
+
+  const response = await fetch( `${ARCH_HOST}/v1/swap/evm/chains`, {
+    method: 'GET',
+  });
+  const responseData = await response.json();
+  const swapSupportedChains = responseData?.chains;
+
+  if (!swapSupportedChains?.includes(parseInt(globalThis.cypherWalletDetails.fromChainId, 16))) {
+    console.log('the chain itself is not supported.');
+    swapSupport = false;
+  }
+
+  function isTokenSwapSupported (tokenArray: any, tokenToCheck: string) {
+    const tokenPresent =  tokenArray.filter(function (token: any)
+    {
+      return token.address.toLowerCase() === tokenToCheck.toLowerCase();
+    });
+    return tokenPresent.length > 0;
+  }
+
+  function swapContractAddressCheck(contractAddress: string, chainId = '') {
+    if (contractAddress === '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee') {
+      return '0x0000000000000000000000000000000000000000';
+    }
+    console.log('chainId in check : ', chainId);
+    if (contractAddress === '0xdeaddeaddeaddeaddeaddeaddeaddeaddead0000' && chainId === '0xa') {
+      return '0x0000000000000000000000000000000000000000';
+    }
+    return contractAddress;
+  }
+
+  let swapSupportedRequiredTokensList = [];
+
+  if (swapSupport) {
+    const responseRequiredTokenList = await fetch( `${ARCH_HOST}/v1/swap/evm/chains/` + parseInt(globalThis.cypherWalletDetails.fromChainId, 16) + `/tokens`, {
+      method: 'GET',
+    } );
+    const responseJSONRequiredTokenList = await responseRequiredTokenList.json();
+    swapSupportedRequiredTokensList = responseJSONRequiredTokenList?.tokens;
+  }
+
+  if (swapSupport && !isTokenSwapSupported(swapSupportedRequiredTokensList, swapContractAddressCheck(globalThis.cypherWalletDetails.fromTokenContractAddress, globalThis.cypherWalletDetails.fromChainId))) {
+    console.log('not supported : ', globalThis.cypherWalletDetails.fromChainId);
+    swapSupport = false;
+  }
+
   const totalHoldings: Holding[] = [];
   for (let i = 0; i < holdings.length; i++) {
     const tokenHoldings: Holding[] = [];
     const currentHoldings = holdings[i]?.token_holdings || [];
 
     for (const holding of currentHoldings) {
-      if (holding.actual_balance * holding.price >= 10 && holding.is_verified) {
-        const tokenHolding: Holding = {
-          name: holding.name,
-          symbol: holding.symbol,
-          logoUrl: holding.logo_url,
-          price: holding.price,
-          contractAddress: holding.contract_address,
-          balance: holding.balance,
-          contractDecimals: holding.contract_decimals,
-          totalValue: holding.total_value,
-          actualBalance: holding.actual_balance,
-          isVerified: holding.is_verified,
-          coinGeckoId: holding.coin_gecko_id,
-          about: holding.about,
-          price24h: holding.price24h,
-        };
-        switch (holdings[i]?.chain_id) {
-          case CHAIN_ETH_GOERLI.backendName:
-            tokenHolding.chainDetails = CHAIN_ETH_GOERLI;
-            break;
-          case CHAIN_POLYGON_MUMBAI.backendName:
-            tokenHolding.chainDetails = CHAIN_POLYGON_MUMBAI;
-            break;
-          case CHAIN_ETH.backendName:
-            tokenHolding.chainDetails = CHAIN_ETH;
-            break;
-          case CHAIN_POLYGON.backendName:
-            tokenHolding.chainDetails = CHAIN_POLYGON;
-            break;
-          case CHAIN_BSC.backendName:
-            tokenHolding.chainDetails = CHAIN_BSC;
-            break;
-          case CHAIN_AVALANCHE.backendName:
-            tokenHolding.chainDetails = CHAIN_AVALANCHE;
-            break;
-          case CHAIN_FTM.backendName:
-            tokenHolding.chainDetails = CHAIN_FTM;
-            break;
-          case CHAIN_ARBITRUM.backendName:
-            tokenHolding.chainDetails = CHAIN_ARBITRUM;
-            break;
-          case CHAIN_OPTIMISM.backendName:
-            tokenHolding.chainDetails = CHAIN_OPTIMISM;
-            break;
-          case CHAIN_EVMOS.backendName:
-            tokenHolding.chainDetails = CHAIN_EVMOS;
-            break;
-          case CHAIN_COSMOS.backendName:
-            tokenHolding.chainDetails = CHAIN_COSMOS;
-            break;
-          case CHAIN_OSMOSIS.backendName:
-            tokenHolding.chainDetails = CHAIN_OSMOSIS;
-            break;
-          case CHAIN_JUNO.backendName:
-            tokenHolding.chainDetails = CHAIN_JUNO;
-            break;
-          case CHAIN_STARGAZE.backendName:
-            tokenHolding.chainDetails = CHAIN_STARGAZE;
-            break;
+      // change to 10
+
+      const chainId = BACKEND_NAME_TO_CHAIN_ID_HEX.get(holdings[i]?.chain_id);
+      console.log('chain Id is  : ', chainId);
+
+      if (chainId === globalThis.cypherWalletDetails.fromChainId && swapSupport) {
+        if (!isTokenSwapSupported(swapSupportedRequiredTokensList, swapContractAddressCheck(holding.contract_address, chainId))) {
+          console.log('not supported : ', holding.name);
+          swapSupport = false;
         }
-        tokenHoldings.push(tokenHolding);
-        totalHoldings.push(tokenHolding);
+      }
+
+      if ((chainId === globalThis.cypherWalletDetails.fromChainId && holding.contract_address === globalThis.cypherWalletDetails.fromTokenContractAddress) || chainId !== globalThis.cypherWalletDetails.fromChainId || (chainId === globalThis.cypherWalletDetails.fromChainId && swapSupport)) {
+        if (holding.actual_balance * holding.price >= 10 && holding.is_verified) {
+          const tokenHolding: Holding = {
+            name: holding.name,
+            symbol: holding.symbol,
+            logoUrl: holding.logo_url,
+            price: holding.price,
+            contractAddress: holding.contract_address,
+            balance: holding.balance,
+            contractDecimals: holding.contract_decimals,
+            totalValue: holding.total_value,
+            actualBalance: holding.actual_balance,
+            isVerified: holding.is_verified,
+            coinGeckoId: holding.coin_gecko_id,
+            about: holding.about,
+            price24h: holding.price24h,
+          };
+          switch (holdings[i]?.chain_id) {
+            case CHAIN_ETH_GOERLI.backendName:
+              tokenHolding.chainDetails = CHAIN_ETH_GOERLI;
+              break;
+            case CHAIN_POLYGON_MUMBAI.backendName:
+              tokenHolding.chainDetails = CHAIN_POLYGON_MUMBAI;
+              break;
+            case CHAIN_ETH.backendName:
+              tokenHolding.chainDetails = CHAIN_ETH;
+              break;
+            case CHAIN_POLYGON.backendName:
+              tokenHolding.chainDetails = CHAIN_POLYGON;
+              break;
+            case CHAIN_BSC.backendName:
+              tokenHolding.chainDetails = CHAIN_BSC;
+              break;
+            case CHAIN_AVALANCHE.backendName:
+              tokenHolding.chainDetails = CHAIN_AVALANCHE;
+              break;
+            case CHAIN_FTM.backendName:
+              tokenHolding.chainDetails = CHAIN_FTM;
+              break;
+            case CHAIN_ARBITRUM.backendName:
+              tokenHolding.chainDetails = CHAIN_ARBITRUM;
+              break;
+            case CHAIN_OPTIMISM.backendName:
+              tokenHolding.chainDetails = CHAIN_OPTIMISM;
+              break;
+            case CHAIN_EVMOS.backendName:
+              tokenHolding.chainDetails = CHAIN_EVMOS;
+              break;
+            case CHAIN_COSMOS.backendName:
+              tokenHolding.chainDetails = CHAIN_COSMOS;
+              break;
+            case CHAIN_OSMOSIS.backendName:
+              tokenHolding.chainDetails = CHAIN_OSMOSIS;
+              break;
+            case CHAIN_JUNO.backendName:
+              tokenHolding.chainDetails = CHAIN_JUNO;
+              break;
+            case CHAIN_STARGAZE.backendName:
+              tokenHolding.chainDetails = CHAIN_STARGAZE;
+              break;
+          }
+          tokenHoldings.push(tokenHolding);
+          totalHoldings.push(tokenHolding);
+        }
       }
     }
 
