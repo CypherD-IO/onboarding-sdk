@@ -111,6 +111,8 @@ export const noBalanceScript = () => {
       function closePopup () {
         const popupBackground = document.getElementById("popupBackground");
         popupBackground.remove();
+        window.location.reload();
+        console.log('reload Triggered');
       }
 
       async function fetchCurrentNetwork () {
