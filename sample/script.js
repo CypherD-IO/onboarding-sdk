@@ -5,7 +5,6 @@ window.Cypher({
   targetChainIdHex: '0xa',
   requiredTokenContractAddress: "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
   requiredTokenBalance: 11,
-  callBack: () => { console.log('callBack called'); }
 });
 
 
