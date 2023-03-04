@@ -17,6 +17,9 @@ console.log("🚀 ~ User operation Completed:", status)
 };
 
 export const Cypher = async ({address, targetChainIdHex: fromChainId, requiredTokenContractAddress: fromTokenContractAddress, requiredTokenBalance, isTestnet, callBack = noop }: DappDetails): Promise<void> => {
+  if (screen.width < 768) {
+    return;
+  }
   await delayMillis(1000);
   const walletAddress = address.toLowerCase();
   let requiredToken = fromTokenContractAddress?.toLowerCase();
@@ -27,8 +30,8 @@ export const Cypher = async ({address, targetChainIdHex: fromChainId, requiredTo
     return;
   }
 
-   //Testnet validation
-   if( isTestnet && ( !['0x5','0x13881'].includes(fromChainId))){
+  //Testnet validation
+  if( isTestnet && ( !['0x5','0x13881'].includes(fromChainId))){
     console.log(fromChainId + "not supported for testnet operations");
     return;
   }

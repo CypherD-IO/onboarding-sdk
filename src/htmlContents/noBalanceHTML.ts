@@ -37,6 +37,9 @@ export const noBalanceHTML = (totalHoldings: any) => {
 
   const htmlValue = `
     <div id="popup">
+      <div class="flex justify-end w-full mt-[20px] mr-[20px] ">
+        <img onclick="closePopup()" src="https://public.cypherd.io/icons/close_icon.svg" class="cursor-pointer">
+      </div>
       <div id="icon-flex-box">
         <img src="https://public.cypherd.io/icons/logos/${_.get(globalThis.requiredTokenDetail, ['chainDetails', 'backendName']).toLowerCase()}.png" alt="${_.get(globalThis.requiredTokenDetail, ['chainDetails', 'backendName']).toLowerCase()} logo" width="52" height="52">
         <img src="${_.get(globalThis.requiredTokenDetail, ['logoUrl'])}" alt="Arbitrum logo" width="52" height="52">
