@@ -9,7 +9,7 @@ function __capitalize(str: string){
 export const noBalanceHTML = (totalHoldings: any) => {
 
 
-  const tokensAvailableList = totalHoldings.map((tokenDetail: any, index: number) => `
+  const tokensAvailableList = totalHoldings.map((tokenDetail: any) => `
     <tr>
       <td>
         <div id="cyd-chain">

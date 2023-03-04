@@ -1,3 +1,4 @@
+(() => {
 
 // Mainnet
 window.Cypher({
@@ -19,3 +20,5 @@ window.Cypher({
 //   callBack: () => { console.log('callBack called'); }
 // });
 
+
+})();
