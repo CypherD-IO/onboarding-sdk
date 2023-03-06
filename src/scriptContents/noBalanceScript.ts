@@ -157,6 +157,7 @@ export const noBalanceScript = () => {
                   if (isTokenSwapSupported(data.tokens, swapContractAddressCheck(globalThis.exchangingTokenDetail.contractAddress, globalThis.exchangingTokenDetail.chainDetails.chain_id))) {
                     console.log('token and chain swappable');
                     document.getElementById("popupBackground").innerHTML = ${bridgeInputHTML};
+                    addInputEventListner();
                   } else {
                     toastMixin.fire({
                       title: 'Sorry...',
@@ -175,10 +176,10 @@ export const noBalanceScript = () => {
         } else {
           console.log('bridge case :: ');
           document.getElementById("popupBackground").innerHTML = ${bridgeInputHTML};
+          addInputEventListner();
         }
       }
 
-      const popupBackgroundParentElement = document.querySelector("#popupBackground");
       function updateUsdValue (event) {
         console.log('event', event.target);
         if (event.target && event.target.matches("input[type='text']")) {
@@ -190,7 +191,12 @@ export const noBalanceScript = () => {
           tokenValueElement.innerHTML = newValue.toString();
         }
       };
-      popupBackgroundParentElement.addEventListener("input",updateUsdValue);
+
+      function addInputEventListner () {
+        const popupBackgroundParentElement = document.querySelector("#popupBackground");
+        popupBackgroundParentElement.addEventListener("input",updateUsdValue);
+      }
+
 
       function backToNoBalanceHTML () {
         document.getElementById("popupBackground").innerHTML = ${noBalanceHTML};
@@ -199,7 +205,6 @@ export const noBalanceScript = () => {
       function closePopup () {
         const popupBackground = document.getElementById("popupBackground");
         popupBackground.remove();
-        window.location.reload();
         console.log('reload Triggered');
       }
 
