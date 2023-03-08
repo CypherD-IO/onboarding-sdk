@@ -1,4 +1,3 @@
-// '<img onclick="backToNoBalanceHTML()" src="https://public.cypherd.io/icons/back_arrow.svg" class="cursor-pointer"/>'+
 export const bridgeSwitchHTML =`'<div class="rounded-[30px] z-50" id="bridge-popup-css">'+
   '<div class=" !bg-[#F5F5F5] rounded-t-[30px] p-5 flex flex-col justify-center items-center w-full h-full">'+
     '<div class="flex justify-end w-full ">'+

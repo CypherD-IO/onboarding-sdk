@@ -192,10 +192,6 @@ export const noBalanceScript = () => {
       };
       popupBackgroundParentElement.addEventListener("input",updateUsdValue);
 
-      function backToNoBalanceHTML () {
-        document.getElementById("popupBackground").innerHTML = ${noBalanceHTML};
-      }
-
       function closePopup () {
         const popupBackground = document.getElementById("popupBackground");
         popupBackground.remove();
