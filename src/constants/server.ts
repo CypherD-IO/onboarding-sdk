@@ -388,3 +388,19 @@ export const CHAIN_ID_HEX_TO_NATIVE_TOKEN_NAME = new Map([
   ['0xa4b1', 'Arbitrum ETH'],
   ['0xa', 'Optimism ETH'],
 ]);
+
+export const transFiCryptoNetworkMapping: any = {
+  ETH: 'ERC20',
+  ARBITRUM: 'Arbitrum',
+  OPTIMISM: 'Optimism',
+  POLYGON: 'Polygon'
+  // COSMOS: 'Cosmos'
+};
+
+export const transFiCryptoTickerMapping: any = {
+  ETH: 'ETH',
+  ARBITRUM: 'ETH',
+  OPTIMISM: 'ETH',
+  POLYGON: 'MATIC'
+  // COSMOS: 'ATOM'
+};

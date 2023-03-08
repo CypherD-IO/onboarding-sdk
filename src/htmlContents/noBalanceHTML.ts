@@ -1,4 +1,6 @@
 import _ from "lodash";
+import { ARCH_HOST, transFiCryptoNetworkMapping, transFiCryptoTickerMapping } from "../constants/server";
+import { get } from "../utils/fetch";
 
 declare let globalThis: any;
 
@@ -6,7 +8,27 @@ function __capitalize(str: string){
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-export const noBalanceHTML = (totalHoldings: any) => {
+const getTransFiCredentials = async () => {
+  const resp = await get(`${ARCH_HOST}/v1/authentication/creds/transfi/no-auth`);
+  console.log('resposne : ', resp);
+  if (!resp.isError) {
+    const { apiKey } = resp;
+    if (apiKey && apiKey !== '') {
+      return apiKey;
+    } else {
+      console.log(resp.errors[0]);
+      return '';
+    }
+  } else {
+    console.log(resp.errors[0]);
+    return '';
+  }
+};
+
+const currency = 'USD';
+const country = 'United States';
+
+export const noBalanceHTML = async (totalHoldings: any) => {
 
 
   const tokensAvailableList = totalHoldings.map((tokenDetail: any) => `
@@ -54,9 +76,10 @@ export const noBalanceHTML = (totalHoldings: any) => {
         </table>
       </div>
       <div class='flex flex-row justify-center w-[100%] py-[25px] bg-[#3C4143] rounded-b-[30px] mt-[15px]'>
-        <a class='flex flex-row items-center text-[14px] text-white' href="https://www.cypherwallet.io/" target="_blank">
-          Powered by  <img src="https://public.cypherd.io/icons/logos/cypher.png" class="ml-[10px] mr-[3px]" alt="Arbitrum logo" width="18" height="18" resizeMode="contain"> Cypher
-        </a>
+        <button class='flex flex-row justify-center items-center py-[10px] px-[15px] bg-white text-[#7597B9] rounded-[100px]' onclick="window.open('https://buy.transfi.com?apiKey=${await getTransFiCredentials()}&fiatTicker=${currency}&product=buy&country=${country}&cryptoNetwork=${transFiCryptoNetworkMapping[globalThis.requiredTokenDetail.chainDetails.backendName]}&cryptoTicker=${transFiCryptoTickerMapping[globalThis.requiredTokenDetail.chainDetails.backendName]}&walletAddress=${globalThis.cypherWalletDetails.address}', '_blank')">
+          <img src="https://public.cypherd.io/icons/logos/transfiLogo.png" class="ml-[10px] mr-[10px]" alt="Transfi logo" width="18" height="18" resizeMode="contain">
+          Buy with TransFi
+        </button>
       </div>
     </div>
   `;

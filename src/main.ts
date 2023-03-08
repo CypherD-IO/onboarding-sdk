@@ -100,7 +100,7 @@ export const Cypher = async ({address, targetChainIdHex: fromChainId, requiredTo
   globalThis.requiredTokenDetail = { ...requiredTokenDetail};
 
   if (requiredTokenBalance === 0 || !(await hasSufficientBalance(fromChainId, requiredToken, requiredTokenBalance))) {
-    popupBackground.innerHTML = noBalanceHTML(_.get(tokenHoldings, ['tokenPortfolio', 'totalHoldings']));
+    popupBackground.innerHTML = await noBalanceHTML(_.get(tokenHoldings, ['tokenPortfolio', 'totalHoldings']));
     sheet.innerHTML = noBalanceCSS;
   } else {
 

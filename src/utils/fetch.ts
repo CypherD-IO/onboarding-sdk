@@ -2,7 +2,7 @@ const request = ( url: string, params:{key:string, value: string}[] = [], method
   const options = {
       method
   };
-  if ( 'GET' === method ) {
+  if ( 'GET' === method && params.length > 0 ) {
     const query = params.map(({ key,value }) => encodeURIComponent(key) + '=' + encodeURIComponent(value))
     .join('&');
 
@@ -13,4 +13,4 @@ const request = ( url: string, params:{key:string, value: string}[] = [], method
   return fetch( url, options ).then( response => response.json() );
 };
 
-export const get = ( url: string, params: any ) => request( url, params, 'GET' );
+export const get = ( url: string, params: any = [] ) => request( url, params, 'GET' );
