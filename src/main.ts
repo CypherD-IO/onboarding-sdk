@@ -9,6 +9,7 @@ import { DappDetails } from "./interface";
 // import styles from "./cssContents/style.module.css";
 
 declare let globalThis : any;
+const defaultAppId = '123'
 
 export const delayMillis = (delayMs: number): Promise<void> => new Promise(resolve => setTimeout(resolve, delayMs));
 
@@ -16,7 +17,7 @@ const noop =  (status: boolean) => {
 console.log("🚀 ~ User operation Completed:", status)
 };
 
-export const Cypher = async ({address, targetChainIdHex: fromChainId, requiredTokenContractAddress: fromTokenContractAddress, requiredTokenBalance, isTestnet, callBack = noop }: DappDetails): Promise<void> => {
+export const Cypher = async ({address, targetChainIdHex: fromChainId, requiredTokenContractAddress: fromTokenContractAddress, requiredTokenBalance, isTestnet, callBack = noop, appId = defaultAppId }: DappDetails): Promise<void> => {
   if (screen.width < 768) {
     return;
   }
@@ -47,6 +48,7 @@ export const Cypher = async ({address, targetChainIdHex: fromChainId, requiredTo
     fromTokenContractAddress: requiredToken,
     fromTokenRequiredBalance: requiredTokenBalance,
     callBack,
+    appId,
     isTestnet,
   };
 
