@@ -1,5 +1,6 @@
 import { ARCH_HOST, ChainBackendNames } from "../constants/server";
 import { bridgeInputHTML, bridgeLoadingHTML , bridgeSuccessHTML, bridgeSummaryHTML, bridgeSwitchHTML, noBalanceHTML, switchBackHTML } from "../htmlContents";
+import { get, post, request } from "../utils/fetch";
 
 declare let globalThis : any;
 
@@ -23,15 +24,12 @@ export const noBalanceScript = () => {
         }
       });
 
-      console.log(Web3.utils.toChecksumAddress('0x71d357ef7e29f07473f9edfb2140f14605c9f309'));
+      const request = ${request}
+      const post = ${post}
+      const get = ${get}
 
-      fetch( '${ARCH_HOST}/v1/swap/evm/chains', {
-        method: 'GET',
-      } ).then(
-        function (response) {
-          console.log('raw response : ', response);
-          return response.json()
-        }).then(
+      console.log(Web3.utils.toChecksumAddress('0x71d357ef7e29f07473f9edfb2140f14605c9f309'));
+        get('${ARCH_HOST}/v1/swap/evm/chains').then(
           function (data) {
             console.log('the chains swappable are :::: ', data.chains);
             globalThis.swapSupportedChains = data.chains;
@@ -46,15 +44,10 @@ export const noBalanceScript = () => {
         if (window.ethereum) {
           try {
             const walletAddress = await window.ethereum.request({ method: 'eth_requestAccounts' });
-            const resp = fetch('${ARCH_HOST}/v1/authentication/sign-message/'+walletAddress[0], {
-              method: 'GET',
-            }).then(function(response){
-              return response.json()})
-              .then(function(data)
-              {
+            const resp = get('${ARCH_HOST}/v1/authentication/sign-message/'+walletAddress[0]).then(function(data){
                 console.log('the data from connectMetaMask : ', data);
                 SignWithMetaMask({ message: data.message, walletAddress: walletAddress[0] });
-              });
+            });
           } catch (error) {
             console.log({ titleText: 'Please install an Ethereum based wallet extension to connect t' });
           }
@@ -75,16 +68,7 @@ export const noBalanceScript = () => {
         signature,
         walletAddress,
       }) {
-        const resp = fetch('${ARCH_HOST}/v1/authentication/verify-message/'+walletAddress, {
-          method: 'POST',
-          headers: {
-            "Content-type": "application/json; charset=UTF-8"
-          },
-          body: JSON.stringify({ signature: signature })
-        }).then(function(response){
-          return response.json()})
-          .then(function(data)
-          {
+          const resp = post('${ARCH_HOST}/v1/authentication/verify-message/'+walletAddress, JSON.stringify({ signature: signature })).then(function(data){
             console.log('the data get aut token : ', data);
             globalThis.AUTH_TOKEN = data.token;
             globalThis.REFRESH_TOKEN = data.refreshToken;
@@ -102,17 +86,11 @@ export const noBalanceScript = () => {
       }
 
       async function getSwapSupportedChainList () {
-        await fetch( '${ARCH_HOST}/v1/swap/evm/chains', {
-          method: 'GET',
-        } ).then(
-          function (response) {
-            console.log('raw response : ', response);
-            return response.json()
-          }).then(
+          get('${ARCH_HOST}/v1/swap/evm/chains').then(
             function (data) {
               console.log('response from act', data.chains);
               return 'hi';
-            });
+          });
       }
 
       function isTokenSwapSupported (tokenArray, tokenToCheck) {
@@ -145,13 +123,7 @@ export const noBalanceScript = () => {
         if (isSwap()) {
           if (globalThis.swapSupportedChains?.includes(parseInt(globalThis.exchangingTokenDetail.chainDetails.chain_id, 16))) {
             console.log('the chain swappable');
-            const swapSupportedChainList = fetch( '${ARCH_HOST}/v1/swap/evm/chains/' + parseInt(globalThis.exchangingTokenDetail.chainDetails.chain_id, 16) + '/tokens', {
-              method: 'GET',
-            } ).then(
-              function (response) {
-                console.log('raw response : ', response);
-                return response.json()
-              }).then(
+            const swapSupportedChainList = get('${ARCH_HOST}/v1/swap/evm/chains/' + parseInt(globalThis.exchangingTokenDetail.chainDetails.chain_id, 16) + '/tokens').then(
                 function (data) {
                   console.log('current chain Id : ', parseInt(globalThis.exchangingTokenDetail.chainDetails.chain_id, 16), 'name: ', globalThis.exchangingTokenDetail.contractAddress);
                   if (isTokenSwapSupported(data.tokens, swapContractAddressCheck(globalThis.exchangingTokenDetail.contractAddress, globalThis.exchangingTokenDetail.chainDetails.chain_id))) {
@@ -623,7 +595,7 @@ export const noBalanceScript = () => {
         const tokenBalance = document.querySelector("#bp-balance-detail-token-value").textContent;
         globalThis.bridgeInputDetails = { usdValueEntered, tokenValueEntered, numericUsdBalance, tokenBalance };
         console.log(parseFloat(numericUsdBalance), parseFloat(usdValueEntered));
-        if (parseFloat(numericUsdBalance) >= parseFloat(usdValueEntered)) {
+        if (parseFloat(numericUsdBalance) <= parseFloat(usdValueEntered)) {
           console.log("Bridge Eligible", "0x" + chainId.toString(16));
           console.log("The current Network is : ", await checkNetwork("0x" + chainId.toString(16)));
           const currentChainId = await fetchCurrentNetwork();
@@ -917,15 +889,7 @@ export const noBalanceScript = () => {
             slippage: 0.4,
             walletAddress: globalThis.cypherWalletDetails.address,
           };
-          const response = fetch('${ARCH_HOST}/v1/swap/evm/chains/' + globalThis.exchangingTokenDetail.chainDetails.chain_id + '/quote', {
-            method: 'POST',
-            headers: {
-              "Content-type": "application/json; charset=UTF-8"
-            },
-            body: JSON.stringify(payload)
-          }).then(function(response){
-            return response.json()})
-            .then(async function(data)
+            const response = post('${ARCH_HOST}/v1/swap/sdk/evm/chains/' + globalThis.exchangingTokenDetail.chainDetails.chain_id + '/quote', JSON.stringify(payload)).then(async function(data)
             {
               console.log('the data from swap : ', data);
               globalThis.swapQuoteData = {...data};
@@ -1020,16 +984,7 @@ export const noBalanceScript = () => {
             toTokenCoingeckoId: globalThis.requiredTokenDetail.coinGeckoId,
           };
           console.log('reqQuoteData', reqQuoteData);
-          const result = fetch('${ARCH_HOST}/v1/bridge/quote', {
-            method: 'POST',
-            headers: {
-              "Content-type": "application/json; charset=UTF-8"
-            },
-            body: JSON.stringify(reqQuoteData)
-          }).then(function(response){
-            return response.json()})
-            .then(function(data)
-            {
+          const result = post('${ARCH_HOST}/v1/bridge/sdk/quote', JSON.stringify(reqQuoteData)).then(function(data){
               console.log('the data from bridge : ', data);
               console.log('the data from bridge status: ', data.errors);
 
@@ -1054,8 +1009,7 @@ export const noBalanceScript = () => {
       async function getGasPrice(chain) {
         console.log('in getGasPrice');
 
-        let response = await fetch('${ARCH_HOST}/v1/prices/gas/' + chain);
-        response = await response.json();
+        let response = await get('${ARCH_HOST}/v1/prices/gas/' + chain);
         console.log('await fetch gasprice response : ', response);
         return response;
       }
@@ -1263,15 +1217,7 @@ export const noBalanceScript = () => {
           txnHash: hash,
         };
         console.log('body : ', depositPostBody);
-        const resp = fetch('${ARCH_HOST}/v1/bridge/quote/' + globalThis.bridgeQuote.quoteUuid + '/deposit', {
-          method: 'POST',
-          headers: {
-            "Content-type": "application/json; charset=UTF-8"
-          },
-          body: JSON.stringify(depositPostBody)
-        }).then(function(response){
-            return response.json()})
-          .then(function(data)
+          const resp = post('${ARCH_HOST}/v1/bridge/sdk/quote/' + globalThis.bridgeQuote.quoteUuid + '/deposit', JSON.stringify(depositPostBody)).then(function(data)
           {
             console.log('deposit data : ', data, data);
             if (!data.isError) {
@@ -1346,13 +1292,7 @@ export const noBalanceScript = () => {
 
               const interval = setInterval(() => {
                 console.log("fetching from activity ... ");
-                const status = fetch( '${ARCH_HOST}/v1/activities/status/bridge/' + globalThis.bridgeQuote.quoteUuid, {
-                  method: 'GET',
-                } ).then(
-                  function (response) {
-                    console.log('raw response : ', response);
-                    return response.json()
-                  }).then(
+                  const status = get('${ARCH_HOST}/v1/activities/status/bridge/' + globalThis.bridgeQuote.quoteUuid).then(
                     async function (data) {
                       console.log('response from act', data);
                       if (data?.activityStatus?.status === "COMPLETED") {
