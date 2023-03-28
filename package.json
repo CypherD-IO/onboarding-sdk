@@ -50,6 +50,10 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.3",
-    "lodash": "^4.17.21"
+    "ethers": "^6.2.3",
+    "lodash": "^4.17.21",
+    "sweetalert2": "^11.7.3",
+    "tailwindcss": "^3.2.7",
+    "web3": "^1.9.0"
   }
 }
