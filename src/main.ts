@@ -14,7 +14,7 @@ import Swal from "sweetalert2";
 import web3 from "web3";
 import { ethers } from "ethers";
 import { DappDetails } from "./interface";
-// import styles from "./cssContents/style.module.css";
+import "./input.css";
 
 declare let globalThis: any;
 const defaultAppId = "123";
@@ -69,10 +69,10 @@ export const Cypher = async ({
     isTestnet,
   };
 
-  const tailwind = document.createElement("script");
-  tailwind.src = "https://cdn.tailwindcss.com";
-  tailwind.type = "application/javascript";
-  document.getElementsByTagName("head")[0].appendChild(tailwind);
+  // const tailwind = document.createElement("script");
+  // tailwind.src = "https://cdn.tailwindcss.com";
+  // tailwind.type = "application/javascript";
+  // document.getElementsByTagName("head")[0].appendChild(tailwind);
 
   const popupBackground = document.createElement("div");
   popupBackground.id = "popupBackground";
