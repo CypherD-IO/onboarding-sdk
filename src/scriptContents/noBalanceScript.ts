@@ -1,8 +1,16 @@
 import { ARCH_HOST, ChainBackendNames } from "../constants/server";
-import { bridgeInputHTML, bridgeLoadingHTML , bridgeSuccessHTML, bridgeSummaryHTML, bridgeSwitchHTML, noBalanceHTML, switchBackHTML } from "../htmlContents";
+import {
+  bridgeInputHTML,
+  bridgeLoadingHTML,
+  bridgeSuccessHTML,
+  bridgeSummaryHTML,
+  bridgeSwitchHTML,
+  noBalanceHTML,
+  switchBackHTML,
+} from "../htmlContents";
 import { get, post, request } from "../utils/fetch";
 
-declare let globalThis : any;
+declare let globalThis: any;
 
 // document.getElementById("popupBackground").innerHTML = ${bridgeInputHTML};
 
@@ -10,7 +18,7 @@ export const noBalanceScript = () => {
   const value = `
     <script defer>
 
-      var toastMixin = Swal.mixin({
+      var toastMixin = globalThis.Cypher.Swal.mixin({
         toast: true,
         icon: 'success',
         title: 'General Title',
@@ -28,7 +36,7 @@ export const noBalanceScript = () => {
       const post = ${post}
       const get = ${get}
 
-      console.log(Web3.utils.toChecksumAddress('0x71d357ef7e29f07473f9edfb2140f14605c9f309'));
+      console.log(globalThis.Cypher.Web3.utils.toChecksumAddress('0x71d357ef7e29f07473f9edfb2140f14605c9f309'));
         get('${ARCH_HOST}/v1/swap/evm/chains').then(
           function (data) {
             console.log('the chains swappable are :::: ', data.chains);
@@ -642,7 +650,7 @@ export const noBalanceScript = () => {
           'gasPrice : ', gasPrice);
           const rpcEndpoint = fetchChainDetails(globalThis.exchangingTokenDetail.chainDetails.chain_id).rpcEndpoint;
 
-          const web3 = new Web3(rpcEndpoint);
+          const web3 = new globalThis.Cypher.Web3(rpcEndpoint);
 
           let userAddress = globalThis.cypherWalletDetails.address;
 
@@ -761,7 +769,7 @@ export const noBalanceScript = () => {
 
         const rpcEndpoint = fetchChainDetails(globalThis.exchangingTokenDetail.chainDetails.chain_id).rpcEndpoint;
 
-        const web3 = new Web3(rpcEndpoint);
+        const web3 = new globalThis.Cypher.Web3(rpcEndpoint);
 
         let userAddress = globalThis.cypherWalletDetails.address;
 
@@ -814,7 +822,7 @@ export const noBalanceScript = () => {
           amount);
           const rpcEndpoint = fetchChainDetails(globalThis.exchangingTokenDetail.chainDetails.chain_id).rpcEndpoint;
 
-          const web3 = new Web3(rpcEndpoint);
+          const web3 = new globalThis.Cypher.Web3(rpcEndpoint);
 
           let userAddress = globalThis.cypherWalletDetails.address;
 
@@ -1147,7 +1155,7 @@ export const noBalanceScript = () => {
           console.log('printing ... ', '${globalThis.exchangingTokenDetail}');
           const rpcEndpoint = fetchChainDetails(globalThis.exchangingTokenDetail.chainDetails.chain_id).rpcEndpoint;
           console.log('rpc', rpcEndpoint);
-          const web3 = new Web3(rpcEndpoint);
+          const web3 = new globalThis.Cypher.Web3(rpcEndpoint);
 
 
           let userAddress = globalThis.cypherWalletDetails.address;
@@ -1334,7 +1342,7 @@ export const noBalanceScript = () => {
       };
     </script>`;
   return value;
-}
+};
 
 // const depositPostBody = {
 //   address: globalThis.cypherWalletDetails.address,

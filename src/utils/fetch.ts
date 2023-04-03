@@ -6,7 +6,7 @@ export const request = ( url: string, params:{key:string, value: string}[] = [],
       headers: {
         client: 'sdk',
         "Content-type": "application/json; charset=UTF-8",
-        "Cyd-Sdk-Key": '123'// globalThis.cypherWalletDetails.appId
+        "Cyd-Sdk-Key": globalThis.cypherWalletDetails.appId
       }
   };
   switch(method){
