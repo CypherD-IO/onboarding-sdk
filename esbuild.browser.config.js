@@ -10,7 +10,7 @@ const { rimraf, rimrafSync, native, nativeSync } = require('rimraf');
   await esbuild.build({
     entryPoints: ['src/browser.ts'],
     bundle: true,
-    minify: false,
+    minify: true,
     sourcemap: 'external',
     outfile: 'dist/esbuild/onboardingsdk.js',
     // plugins: [postcss()],

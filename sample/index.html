@@ -1,17 +1,27 @@
 <html>
   <head>
     <title>Sample</title>
-    <script src="../dist/esbuild/onboardingsdk.js"></script>
+    <script type="tex/javascript" src="https://public.cypherd.io/cypher-sdk.js"></script>
     <!-- <link rel="stylesheet" href="../dist/output.css"> -->
   </head>
   <body>
     <h1>Hello World</h1>
-    <button id="addPopup">Add Popup</button>
+    <button id="addPopup" onclick="test()">Add Popup</button>
     <!-- <script>
       console.log('Hello World. Success');
       console.log(window.Cypher);
     </script> -->
-    <script src="./script.js"></script>
+    <script>
+      function test(){
+        window.Cypher({
+          address: '0x3d063C72b5A5b5457cb02076d134c806eca63Cff',
+          targetChainIdHex: '0xa',
+          requiredTokenContractAddress: "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+          requiredTokenBalance: 11,
+        });
+      }
+    </script>
+    <!-- <script src="./script.js"></script> -->
 
   </body>
 </html>
