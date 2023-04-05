@@ -35,7 +35,7 @@ export const getPortfolioModel = async (holdings: any) => {
 
   let swapSupport = true;
 
-  const response = await fetch( `${ARCH_HOST}/v1/swap/evm/chains`, {
+  const response = await fetch(`${ARCH_HOST}/v1/swap/evm/chains`, {
     method: 'GET',
   });
   const responseData = await response.json();
@@ -46,9 +46,8 @@ export const getPortfolioModel = async (holdings: any) => {
     swapSupport = false;
   }
 
-  function isTokenSwapSupported (tokenArray: any, tokenToCheck: string) {
-    const tokenPresent =  tokenArray.filter(function (token: any)
-    {
+  function isTokenSwapSupported(tokenArray: any, tokenToCheck: string) {
+    const tokenPresent = tokenArray.filter(function (token: any) {
       return token.address.toLowerCase() === tokenToCheck.toLowerCase();
     });
     return tokenPresent.length > 0;
@@ -68,9 +67,9 @@ export const getPortfolioModel = async (holdings: any) => {
   let swapSupportedRequiredTokensList = [];
 
   if (swapSupport) {
-    const responseRequiredTokenList = await fetch( `${ARCH_HOST}/v1/swap/evm/chains/` + parseInt(globalThis.cypherWalletDetails.fromChainId, 16) + `/tokens`, {
+    const responseRequiredTokenList = await fetch(`${ARCH_HOST}/v1/swap/evm/chains/` + parseInt(globalThis.cypherWalletDetails.fromChainId, 16) + `/tokens`, {
       method: 'GET',
-    } );
+    });
     const responseJSONRequiredTokenList = await responseRequiredTokenList.json();
     swapSupportedRequiredTokensList = responseJSONRequiredTokenList?.tokens;
   }
@@ -79,6 +78,7 @@ export const getPortfolioModel = async (holdings: any) => {
     console.log('not supported : ', globalThis.cypherWalletDetails.fromChainId);
     swapSupport = false;
   }
+
 
   const totalHoldings: Holding[] = [];
   for (let i = 0; i < holdings.length; i++) {
@@ -98,8 +98,17 @@ export const getPortfolioModel = async (holdings: any) => {
         }
       }
 
-      if ((chainId === globalThis.cypherWalletDetails.fromChainId && holding.contract_address === globalThis.cypherWalletDetails.fromTokenContractAddress) || chainId !== globalThis.cypherWalletDetails.fromChainId || (chainId === globalThis.cypherWalletDetails.fromChainId && swapSupport)) {
-        if (holding.actual_balance * holding.price >= 10 && holding.is_verified) {
+      console.log({ chainId, w: globalThis.cypherWalletDetails, holding })
+      const isTestnet = ['0x5', '0x13881'].includes(chainId as string);
+      if (isTestnet ||
+        (chainId === globalThis.cypherWalletDetails.fromChainId
+          && holding.contract_address === globalThis.cypherWalletDetails.fromTokenContractAddress || (!globalThis.cypherWalletDetails.fromTokenContractAddress))
+        || chainId !== globalThis.cypherWalletDetails.fromChainId ||
+        (chainId === globalThis.cypherWalletDetails.fromChainId && swapSupport)) {
+
+
+
+        if (holding.actual_balance * holding.price >= 10 && holding.is_verified || isTestnet) {
           const tokenHolding: Holding = {
             name: holding.name,
             symbol: holding.symbol,
@@ -162,6 +171,8 @@ export const getPortfolioModel = async (holdings: any) => {
           tokenHoldings.push(tokenHolding);
           totalHoldings.push(tokenHolding);
         }
+      } else {
+        console.log('not supported : ', chainId)
       }
     }
 
@@ -186,7 +197,7 @@ export const getPortfolioModel = async (holdings: any) => {
         break;
       case CHAIN_ETH_GOERLI.backendName:
         ethGoerliHoldings = chainHoldings;
-      break;
+        break;
       case CHAIN_POLYGON_MUMBAI.backendName:
         polyonMumbaiHoldings = chainHoldings;
         break;
