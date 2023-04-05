@@ -15,6 +15,7 @@ import web3 from "web3";
 import { ethers } from "ethers";
 import { DappDetails } from "./interface";
 import "./input.css";
+import { get, post, request } from "./utils/fetch";
 
 declare let globalThis: any;
 const defaultAppId = "123";
@@ -129,3 +130,6 @@ globalThis.Web3 = web3;
 Cypher.Swal = Swal;
 Cypher.Web3 = web3;
 Cypher.ethers = ethers;
+Cypher.get = get;
+Cypher.post = post;
+Cypher.request = request;
