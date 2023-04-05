@@ -115,7 +115,7 @@ export const fetchRequiredTokenDetails = async (chainId: string, tokenContractAd
       const tokenDetail = await fetchRequiredTokenData(chainId, tokenContractAddress);
       return {name: tokenDetail.name,
         logoUrl: tokenDetail.logo_url,
-        contractDecimals: tokenDetail.contract_decimals,
+        contractDecimals: Number(tokenDetail.contract_decimals),
         symbol: tokenDetail.symbol,
         coinGeckoId: tokenDetail.coin_gecko_id,
         contractAddress: tokenContractAddress,
@@ -131,7 +131,7 @@ export const fetchRequiredTokenDetails = async (chainId: string, tokenContractAd
     return {
       name: tokenDetail.name,
         logoUrl: tokenDetail.logo_url,
-        contractDecimals: tokenDetail.contract_decimals,
+        contractDecimals: Number(tokenDetail.contract_decimals),
         symbol: tokenDetail.symbol,
         coinGeckoId: tokenDetail.coin_gecko_id,
         contractAddress: tokenContractAddress,

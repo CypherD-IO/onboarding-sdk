@@ -32,9 +32,9 @@ export const noBalanceScript = () => {
         }
       });
 
-      const request = ${request}
-      const post = ${post}
-      const get = ${get}
+      const request = globalThis.Cypher.request
+      const post = globalThis.Cypher.post
+      const get = globalThis.Cypher.get
 
       console.log(globalThis.Cypher.Web3.utils.toChecksumAddress('0x71d357ef7e29f07473f9edfb2140f14605c9f309'));
         get('${ARCH_HOST}/v1/swap/evm/chains').then(
@@ -66,7 +66,7 @@ export const noBalanceScript = () => {
         message,
         walletAddress,
       }) {
-        const provider = new ethers.BrowserProvider(window.ethereum);
+        const provider = new globalThis.Cypher.ethers.BrowserProvider(window.ethereum);
         const signer = await provider.getSigner();
         const signature = await signer.signMessage(message);
         await GetAuthToken({ signature, walletAddress });
@@ -603,7 +603,7 @@ export const noBalanceScript = () => {
         const tokenBalance = document.querySelector("#bp-balance-detail-token-value").textContent;
         globalThis.bridgeInputDetails = { usdValueEntered, tokenValueEntered, numericUsdBalance, tokenBalance };
         console.log(parseFloat(numericUsdBalance), parseFloat(usdValueEntered));
-        if (parseFloat(numericUsdBalance) <= parseFloat(usdValueEntered)) {
+        if (parseFloat(numericUsdBalance) >= parseFloat(usdValueEntered)) {
           console.log("Bridge Eligible", "0x" + chainId.toString(16));
           console.log("The current Network is : ", await checkNetwork("0x" + chainId.toString(16)));
           const currentChainId = await fetchCurrentNetwork();
@@ -666,7 +666,7 @@ export const noBalanceScript = () => {
             data: contractData,
           };
 
-          const provider = new ethers.BrowserProvider(window.ethereum);
+          const provider = new globalThis.Cypher.ethers.BrowserProvider(window.ethereum);
           const signer = await provider.getSigner();
 
           const response = await signer.sendTransaction(tx);
@@ -848,7 +848,7 @@ export const noBalanceScript = () => {
           };
 
           console.log('tx : ', tx);
-          const provider = new ethers.BrowserProvider(window.ethereum);
+          const provider = new globalThis.Cypher.ethers.BrowserProvider(window.ethereum);
           const signer = await provider.getSigner();
           console.log('provider : ', provider, 'signer :', signer);
 
@@ -1092,7 +1092,7 @@ export const noBalanceScript = () => {
           gasPrice: gasPrice,
         };
 
-        const provider = new ethers.BrowserProvider(window.ethereum);
+        const provider = new globalThis.Cypher.ethers.BrowserProvider(window.ethereum);
         const signer = await provider.getSigner();
 
         const response = await signer.sendTransaction(tx);
@@ -1108,7 +1108,7 @@ export const noBalanceScript = () => {
         gasLimit,
       }) {
         console.log('in sendToken');
-        const provider = new ethers.BrowserProvider(window.ethereum);
+        const provider = new globalThis.Cypher.ethers.BrowserProvider(window.ethereum);
         console.log('ehters.BrowserProvider', provider);
         const signer = await provider.getSigner();
 
@@ -1133,7 +1133,7 @@ export const noBalanceScript = () => {
           },
         ];
 
-        const contract = new ethers.Contract(contractAddress, contractAbiFragment, signer);
+        const contract = new globalThis.Cypher.ethers.Contract(contractAddress, contractAbiFragment, signer);
 
         const response = await contract.transfer(toAddress, amount);
 
