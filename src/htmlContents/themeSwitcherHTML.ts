@@ -1,8 +1,7 @@
-export const themeSwitcherHTML = `<div class="w-[35%] flex flex-row justify-end">
-<p>theme switcher</p>
+export const themeSwitcherHTML = `<div class="h-[45px] flex flex-row justify-end ml-[-25px]">
   <div class="toggle-switch">
       <label>
-          <input class="toggle-input" type="checkbox">
+          <input onclick="applyTheme(globalThis.theme === 'light' ? 'dark' : 'light')" class="toggle-input" type="checkbox">
           <span class="slider"></span>
       </label>
   </div>

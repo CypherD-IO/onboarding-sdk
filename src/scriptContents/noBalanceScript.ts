@@ -37,11 +37,10 @@ export const noBalanceScript = () => {
     // const root = document.documentElement;
     // root.style.setProperty('--theme-primaryBg', globalThis.Colors[globalThis.theme].primaryBg);
     function applyTheme(theme){
-      console.log('changeTheme');
+      console.log('changeTheme', theme);
       globalThis.theme=theme;
       // globalThis.Colors = '${Colors.dark}'
       const root = document.documentElement;
-      console.log(globalThis.Colors[globalThis.theme].primaryBg);
       // root.style.setProperty('--theme-primaryBg', globalThis.Colors[globalThis.theme].primaryBg);
       Object.keys(globalThis.Colors[globalThis.theme]).forEach((cssVar, index) => {
         console.log(cssVar);
@@ -208,9 +207,10 @@ export const noBalanceScript = () => {
       }
 
       function closePopup () {
-        const popupBackground = document.getElementById("popupBackground");
-        popupBackground.remove();
-        window.location.reload();
+        const sdkContainer = document.getElementById("sdkContainer");
+        sdkContainer.remove();
+        // window.location.reload();
+        // delete window.Cypher;
         console.log('reload Triggered');
       }
 
@@ -1206,7 +1206,7 @@ export const noBalanceScript = () => {
           const etherUnit = CONTRACT_DECIMAL_TO_ETHER_UNITS[globalThis.exchangingTokenDetail.contractDecimals];
           console.log('etherUnit', etherUnit);
           const parsedSendingAmount = web3.utils.toWei(amountToSend.toString(), etherUnit).toString();
-
+          console.log('parsedSendingAmount:', parsedSendingAmount);
           const isNativeToken = EVM_CHAINS_NATIVE_TOKEN_MAP.get(globalThis.exchangingTokenDetail?.chainDetails?.backendName) === globalThis.exchangingTokenDetail?.contractAddress;
           console.log('isNativeToken', isNativeToken);
           await switchNetwork(globalThis.exchangingTokenDetail?.chainDetails?.chain_id, chain);

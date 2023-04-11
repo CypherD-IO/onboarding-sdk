@@ -81,6 +81,8 @@ export const Cypher = async ({
 
   const popupBackground = document.createElement("div");
   popupBackground.id = "popupBackground";
+  const sdkContainer = document.createElement("div");
+  sdkContainer.id = "sdkContainer";
   // popupBackground.className = styles.sedhu;
   // popupBackground.innerHTML = bridgeSuccessHTML;
   const fetchBalances = await fetchTokenData(walletAddress.toLowerCase());
@@ -111,19 +113,18 @@ export const Cypher = async ({
       requiredTokenBalance
     ))
   ) {
-    // popupBackground.innerHTML = noBalanceHTML(
-    //   _.get(tokenHoldings, ["tokenPortfolio", "totalHoldings"])
-    // );
     popupBackground.innerHTML = noBalanceHTML(
       _.get(tokenHoldings, ["tokenPortfolio", "totalHoldings"])
     );
+    sdkContainer.innerHTML = themeSwitcherHTML;
+    sdkContainer.appendChild(popupBackground);
     sheet.innerHTML = noBalanceCSS;
   } else {
     console.log("Hurray!!, you have enough Balance. Continue using the dapp.");
     callBack(true);
   }
 
-  globalThis.document.body.appendChild(popupBackground);
+  globalThis.document.body.appendChild(sdkContainer);
   globalThis.document.body.appendChild(sheet);
 
   const range = document.createRange();

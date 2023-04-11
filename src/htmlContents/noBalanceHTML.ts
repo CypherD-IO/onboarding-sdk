@@ -36,28 +36,35 @@ export const noBalanceHTML = (totalHoldings: any) => {
     </tr>
   `).join(' ');
 
+  const tokenListContainer = tokensAvailableList.length ? `<div class="w-[100%] flex flex-column justify-center items-center">
+  <p class='text-[16px] text-primaryText font-semibold mb-[20px]'>You can exchange with below tokens in your wallet</p>
+  <div id="tokens-available-flex-box">
+    <table width="100%">
+      ${tokensAvailableList}
+    </table>
+  </div>
+</div>` : `<div class="w-[100%] flex flex-column justify-center items-center">
+  <p class='text-[16px] text-primaryText font-semibold mb-[20px]'>Insufficient funds to perform this action!</p>
+  <img src="https://public.cypherd.io/icons/emptyWallet.png" class="h-[300px] w-[200px]">
+</div>
+`
+
   const htmlValue = `
     <div id="popup" class="bg-primaryBg">
       <div class="flex flex-row justify-end w-[95%] mt-[20px] mx-[30px] bg-primaryBg">
         <img onclick="closePopup()" src="https://public.cypherd.io/icons/close_icon.svg" class="cursor-pointer">
       </div>
-      // <button onclick="applyTheme(globalThis.theme === 'light' ? 'dark' : 'light')">Change Theme</button>
       <div id="icon-flex-box">
         <img src="https://public.cypherd.io/icons/logos/${_.get(globalThis.requiredTokenDetail, ['chainDetails', 'backendName']).toLowerCase()}.png" alt="${_.get(globalThis.requiredTokenDetail, ['chainDetails', 'backendName']).toLowerCase()} logo" width="52" height="52">
         <img src="${_.get(globalThis.requiredTokenDetail, ['logoUrl'])}" alt="Arbitrum logo" width="52" height="52">
       </div>
-      <div id=cyd-tokenList-header class='my-[20px]'>
-        <h2 class='text-[23px] text-primaryText font-semibold'>You need ${_.get(globalThis.requiredTokenDetail, ['symbol']).toUpperCase()} in ${__capitalize(_.get(globalThis.requiredTokenDetail, ['chainDetails', 'backendName']).toLowerCase())} to use this dApp</h2>
-        <p class='text-[16px] text-primaryText font-semibold'>You can exchange with below tokens in your wallet  </p>
+      <div id=cyd-tokenList-header class='mt-[20px]'>
+        <h2 class='text-[23px] text-primaryText font-semibold'>You need ${_.get(globalThis.requiredTokenDetail, ['symbol']).toUpperCase()} in ${__capitalize(_.get(globalThis.requiredTokenDetail, ['chainDetails', 'backendName']).toLowerCase())} chain to use this dApp</h2>
       </div>
-      <div id="tokens-available-flex-box">
-        <table width="100%">
-          ${tokensAvailableList}
-        </table>
-      </div>
+      ${tokenListContainer}
       <div class='flex flex-row justify-center w-[100%] py-[25px] bg-[#3C4143] rounded-b-[30px] mt-[15px]'>
         <a class='flex flex-row items-center text-[14px] text-white' href="https://www.cypherwallet.io/" target="_blank">
-          Powered by  <img src="https://public.cypherd.io/icons/logos/cypher.png" class="ml-[10px] mr-[3px]" alt="Arbitrum logo" width="18" height="18" resizeMode="contain"> Cypher
+          Powered by  <img src="https://public.cypherd.io/icons/logos/cypher.png" class="ml-[10px] mr-[3px]" alt="Arbitrum logo" width="18" height="18" resizeMode="contain"> Cypher Wallet
         </a>
       </div>
     </div>

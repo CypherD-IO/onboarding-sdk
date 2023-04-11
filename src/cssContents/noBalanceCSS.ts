@@ -3,7 +3,7 @@ export const noBalanceCSS = `
   z-index: 2147483647;
 }
 
-#popupBackground {
+#sdkContainer {
   display: flex;
   flex-direction: column;
   position: fixed;
@@ -19,6 +19,23 @@ export const noBalanceCSS = `
   background-color: rgb(0,0,0);
   background-color: rgba(0,0,0,0.4);
   backdrop-filter: blur(5px);
+}
+
+#popupBackground {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  // z-index: 2147483646;
+  // left: 0;
+  // top: 0;
+  width: 100%;
+  // overflow: auto;
+  // color: black;
+  // background-color: rgb(0,0,0);
+  // background-color: rgba(0,0,0,0.4);
+  // backdrop-filter: blur(5px);
 }
 
 #popup {
@@ -213,13 +230,12 @@ td{
 
 .toggle-switch {
   position: relative;
-  width: 200px;
 }
 
 label {
   position: absolute;
-  width: 120px;
-  height: 60px;
+  width: 75px;
+  height: 30px;
   background-color: var(--dark);
   border-radius: 50px;
   cursor: pointer;
@@ -234,6 +250,7 @@ label {
   position: absolute;
   width: 100%;
   height: 100%;
+  border: 1px solid var(--theme-primaryText);
   border-radius: 50px;
   transition: 0.3s;
 }
@@ -245,18 +262,18 @@ label {
 .slider::before {
   content: "";
   position: absolute;
-  top: 5px;
-  left: 16px;
-  width: 50px;
-  height: 50px;
-  border-radius: 25px;
-  box-shadow: inset 15px -2px 0px 0px var(--light);
+  top: 3px;
+  left: 6px;
+  width: 20px;
+  height: 20px;
+  border-radius: 15px;
+  box-shadow: inset 6px 0px 0px 0px var(--light);
   background-color: var(--dark);
   transition: 0.3s;
 }
 
 .toggle-input:checked ~ .slider::before {
-  transform: translateX(48px);
+  transform: translateX(42px);
   background-color: var(--dark);
   box-shadow: none;
 }
