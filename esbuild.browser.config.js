@@ -1,5 +1,6 @@
 
 const esbuild = require('esbuild');
+const cssModulesPlugin = require("esbuild-css-modules-plugin");
 // const postcss = require('esbuild-postcss');
 const postcss = require('esbuild-postcss-plugin');
 // const stylePlugin = require('esbuild-style-plugin');
@@ -13,6 +14,7 @@ const { rimraf, rimrafSync, native, nativeSync } = require('rimraf');
     minify: true,
     sourcemap: 'external',
     outfile: 'dist/esbuild/onboardingsdk.js',
+    //plugins: [cssModulesPlugin()],
     // plugins: [postcss()],
     plugins: [
       postcss({

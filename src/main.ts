@@ -8,7 +8,7 @@ import {
 import _ from "lodash";
 import { noBalanceScript } from "./scriptContents";
 import { noBalanceCSS } from "./cssContents";
-import { noBalanceHTML } from "./htmlContents";
+import { bridgeLoadingHTML, bridgeSuccessHTML, bridgeSwitchHTML, noBalanceHTML, switchBackHTML } from "./htmlContents";
 import { SUPPORTED_CHAINID_LIST_HEX } from "./constants/server";
 import Swal from "sweetalert2";
 import web3 from "web3";
@@ -16,9 +16,12 @@ import { ethers } from "ethers";
 import { DappDetails } from "./interface";
 import "./input.css";
 import { get, post, request } from "./utils/fetch";
+import { Colors } from "./constants/colors";
+import { themeSwitcherHTML } from "./htmlContents/themeSwitcherHTML";
 
 declare let globalThis: any;
 const defaultAppId = "123";
+const defaultTheme = 'dark';
 
 export const delayMillis = (delayMs: number): Promise<void> =>
   new Promise((resolve) => setTimeout(resolve, delayMs));
@@ -35,6 +38,7 @@ export const Cypher = async ({
   isTestnet,
   callBack = noop,
   appId = defaultAppId,
+  theme = defaultTheme
 }: DappDetails): Promise<void> => {
   if (screen.width < 768) {
     return;
@@ -107,6 +111,9 @@ export const Cypher = async ({
       requiredTokenBalance
     ))
   ) {
+    // popupBackground.innerHTML = noBalanceHTML(
+    //   _.get(tokenHoldings, ["tokenPortfolio", "totalHoldings"])
+    // );
     popupBackground.innerHTML = noBalanceHTML(
       _.get(tokenHoldings, ["tokenPortfolio", "totalHoldings"])
     );
@@ -121,6 +128,8 @@ export const Cypher = async ({
 
   const range = document.createRange();
   range.setStart(globalThis.document.body, 0);
+  globalThis.Colors=Colors;
+  globalThis.theme = theme;
   globalThis.document.body.appendChild(
     range.createContextualFragment(noBalanceScript())
   );
@@ -133,3 +142,5 @@ Cypher.ethers = ethers;
 Cypher.get = get;
 Cypher.post = post;
 Cypher.request = request;
+Cypher.Colors = Colors.light;
+Cypher.theme='dark';

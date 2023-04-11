@@ -5,5 +5,6 @@ export interface DappDetails{
   requiredTokenBalance: number;
   isTestnet?: boolean;
   callBack?: (status: boolean) => void;
-  appId?: string
+  appId?: string;
+  theme?: string
 }

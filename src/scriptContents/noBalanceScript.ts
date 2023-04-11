@@ -1,3 +1,4 @@
+import  {Colors} from "../constants/colors";
 import { ARCH_HOST, ChainBackendNames } from "../constants/server";
 import {
   bridgeInputHTML,
@@ -10,13 +11,43 @@ import {
 } from "../htmlContents";
 import { get, post, request } from "../utils/fetch";
 
-declare let globalThis: any;
-
 // document.getElementById("popupBackground").innerHTML = ${bridgeInputHTML};
 
 export const noBalanceScript = () => {
+  const theme = globalThis.theme;
+  console.log(theme);
   const value = `
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primaryBg: 'var(--theme-primaryBg)',
+            secondaryBg: 'var(--theme-secondaryBg)',
+            primaryText: 'var(--theme-primaryText)',
+            borderColor: 'var(--theme-borderColor)',
+            stripedTableBg: 'var(--theme-stripedTableBg)'
+          }
+        }
+      }
+    }
+  </script>
     <script defer>
+    applyTheme(globalThis.theme)
+    // const root = document.documentElement;
+    // root.style.setProperty('--theme-primaryBg', globalThis.Colors[globalThis.theme].primaryBg);
+    function applyTheme(theme){
+      console.log('changeTheme');
+      globalThis.theme=theme;
+      // globalThis.Colors = '${Colors.dark}'
+      const root = document.documentElement;
+      console.log(globalThis.Colors[globalThis.theme].primaryBg);
+      // root.style.setProperty('--theme-primaryBg', globalThis.Colors[globalThis.theme].primaryBg);
+      Object.keys(globalThis.Colors[globalThis.theme]).forEach((cssVar, index) => {
+        console.log(cssVar);
+        root.style.setProperty(cssVar, globalThis.Colors[globalThis.theme][cssVar]);
+      });
+    }
 
       var toastMixin = globalThis.Cypher.Swal.mixin({
         toast: true,

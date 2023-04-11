@@ -1,4 +1,5 @@
 import _ from "lodash";
+import { themeSwitcherHTML } from "./themeSwitcherHTML";
 
 declare let globalThis: any;
 
@@ -10,43 +11,44 @@ export const noBalanceHTML = (totalHoldings: any) => {
 
 
   const tokensAvailableList = totalHoldings.map((tokenDetail: any) => `
-    <tr>
+    <tr class="odd:bg-stripedTableBg">
       <td>
         <div id="cyd-chain">
           <img id="td-chain-icon" src="https://public.cypherd.io/icons/logos/${_.get(tokenDetail, ['chainDetails', 'backendName'], '').toLowerCase()}.png" alt="${_.get(tokenDetail, ['chainDetails', 'backendName'], '').toLowerCase()} logo" width="20" height="20"/>
-          <p class='text-[14px]'>${_.get(tokenDetail, ['chainDetails', 'backendName'], '')}</p>
+          <p class='text-[14px] text-primaryText'>${_.get(tokenDetail, ['chainDetails', 'backendName'], '')}</p>
         </div>
       </td>
       <td>
         <div id="cyd-token">
           <img id="td-token-icon" src="${_.get(tokenDetail, ['logoUrl'])}" alt="${_.get(tokenDetail, ['name'])} logo" width="20" height="20">
-          <p class='text-[14px]'>${_.get(tokenDetail, ['name'])}</p>
+          <p class='text-[14px] text-primaryText'>${_.get(tokenDetail, ['name'])}</p>
         </div>
       </td>
       <td>
-        <p id="td-usd-value" class='text-[14px] font-semibold'>$ ${(_.get(tokenDetail, ['actualBalance']) * _.get(tokenDetail, ['price'])).toFixed(2)}</p>
+        <p id="td-usd-value" class='text-[14px] text-primaryText font-semibold'>$ ${(_.get(tokenDetail, ['actualBalance']) * _.get(tokenDetail, ['price'])).toFixed(2)}</p>
       </td>
       <td>
-        <p id="td-token-balance" class='text-[14px]'>${Number(_.get(tokenDetail, ['actualBalance'])).toFixed(5)}</p>
+        <p id="td-token-balance" class='text-[14px] text-primaryText'>${Number(_.get(tokenDetail, ['actualBalance'])).toFixed(5)}</p>
       </td>
       <td>
-        <button class="blue-button text-[14px]" onclick='bridgePopup(${JSON.stringify(_.omit(tokenDetail, ['about']))})'>Exchange</button>
+        <button class="blue-button text-[14px] text-primaryText" onclick='bridgePopup(${JSON.stringify(_.omit(tokenDetail, ['about']))})'>Exchange</button>
       </td>
     </tr>
   `).join(' ');
 
   const htmlValue = `
-    <div id="popup">
-      <div class="flex justify-end w-full mt-[20px] mr-[20px] ">
+    <div id="popup" class="bg-primaryBg">
+      <div class="flex flex-row justify-end w-[95%] mt-[20px] mx-[30px] bg-primaryBg">
         <img onclick="closePopup()" src="https://public.cypherd.io/icons/close_icon.svg" class="cursor-pointer">
       </div>
+      // <button onclick="applyTheme(globalThis.theme === 'light' ? 'dark' : 'light')">Change Theme</button>
       <div id="icon-flex-box">
         <img src="https://public.cypherd.io/icons/logos/${_.get(globalThis.requiredTokenDetail, ['chainDetails', 'backendName']).toLowerCase()}.png" alt="${_.get(globalThis.requiredTokenDetail, ['chainDetails', 'backendName']).toLowerCase()} logo" width="52" height="52">
         <img src="${_.get(globalThis.requiredTokenDetail, ['logoUrl'])}" alt="Arbitrum logo" width="52" height="52">
       </div>
       <div id=cyd-tokenList-header class='my-[20px]'>
-        <h2 class='text-[23px] font-semibold'>You need ${_.get(globalThis.requiredTokenDetail, ['symbol']).toUpperCase()} in ${__capitalize(_.get(globalThis.requiredTokenDetail, ['chainDetails', 'backendName']).toLowerCase())} to use this dApp</h2>
-        <p class='text-[16px] font-semibold'>You can exchange with below tokens in your wallet  </p>
+        <h2 class='text-[23px] text-primaryText font-semibold'>You need ${_.get(globalThis.requiredTokenDetail, ['symbol']).toUpperCase()} in ${__capitalize(_.get(globalThis.requiredTokenDetail, ['chainDetails', 'backendName']).toLowerCase())} to use this dApp</h2>
+        <p class='text-[16px] text-primaryText font-semibold'>You can exchange with below tokens in your wallet  </p>
       </div>
       <div id="tokens-available-flex-box">
         <table width="100%">
