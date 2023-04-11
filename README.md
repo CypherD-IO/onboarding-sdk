@@ -24,7 +24,7 @@
 Inject the CypherWallet Signon-SDK from the CDN link `https://public.cypherd.io/js/onboardingsdk.js`
 
 ```
-<script src="https://public.cypherd.io/js/onboardingsdk.jss"> </script>
+<script src="https://public.cypherd.io/js/onboardingsdk.js"> </script>
 window.Cypher({
   address: '0xdEc1bc71bf91431D60eF2742f412DCd1c5A204B8', // user wallet address
   targetChainIdHex: '0x5', // Required: Chain Id in Hexadecimal
