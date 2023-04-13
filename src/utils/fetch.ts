@@ -1,12 +1,13 @@
 declare let globalThis;
 
 export const request = ( url: string, params:{key:string, value: string}[] = [], method = 'GET', body={} ) => {
+  const {appId} = globalThis.cypherWalletDetails;
   const options = {
       method,
       headers: {
-        client: 'sdk',
+        client: 'sdk:' + appId,
         "Content-type": "application/json; charset=UTF-8",
-        "Cyd-Sdk-Key": globalThis.cypherWalletDetails.appId
+        "Cyd-Sdk-Key": appId
       }
   };
   switch(method){

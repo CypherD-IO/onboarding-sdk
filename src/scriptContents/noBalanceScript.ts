@@ -1,3 +1,4 @@
+import  {Colors} from "../constants/colors";
 import { ARCH_HOST, ChainBackendNames } from "../constants/server";
 import {
   bridgeInputHTML,
@@ -10,13 +11,42 @@ import {
 } from "../htmlContents";
 import { get, post, request } from "../utils/fetch";
 
-declare let globalThis: any;
-
 // document.getElementById("popupBackground").innerHTML = ${bridgeInputHTML};
 
 export const noBalanceScript = () => {
+  const theme = globalThis.theme;
+  console.log(theme);
   const value = `
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primaryBg: 'var(--theme-primaryBg)',
+            secondaryBg: 'var(--theme-secondaryBg)',
+            primaryText: 'var(--theme-primaryText)',
+            borderColor: 'var(--theme-borderColor)',
+            stripedTableBg: 'var(--theme-stripedTableBg)'
+          }
+        }
+      }
+    }
+  </script>
     <script defer>
+    applyTheme(globalThis.theme)
+    // const root = document.documentElement;
+    // root.style.setProperty('--theme-primaryBg', globalThis.Colors[globalThis.theme].primaryBg);
+    function applyTheme(theme){
+      console.log('changeTheme', theme);
+      globalThis.theme=theme;
+      // globalThis.Colors = '${Colors.dark}'
+      const root = document.documentElement;
+      // root.style.setProperty('--theme-primaryBg', globalThis.Colors[globalThis.theme].primaryBg);
+      Object.keys(globalThis.Colors[globalThis.theme]).forEach((cssVar, index) => {
+        console.log(cssVar);
+        root.style.setProperty(cssVar, globalThis.Colors[globalThis.theme][cssVar]);
+      });
+    }
 
       var toastMixin = globalThis.Cypher.Swal.mixin({
         toast: true,
@@ -137,6 +167,7 @@ export const noBalanceScript = () => {
                   if (isTokenSwapSupported(data.tokens, swapContractAddressCheck(globalThis.exchangingTokenDetail.contractAddress, globalThis.exchangingTokenDetail.chainDetails.chain_id))) {
                     console.log('token and chain swappable');
                     document.getElementById("popupBackground").innerHTML = ${bridgeInputHTML};
+                    addInputEventListner();
                   } else {
                     toastMixin.fire({
                       title: 'Sorry...',
@@ -155,6 +186,7 @@ export const noBalanceScript = () => {
         } else {
           console.log('bridge case :: ');
           document.getElementById("popupBackground").innerHTML = ${bridgeInputHTML};
+          addInputEventListner();
         }
       }
 
@@ -176,10 +208,16 @@ export const noBalanceScript = () => {
         document.getElementById("popupBackground").innerHTML = ${noBalanceHTML};
       }
 
+      function addInputEventListner () {
+        const popupBackgroundParentElement = document.querySelector("#popupBackground");
+        popupBackgroundParentElement.addEventListener("input",updateUsdValue);
+      }
+
       function closePopup () {
-        const popupBackground = document.getElementById("popupBackground");
-        popupBackground.remove();
-        window.location.reload();
+        const sdkContainer = document.getElementById("sdkContainer");
+        sdkContainer.remove();
+        // window.location.reload();
+        // delete window.Cypher;
         console.log('reload Triggered');
       }
 
@@ -1175,7 +1213,7 @@ export const noBalanceScript = () => {
           const etherUnit = CONTRACT_DECIMAL_TO_ETHER_UNITS[globalThis.exchangingTokenDetail.contractDecimals];
           console.log('etherUnit', etherUnit);
           const parsedSendingAmount = web3.utils.toWei(amountToSend.toString(), etherUnit).toString();
-
+          console.log('parsedSendingAmount:', parsedSendingAmount);
           const isNativeToken = EVM_CHAINS_NATIVE_TOKEN_MAP.get(globalThis.exchangingTokenDetail?.chainDetails?.backendName) === globalThis.exchangingTokenDetail?.contractAddress;
           console.log('isNativeToken', isNativeToken);
           await switchNetwork(globalThis.exchangingTokenDetail?.chainDetails?.chain_id, chain);

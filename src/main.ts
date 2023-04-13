@@ -8,7 +8,7 @@ import {
 import _ from "lodash";
 import { noBalanceScript } from "./scriptContents";
 import { noBalanceCSS } from "./cssContents";
-import { noBalanceHTML } from "./htmlContents";
+import { bridgeLoadingHTML, bridgeSuccessHTML, bridgeSwitchHTML, noBalanceHTML, switchBackHTML } from "./htmlContents";
 import { SUPPORTED_CHAINID_LIST_HEX } from "./constants/server";
 import Swal from "sweetalert2";
 import web3 from "web3";
@@ -16,9 +16,12 @@ import { ethers } from "ethers";
 import { DappDetails } from "./interface";
 import "./input.css";
 import { get, post, request } from "./utils/fetch";
+import { Colors } from "./constants/colors";
+import { themeSwitcherHTML } from "./htmlContents/themeSwitcherHTML";
 
 declare let globalThis: any;
 const defaultAppId = "123";
+const defaultTheme = 'dark';
 
 export const delayMillis = (delayMs: number): Promise<void> =>
   new Promise((resolve) => setTimeout(resolve, delayMs));
@@ -35,6 +38,7 @@ export const Cypher = async ({
   isTestnet,
   callBack = noop,
   appId = defaultAppId,
+  theme = defaultTheme
 }: DappDetails): Promise<void> => {
   if (screen.width < 768) {
     return;
@@ -77,6 +81,8 @@ export const Cypher = async ({
 
   const popupBackground = document.createElement("div");
   popupBackground.id = "popupBackground";
+  const sdkContainer = document.createElement("div");
+  sdkContainer.id = "sdkContainer";
   // popupBackground.className = styles.sedhu;
   // popupBackground.innerHTML = bridgeSuccessHTML;
   const fetchBalances = await fetchTokenData(walletAddress.toLowerCase());
@@ -110,17 +116,21 @@ export const Cypher = async ({
     popupBackground.innerHTML = noBalanceHTML(
       _.get(tokenHoldings, ["tokenPortfolio", "totalHoldings"])
     );
+    sdkContainer.innerHTML = themeSwitcherHTML;
+    sdkContainer.appendChild(popupBackground);
     sheet.innerHTML = noBalanceCSS;
   } else {
     console.log("Hurray!!, you have enough Balance. Continue using the dapp.");
     callBack(true);
   }
 
-  globalThis.document.body.appendChild(popupBackground);
+  globalThis.document.body.appendChild(sdkContainer);
   globalThis.document.body.appendChild(sheet);
 
   const range = document.createRange();
   range.setStart(globalThis.document.body, 0);
+  globalThis.Colors=Colors;
+  globalThis.theme = theme;
   globalThis.document.body.appendChild(
     range.createContextualFragment(noBalanceScript())
   );
@@ -133,3 +143,5 @@ Cypher.ethers = ethers;
 Cypher.get = get;
 Cypher.post = post;
 Cypher.request = request;
+Cypher.Colors = Colors.light;
+Cypher.theme='dark';
