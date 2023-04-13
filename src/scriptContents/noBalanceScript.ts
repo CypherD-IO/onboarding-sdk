@@ -167,6 +167,7 @@ export const noBalanceScript = () => {
                   if (isTokenSwapSupported(data.tokens, swapContractAddressCheck(globalThis.exchangingTokenDetail.contractAddress, globalThis.exchangingTokenDetail.chainDetails.chain_id))) {
                     console.log('token and chain swappable');
                     document.getElementById("popupBackground").innerHTML = ${bridgeInputHTML};
+                    addInputEventListner();
                   } else {
                     toastMixin.fire({
                       title: 'Sorry...',
@@ -185,6 +186,7 @@ export const noBalanceScript = () => {
         } else {
           console.log('bridge case :: ');
           document.getElementById("popupBackground").innerHTML = ${bridgeInputHTML};
+          addInputEventListner();
         }
       }
 
@@ -204,6 +206,11 @@ export const noBalanceScript = () => {
 
       function backToNoBalanceHTML () {
         document.getElementById("popupBackground").innerHTML = ${noBalanceHTML};
+      }
+
+      function addInputEventListner () {
+        const popupBackgroundParentElement = document.querySelector("#popupBackground");
+        popupBackgroundParentElement.addEventListener("input",updateUsdValue);
       }
 
       function closePopup () {
