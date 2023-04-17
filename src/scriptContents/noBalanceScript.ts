@@ -18,19 +18,19 @@ export const noBalanceScript = () => {
   console.log(theme);
   const value = `
   <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primaryBg: 'var(--theme-primaryBg)',
-            secondaryBg: 'var(--theme-secondaryBg)',
-            primaryText: 'var(--theme-primaryText)',
-            borderColor: 'var(--theme-borderColor)',
-            stripedTableBg: 'var(--theme-stripedTableBg)'
-          }
-        }
-      }
-    }
+    // tailwind.config = {
+    //   theme: {
+    //     extend: {
+    //       colors: {
+    //         primaryBg: 'var(--theme-primaryBg)',
+    //         secondaryBg: 'var(--theme-secondaryBg)',
+    //         primaryText: 'var(--theme-primaryText)',
+    //         borderColor: 'var(--theme-borderColor)',
+    //         stripedTableBg: 'var(--theme-stripedTableBg)'
+    //       }
+    //     }
+    //   }
+    // }
   </script>
     <script defer>
     applyTheme(globalThis.theme)
@@ -46,6 +46,45 @@ export const noBalanceScript = () => {
         console.log(cssVar);
         root.style.setProperty(cssVar, globalThis.Colors[globalThis.theme][cssVar]);
       });
+    }
+
+    // setTimeout(()=>{
+    //   maximizeWindow();
+    // }, 5000);
+
+    function minimizeWindow(event){
+      console.log('minimize');
+      event.stopPropagation();
+      const sdkContainer = document.getElementById("sdkContainer");
+      const popupBackground = document.getElementById("popupBackground");
+      const bridgeLoadingContainer = document.getElementById("bridgeLoadingContainer");
+      sdkContainer.style.backgroundColor = "transparent";
+      sdkContainer.style.backdropFilter = "none";
+      sdkContainer.style.zoom = 0.4;
+      sdkContainer.style.height = "25%";
+      sdkContainer.style.width = "25%";
+      sdkContainer.style.top = "75%";
+      sdkContainer.style.left = "75%";
+      bridgeLoadingContainer.style.width = "70%";
+    }
+
+    function maximizeWindow(){
+      console.log('maximize');
+      const sdkContainer = document.getElementById("sdkContainer");
+      const popupBackground = document.getElementById("popupBackground");
+      const bridgeLoadingContainer = document.getElementById("bridgeLoadingContainer");
+      console.log(sdkContainer.style);
+      if(sdkContainer && sdkContainer.style.zoom === "0.4"){
+        console.log('maximized');
+        sdkContainer.style.backgroundColor = "rgba(0,0,0,0.4)";
+        sdkContainer.style.backdropFilter = "blur(5px)";
+        sdkContainer.style.zoom = 1;
+        sdkContainer.style.height = "100%";
+        sdkContainer.style.width = "100%";
+        sdkContainer.style.top = 0;
+        sdkContainer.style.left = 0;
+        bridgeLoadingContainer.style.width = "30%";
+      }
     }
 
       var toastMixin = globalThis.Cypher.Swal.mixin({
@@ -912,6 +951,7 @@ export const noBalanceScript = () => {
         });
         if (!swapResp.isError) {
           console.log('swap completee ... ');
+          maximizeWindow();
           document.getElementById("popupBackground").innerHTML = ${bridgeSuccessHTML};
         } else {
           toastMixin.fire({
@@ -1321,6 +1361,9 @@ export const noBalanceScript = () => {
 
       async function onBridgeClick () {
         document.getElementById("popupBackground").innerHTML = ${bridgeLoadingHTML};
+        setTimeout(()=>{
+          minimizeWindow();
+        }, 3000);
         if (isSwap()) {
           console.log('allowance data : ', globalThis.allowanceData);
           if (globalThis.allowanceData.isAllowance) {
@@ -1344,9 +1387,11 @@ export const noBalanceScript = () => {
                       if (data?.activityStatus?.status === "COMPLETED") {
                         if(await checkNetwork(globalThis.requiredTokenDetail.chainDetails.chain_id)) {
                           console.log('true state');
+                          maximizeWindow();
                           document.getElementById("popupBackground").innerHTML = ${bridgeSuccessHTML};
                         } else {
                           console.log('false state');
+                          maximizeWindow();
                           document.getElementById("popupBackground").innerHTML = ${switchBackHTML};
                         }
                         clearInterval(interval);
