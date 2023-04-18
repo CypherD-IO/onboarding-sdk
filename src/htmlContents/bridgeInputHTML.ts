@@ -1,5 +1,5 @@
 // '<img onclick="backToNoBalanceHTML()" src="https://public.cypherd.io/icons/back_arrow.svg" class="cursor-pointer"/>'+
-export const bridgeInputHTML = `'<div class="bg-primaryBg rounded-[30px] z-50 flex flex-column justify-between items-center m-auto w-[30%]" id="bridge-popup-css">'+
+export const bridgeInputHTML = `'<div class="bg-primaryBg rounded-[30px] z-50 flex flex-col justify-between items-center m-auto w-[30%]" id="bridge-popup-css">'+
   '<div class=" bg-primaryBg rounded-t-[30px] p-5 flex flex-col justify-center items-center w-full h-full">'+
     '<div class="flex justify-end w-full mt-[5px] ">'+
       '<img onclick="closePopup()" src="https://public.cypherd.io/icons/close_icon.svg" class="cursor-pointer">'+
@@ -11,7 +11,7 @@ export const bridgeInputHTML = `'<div class="bg-primaryBg rounded-[30px] z-50 fl
         '<p class="text-[12px] text-[#2081E1]">MAX</p>'+
       '</div>'+
       '<div id="bp-amount-input">'+
-        '<input type="text" class="text-center focus:outline-none font-extrabold text-[70px] text-primaryText bg-primaryBg" id="bp-amount-value" placeholder="0.00">'+
+        '<input type="text" class="text-center focus:outline-none font-extrabold text-[70px] text-primaryText bg-primaryBg" id="bp-amount-value" placeholder="0.00" onfocus="onFocusInput(event)" onblur="onBlurInput(event)">'+
       '</div>'+
       '<div class="rounded-full flex items-center justify-center h-[48px] w-[48px] cursor-pointer" id="bp-switch-button">'+
       '</div>'+

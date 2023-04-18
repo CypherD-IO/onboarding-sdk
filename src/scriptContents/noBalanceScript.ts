@@ -54,7 +54,7 @@ export const noBalanceScript = () => {
 
     function minimizeWindow(event){
       console.log('minimize');
-      event.stopPropagation();
+      event?.stopPropagation();
       const sdkContainer = document.getElementById("sdkContainer");
       const popupBackground = document.getElementById("popupBackground");
       const bridgeLoadingContainer = document.getElementById("bridgeLoadingContainer");
@@ -85,6 +85,14 @@ export const noBalanceScript = () => {
         sdkContainer.style.left = 0;
         bridgeLoadingContainer.style.width = "30%";
       }
+    }
+
+    function onFocusInput(e){
+      e.target.placeholder="";
+    }
+
+    function onBlurInput(e){
+      e.target.placeholder="0.00";
     }
 
       var toastMixin = globalThis.Cypher.Swal.mixin({
@@ -241,7 +249,7 @@ export const noBalanceScript = () => {
           tokenValueElement.innerHTML = newValue.toString();
         }
       };
-      popupBackgroundParentElement.addEventListener("input",updateUsdValue);
+      popupBackgroundParentElement?.addEventListener("input",updateUsdValue);
 
       function backToNoBalanceHTML () {
         document.getElementById("popupBackground").innerHTML = ${noBalanceHTML};
@@ -249,7 +257,7 @@ export const noBalanceScript = () => {
 
       function addInputEventListner () {
         const popupBackgroundParentElement = document.querySelector("#popupBackground");
-        popupBackgroundParentElement.addEventListener("input",updateUsdValue);
+        popupBackgroundParentElement?.addEventListener("input",updateUsdValue);
       }
 
       function closePopup () {
@@ -1361,9 +1369,6 @@ export const noBalanceScript = () => {
 
       async function onBridgeClick () {
         document.getElementById("popupBackground").innerHTML = ${bridgeLoadingHTML};
-        setTimeout(()=>{
-          minimizeWindow();
-        }, 3000);
         if (isSwap()) {
           console.log('allowance data : ', globalThis.allowanceData);
           if (globalThis.allowanceData.isAllowance) {
@@ -1378,7 +1383,7 @@ export const noBalanceScript = () => {
 
             if (response?.message === "success") {
               console.log('success');
-
+              minimizeWindow(null);
               const interval = setInterval(() => {
                 console.log("fetching from activity ... ");
                   const status = get('${ARCH_HOST}/v1/activities/status/bridge/' + globalThis.bridgeQuote.quoteUuid).then(
