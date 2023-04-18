@@ -1,4 +1,4 @@
-export const switchBackHTML = `'<div id="bridge-popup-css" class="rounded-[30px] px-[50px] py-[12px] w-[35%] justify-evenly bg-primaryBg">'+
+export const switchBackHTML = `'<div id="bridge-popup-css" class="rounded-[30px] px-[50px] py-[30px] w-[35%] justify-evenly bg-primaryBg">'+
 '<div id="bp-heading" class="flex flex-col justify-center items-center">'+
   '<img src="https://public.cypherd.io/icons/logos/success.png" alt="successLogo" width="42" height="42">'+
   '<h2 class="text-[23px] text-primaryText font-semibold mt-[3px]">Congrats</h2>'+

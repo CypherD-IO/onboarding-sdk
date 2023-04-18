@@ -1,6 +1,6 @@
 export const bridgeLoadingHTML = `'<div onclick="maximizeWindow()" id="bridgeLoadingContainer" class="flex flex-col rounded-[30px] bg-primaryBg py-[25px] w-[30%]">'+
       '<div class="flex flex-row justify-end items-center w-full px-[20px]">'+
-        '<div onclick="minimizeWindow(event)" class="flex flex-row justify-center items-center px-[5px] py-[5px] cursor-pointer">'+
+        '<div onclick="minimizeWindow(event)" class="flex flex-row justify-center items-center px-[5px] py-[5px] mr-[15px] cursor-pointer">'+
           '<img src="https://public.cypherd.io/icons/minimize_icon.png" class="cursor-pointer w-[20px] h-[3px]">'+
         '</div>'+
         '<img onclick="closePopup()" src="https://public.cypherd.io/icons/close_icon.svg" class="cursor-pointer">'+
