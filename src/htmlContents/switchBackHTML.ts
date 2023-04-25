@@ -3,7 +3,7 @@ export const switchBackHTML = `'<div id="bridge-popup-css" class="rounded-[30px]
   '<img src="https://public.cypherd.io/icons/logos/success.png" alt="successLogo" width="42" height="42">'+
   '<h2 class="text-[23px] text-primaryText font-semibold mt-[3px]">Congrats</h2>'+
 '</div>'+
-'<p class="text-center text-primaryText text-[18px] mt-[5px] px-[50px]">You have '+ (globalThis?.bridgeQuote?.transferAmount)?.toString() + ' ' + globalThis?.requiredTokenDetail?.symbol + ' added in ' + globalThis?.requiredTokenDetail?.chainDetails?.backendName + '. You can now use dapp. Switch chain back to ' + globalThis?.requiredTokenDetail?.chainDetails?.backendName + '</p>'+
+'<p class="text-center text-primaryText text-[18px] mt-[5px]">You have '+ (globalThis?.bridgeQuote?.transferAmount)?.toString() + ' ' + globalThis?.requiredTokenDetail?.symbol + ' added in ' + globalThis?.requiredTokenDetail?.chainDetails?.backendName + '. You can now use dapp. Switch chain back to ' + globalThis?.requiredTokenDetail?.chainDetails?.backendName + '</p>'+
 '<div id="bp-switch-container" class="mt-[5px] px-[50px]">'+
   '<div id="bp-switch-chain-container">'+
     '<img src="https://public.cypherd.io/icons/logos/' + globalThis?.exchangingTokenDetail?.chainDetails?.backendName?.toLowerCase() + '.png" alt="' + globalThis?.exchangingTokenDetail?.chainDetails?.backendName + ' logo" width="42" height="42">'+
