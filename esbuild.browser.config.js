@@ -7,7 +7,7 @@ const postcss = require('esbuild-postcss-plugin');
 const { rimraf, rimrafSync, native, nativeSync } = require('rimraf');
 
 (async function () {
-  // await rimrafSync("./dist");
+  await rimrafSync("./dist");
   await esbuild.build({
     entryPoints: ['src/browser.ts'],
     bundle: true,
