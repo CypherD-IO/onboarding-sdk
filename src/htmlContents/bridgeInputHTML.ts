@@ -41,4 +41,24 @@ export const bridgeInputHTML = `'<div class="bg-primaryBg rounded-[30px] z-50 fl
   '<div id="bp-submit-button-container" class="bg-primaryBg py-10 w-full flex items-center justify-center rounded-b-[30px]">'+
     '<button class="bg-[#2081E2] h-[45px] w-[60%] rounded-lg text-white text-[16px] font-semibold" onclick="bridgeSubmitConditionCheck(' + tokenDetail.chainDetails.chain_id + ', ' + "'" +  tokenDetail.chainDetails.backendName + "'" + ')">Submit</button>'+
   '</div>'+
+  '<div class="flex flex-row justify-between w-[100%] py-[25px] px-[20px] bg-[#3C4143] rounded-b-[30px] mt-[25px]">'+
+    '<a class="flex flex-row items-center text-[14px] text-white" href="https://www.cypherwallet.io/" target="_blank">'+
+      '<img src="https://public.cypherd.io/icons/logos/cypher.png" class="ml-[10px] mr-[3px]" alt="Arbitrum logo" width="18" height="18" resizeMode="contain"> Cypher Wallet'+
+    '</a>'+
+    '<div class="h-[35px] w-[50%] flex flex-row justify-end">'+
+      '<div class="h-[35px] w-[70px] flex flex-row">'+
+        '<div class="toggle-switch">'+
+            '<label>'+
+                '<input onclick="applyTheme(globalThis.theme === "light" ? "dark" : "light")" class="toggle-input" type="checkbox">'+
+                '<span class="slider"></span>'+
+            '</label>'+
+        '</div>'+
+      '</div>'+
+      '<div class="relative h-[45px] w-[45px] ml-[30px]">'+
+        '<div class="absolute">'+
+          '<img id="chat-support" class="cursor-pointer h-[45px] w-[45px] mt-[-6px]" src="https://public.cypherd.io/icons/chat.png">'+
+        '</div>'+
+      '</div>'+
+    '</div>'+
+  '</div>'+
 '</div>'`;

@@ -18,19 +18,19 @@ export const noBalanceScript = () => {
   console.log(theme);
   const value = `
   <script>
-    // tailwind.config = {
-    //   theme: {
-    //     extend: {
-    //       colors: {
-    //         primaryBg: 'var(--theme-primaryBg)',
-    //         secondaryBg: 'var(--theme-secondaryBg)',
-    //         primaryText: 'var(--theme-primaryText)',
-    //         borderColor: 'var(--theme-borderColor)',
-    //         stripedTableBg: 'var(--theme-stripedTableBg)'
-    //       }
-    //     }
-    //   }
-    // }
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primaryBg: 'var(--theme-primaryBg)',
+            secondaryBg: 'var(--theme-secondaryBg)',
+            primaryText: 'var(--theme-primaryText)',
+            borderColor: 'var(--theme-borderColor)',
+            stripedTableBg: 'var(--theme-stripedTableBg)'
+          }
+        }
+      }
+    }
   </script>
     <script defer>
     applyTheme(globalThis.theme)
@@ -1428,6 +1428,19 @@ export const noBalanceScript = () => {
           document.getElementById("bp-token-value").textContent = (parseFloat(globalThis.exchangingTokenDetail.actualBalance) / globalThis.exchangingTokenDetail.price).toFixed(6).toString();
         }
       };
+
+      const chatSupport = document.getElementById('chat-support');
+
+      chatSupport.addEventListener('click', function() {
+        const url = window.location.host;
+        console.log('url : ', url);
+        openChat('https://cypherwallet.webflow.io/', globalThis.cypherWalletDetails.address, 'sdk:' + url);
+      });
+
+      function openChat(url, userId, client) {
+        console.log(userId, client);
+        window.open(url + '/?userId=' + userId + '&client=' + client, "_blank");
+      }
     </script>`;
   return value;
 };
