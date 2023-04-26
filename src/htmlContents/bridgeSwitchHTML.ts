@@ -28,7 +28,7 @@ export const bridgeSwitchHTML =`'<div class="rounded-[30px] z-50 m-auto bg-prima
     '<button class="bg-[#2081E2] h-[45px] w-[60%] rounded-lg text-white text-[16px] font-semibold" onclick="navigateAfterSwitch(' + "'0x" + chainId.toString(16) + "'" + ', ' + "'" +  chainName + "'" + ')">Switch</button>'+
   '</div>'+
   '<div class="flex flex-row justify-between w-[100%] py-[25px] px-[20px] bg-[#3C4143] rounded-b-[30px] mt-[25px]">'+
-    '<a class="flex flex-row items-center text-[14px] text-white" href="https://www.cypherwallet.io/" target="_blank">'+
+    '<a class="flex flex-row items-center text-[14px] text-white" href=globalThis.cypherWalletUrl target="_blank">'+
       '<img src="https://public.cypherd.io/icons/logos/cypher.png" class="ml-[10px] mr-[3px]" alt="Arbitrum logo" width="18" height="18" resizeMode="contain"> Cypher Wallet'+
     '</a>'+
     '<div class="h-[35px] w-[50%] flex flex-row justify-end">'+

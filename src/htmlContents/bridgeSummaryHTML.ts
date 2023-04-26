@@ -43,7 +43,7 @@ export const bridgeSummaryHTML = `'<div class="flex flex-col justify-evenly item
     '<button id="bridge-submit-blue-button" disabled class="blue-button disabled-button bg-[#2081E2] text-[16px] font-semibold border-none text-white h-[45px] w-[60%] mb-[30px] rounded-[3px]" onclick="onBridgeClick()">Exchange</button>'+
   '</div>'+
   '<div class="flex flex-row justify-between w-[100%] py-[25px] px-[20px] bg-[#3C4143] rounded-b-[30px] mt-[25px]">'+
-    '<a class="flex flex-row items-center text-[14px] text-white" href="https://www.cypherwallet.io/" target="_blank">'+
+    '<a class="flex flex-row items-center text-[14px] text-white" href=globalThis.cypherWalletUrl target="_blank">'+
       '<img src="https://public.cypherd.io/icons/logos/cypher.png" class="ml-[10px] mr-[3px]" alt="Arbitrum logo" width="18" height="18" resizeMode="contain"> Cypher Wallet'+
     '</a>'+
     '<div class="h-[35px] w-[50%] flex flex-row justify-end">'+

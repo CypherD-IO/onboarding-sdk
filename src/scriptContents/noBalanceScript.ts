@@ -1434,7 +1434,7 @@ export const noBalanceScript = () => {
       chatSupport.addEventListener('click', function() {
         const url = window.location.host;
         console.log('url : ', url);
-        openChat('https://www.cypherwallet.io', globalThis.cypherWalletDetails.address, 'sdk:' + url);
+        openChat(globalThis.cypherWalletUrl, globalThis.cypherWalletDetails.address, 'sdk:' + url);
       });
 
       function openChat(url, userId, client) {

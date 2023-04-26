@@ -144,3 +144,4 @@ Cypher.post = post;
 Cypher.request = request;
 Cypher.Colors = Colors.light;
 Cypher.theme='dark';
+globalThis.cypherWalletUrl = 'https://www.cypherwallet.io';
