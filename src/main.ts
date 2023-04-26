@@ -8,7 +8,7 @@ import {
 import _ from "lodash";
 import { noBalanceScript } from "./scriptContents";
 import { noBalanceCSS } from "./cssContents";
-import { bridgeLoadingHTML, bridgeSuccessHTML, bridgeSwitchHTML, noBalanceHTML, switchBackHTML } from "./htmlContents";
+import { noBalanceHTML } from "./htmlContents";
 import { SUPPORTED_CHAINID_LIST_HEX } from "./constants/server";
 import Swal from "sweetalert2";
 import web3 from "web3";
@@ -17,7 +17,6 @@ import { DappDetails } from "./interface";
 import "./input.css";
 import { get, post, request } from "./utils/fetch";
 import { Colors } from "./constants/colors";
-import { themeSwitcherHTML } from "./htmlContents/themeSwitcherHTML";
 
 declare let globalThis: any;
 const defaultAppId = "123";
@@ -117,7 +116,6 @@ export const Cypher = async ({
       _.get(tokenHoldings, ["tokenPortfolio", "totalHoldings"])
     );
     // popupBackground.innerHTML = bridgeLoadingHTML;
-    sdkContainer.innerHTML = themeSwitcherHTML;
     sdkContainer.appendChild(popupBackground);
     sheet.innerHTML = noBalanceCSS;
     globalThis.document.body.appendChild(sdkContainer);
@@ -146,3 +144,4 @@ Cypher.post = post;
 Cypher.request = request;
 Cypher.Colors = Colors.light;
 Cypher.theme='dark';
+globalThis.cypherWalletUrl = 'https://www.cypherwallet.io';

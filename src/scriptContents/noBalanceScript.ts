@@ -1428,6 +1428,19 @@ export const noBalanceScript = () => {
           document.getElementById("bp-token-value").textContent = (parseFloat(globalThis.exchangingTokenDetail.actualBalance) / globalThis.exchangingTokenDetail.price).toFixed(6).toString();
         }
       };
+
+      const chatSupport = document.getElementById('chat-support');
+
+      chatSupport.addEventListener('click', function() {
+        const url = window.location.host;
+        console.log('url : ', url);
+        openChat(globalThis.cypherWalletUrl, globalThis.cypherWalletDetails.address, 'sdk:' + url);
+      });
+
+      function openChat(url, userId, client) {
+        console.log(userId, client);
+        window.open(url + '/?userId=' + userId + '&client=' + client, "_blank");
+      }
     </script>`;
   return value;
 };

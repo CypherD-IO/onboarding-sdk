@@ -1,5 +1,4 @@
 import _ from "lodash";
-import { themeSwitcherHTML } from "./themeSwitcherHTML";
 
 declare let globalThis: any;
 
@@ -62,13 +61,27 @@ export const noBalanceHTML = (totalHoldings: any) => {
         <h2 class='text-[23px] text-primaryText font-semibold'>You need ${_.get(globalThis.requiredTokenDetail, ['symbol']).toUpperCase()} in ${__capitalize(_.get(globalThis.requiredTokenDetail, ['chainDetails', 'backendName']).toLowerCase())} chain to use this dApp</h2>
       </div>
       ${tokenListContainer}
-      <div class='flex flex-row justify-center w-[100%] py-[25px] bg-[#3C4143] rounded-b-[30px] mt-[15px]'>
-        <a class='flex flex-row items-center text-[14px] text-white' href="https://www.cypherwallet.io/" target="_blank">
+      <div class='flex flex-row justify-between w-[100%] py-[25px] px-[20px] bg-[#3C4143] rounded-b-[30px] mt-[25px]'>
+        <a class='flex flex-row items-center text-[14px] text-white' href=globalThis.cypherWalletUrl target="_blank">
           Powered by  <img src="https://public.cypherd.io/icons/logos/cypher.png" class="ml-[10px] mr-[3px]" alt="Arbitrum logo" width="18" height="18" resizeMode="contain"> Cypher Wallet
         </a>
+        <div class="h-[35px] w-[50%] flex flex-row justify-end">
+          <div class="h-[35px] w-[70px] flex flex-row">
+            <div class="toggle-switch">
+                <label>
+                    <input onclick="applyTheme(globalThis.theme === 'light' ? 'dark' : 'light')" class="toggle-input" type="checkbox">
+                    <span class="slider"></span>
+                </label>
+            </div>
+          </div>
+          <div class="relative h-[45px] w-[45px] ml-[30px]">
+            <div class="absolute">
+              <img id="chat-support" class="cursor-pointer h-[45px] w-[45px] mt-[-6px]" src="https://public.cypherd.io/icons/chat.png">
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  `;
+    </div>`;
 
   return htmlValue;
 };
