@@ -17,6 +17,7 @@ import { DappDetails } from "./interface";
 import "./input.css";
 import { get, post, request } from "./utils/fetch";
 import { Colors } from "./constants/colors";
+import { portfolioLoadingHTML } from "./htmlContents/portfolioLoadingHTML";
 
 declare let globalThis: any;
 const defaultAppId = "123";
@@ -73,22 +74,42 @@ export const Cypher = async ({
     isTestnet,
   };
 
-  const tailwind = document.createElement("script");
-  tailwind.src = "https://cdn.tailwindcss.com";
-  tailwind.type = "application/javascript";
-  document.getElementsByTagName("head")[0].appendChild(tailwind);
+  // const tailwind = document.createElement("script");
+  // tailwind.src = "https://cdn.tailwindcss.com";
+  // tailwind.type = "application/javascript";
+  // document.getElementsByTagName("head")[0].appendChild(tailwind);
 
   const popupBackground = document.createElement("div");
   popupBackground.id = "popupBackground";
   const sdkContainer = document.createElement("div");
   sdkContainer.id = "sdkContainer";
+
+  const sheet = document.createElement("style");
+
+  popupBackground.innerHTML = portfolioLoadingHTML;
+
+  sdkContainer.appendChild(popupBackground);
+  sheet.innerHTML = noBalanceCSS;
+  globalThis.document.body.appendChild(sdkContainer);
+
+  globalThis.document.body.appendChild(sheet);
+
+
+  const range = document.createRange();
+  range.setStart(globalThis.document.body, 0);
+  globalThis.Colors=Colors;
+  globalThis.theme = theme;
+  globalThis.document.body.appendChild(
+    range.createContextualFragment(noBalanceScript())
+  );
+
   // popupBackground.className = styles.sedhu;
   // popupBackground.innerHTML = bridgeSuccessHTML;
   const fetchBalances = await fetchTokenData(walletAddress.toLowerCase());
   console.log("balances logged", fetchBalances);
   const tokenHoldings = store.getState().portfolioStore;
   console.log("token holdings from store : ", tokenHoldings);
-  const sheet = document.createElement("style");
+  // const sheet = document.createElement("style");
 
   // close on click background of popup
   // popupBackground.addEventListener('click', function(event) {
@@ -116,23 +137,24 @@ export const Cypher = async ({
       _.get(tokenHoldings, ["tokenPortfolio", "totalHoldings"])
     );
     // popupBackground.innerHTML = bridgeLoadingHTML;
-    sdkContainer.appendChild(popupBackground);
-    sheet.innerHTML = noBalanceCSS;
-    globalThis.document.body.appendChild(sdkContainer);
+
+    // sdkContainer.appendChild(popupBackground);
+    // sheet.innerHTML = noBalanceCSS;
+    // globalThis.document.body.appendChild(sdkContainer);
   } else {
     console.log("Hurray!!, you have enough Balance. Continue using the dapp.");
     callBack(true);
   }
 
-  globalThis.document.body.appendChild(sheet);
+  // globalThis.document.body.appendChild(sheet);
 
-  const range = document.createRange();
-  range.setStart(globalThis.document.body, 0);
-  globalThis.Colors=Colors;
-  globalThis.theme = theme;
-  globalThis.document.body.appendChild(
-    range.createContextualFragment(noBalanceScript())
-  );
+  // const range = document.createRange();
+  // range.setStart(globalThis.document.body, 0);
+  // globalThis.Colors=Colors;
+  // globalThis.theme = theme;
+  // globalThis.document.body.appendChild(
+  //   range.createContextualFragment(noBalanceScript())
+  // );
   return;
 };
 globalThis.Web3 = web3;
