@@ -35,14 +35,14 @@ export const bridgeSwitchHTML =`'<div class="rounded-[30px] z-50 m-auto bg-prima
       '<div class="h-[35px] w-[70px] flex flex-row">'+
         '<div class="toggle-switch">'+
             '<label>'+
-                '<input onclick="applyTheme(globalThis.theme === "light" ? "dark" : "light")" class="toggle-input" type="checkbox">'+
+                '<input onclick="switchTheme()" class="toggle-input" type="checkbox">'+
                 '<span class="slider"></span>'+
             '</label>'+
         '</div>'+
       '</div>'+
-      '<div class="relative h-[45px] w-[45px] ml-[30px]">'+
+      '<div class="relative h-[55px] w-[55px] ml-[20px]">'+
         '<div class="absolute">'+
-          '<img id="chat-support" class="cursor-pointer h-[45px] w-[45px] mt-[-6px]" src="https://public.cypherd.io/icons/chat.png">'+
+          '<img id="chat-support" class="cursor-pointer h-[55px] w-[55px] mt-[-10px]" src="https://public.cypherd.io/icons/chat.png" onclick="openChat()">'+
         '</div>'+
       '</div>'+
     '</div>'+
