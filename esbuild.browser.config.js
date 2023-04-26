@@ -15,7 +15,7 @@ const { rimraf, rimrafSync, native, nativeSync } = require('rimraf');
     sourcemap: 'external',
     outfile: 'dist/esbuild/onboardingsdk.js',
     // plugins: [cssModulesPlugin()],
-    plugins: [postcss()],
+    // plugins: [postcss()],
     plugins: [
       postcss({
         plugins: [

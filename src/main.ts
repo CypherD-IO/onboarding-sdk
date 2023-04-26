@@ -136,25 +136,10 @@ export const Cypher = async ({
     popupBackground.innerHTML = noBalanceHTML(
       _.get(tokenHoldings, ["tokenPortfolio", "totalHoldings"])
     );
-    // popupBackground.innerHTML = bridgeLoadingHTML;
-
-    // sdkContainer.appendChild(popupBackground);
-    // sheet.innerHTML = noBalanceCSS;
-    // globalThis.document.body.appendChild(sdkContainer);
   } else {
     console.log("Hurray!!, you have enough Balance. Continue using the dapp.");
     callBack(true);
   }
-
-  // globalThis.document.body.appendChild(sheet);
-
-  // const range = document.createRange();
-  // range.setStart(globalThis.document.body, 0);
-  // globalThis.Colors=Colors;
-  // globalThis.theme = theme;
-  // globalThis.document.body.appendChild(
-  //   range.createContextualFragment(noBalanceScript())
-  // );
   return;
 };
 globalThis.Web3 = web3;
