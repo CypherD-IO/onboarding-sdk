@@ -26,7 +26,6 @@ export const request = ( url: string, params:{key:string, value: string}[] = [],
   //   url += query;
 
   // }
-  console.log('the url :: ', url);
   return fetch( url, options ).then( response => response.json() );
 };
 

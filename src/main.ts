@@ -106,9 +106,7 @@ export const Cypher = async ({
   // popupBackground.className = styles.sedhu;
   // popupBackground.innerHTML = bridgeSuccessHTML;
   const fetchBalances = await fetchTokenData(walletAddress.toLowerCase());
-  console.log("balances logged", fetchBalances);
   const tokenHoldings = store.getState().portfolioStore;
-  console.log("token holdings from store : ", tokenHoldings);
   // const sheet = document.createElement("style");
 
   // close on click background of popup
