@@ -18,27 +18,29 @@ export const noBalanceScript = () => {
   console.log(theme);
   const value = `
   <script>
-    // tailwind.config = {
-    //   theme: {
-    //     extend: {
-    //       colors: {
-    //         primaryBg: 'var(--theme-primaryBg)',
-    //         secondaryBg: 'var(--theme-secondaryBg)',
-    //         primaryText: 'var(--theme-primaryText)',
-    //         borderColor: 'var(--theme-borderColor)',
-    //         stripedTableBg: 'var(--theme-stripedTableBg)'
-    //       }
-    //     }
-    //   }
-    // }
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primaryBg: 'var(--theme-primaryBg)',
+            secondaryBg: 'var(--theme-secondaryBg)',
+            primaryText: 'var(--theme-primaryText)',
+            borderColor: 'var(--theme-borderColor)',
+            stripedTableBg: 'var(--theme-stripedTableBg)'
+          }
+        }
+      }
+    }
   </script>
     <script defer>
-    applyTheme(globalThis.theme)
+    switchTheme(globalThis.theme);
     // const root = document.documentElement;
     // root.style.setProperty('--theme-primaryBg', globalThis.Colors[globalThis.theme].primaryBg);
-    function applyTheme(theme){
+    function switchTheme(theme=''){
       console.log('changeTheme', theme);
-      globalThis.theme=theme;
+      if(!theme) {
+        globalThis.theme = globalThis.theme === "light" ? "dark" : "light";
+      }
       // globalThis.Colors = '${Colors.dark}'
       const root = document.documentElement;
       // root.style.setProperty('--theme-primaryBg', globalThis.Colors[globalThis.theme].primaryBg);
@@ -1429,17 +1431,11 @@ export const noBalanceScript = () => {
         }
       };
 
-      const chatSupport = document.getElementById('chat-support');
-
-      chatSupport.addEventListener('click', function() {
-        const url = window.location.host;
+      function openChat() {
+        const client = 'sdk:' + window.location.host;
+        const url = globalThis.cypherWalletUrl
         console.log('url : ', url);
-        openChat(globalThis.cypherWalletUrl, globalThis.cypherWalletDetails.address, 'sdk:' + url);
-      });
-
-      function openChat(url, userId, client) {
-        console.log(userId, client);
-        window.open(url + '/?userId=' + userId + '&client=' + client, "_blank");
+        window.open(url + '/?userId=' + globalThis.cypherWalletDetails.address + '&client=' + client, "_blank");
       }
     </script>`;
   return value;
