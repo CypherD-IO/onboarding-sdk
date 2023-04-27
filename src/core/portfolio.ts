@@ -42,7 +42,7 @@ export const getPortfolioModel = async (holdings: any) => {
   const swapSupportedChains = responseData?.chains;
 
   if (!swapSupportedChains?.includes(parseInt(globalThis.cypherWalletDetails.fromChainId, 16))) {
-    console.log('the chain itself is not supported.');
+    console.log('Swap is not supported for this chain.');
     swapSupport = false;
   }
 
@@ -58,7 +58,6 @@ export const getPortfolioModel = async (holdings: any) => {
     if (contractAddress === '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee') {
       return '0x0000000000000000000000000000000000000000';
     }
-    console.log('chainId in check : ', chainId);
     if (contractAddress === '0xdeaddeaddeaddeaddeaddeaddeaddeaddead0000' && chainId === '0xa') {
       return '0x0000000000000000000000000000000000000000';
     }
@@ -76,7 +75,7 @@ export const getPortfolioModel = async (holdings: any) => {
   }
 
   if (swapSupport && !isTokenSwapSupported(swapSupportedRequiredTokensList, swapContractAddressCheck(globalThis.cypherWalletDetails.fromTokenContractAddress, globalThis.cypherWalletDetails.fromChainId))) {
-    console.log('not supported : ', globalThis.cypherWalletDetails.fromChainId);
+    console.log('swap not supported : ', globalThis.cypherWalletDetails.fromChainId);
     swapSupport = false;
   }
 
@@ -89,11 +88,10 @@ export const getPortfolioModel = async (holdings: any) => {
       // change to 10
 
       const chainId = BACKEND_NAME_TO_CHAIN_ID_HEX.get(holdings[i]?.chain_id);
-      console.log('chain Id is  : ', chainId);
 
       if (chainId === globalThis.cypherWalletDetails.fromChainId && swapSupport) {
         if (!isTokenSwapSupported(swapSupportedRequiredTokensList, swapContractAddressCheck(holding.contract_address, chainId))) {
-          console.log('not supported : ', holding.name);
+          console.log('swap not supported : ', holding.name);
           swapSupport = false;
         }
       }
