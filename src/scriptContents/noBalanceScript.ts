@@ -676,10 +676,6 @@ export const noBalanceScript = () => {
         isNative
       }) {
         try {
-          'contractAddress : ',contractAddress,
-          'contractData : ',contractData,
-          'gasLimit : ', gasLimit,
-          'gasPrice : ', gasPrice);
           const rpcEndpoint = fetchChainDetails(globalThis.exchangingTokenDetail.chainDetails.chain_id).rpcEndpoint;
 
           const web3 = new globalThis.Cypher.Web3(rpcEndpoint);
@@ -739,10 +735,6 @@ export const noBalanceScript = () => {
         contractDecimal,
         isNative
       }) {
-        contractAddress,
-        routerAddress,
-        amount,
-        contractDecimal);
         await switchNetwork(globalThis.exchangingTokenDetail?.chainDetails?.chain_id, globalThis.exchangingTokenDetail?.chainDetails?.chainName);
 
         const contractABI = [
@@ -836,11 +828,6 @@ export const noBalanceScript = () => {
         amount,
       }) {
         try {
-          chainId,
-          routerAddress,
-          contractData,
-          isNative,
-          amount);
           const rpcEndpoint = fetchChainDetails(globalThis.exchangingTokenDetail.chainDetails.chain_id).rpcEndpoint;
 
           const web3 = new globalThis.Cypher.Web3(rpcEndpoint);
