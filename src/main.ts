@@ -40,7 +40,7 @@ export const Cypher = async ({
   appId = defaultAppId,
   theme = defaultTheme
 }: DappDetails): Promise<void> => {
-  if (screen.width < 768) {
+  if (screen.width < 768 || document.getElementById('popupBackground') !== null) {
     return;
   }
   await delayMillis(1000);
