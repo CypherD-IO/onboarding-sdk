@@ -35,18 +35,18 @@ export const noBalanceHTML = (totalHoldings: any) => {
     </tr>
   `).join(' ');
 
-  const tokenListContainer = tokensAvailableList.length ? `<div class="w-[100%] flex flex-col justify-center items-center">
+  const tokenListContainer = tokensAvailableList.length ? `<div class="w-[100%] max-h-[60%] flex flex-col justify-center items-center">
   <p class='text-[16px] text-primaryText font-semibold mb-[20px]'>You can exchange with below tokens in your wallet</p>
-  <div id="tokens-available-flex-box">
-    <table width="100%">
-      ${tokensAvailableList}
-    </table>
+    <div id="tokens-available-flex-box">
+      <table class="w-[100%]">
+        ${tokensAvailableList}
+      </table>
+    </div>
+  </div>` : `<div class="w-[100%] flex flex-col justify-center items-center">
+    <p class='text-[16px] text-primaryText font-semibold mb-[20px]'>Insufficient funds to perform this action!</p>
+    <img src="https://public.cypherd.io/icons/emptyWallet.png" class="h-[300px] w-[200px]">
   </div>
-</div>` : `<div class="w-[100%] flex flex-col justify-center items-center">
-  <p class='text-[16px] text-primaryText font-semibold mb-[20px]'>Insufficient funds to perform this action!</p>
-  <img src="https://public.cypherd.io/icons/emptyWallet.png" class="h-[300px] w-[200px]">
-</div>
-`
+  `
 
   const htmlValue = `
     <div id="popup" class="bg-primaryBg">

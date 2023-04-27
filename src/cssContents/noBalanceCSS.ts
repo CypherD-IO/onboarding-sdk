@@ -14,7 +14,6 @@ export const noBalanceCSS = `
   top: 0;
   width: 100%;
   height: 100%;
-  overflow: auto;
   color: black;
   background-color: rgb(0,0,0);
   background-color: rgba(0,0,0,0.4);
@@ -27,25 +26,17 @@ export const noBalanceCSS = `
   position: relative;
   justify-content: center;
   align-items: center;
-  // z-index: 2147483646;
-  // left: 0;
-  // top: 0;
   width: 100%;
-  // overflow: auto;
-  // color: black;
-  // background-color: rgb(0,0,0);
-  // background-color: rgba(0,0,0,0.4);
-  // backdrop-filter: blur(5px);
+  height: 100%;
 }
 
 #popup {
-  // background-color: #fefefe;
   display: flex;
   flex-direction: column;
   align-items: center;
-  // margin: auto;
   width: 60%;
-  height: auto;
+  max-height: 85%;
+  justify-content: space-between;
   border-radius: 30px;
 }
 
@@ -58,10 +49,11 @@ export const noBalanceCSS = `
 }
 
 #tokens-available-flex-box {
+  height: 100%;
   width: 80%;
   overflow: scroll;
-  border: 1px solid #f2f2f2;
   border-radius: 10px;
+  border: 1px solid #f2f2f2;
 }
 
 #cyd-tokenList-header{
