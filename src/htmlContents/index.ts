@@ -5,3 +5,4 @@ export * from './bridgeSwitchHTML';
 export * from './bridgeLoadingHTML';
 export * from './switchBackHTML';
 export * from './bridgeSuccessHTML';
+export * from './bridgeFailedHTML';

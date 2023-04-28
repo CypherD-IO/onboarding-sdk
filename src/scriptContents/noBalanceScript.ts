@@ -1,9 +1,10 @@
 import { Colors } from "../constants/colors";
-import { ARCH_HOST, ChainBackendNames } from "../constants/server";
+import { ARCH_HOST, ChainBackendNames, ONGOING_BRIDGE_KEY } from "../constants/server";
 import {
   bridgeInputHTML,
   bridgeLoadingHTML,
   bridgeSuccessHTML,
+  bridgeFailedHTML,
   bridgeSummaryHTML,
   bridgeSwitchHTML,
   noBalanceHTML,
@@ -17,19 +18,19 @@ export const noBalanceScript = () => {
   const theme = globalThis.theme;
   const value = `
   <script>
-    // tailwind.config = {
-    //   theme: {
-    //     extend: {
-    //       colors: {
-    //         primaryBg: 'var(--theme-primaryBg)',
-    //         secondaryBg: 'var(--theme-secondaryBg)',
-    //         primaryText: 'var(--theme-primaryText)',
-    //         borderColor: 'var(--theme-borderColor)',
-    //         stripedTableBg: 'var(--theme-stripedTableBg)'
-    //       }
-    //     }
-    //   }
-    // }
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primaryBg: 'var(--theme-primaryBg)',
+            secondaryBg: 'var(--theme-secondaryBg)',
+            primaryText: 'var(--theme-primaryText)',
+            borderColor: 'var(--theme-borderColor)',
+            stripedTableBg: 'var(--theme-stripedTableBg)'
+          }
+        }
+      }
+    }
   </script>
     <script defer>
     switchTheme(globalThis.theme);
@@ -1240,14 +1241,19 @@ export const noBalanceScript = () => {
           bridgeResult = bridge().then(async function(response){
 
             if (response?.message === "success") {
+              window.localStorage.setItem(${ONGOING_BRIDGE_KEY}, globalThis.bridgeQuote.quoteUuid);
               minimizeWindow(null);
               const interval = setInterval(() => {
                   const status = get('${ARCH_HOST}/v1/activities/status/bridge/' + globalThis.bridgeQuote.quoteUuid).then(
                     async function (data) {
                       if (data?.activityStatus?.status === "COMPLETED") {
+                        window.localStorage.removeItem(${ONGOING_BRIDGE_KEY});
                         if(await checkNetwork(globalThis.requiredTokenDetail.chainDetails.chain_id)) {
                           maximizeWindow();
                           document.getElementById("popupBackground").innerHTML = ${bridgeSuccessHTML};
+                        } else if (data?.activityStatus?.status === "FAILED") {
+                          maximizeWindow();
+                          document.getElementById("popupBackground").innerHTML = ${bridgeFailedHTML};
                         } else {
                           maximizeWindow();
                           document.getElementById("popupBackground").innerHTML = ${switchBackHTML};

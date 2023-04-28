@@ -388,3 +388,5 @@ export const CHAIN_ID_HEX_TO_NATIVE_TOKEN_NAME = new Map([
   ['0xa4b1', 'Arbitrum ETH'],
   ['0xa', 'Optimism ETH'],
 ]);
+
+export const ONGOING_BRIDGE_KEY = 'ongoing-bridge';
