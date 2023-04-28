@@ -34,7 +34,6 @@ export const noBalanceCSS = `
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 60%;
   max-height: 85%;
   justify-content: space-between;
   border-radius: 30px;
@@ -44,13 +43,10 @@ export const noBalanceCSS = `
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 120px;
-  margin-top: 30px;
 }
 
 #tokens-available-flex-box {
   height: 100%;
-  width: 80%;
   overflow: scroll;
   border-radius: 10px;
   border: 1px solid #f2f2f2;
@@ -119,8 +115,6 @@ td{
   background-color: #2081E2;
   border: none;
   color: white;
-  height: 35px;
-  width: 90px;
   border-radius: 3px;
   float: right;
   margin-right: 10px
@@ -147,7 +141,6 @@ td{
   justify-content: center;
   text-align: center;
   align-items: stretch;
-  width: 250px;
 }
 
 #bp-token-value-flex-box {
@@ -169,14 +162,12 @@ td{
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  height: 25px;
 }
 
 #bp-balance-detail-token {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  height: 25px;
   align-items: center;
 }
 
