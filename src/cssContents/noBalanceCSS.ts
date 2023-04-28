@@ -253,6 +253,7 @@ label {
   box-shadow: inset 6px 0px 0px 0px var(--light);
   background-color: var(--dark);
   transition: 0.3s;
+  transform: rotate(-30deg);
 }
 
 .toggle-input:checked ~ .slider::before {

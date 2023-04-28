@@ -53,20 +53,21 @@ export const noBalanceHTML = (totalHoldings: any) => {
       <div class="flex flex-row justify-end w-[95%] mt-[20px] mx-[30px] bg-primaryBg">
         <img onclick="closePopup()" src="https://public.cypherd.io/icons/close_icon.svg" class="cursor-pointer">
       </div>
-      <div id="icon-flex-box" class="w-[200px] lg:w-[120px] mt-[30px] mb-[30px] lg:mb-0">
-        <img
-          src="https://public.cypherd.io/icons/logos/${_.get(globalThis.requiredTokenDetail, ['chainDetails', 'backendName']).toLowerCase()}.png"
-          alt="${_.get(globalThis.requiredTokenDetail, ['chainDetails', 'backendName']).toLowerCase()} logo"
-          class="w-[85px] lg:w-[52px]"
-        />
-        <img
-          src="${_.get(globalThis.requiredTokenDetail, ['logoUrl'])}"
-          alt="Arbitrum logo"
-          class="w-[85px] lg:w-[52px]"
-        />
-      </div>
       <div id=cyd-tokenList-header class='my-[20px] px-10 lg:px-0'>
-        <h2 class='text-[46px] lg:text-[23px] text-primaryText font-semibold'>You need ${_.get(globalThis.requiredTokenDetail, ['symbol']).toUpperCase()} in ${__capitalize(_.get(globalThis.requiredTokenDetail, ['chainDetails', 'backendName']).toLowerCase())} chain to use this dApp</h2>
+        <h2 class='flex flex-row text-[46px] lg:text-[23px] text-primaryText font-semibold'>You need
+          <img
+            src="https://public.cypherd.io/icons/logos/${_.get(globalThis.requiredTokenDetail, ['chainDetails', 'backendName']).toLowerCase()}.png"
+            alt="${_.get(globalThis.requiredTokenDetail, ['chainDetails', 'backendName']).toLowerCase()} logo"
+            class="w-[55px] lg:w-[32px] ml-[8px] mr-[8px]"
+          />
+          ${_.get(globalThis.requiredTokenDetail, ['symbol']).toUpperCase()} in
+          <img
+            src="${_.get(globalThis.requiredTokenDetail, ['logoUrl'])}"
+            alt="Arbitrum logo"
+            class="w-[55px] lg:w-[32px] ml-[8px] mr-[8px]"
+          />
+          ${__capitalize(_.get(globalThis.requiredTokenDetail, ['chainDetails', 'backendName']).toLowerCase())} chain to use this dApp
+        </h2>
       </div>
       ${tokenListContainer}
       <div class='flex flex-row justify-between w-[100%] py-[25px] px-[20px] bg-[#3C4143] rounded-b-[30px] mt-[25px]'>
