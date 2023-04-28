@@ -40,7 +40,7 @@ export const Cypher = async ({
   appId = defaultAppId,
   theme = defaultTheme
 }: DappDetails): Promise<void> => {
-  if (screen.width < 768 || document.getElementById('popupBackground') !== null) {
+  if (document.getElementById('popupBackground') !== null) {
     return;
   }
   await delayMillis(1000);
@@ -97,7 +97,7 @@ export const Cypher = async ({
 
   const range = document.createRange();
   range.setStart(globalThis.document.body, 0);
-  globalThis.Colors=Colors;
+  globalThis.Colors = Colors;
   globalThis.theme = theme;
   globalThis.document.body.appendChild(
     range.createContextualFragment(noBalanceScript())
@@ -148,5 +148,5 @@ Cypher.get = get;
 Cypher.post = post;
 Cypher.request = request;
 Cypher.Colors = Colors.light;
-Cypher.theme='dark';
+Cypher.theme = 'dark';
 globalThis.cypherWalletUrl = 'https://www.cypherwallet.io';

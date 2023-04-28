@@ -1,4 +1,4 @@
-import  {Colors} from "../constants/colors";
+import { Colors } from "../constants/colors";
 import { ARCH_HOST, ChainBackendNames } from "../constants/server";
 import {
   bridgeInputHTML,
@@ -63,7 +63,8 @@ export const noBalanceScript = () => {
       sdkContainer.style.width = "25%";
       sdkContainer.style.top = "75%";
       sdkContainer.style.left = "75%";
-      bridgeLoadingContainer.style.width = "70%";
+      bridgeLoadingContainer.classList.remove("lg:w-[30%]");
+      bridgeLoadingContainer.classList.add("lg:w-[70%]");
     }
 
     function maximizeWindow(){
@@ -78,7 +79,8 @@ export const noBalanceScript = () => {
         sdkContainer.style.width = "100%";
         sdkContainer.style.top = 0;
         sdkContainer.style.left = 0;
-        bridgeLoadingContainer.style.width = "30%";
+        bridgeLoadingContainer.classList.remove("lg:w-[70%]");
+        bridgeLoadingContainer.classList.add("lg:w-[30%]");
       }
     }
 
