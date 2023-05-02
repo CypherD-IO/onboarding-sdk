@@ -22,7 +22,9 @@ export const isBridgeOngoing = () => {
             popupBackground.innerHTML = switchBackHTML;
             appendContainerToBody(popupBackground, sdkContainer, sheet);
           }
-        } else (data?.activityStatus?.status === "")
+        } else if (data?.activityStatus?.status === "FAILED") {
+          window.localStorage.removeItem(ONGOING_BRIDGE_KEY);
+        }
       });
   }
   return false;
