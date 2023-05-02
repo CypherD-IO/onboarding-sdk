@@ -56,17 +56,17 @@ export const noBalanceHTML = (totalHoldings: any) => {
       <div class="flex flex-row justify-end w-[95%] mt-[20px] mx-[30px] bg-primaryBg">
         <img onclick="closePopup()" src="https://public.cypherd.io/icons/close_icon.svg" class="cursor-pointer">
       </div>
-      <div class='my-[20px] px-10 lg:px-0'>
+      <div class='my-[20px] px-10 lg:px-0 text-center'>
         <span class='text-[23px] text-primaryText font-semibold float-left'>You need</span>
         <img
-          src="https://public.cypherd.io/icons/logos/${_.get(globalThis.requiredTokenDetail, ['chainDetails', 'backendName']).toLowerCase()}.png"
-          alt="${_.get(globalThis.requiredTokenDetail, ['chainDetails', 'backendName']).toLowerCase()} logo"
+          src="${_.get(globalThis.requiredTokenDetail, ['logoUrl'])}"
+          alt="Arbitrum logo"
           class="w-[32px] h-[32px] mx-[8px] float-left"
         />
         <span class='text-[23px] text-primaryText font-semibold float-left'>${_.get(globalThis.requiredTokenDetail, ['symbol']).toUpperCase()} in</span>
         <img
-          src="${_.get(globalThis.requiredTokenDetail, ['logoUrl'])}"
-          alt="Arbitrum logo"
+          src="https://public.cypherd.io/icons/logos/${_.get(globalThis.requiredTokenDetail, ['chainDetails', 'backendName']).toLowerCase()}.png"
+          alt="${_.get(globalThis.requiredTokenDetail, ['chainDetails', 'backendName']).toLowerCase()} logo"
           class="w-[32px] h-[32px] mx-[8px] float-left"
         />
         <span class='text-[23px] text-primaryText font-semibold'>${__capitalize(_.get(globalThis.requiredTokenDetail, ['chainDetails', 'backendName']).toLowerCase())} chain to use this dApp</span>
