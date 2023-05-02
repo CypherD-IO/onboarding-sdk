@@ -44,7 +44,6 @@ export const fetchRequiredTokenData = async(chainId: string, tokenContractAddres
     }
 ];
   const response = await get(tokenDetailUrl, params);
-  console.log(response);
   return response;
 };
 
@@ -76,7 +75,6 @@ export const fetchTokenData = async (address: any) => {
 
   const response = await get(portfolioUrl, params);
   const portfolio = await getPortfolioModel(response.chain_portfolios);
-  console.log('portfolio', portfolio);
 
   if (portfolio && (portfolio.totalUnverifiedBalance > 0 || portfolio.totalBalance > 0 )) {
     store.dispatch(setPortfolioStore({ tokenPortfolio: portfolio, portfolioState: PORTFOLIO_NOT_EMPTY, }));
@@ -92,7 +90,6 @@ export const hasSufficientBalance = async (chainId: string, tokenContractAddress
     const totalHoldings = _.get(tokenHoldings, ['tokenPortfolio', 'totalHoldings']);
 
     const tokenRequired = totalHoldings.find((token: any) => _.get(token, ['contractAddress']).toLowerCase() === tokenContractAddress.toLowerCase() && _.get(token, ['chainDetails', 'chain_id']) === chainId);
-    console.log('the token requested : ', tokenRequired);
     if (tokenRequired !== undefined && _.get(tokenRequired, 'actualBalance') >= balanceRequired) {
       return true;
     }
@@ -107,7 +104,6 @@ export const fetchRequiredTokenDetails = async (chainId: string, tokenContractAd
     const totalHoldings = _.get(tokenHoldings, ['tokenPortfolio', 'totalHoldings']);
 
     const tokenRequired = totalHoldings.find((token: any) => _.get(token, ['contractAddress']).toLowerCase() === tokenContractAddress.toLowerCase() && _.get(token, ['chainDetails', 'chain_id']) === chainId);
-    console.log('the token requested : ', tokenRequired);
     if (tokenRequired !== undefined) {
       return tokenRequired;
     } else {
@@ -115,7 +111,7 @@ export const fetchRequiredTokenDetails = async (chainId: string, tokenContractAd
       const tokenDetail = await fetchRequiredTokenData(chainId, tokenContractAddress);
       return {name: tokenDetail.name,
         logoUrl: tokenDetail.logo_url,
-        contractDecimals: tokenDetail.contract_decimals,
+        contractDecimals: Number(tokenDetail.contract_decimals),
         symbol: tokenDetail.symbol,
         coinGeckoId: tokenDetail.coin_gecko_id,
         contractAddress: tokenContractAddress,
@@ -131,7 +127,7 @@ export const fetchRequiredTokenDetails = async (chainId: string, tokenContractAd
     return {
       name: tokenDetail.name,
         logoUrl: tokenDetail.logo_url,
-        contractDecimals: tokenDetail.contract_decimals,
+        contractDecimals: Number(tokenDetail.contract_decimals),
         symbol: tokenDetail.symbol,
         coinGeckoId: tokenDetail.coin_gecko_id,
         contractAddress: tokenContractAddress,
