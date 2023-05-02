@@ -7,8 +7,8 @@ export const bridgeLoadingHTML = `
         '<img onclick="closePopup()" src="https://public.cypherd.io/icons/close_icon.svg" class="cursor-pointer">'+
       '</div>'+
       '<div class="flex flex-1 flex-col justify-center self-center items-center px-[30px] w-[72%]">'+
-          '<h2 class="text-[20px] text-primaryText text-center font-semibold mt-[40px]">Transaction submitted</h2>'+
-          '<p class="text-[16px] text-primaryText text-center mt-[10px]">Your transaction is being processed. This can take upto 5 mins</p>'+
+          '<h2 class="text-[24px] text-primaryText text-center font-semibold mt-[40px]">Transaction submitted</h2>'+
+          '<p class="text-[20px] text-primaryText text-center mt-[10px]">Your transaction is being processed. This can take upto 5 mins</p>'+
           '<img class="mt-[5px]" src="https://public.cypherd.io/icons/logos/loading.gif" alt="loading gif" width="300" height="300">'+
       '</div>'+
       '<div class="flex flex-row justify-between w-[100%] py-[25px] px-[20px] bg-[#3C4143] rounded-b-[30px] mt-[25px]">'+
