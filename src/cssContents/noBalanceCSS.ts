@@ -83,10 +83,6 @@ tr{
   height: 75px;
 }
 
-td{
-  padding-left: 10px;
-}
-
 // tr:nth-child(odd) {
 //   background-color: #f5f5f5;
 // }
@@ -103,21 +99,12 @@ td{
   align-items: center;
 }
 
-#td-chain-icon {
-  margin-right: 10px
-}
-
-#td-token-icon {
-  margin-right: 10px
-}
-
 .blue-button{
   background-color: #2081E2;
   border: none;
   color: white;
   border-radius: 3px;
   float: right;
-  margin-right: 10px
 }
 
 .disabled-button {
