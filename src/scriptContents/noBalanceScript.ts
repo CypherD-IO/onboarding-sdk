@@ -1251,14 +1251,14 @@ export const noBalanceScript = () => {
                         if(await checkNetwork(globalThis.requiredTokenDetail.chainDetails.chain_id)) {
                           maximizeWindow();
                           document.getElementById("popupBackground").innerHTML = ${bridgeSuccessHTML};
-                        } else if (data?.activityStatus?.status === "FAILED") {
-                          maximizeWindow();
-                          document.getElementById("popupBackground").innerHTML = ${bridgeFailedHTML};
                         } else {
                           maximizeWindow();
                           document.getElementById("popupBackground").innerHTML = ${switchBackHTML};
                         }
                         clearInterval(interval);
+                      } else if (data?.activityStatus?.status === "FAILED") {
+                        maximizeWindow();
+                        document.getElementById("popupBackground").innerHTML = ${bridgeFailedHTML};
                       }
                     });
               }, 10000);
