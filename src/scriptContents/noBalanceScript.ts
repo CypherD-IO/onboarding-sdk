@@ -59,10 +59,10 @@ export const noBalanceScript = () => {
       sdkContainer.style.backgroundColor = "transparent";
       sdkContainer.style.backdropFilter = "none";
       sdkContainer.style.zoom = 0.4;
-      sdkContainer.style.height = "25%";
-      sdkContainer.style.width = "25%";
-      sdkContainer.style.top = "75%";
-      sdkContainer.style.left = "75%";
+      sdkContainer.style.height = "30%";
+      sdkContainer.style.width = "40%";
+      sdkContainer.style.top = "70%";
+      sdkContainer.style.left = "60%";
       bridgeLoadingContainer.classList.remove("lg:w-[30%]");
       bridgeLoadingContainer.classList.add("lg:w-[70%]");
     }
