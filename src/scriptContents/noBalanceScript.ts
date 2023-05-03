@@ -17,19 +17,19 @@ export const noBalanceScript = () => {
   const theme = globalThis.theme;
   const value = `
   <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primaryBg: 'var(--theme-primaryBg)',
-            secondaryBg: 'var(--theme-secondaryBg)',
-            primaryText: 'var(--theme-primaryText)',
-            borderColor: 'var(--theme-borderColor)',
-            stripedTableBg: 'var(--theme-stripedTableBg)'
-          }
-        }
-      }
-    }
+    // tailwind.config = {
+    //   theme: {
+    //     extend: {
+    //       colors: {
+    //         primaryBg: 'var(--theme-primaryBg)',
+    //         secondaryBg: 'var(--theme-secondaryBg)',
+    //         primaryText: 'var(--theme-primaryText)',
+    //         borderColor: 'var(--theme-borderColor)',
+    //         stripedTableBg: 'var(--theme-stripedTableBg)'
+    //       }
+    //     }
+    //   }
+    // }
   </script>
   <script defer>
     switchTheme(globalThis.theme);
