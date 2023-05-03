@@ -1234,10 +1234,6 @@ export const noBalanceScript = () => {
 
     async function onBridgeClick () {
       document.getElementById("popupBackground").innerHTML = ${bridgeLoadingHTML};
-      window.localStorage.setItem('${ONGOING_BRIDGE_KEY}', globalThis.bridgeQuote.quoteUuid);
-      window.localStorage.setItem('${ONONGOING_BRIDGE_DATA}', JSON.stringify({bridgeQuoteData: globalThis?.bridgeQuote, swapQuoteData: globalThis?.swapQuoteData, requiredTokenDetail: globalThis?.requiredTokenDetail}));
-      console.log('ongoing bridge key stored ... ', globalThis.bridgeQuote.quoteUuid);
-      console.log('ongoing bridge data: ', JSON.stringify({bridgeQuoteData: globalThis?.bridgeQuote, swapQuoteData: globalThis?.swapQuoteData, requiredTokenDetail: globalThis?.requiredTokenDetail}));
       if (isSwap()) {
         if (globalThis.allowanceData.isAllowance) {
           await getSwapAllowanceApproval();
