@@ -77,6 +77,10 @@ export const Cypher = async ({
   // tailwind.src = "https://cdn.tailwindcss.com";
   // tailwind.type = "application/javascript";
   // document.getElementsByTagName("head")[0].appendChild(tailwind);
+
+  globalThis.Colors = Colors;
+  globalThis.theme = defaultTheme;
+
   if (!await isBridgeOngoing()) {
     const {popupBackground, sdkContainer, sheet} = createContainer();
     popupBackground.innerHTML = portfolioLoadingHTML;
