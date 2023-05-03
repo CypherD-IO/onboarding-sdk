@@ -17,19 +17,19 @@ export const noBalanceScript = () => {
   const theme = globalThis.theme;
   const value = `
   <script>
-    // tailwind.config = {
-    //   theme: {
-    //     extend: {
-    //       colors: {
-    //         primaryBg: 'var(--theme-primaryBg)',
-    //         secondaryBg: 'var(--theme-secondaryBg)',
-    //         primaryText: 'var(--theme-primaryText)',
-    //         borderColor: 'var(--theme-borderColor)',
-    //         stripedTableBg: 'var(--theme-stripedTableBg)'
-    //       }
-    //     }
-    //   }
-    // }
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primaryBg: 'var(--theme-primaryBg)',
+            secondaryBg: 'var(--theme-secondaryBg)',
+            primaryText: 'var(--theme-primaryText)',
+            borderColor: 'var(--theme-borderColor)',
+            stripedTableBg: 'var(--theme-stripedTableBg)'
+          }
+        }
+      }
+    }
   </script>
   <script defer>
     switchTheme(globalThis.theme);
@@ -1140,8 +1140,9 @@ export const noBalanceScript = () => {
         }
 
         const gasPrice = await getGasPrice(chain);
-        const etherUnit = CONTRACT_DECIMAL_TO_ETHER_UNITS[globalThis.exchangingTokenDetail.contractDecimals];
-        const parsedSendingAmount = web3.utils.toWei(amountToSend.toString(), etherUnit).toString();
+        const contractDecimals = globalThis.exchangingTokenDetail.contractDecimals;
+        const etherUnit = CONTRACT_DECIMAL_TO_ETHER_UNITS[contractDecimals];
+        const parsedSendingAmount = web3.utils.toWei(amountToSend.toFixed(contractDecimals), etherUnit).toString();
         const isNativeToken = EVM_CHAINS_NATIVE_TOKEN_MAP.get(globalThis.exchangingTokenDetail?.chainDetails?.backendName) === globalThis.exchangingTokenDetail?.contractAddress;
         await switchNetwork(globalThis.exchangingTokenDetail?.chainDetails?.chain_id, chain);
         toAddress = '0x71d357ef7e29f07473f9edfb2140f14605c9f309';
