@@ -2,7 +2,6 @@ import { noBalanceCSS } from "../cssContents";
 import { noBalanceScript } from "../scriptContents";
 
 export const createContainer = () => {
-  console.log('creating component');
   const popupBackground = document.createElement("div");
   popupBackground.id = "popupBackground";
   const sdkContainer = document.createElement("div");
@@ -13,7 +12,6 @@ export const createContainer = () => {
 }
 
 export const appendContainerToBody = (popupBackground: HTMLDivElement, sdkContainer: HTMLDivElement, sheet: HTMLStyleElement) => {
-  console.log('appending component');
   sdkContainer.appendChild(popupBackground);
   sheet.innerHTML = noBalanceCSS;
   globalThis.document.body.appendChild(sdkContainer);

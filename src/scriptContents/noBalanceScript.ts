@@ -10,7 +10,6 @@ import {
   noBalanceHTML,
   switchBackHTML,
 } from "../htmlContents";
-import { get, post, request } from "../utils/fetch";
 
 // document.getElementById("popupBackground").innerHTML = ${bridgeInputHTML};
 
@@ -18,19 +17,19 @@ export const noBalanceScript = () => {
   const theme = globalThis.theme;
   const value = `
   <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primaryBg: 'var(--theme-primaryBg)',
-            secondaryBg: 'var(--theme-secondaryBg)',
-            primaryText: 'var(--theme-primaryText)',
-            borderColor: 'var(--theme-borderColor)',
-            stripedTableBg: 'var(--theme-stripedTableBg)'
-          }
-        }
-      }
-    }
+    // tailwind.config = {
+    //   theme: {
+    //     extend: {
+    //       colors: {
+    //         primaryBg: 'var(--theme-primaryBg)',
+    //         secondaryBg: 'var(--theme-secondaryBg)',
+    //         primaryText: 'var(--theme-primaryText)',
+    //         borderColor: 'var(--theme-borderColor)',
+    //         stripedTableBg: 'var(--theme-stripedTableBg)'
+    //       }
+    //     }
+    //   }
+    // }
   </script>
   <script defer>
     switchTheme(globalThis.theme);
@@ -1245,8 +1244,6 @@ export const noBalanceScript = () => {
           if (response?.message === "success") {
             window.localStorage.setItem('${ONGOING_BRIDGE_KEY}', globalThis.bridgeQuote.quoteUuid);
             window.localStorage.setItem('${ONONGOING_BRIDGE_DATA}', JSON.stringify({bridgeQuoteData: globalThis?.bridgeQuote, swapQuoteData: globalThis?.swapQuoteData, requiredTokenDetail: globalThis?.requiredTokenDetail}));
-            console.log('ongoing bridge key stored ... ', globalThis.bridgeQuote.quoteUuid);
-            console.log('ongoing bridge data: ', JSON.stringify({bridgeQuoteData: globalThis?.bridgeQuote, swapQuoteData: globalThis?.swapQuoteData, requiredTokenDetail: globalThis?.requiredTokenDetail}));
             minimizeWindow(null);
             const interval = setInterval(() => {
                 const status = get('${ARCH_HOST}/v1/activities/status/bridge/' + globalThis.bridgeQuote.quoteUuid).then(

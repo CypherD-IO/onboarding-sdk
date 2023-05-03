@@ -46,8 +46,6 @@ export const getPortfolioModel = async (holdings: any) => {
     swapSupport = false;
   }
 
-  console.log('---- chain swap support : ', swapSupport);
-
   function isTokenSwapSupported (tokenArray: any, tokenToCheck: string) {
     const tokenPresent =  tokenArray.filter(function (token: any)
     {
