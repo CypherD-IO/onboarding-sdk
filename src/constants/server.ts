@@ -390,3 +390,4 @@ export const CHAIN_ID_HEX_TO_NATIVE_TOKEN_NAME = new Map([
 ]);
 
 export const ONGOING_BRIDGE_KEY = 'ongoing-bridge';
+export const ONONGOING_BRIDGE_DATA = 'ongoing-bridge-data';

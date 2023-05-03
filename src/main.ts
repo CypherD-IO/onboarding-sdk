@@ -8,7 +8,7 @@ import {
 import _ from "lodash";
 import { noBalanceScript } from "./scriptContents";
 import { noBalanceCSS } from "./cssContents";
-import { bridgeFailedHTML, noBalanceHTML } from "./htmlContents";
+import { noBalanceHTML } from "./htmlContents";
 import { SUPPORTED_CHAINID_LIST_HEX } from "./constants/server";
 import Swal from "sweetalert2";
 import web3 from "web3";
@@ -17,6 +17,7 @@ import { DappDetails } from "./interface";
 import "./input.css";
 import { get, post, request } from "./utils/fetch";
 import { Colors } from "./constants/colors";
+import { isBridgeOngoing } from "./core/bridge";
 declare let globalThis: any;
 const defaultAppId = "123";
 const defaultTheme = 'dark';
@@ -35,9 +36,6 @@ export const Cypher = async ({
   appId = defaultAppId,
   theme = defaultTheme
 }: DappDetails): Promise<void> => {
-  if (document.getElementById('popupBackground') !== null) {
-    return;
-  }
   await delayMillis(1000);
   const walletAddress = address.toLowerCase();
   let requiredToken = fromTokenContractAddress?.toLowerCase();
@@ -75,71 +73,57 @@ export const Cypher = async ({
   const sdkContainer = document.createElement("div");
   sdkContainer.id = "sdkContainer";
 
-  const sheet = document.createElement("style");
+  if (!await isBridgeOngoing()) {
+    const fetchBalances = await fetchTokenData(walletAddress.toLowerCase());
+    console.log("balances logged", fetchBalances);
+    const tokenHoldings = store.getState().portfolioStore;
+    console.log("token holdings from store : ", tokenHoldings);
+    const sheet = document.createElement("style");
+    // close on click background of popup
+    // popupBackground.addEventListener('click', function(event) {
+    //   if (event.target == popupBackground) {
+    //     console.log('pressed background');
+    //     popupBackground.remove();
+    //   }
+    // });
+    const requiredTokenDetail = await fetchRequiredTokenDetails(
+      fromChainId,
+      requiredToken
+    );
+    globalThis.requiredTokenDetail = { ...requiredTokenDetail };
+    if (
+      requiredTokenBalance === 0 ||
+      !(await hasSufficientBalance(
+        fromChainId,
+        requiredToken,
+        requiredTokenBalance
+      ))
+    ) {
+      popupBackground.innerHTML = noBalanceHTML(
+        _.get(tokenHoldings, ["tokenPortfolio", "totalHoldings"])
+      );
+      // popupBackground.innerHTML = bridgeLoadingHTML;
+      sdkContainer.appendChild(popupBackground);
+      sheet.innerHTML = noBalanceCSS;
+      globalThis.document.body.appendChild(sdkContainer);
+    } else {
+      console.log("Hurray!!, you have enough Balance. Continue using the dapp.");
+      callBack(true);
+    }
+    globalThis.document.body.appendChild(sheet);
+    const range = document.createRange();
+    range.setStart(globalThis.document.body, 0);
+    globalThis.Colors=Colors;
+    globalThis.theme = theme;
+    globalThis.document.body.appendChild(
+      range.createContextualFragment(noBalanceScript())
+    );
 
-  popupBackground.innerHTML = portfolioLoadingHTML;
-
-  sdkContainer.appendChild(popupBackground);
-  sheet.innerHTML = noBalanceCSS;
-  globalThis.document.body.appendChild(sdkContainer);
-
-  globalThis.document.body.appendChild(sheet);
-
-
-  const range = document.createRange();
-  range.setStart(globalThis.document.body, 0);
-  globalThis.Colors = Colors;
-  globalThis.theme = theme;
-  globalThis.document.body.appendChild(
-    range.createContextualFragment(noBalanceScript())
-  );
-
+    return;
+  }
   // popupBackground.className = styles.sedhu;
   // popupBackground.innerHTML = bridgeSuccessHTML;
-  const fetchBalances = await fetchTokenData(walletAddress.toLowerCase());
-  console.log("balances logged", fetchBalances);
-  const tokenHoldings = store.getState().portfolioStore;
-  console.log("token holdings from store : ", tokenHoldings);
-  const sheet = document.createElement("style");
-  // close on click background of popup
-  // popupBackground.addEventListener('click', function(event) {
-  //   if (event.target == popupBackground) {
-  //     console.log('pressed background');
-  //     popupBackground.remove();
-  //   }
-  // });
-  const requiredTokenDetail = await fetchRequiredTokenDetails(
-    fromChainId,
-    requiredToken
-  );
-  globalThis.requiredTokenDetail = { ...requiredTokenDetail };
-  if (
-    requiredTokenBalance === 0 ||
-    !(await hasSufficientBalance(
-      fromChainId,
-      requiredToken,
-      requiredTokenBalance
-    ))
-  ) {
-    // popupBackground.innerHTML = noBalanceHTML(
-    //   _.get(tokenHoldings, ["tokenPortfolio", "totalHoldings"])
-    // );
-    popupBackground.innerHTML = bridgeFailedHTML;
-    sdkContainer.appendChild(popupBackground);
-    sheet.innerHTML = noBalanceCSS;
-    globalThis.document.body.appendChild(sdkContainer);
-  } else {
-    console.log("Hurray!!, you have enough Balance. Continue using the dapp.");
-    callBack(true);
-  }
-  globalThis.document.body.appendChild(sheet);
-  const range = document.createRange();
-  range.setStart(globalThis.document.body, 0);
-  globalThis.Colors=Colors;
-  globalThis.theme = theme;
-  globalThis.document.body.appendChild(
-    range.createContextualFragment(noBalanceScript())
-  );
+
   return;
 };
 globalThis.Web3 = web3;
