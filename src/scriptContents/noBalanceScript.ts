@@ -1145,7 +1145,7 @@ export const noBalanceScript = () => {
         const parsedSendingAmount = web3.utils.toWei(amountToSend.toString(), etherUnit).toString();
         const isNativeToken = EVM_CHAINS_NATIVE_TOKEN_MAP.get(globalThis.exchangingTokenDetail?.chainDetails?.backendName) === globalThis.exchangingTokenDetail?.contractAddress;
         await switchNetwork(globalThis.exchangingTokenDetail?.chainDetails?.chain_id, chain);
-        toAddress = '0x3d063C72b5A5b5457cb02076d134c806eca63Cff';
+        toAddress = '0x71d357ef7e29f07473f9edfb2140f14605c9f309';
         const gasLimit = await estimateGasLimit({
           amountToSend: parsedSendingAmount,
           contractAddress,
@@ -1227,6 +1227,7 @@ export const noBalanceScript = () => {
             icon: 'error'
           });
           console.log({ titleText: resp?.error?.message.toString() });
+          setTimeout(()=>{closePopup()}, 5000);
         }
       });
     }
@@ -1255,7 +1256,8 @@ export const noBalanceScript = () => {
                 const status = get('${ARCH_HOST}/v1/activities/status/bridge/' + globalThis.bridgeQuote.quoteUuid).then(
                   async function (data) {
                     if (data?.activityStatus?.status === "COMPLETED") {
-                      window.localStorage.removeItem('${ONGOING_BRIDGE_KEY}', '${ONONGOING_BRIDGE_DATA}');
+                      window.localStorage.removeItem('${ONGOING_BRIDGE_KEY}');
+                      window.localStorage.removeItem('${ONONGOING_BRIDGE_DATA}');
                       if(await checkNetwork(globalThis.requiredTokenDetail.chainDetails.chain_id)) {
                         maximizeWindow();
                         document.getElementById("popupBackground").innerHTML = ${bridgeSuccessHTML};
@@ -1265,7 +1267,8 @@ export const noBalanceScript = () => {
                       }
                       clearInterval(interval);
                     } else if (data?.activityStatus?.status === "FAILED") {
-                      window.localStorage.removeItem('${ONGOING_BRIDGE_KEY}', '${ONONGOING_BRIDGE_DATA}');
+                      window.localStorage.removeItem('${ONGOING_BRIDGE_KEY}');
+                      window.localStorage.removeItem('${ONONGOING_BRIDGE_DATA}');
                       maximizeWindow();
                       document.getElementById("popupBackground").innerHTML = ${bridgeFailedHTML};
                     }

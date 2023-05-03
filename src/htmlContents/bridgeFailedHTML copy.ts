@@ -1,5 +1,5 @@
 export const bridgeFailedHTMLCopy = `<div id="bridge-popup-css" class="rounded-[30px] pt-[30px] w-[35%] justify-evenly bg-primaryBg">
-<div class="flex justify-end w-full mt-[5px] ">
+<div class="flex justify-end w-full mt-[5px] px-[20px]">
   <img onclick="closePopup()" src="https://public.cypherd.io/icons/close_icon.svg" class="cursor-pointer">
 </div>
 <div id="bp-heading" class="flex flex-col justify-center items-center px-[50px]">
