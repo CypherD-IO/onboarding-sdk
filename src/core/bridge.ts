@@ -1,4 +1,4 @@
-import { ARCH_HOST, ONGOING_BRIDGE_KEY, ONONGOING_BRIDGE_DATA } from "../constants/server"
+import { ARCH_HOST, ONONGOING_BRIDGE_DATA } from "../constants/server"
 import { bridgeFailedHTMLCopy, bridgeLoadingHTMLCopy, bridgeSuccessHTMLCopy, switchBackHTMLCopy } from "../htmlContents";
 import { appendContainerToBody, createContainer } from "../utils/container";
 import { get } from "../utils/fetch";
@@ -11,46 +11,69 @@ declare let globalThis: any;
 
 export const isBridgeOngoing = async () => {
   checkExpiry();
-  const bridgeUuid = window.localStorage.getItem(ONGOING_BRIDGE_KEY);
+  let bridgeUuid;
   let bridgeData = window.localStorage.getItem(ONONGOING_BRIDGE_DATA);
   if (bridgeData) {
     bridgeData = JSON.parse(bridgeData);
-    if (!(globalThis?.bridgeQuote || globalThis?.swapQuoteData) || !globalThis?.requiredTokenDetail) {
+    if (!(globalThis?.bridgeQuote || globalThis?.swapQuoteData) || !globalThis?.requiredTokenDetail || !globalThis.cypherWalletUrl) {
+      bridgeUuid = _.get(bridgeData, ['bridgeQuoteData', 'quoteUuid']);
       globalThis.bridgeQuote = _.get(bridgeData, 'bridgeQuoteData');
       globalThis.swapQuoteData = _.get(bridgeData, 'swapQuoteData');
       globalThis.requiredTokenDetail = _.get(bridgeData, 'requiredTokenDetail');
+      globalThis.cypherWalletUrl = _.get(bridgeData, 'cypherWalletUrl');
     }
-  }
 
-  if (bridgeUuid) {
-    get(ARCH_HOST + '/v1/activities/status/bridge/' + bridgeUuid).then(
-      async function (data) {
-        if (data?.activityStatus?.status === "COMPLETED") {
-          window.localStorage.removeItem(ONGOING_BRIDGE_KEY);
-          window.localStorage.removeItem(ONONGOING_BRIDGE_DATA);
-          if(await checkNetwork(globalThis.requiredTokenDetail.chainDetails.chain_id)) {
+    console.log('RETRIEVED : bridge quote', globalThis.bridgeQuote, 'swap quote', globalThis.swapQuoteData, 'required token detail', globalThis.requiredTokenDetail,'cypherURL',  globalThis.cypherWalletUrl);
+
+    if (bridgeUuid) {
+      get(ARCH_HOST + '/v1/activities/status/bridge/' + bridgeUuid).then(
+        async function (data) {
+          if (data?.activityStatus?.status === "COMPLETED") {
+            window.localStorage.removeItem(ONONGOING_BRIDGE_DATA);
+            if(await checkNetwork(globalThis.requiredTokenDetail.chainDetails.chain_id)) {
+              const {popupBackground, sdkContainer, sheet} = createContainer();
+              popupBackground.innerHTML = bridgeSuccessHTMLCopy;
+              appendContainerToBody(popupBackground, sdkContainer, sheet);
+            } else {
+              const {popupBackground, sdkContainer, sheet} = createContainer();
+              popupBackground.innerHTML = switchBackHTMLCopy;
+              appendContainerToBody(popupBackground, sdkContainer, sheet);
+            }
+          } else if (data?.activityStatus?.status === "FAILED") {
+            window.localStorage.removeItem(ONONGOING_BRIDGE_DATA);
             const {popupBackground, sdkContainer, sheet} = createContainer();
-            popupBackground.innerHTML = bridgeSuccessHTMLCopy;
+            popupBackground.innerHTML = bridgeFailedHTMLCopy;
             appendContainerToBody(popupBackground, sdkContainer, sheet);
           } else {
             const {popupBackground, sdkContainer, sheet} = createContainer();
-            popupBackground.innerHTML = switchBackHTMLCopy;
+            console.log('here now');
+            popupBackground.innerHTML = bridgeLoadingHTMLCopy;
             appendContainerToBody(popupBackground, sdkContainer, sheet);
+            const interval = setInterval(() => {
+              const status = get(`${ARCH_HOST}/v1/activities/status/bridge/` + globalThis.bridgeQuote.quoteUuid).then(
+                async function (data) {
+                  const popupBackground = document.getElementById("popupBackground");
+                  if(popupBackground) {
+                    if (data?.activityStatus?.status === "COMPLETED") {
+                      window.localStorage.removeItem(ONONGOING_BRIDGE_DATA);
+                      if(await checkNetwork(globalThis.requiredTokenDetail.chainDetails.chain_id)) {
+                        popupBackground.innerHTML = bridgeSuccessHTMLCopy;
+                      } else {
+                        popupBackground.innerHTML = switchBackHTMLCopy;
+                      }
+                      clearInterval(interval);
+                    } else if (data?.activityStatus?.status === "FAILED") {
+                      window.localStorage.removeItem(ONONGOING_BRIDGE_DATA);
+                      popupBackground.innerHTML = bridgeFailedHTMLCopy;
+                    }
+                  }
+                });
+            }, 10000);
           }
-        } else if (data?.activityStatus?.status === "FAILED") {
-          window.localStorage.removeItem(ONGOING_BRIDGE_KEY);
-          window.localStorage.removeItem(ONONGOING_BRIDGE_DATA);
-          const {popupBackground, sdkContainer, sheet} = createContainer();
-          popupBackground.innerHTML = bridgeFailedHTMLCopy;
-          appendContainerToBody(popupBackground, sdkContainer, sheet);
-        } else {
-          const {popupBackground, sdkContainer, sheet} = createContainer();
-          popupBackground.innerHTML = bridgeLoadingHTMLCopy;
-          appendContainerToBody(popupBackground, sdkContainer, sheet);
-        }
-        return true;
-      });
-    return true;
+          return true;
+        });
+      return true;
+    }
   }
   return false;
 }

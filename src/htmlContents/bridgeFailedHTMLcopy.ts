@@ -1,3 +1,5 @@
+declare let globalThis: any;
+
 export const bridgeFailedHTMLCopy = `<div id="bridge-popup-css" class="rounded-[30px] pt-[30px] w-[35%] justify-evenly bg-primaryBg">
 <div class="flex justify-end w-full mt-[5px] px-[20px]">
   <img onclick="closePopup()" src="https://public.cypherd.io/icons/close_icon.svg" class="cursor-pointer">
@@ -8,7 +10,7 @@ export const bridgeFailedHTMLCopy = `<div id="bridge-popup-css" class="rounded-[
 </div>
 <p class="text-center text-[18px] text-primaryText mt-[5px]">Please Contact <a class="underline cursor-pointer" onclick="openChat()">Cypher Support.</a></p>
   <div class="flex flex-row justify-between w-[100%] py-[25px] px-[20px] bg-[#3C4143] rounded-b-[30px] mt-[25px]">
-    <a class="flex flex-row items-center text-[14px] text-white" href=globalThis.cypherWalletUrl target="_blank">
+    <a class="flex flex-row items-center text-[14px] text-white" href=${globalThis.cypherWalletUrl} target="_blank">
       <img src="https://public.cypherd.io/icons/logos/cypher.png" class="ml-[10px] mr-[3px]" alt="Arbitrum logo" width="18" height="18" resizeMode="contain"> Cypher Wallet
     </a>
     <div class="h-[35px] w-[50%] flex flex-row justify-end">

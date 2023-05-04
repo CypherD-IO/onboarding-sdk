@@ -21,7 +21,8 @@ import { appendContainerToBody, createContainer } from "./utils/container";
 
 declare let globalThis: any;
 const defaultAppId = "123";
-const defaultTheme = 'dark';
+const defaultTheme = 'dark'
+globalThis.cypherWalletUrl = 'https://www.cypherwallet.io';
 
 export const delayMillis = (delayMs: number): Promise<void> =>
   new Promise((resolve) => setTimeout(resolve, delayMs));
@@ -73,10 +74,10 @@ export const Cypher = async ({
     isTestnet,
   };
 
-  // const tailwind = document.createElement("script");
-  // tailwind.src = "https://cdn.tailwindcss.com";
-  // tailwind.type = "application/javascript";
-  // document.getElementsByTagName("head")[0].appendChild(tailwind);
+  const tailwind = document.createElement("script");
+  tailwind.src = "https://cdn.tailwindcss.com";
+  tailwind.type = "application/javascript";
+  document.getElementsByTagName("head")[0].appendChild(tailwind);
 
   globalThis.Colors = Colors;
   globalThis.theme = defaultTheme;
@@ -134,4 +135,4 @@ Cypher.post = post;
 Cypher.request = request;
 Cypher.Colors = Colors.light;
 Cypher.theme = 'dark';
-globalThis.cypherWalletUrl = 'https://www.cypherwallet.io';
+// globalThis.cypherWalletUrl = 'https://www.cypherwallet.io';

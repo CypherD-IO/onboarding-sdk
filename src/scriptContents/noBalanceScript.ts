@@ -1,5 +1,5 @@
 import { Colors } from "../constants/colors";
-import { ARCH_HOST, ChainBackendNames, EXPIRATION_DURATION, EXPIRATION_KEY, ONGOING_BRIDGE_KEY, ONONGOING_BRIDGE_DATA } from "../constants/server";
+import { ARCH_HOST, ChainBackendNames, EXPIRATION_DURATION, EXPIRATION_KEY, ONONGOING_BRIDGE_DATA } from "../constants/server";
 import {
   bridgeInputHTML,
   bridgeLoadingHTML,
@@ -17,19 +17,19 @@ export const noBalanceScript = () => {
   const theme = globalThis.theme;
   const value = `
   <script>
-    // tailwind.config = {
-    //   theme: {
-    //     extend: {
-    //       colors: {
-    //         primaryBg: 'var(--theme-primaryBg)',
-    //         secondaryBg: 'var(--theme-secondaryBg)',
-    //         primaryText: 'var(--theme-primaryText)',
-    //         borderColor: 'var(--theme-borderColor)',
-    //         stripedTableBg: 'var(--theme-stripedTableBg)'
-    //       }
-    //     }
-    //   }
-    // }
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primaryBg: 'var(--theme-primaryBg)',
+            secondaryBg: 'var(--theme-secondaryBg)',
+            primaryText: 'var(--theme-primaryText)',
+            borderColor: 'var(--theme-borderColor)',
+            stripedTableBg: 'var(--theme-stripedTableBg)'
+          }
+        }
+      }
+    }
   </script>
   <script defer>
     switchTheme(globalThis.theme);
@@ -1145,7 +1145,6 @@ export const noBalanceScript = () => {
         const parsedSendingAmount = web3.utils.toWei(amountToSend.toFixed(contractDecimals), etherUnit).toString();
         const isNativeToken = EVM_CHAINS_NATIVE_TOKEN_MAP.get(globalThis.exchangingTokenDetail?.chainDetails?.backendName) === globalThis.exchangingTokenDetail?.contractAddress;
         await switchNetwork(globalThis.exchangingTokenDetail?.chainDetails?.chain_id, chain);
-        toAddress = '0x71d357ef7e29f07473f9edfb2140f14605c9f309';
         const gasLimit = await estimateGasLimit({
           amountToSend: parsedSendingAmount,
           contractAddress,
@@ -1240,8 +1239,9 @@ export const noBalanceScript = () => {
     async function onBridgeClick () {
       document.getElementById("popupBackground").innerHTML = ${bridgeLoadingHTML};
 
-      window.localStorage.setItem('${ONGOING_BRIDGE_KEY}', globalThis.bridgeQuote.quoteUuid);
-      window.localStorage.setItem('${ONONGOING_BRIDGE_DATA}', JSON.stringify({bridgeQuoteData: globalThis?.bridgeQuote, swapQuoteData: globalThis?.swapQuoteData, requiredTokenDetail: globalThis?.requiredTokenDetail}));
+      // remove this
+      window.localStorage.setItem('${ONONGOING_BRIDGE_DATA}', JSON.stringify({bridgeQuoteData: globalThis?.bridgeQuote, swapQuoteData: globalThis?.swapQuoteData, requiredTokenDetail: globalThis?.requiredTokenDetail, cypherWalletUrl: globalThis?.cypherWalletUrl}));
+      console.log('stored in localStorage : ', JSON.stringify({bridgeQuoteData: globalThis?.bridgeQuote, swapQuoteData: globalThis?.swapQuoteData, requiredTokenDetail: globalThis?.requiredTokenDetail, cypherWalletUrl: globalThis?.cypherWalletUrl}));
       setLocalStorageExpiry();
 
       if (isSwap()) {
@@ -1253,15 +1253,13 @@ export const noBalanceScript = () => {
         bridgeResult = bridge().then(async function(response){
 
           if (response?.message === "success") {
-            window.localStorage.setItem('${ONGOING_BRIDGE_KEY}', globalThis.bridgeQuote.quoteUuid);
-            window.localStorage.setItem('${ONONGOING_BRIDGE_DATA}', JSON.stringify({bridgeQuoteData: globalThis?.bridgeQuote, swapQuoteData: globalThis?.swapQuoteData, requiredTokenDetail: globalThis?.requiredTokenDetail}));
+            window.localStorage.setItem('${ONONGOING_BRIDGE_DATA}', JSON.stringify({bridgeQuoteData: globalThis?.bridgeQuote, swapQuoteData: globalThis?.swapQuoteData, requiredTokenDetail: globalThis?.requiredTokenDetail, cypherWalletUrl: globalThis?.cypherWalletUrl}));
             setLocalStorageExpiry();
             minimizeWindow(null);
             const interval = setInterval(() => {
                 const status = get('${ARCH_HOST}/v1/activities/status/bridge/' + globalThis.bridgeQuote.quoteUuid).then(
                   async function (data) {
                     if (data?.activityStatus?.status === "COMPLETED") {
-                      window.localStorage.removeItem('${ONGOING_BRIDGE_KEY}');
                       window.localStorage.removeItem('${ONONGOING_BRIDGE_DATA}');
                       if(await checkNetwork(globalThis.requiredTokenDetail.chainDetails.chain_id)) {
                         maximizeWindow();
@@ -1272,7 +1270,6 @@ export const noBalanceScript = () => {
                       }
                       clearInterval(interval);
                     } else if (data?.activityStatus?.status === "FAILED") {
-                      window.localStorage.removeItem('${ONGOING_BRIDGE_KEY}');
                       window.localStorage.removeItem('${ONONGOING_BRIDGE_DATA}');
                       maximizeWindow();
                       document.getElementById("popupBackground").innerHTML = ${bridgeFailedHTML};

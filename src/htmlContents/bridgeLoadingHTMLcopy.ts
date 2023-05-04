@@ -1,3 +1,5 @@
+declare let globalThis: any;
+
 export const bridgeLoadingHTMLCopy = `
 <div onclick="maximizeWindow()" id="bridgeLoadingContainer" class="flex flex-col rounded-[30px] bg-primaryBg pt-[25px] w-[90%] lg:w-[30%]">
       <div class="flex flex-row justify-end items-center w-full px-[20px]">
@@ -12,8 +14,9 @@ export const bridgeLoadingHTMLCopy = `
           <img class="mt-[5px]" src="https://public.cypherd.io/icons/logos/loading.gif" alt="loading gif" width="300" height="300">
       </div>
       <div class="flex flex-row justify-between w-[100%] py-[25px] px-[20px] bg-[#3C4143] rounded-b-[30px] mt-[25px]">
-    <a class="flex flex-row items-center text-[28px] lg:text-[14px] text-white" href=globalThis.cypherWalletUrl target="_blank">
-      <img src="https://public.cypherd.io/icons/logos/cypher.png" class="ml-[10px] mr-[3px] w-[24px] lg:w-[18px]" alt="Arbitrum logo" resizeMode="contain"> Cypher Wallet
+      <p>${globalThis.cypherWalletUrl}</p>
+    <a class="flex flex-row items-center text-[28px] lg:text-[14px] text-white" href="${globalThis.cypherWalletUrl}" target="_blank">
+      <img src="https://public.cypherd.io/icons/logos/cypher.png" class="ml-[10px] mr-[3px] w-[24px] lg:w-[18px]" alt="Arbitrum logo" resizeMode="contain"> Cypher Wallet 1
     </a>
     <div class="h-[35px] w-[50%] flex flex-row justify-end">
       <div class="h-[35px] w-[70px] flex flex-row">

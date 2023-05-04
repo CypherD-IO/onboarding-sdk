@@ -2,7 +2,7 @@
 
 <head>
   <title>Sample</title>
-  <script type="text/javascript" src="https://public.cypherd.io/sdk/cypher-sdk.js"></script>
+  <script type="text/javascript" src="../dist/esbuild/onboardingsdk.js"></script>
   <!-- <link rel="stylesheet" href="../dist/output.css"> -->
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 </head>
@@ -18,9 +18,10 @@
     function test() {
       window.Cypher({
         address: '0x71D357Ef7e29f07473f9EDFB2140f14605C9f309',
-        targetChainIdHex: '0xa',
-        requiredTokenContractAddress: "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+        targetChainIdHex: '0x89',
+        requiredTokenContractAddress: "0x0000000000000000000000000000000000001010",
         requiredTokenBalance: 0,
+        appId: 'AJAR'
       });
     }
   </script>

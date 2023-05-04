@@ -389,7 +389,6 @@ export const CHAIN_ID_HEX_TO_NATIVE_TOKEN_NAME = new Map([
   ['0xa', 'Optimism ETH'],
 ]);
 
-export const ONGOING_BRIDGE_KEY = 'ongoing-bridge';
 export const ONONGOING_BRIDGE_DATA = 'ongoing-bridge-data';
 export const EXPIRATION_KEY = 'key_expiry';
 export const EXPIRATION_DURATION = 24 * 60 * 60 * 1000;
