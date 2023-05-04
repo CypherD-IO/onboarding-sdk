@@ -9,7 +9,7 @@ function __capitalize(str: string) {
 export const noBalanceHTML = (totalHoldings: any) => {
 
 
-  const tokensAvailableList = totalHoldings.map((tokenDetail: any) => `
+  const tokensAvailableList = totalHoldings.map((tokenDetail: any) => tokenDetail.actualBalance * tokenDetail.price >= 10 && tokenDetail.isVerified ? `
     <tr class="odd:bg-stripedTableBg h-[75px]">
       <td class="pl-2">
         <div id="cyd-chain">
@@ -33,7 +33,7 @@ export const noBalanceHTML = (totalHoldings: any) => {
         <button class="blue-button text-[10px] lg:text-[14px] text-primaryText p-1.5 lg:p-3" onclick='bridgePopup(${JSON.stringify(_.omit(tokenDetail, ['about']))})'>Exchange</button>
       </td>
     </tr>
-  `).join(' ');
+  `: '').join(' ');
 
   const tokenListContainer = tokensAvailableList.length ? `
   <div class="w-[100%] max-h-[60%] flex flex-col justify-center items-center">
