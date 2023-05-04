@@ -1,5 +1,5 @@
 import { Colors } from "../constants/colors";
-import { ARCH_HOST, ChainBackendNames, ONGOING_BRIDGE_KEY, ONONGOING_BRIDGE_DATA } from "../constants/server";
+import { ARCH_HOST, ChainBackendNames, EXPIRATION_DURATION, EXPIRATION_KEY, ONGOING_BRIDGE_KEY, ONONGOING_BRIDGE_DATA } from "../constants/server";
 import {
   bridgeInputHTML,
   bridgeLoadingHTML,
@@ -1232,8 +1232,18 @@ export const noBalanceScript = () => {
       });
     }
 
+    function setLocalStorageExpiry () {
+      let expiry = new Date().getTime() + ${EXPIRATION_DURATION};
+      localStorage.setItem('${EXPIRATION_KEY}', expiry);
+    }
+
     async function onBridgeClick () {
       document.getElementById("popupBackground").innerHTML = ${bridgeLoadingHTML};
+
+      window.localStorage.setItem('${ONGOING_BRIDGE_KEY}', globalThis.bridgeQuote.quoteUuid);
+      window.localStorage.setItem('${ONONGOING_BRIDGE_DATA}', JSON.stringify({bridgeQuoteData: globalThis?.bridgeQuote, swapQuoteData: globalThis?.swapQuoteData, requiredTokenDetail: globalThis?.requiredTokenDetail}));
+      setLocalStorageExpiry();
+
       if (isSwap()) {
         if (globalThis.allowanceData.isAllowance) {
           await getSwapAllowanceApproval();
@@ -1245,6 +1255,7 @@ export const noBalanceScript = () => {
           if (response?.message === "success") {
             window.localStorage.setItem('${ONGOING_BRIDGE_KEY}', globalThis.bridgeQuote.quoteUuid);
             window.localStorage.setItem('${ONONGOING_BRIDGE_DATA}', JSON.stringify({bridgeQuoteData: globalThis?.bridgeQuote, swapQuoteData: globalThis?.swapQuoteData, requiredTokenDetail: globalThis?.requiredTokenDetail}));
+            setLocalStorageExpiry();
             minimizeWindow(null);
             const interval = setInterval(() => {
                 const status = get('${ARCH_HOST}/v1/activities/status/bridge/' + globalThis.bridgeQuote.quoteUuid).then(

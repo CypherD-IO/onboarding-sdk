@@ -4,11 +4,13 @@ import { appendContainerToBody, createContainer } from "../utils/container";
 import { get } from "../utils/fetch";
 import { checkNetwork } from "../utils/network";
 import _ from "lodash";
+import { checkExpiry } from "../utils/localStorage";
 
 
 declare let globalThis: any;
 
 export const isBridgeOngoing = async () => {
+  checkExpiry();
   const bridgeUuid = window.localStorage.getItem(ONGOING_BRIDGE_KEY);
   let bridgeData = window.localStorage.getItem(ONONGOING_BRIDGE_DATA);
   if (bridgeData) {
@@ -25,6 +27,7 @@ export const isBridgeOngoing = async () => {
       async function (data) {
         if (data?.activityStatus?.status === "COMPLETED") {
           window.localStorage.removeItem(ONGOING_BRIDGE_KEY);
+          window.localStorage.removeItem(ONONGOING_BRIDGE_DATA);
           if(await checkNetwork(globalThis.requiredTokenDetail.chainDetails.chain_id)) {
             const {popupBackground, sdkContainer, sheet} = createContainer();
             popupBackground.innerHTML = bridgeSuccessHTMLCopy;
@@ -36,6 +39,7 @@ export const isBridgeOngoing = async () => {
           }
         } else if (data?.activityStatus?.status === "FAILED") {
           window.localStorage.removeItem(ONGOING_BRIDGE_KEY);
+          window.localStorage.removeItem(ONONGOING_BRIDGE_DATA);
           const {popupBackground, sdkContainer, sheet} = createContainer();
           popupBackground.innerHTML = bridgeFailedHTMLCopy;
           appendContainerToBody(popupBackground, sdkContainer, sheet);
