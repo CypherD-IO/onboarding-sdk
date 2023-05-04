@@ -86,22 +86,9 @@ export const Cypher = async ({
 
   const sheet = document.createElement("style");
 
-  popupBackground.innerHTML = portfolioLoadingHTML;
-
-  sdkContainer.appendChild(popupBackground);
-  sheet.innerHTML = noBalanceCSS;
-  globalThis.document.body.appendChild(sdkContainer);
-
-  globalThis.document.body.appendChild(sheet);
+  // popupBackground.innerHTML = portfolioLoadingHTML;
 
 
-  const range = document.createRange();
-  range.setStart(globalThis.document.body, 0);
-  globalThis.Colors = Colors;
-  globalThis.theme = theme;
-  globalThis.document.body.appendChild(
-    range.createContextualFragment(noBalanceScript())
-  );
 
   // popupBackground.className = styles.sedhu;
   // popupBackground.innerHTML = bridgeSuccessHTML;
@@ -133,6 +120,20 @@ export const Cypher = async ({
   ) {
     popupBackground.innerHTML = noBalanceHTML(
       _.get(tokenHoldings, ["tokenPortfolio", "totalHoldings"])
+    );
+    sdkContainer.appendChild(popupBackground);
+    sheet.innerHTML = noBalanceCSS;
+    globalThis.document.body.appendChild(sdkContainer);
+
+    globalThis.document.body.appendChild(sheet);
+
+
+    const range = document.createRange();
+    range.setStart(globalThis.document.body, 0);
+    globalThis.Colors = Colors;
+    globalThis.theme = theme;
+    globalThis.document.body.appendChild(
+      range.createContextualFragment(noBalanceScript())
     );
   } else {
     console.log("Hurray!!, you have enough Balance. Continue using the dapp.");
