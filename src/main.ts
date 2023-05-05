@@ -1,7 +1,6 @@
 import store from "./store";
 import {
   fetchRequiredTokenDetails,
-  fetchTokenData,
   hasSufficientBalance,
   getNativeTokenAddressForHexChainId,
 } from "./utils/portfolio";
@@ -17,19 +16,15 @@ import { DappDetails } from "./interface";
 import "./input.css";
 import { get, post, request } from "./utils/fetch";
 import { Colors } from "./constants/colors";
-import { portfolioLoadingHTML } from "./htmlContents/portfolioLoadingHTML";
 
 declare let globalThis: any;
 const defaultAppId = "123";
 const defaultTheme = 'dark';
-
 export const delayMillis = (delayMs: number): Promise<void> =>
   new Promise((resolve) => setTimeout(resolve, delayMs));
-
 const noop = (status: boolean) => {
   console.log("🚀 ~ User operation Completed:", status);
 };
-
 export const Cypher = async ({
   address,
   targetChainIdHex: fromChainId,
@@ -38,7 +33,8 @@ export const Cypher = async ({
   isTestnet,
   callBack = noop,
   appId = defaultAppId,
-  theme = defaultTheme
+  theme = defaultTheme,
+  infoRequired = true,
 }: DappDetails): Promise<void> => {
   if (document.getElementById('popupBackground') !== null) {
     return;
@@ -46,24 +42,20 @@ export const Cypher = async ({
   await delayMillis(1000);
   const walletAddress = address.toLowerCase();
   let requiredToken = fromTokenContractAddress?.toLowerCase();
-
   //chainId is a required field
   if (!SUPPORTED_CHAINID_LIST_HEX.includes(fromChainId)) {
     console.log(fromChainId + "not supported");
     return;
   }
-
   //Testnet validation
   if (isTestnet && !["0x5", "0x13881"].includes(fromChainId)) {
     console.log(fromChainId + "not supported for testnet operations");
     return;
   }
-
   //intialize fromTokenContractAddress for native token
   if (requiredToken === undefined || requiredToken === "") {
     requiredToken = getNativeTokenAddressForHexChainId(fromChainId);
   }
-
   globalThis.cypherWalletDetails = {
     address: walletAddress.toLowerCase(),
     fromChainId,
@@ -92,7 +84,6 @@ export const Cypher = async ({
 
   // popupBackground.className = styles.sedhu;
   // popupBackground.innerHTML = bridgeSuccessHTML;
-  const fetchBalances = await fetchTokenData(walletAddress.toLowerCase());
   const tokenHoldings = store.getState().portfolioStore;
   // const sheet = document.createElement("style");
 
@@ -103,13 +94,11 @@ export const Cypher = async ({
   //     popupBackground.remove();
   //   }
   // });
-
   const requiredTokenDetail = await fetchRequiredTokenDetails(
     fromChainId,
     requiredToken
   );
   globalThis.requiredTokenDetail = { ...requiredTokenDetail };
-
   if (
     requiredTokenBalance === 0 ||
     !(await hasSufficientBalance(
@@ -119,7 +108,7 @@ export const Cypher = async ({
     ))
   ) {
     popupBackground.innerHTML = noBalanceHTML(
-      _.get(tokenHoldings, ["tokenPortfolio", "totalHoldings"])
+      _.get(tokenHoldings, ["tokenPortfolio", "totalHoldings"]), infoRequired
     );
     sdkContainer.appendChild(popupBackground);
     sheet.innerHTML = noBalanceCSS;
