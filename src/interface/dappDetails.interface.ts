@@ -7,5 +7,5 @@ export interface DappDetails {
   callBack?: (status: boolean) => void;
   appId?: string;
   theme?: string
-  infoRequired: boolean
+  showInfoScreen: boolean
 }

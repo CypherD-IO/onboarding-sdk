@@ -3,6 +3,7 @@ import {
   fetchRequiredTokenDetails,
   hasSufficientBalance,
   getNativeTokenAddressForHexChainId,
+  fetchTokenData,
 } from "./utils/portfolio";
 import _ from "lodash";
 import { noBalanceScript } from "./scriptContents";
@@ -16,6 +17,7 @@ import { DappDetails } from "./interface";
 import "./input.css";
 import { get, post, request } from "./utils/fetch";
 import { Colors } from "./constants/colors";
+import { portfolioLoadingHTML } from "./htmlContents/portfolioLoadingHTML";
 
 declare let globalThis: any;
 const defaultAppId = "123";
@@ -34,7 +36,7 @@ export const Cypher = async ({
   callBack = noop,
   appId = defaultAppId,
   theme = defaultTheme,
-  infoRequired = true,
+  showInfoScreen = true,
 }: DappDetails): Promise<void> => {
   if (document.getElementById('popupBackground') !== null) {
     return;
@@ -78,12 +80,27 @@ export const Cypher = async ({
 
   const sheet = document.createElement("style");
 
-  // popupBackground.innerHTML = portfolioLoadingHTML;
+  if (!showInfoScreen) popupBackground.innerHTML = portfolioLoadingHTML;
 
+  sdkContainer.appendChild(popupBackground);
+  sheet.innerHTML = noBalanceCSS;
+  globalThis.document.body.appendChild(sdkContainer);
+
+  globalThis.document.body.appendChild(sheet);
+
+
+  const range = document.createRange();
+  range.setStart(globalThis.document.body, 0);
+  globalThis.Colors = Colors;
+  globalThis.theme = theme;
+  globalThis.document.body.appendChild(
+    range.createContextualFragment(noBalanceScript())
+  );
 
 
   // popupBackground.className = styles.sedhu;
   // popupBackground.innerHTML = bridgeSuccessHTML;
+  await fetchTokenData(walletAddress.toLowerCase());
   const tokenHoldings = store.getState().portfolioStore;
   // const sheet = document.createElement("style");
 
@@ -108,22 +125,9 @@ export const Cypher = async ({
     ))
   ) {
     popupBackground.innerHTML = noBalanceHTML(
-      _.get(tokenHoldings, ["tokenPortfolio", "totalHoldings"]), infoRequired
+      _.get(tokenHoldings, ["tokenPortfolio", "totalHoldings"]), showInfoScreen
     );
-    sdkContainer.appendChild(popupBackground);
-    sheet.innerHTML = noBalanceCSS;
-    globalThis.document.body.appendChild(sdkContainer);
 
-    globalThis.document.body.appendChild(sheet);
-
-
-    const range = document.createRange();
-    range.setStart(globalThis.document.body, 0);
-    globalThis.Colors = Colors;
-    globalThis.theme = theme;
-    globalThis.document.body.appendChild(
-      range.createContextualFragment(noBalanceScript())
-    );
   } else {
     console.log("Hurray!!, you have enough Balance. Continue using the dapp.");
     callBack(true);

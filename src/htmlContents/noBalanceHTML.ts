@@ -6,12 +6,12 @@ function __capitalize(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-export const noBalanceHTML = (totalHoldings: any, infoRequired: boolean) => {
+export const noBalanceHTML = (totalHoldings: any, showInfoScreen: boolean) => {
 
   const bridgeableTokensList = [];
-  totalHoldings.map((tokenDetail: any) => { if (tokenDetail.actualBalance * tokenDetail.price >= 10 && tokenDetail.isVerified) { bridgeableTokensList.push(tokenDetail) } });
+  totalHoldings?.map((tokenDetail: any) => { if (tokenDetail.actualBalance * tokenDetail.price >= 10 && tokenDetail.isVerified) { bridgeableTokensList.push(tokenDetail) } });
 
-  const tokensAvailableList = totalHoldings.map((tokenDetail: any) => tokenDetail.actualBalance * tokenDetail.price >= 10 && tokenDetail.isVerified ? `
+  const tokensAvailableList = totalHoldings?.map((tokenDetail: any) => tokenDetail.actualBalance * tokenDetail.price >= 10 && tokenDetail.isVerified ? `
     <tr class="odd:bg-stripedTableBg h-[75px]">
       <td class="pl-2">
         <div id="cyd-chain">
@@ -56,7 +56,7 @@ export const noBalanceHTML = (totalHoldings: any, infoRequired: boolean) => {
   const htmlValue = `
     <div
       id="popup"
-      class="flex flex-col items-center justify-between max-h-[85%] rounded-[30px] bg-primaryBg w-11/12 lg:w-3/5 ${!infoRequired || !bridgeableTokensList.length ? 'block' : 'hidden'}"
+      class="flex flex-col items-center justify-between max-h-[85%] rounded-[30px] bg-primaryBg w-11/12 lg:w-3/5 ${!showInfoScreen || !bridgeableTokensList.length ? 'block' : 'hidden'}"
     >
       <div class="flex flex-row justify-end w-[95%] mt-[20px] mx-[30px] bg-primaryBg">
         <img onclick="closePopup()" src="https://public.cypherd.io/icons/close_icon.svg" class="cursor-pointer">
@@ -101,7 +101,7 @@ export const noBalanceHTML = (totalHoldings: any, infoRequired: boolean) => {
       </div>
     </div>
     <div
-    class="rounded-[30px] z-50 m-auto bg-primaryBg w-[90%] lg:w-[40%] justify-between items-center ${bridgeableTokensList.length && infoRequired ? 'block' : 'hidden'}"
+    class="rounded-[30px] z-50 m-auto bg-primaryBg w-[90%] lg:w-[40%] justify-between items-center ${bridgeableTokensList.length && showInfoScreen ? 'block' : 'hidden'}"
     id="bridge-info"
     >
       <div class=" bg-primaryBg] rounded-t-[30px] p-5 flex flex-col justify-start items-center w-full">
