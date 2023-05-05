@@ -34,6 +34,8 @@ export const Cypher = async ({
   requiredTokenBalance,
   isTestnet,
   callBack = noop,
+  connector = undefined,
+  provider = undefined,
   appId = defaultAppId,
   theme = defaultTheme,
   showInfoScreen = true,
@@ -64,6 +66,8 @@ export const Cypher = async ({
     fromTokenContractAddress: requiredToken,
     fromTokenRequiredBalance: requiredTokenBalance,
     callBack,
+    connector,
+    provider,
     appId,
     isTestnet,
   };
