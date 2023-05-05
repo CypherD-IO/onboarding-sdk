@@ -30,15 +30,6 @@ export const noBalanceCSS = `
   height: 100%;
 }
 
-#popup {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-height: 85%;
-  justify-content: space-between;
-  border-radius: 30px;
-}
-
 #icon-flex-box {
   display: flex;
   flex-direction: row;

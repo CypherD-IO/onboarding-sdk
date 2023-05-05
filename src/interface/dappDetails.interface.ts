@@ -1,4 +1,4 @@
-export interface DappDetails{
+export interface DappDetails {
   address: string;
   targetChainIdHex: string;
   requiredTokenContractAddress?: string;
@@ -7,4 +7,5 @@ export interface DappDetails{
   callBack?: (status: boolean) => void;
   appId?: string;
   theme?: string
+  showInfoScreen: boolean
 }

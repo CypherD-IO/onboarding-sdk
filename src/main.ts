@@ -1,9 +1,9 @@
 import store from "./store";
 import {
   fetchRequiredTokenDetails,
-  fetchTokenData,
   hasSufficientBalance,
   getNativeTokenAddressForHexChainId,
+  fetchTokenData,
 } from "./utils/portfolio";
 import _ from "lodash";
 import { noBalanceScript } from "./scriptContents";
@@ -22,14 +22,11 @@ import { portfolioLoadingHTML } from "./htmlContents/portfolioLoadingHTML";
 declare let globalThis: any;
 const defaultAppId = "123";
 const defaultTheme = 'dark';
-
 export const delayMillis = (delayMs: number): Promise<void> =>
   new Promise((resolve) => setTimeout(resolve, delayMs));
-
 const noop = (status: boolean) => {
   console.log("🚀 ~ User operation Completed:", status);
 };
-
 export const Cypher = async ({
   address,
   targetChainIdHex: fromChainId,
@@ -38,7 +35,8 @@ export const Cypher = async ({
   isTestnet,
   callBack = noop,
   appId = defaultAppId,
-  theme = defaultTheme
+  theme = defaultTheme,
+  showInfoScreen = true,
 }: DappDetails): Promise<void> => {
   if (document.getElementById('popupBackground') !== null) {
     return;
@@ -46,24 +44,20 @@ export const Cypher = async ({
   await delayMillis(1000);
   const walletAddress = address.toLowerCase();
   let requiredToken = fromTokenContractAddress?.toLowerCase();
-
   //chainId is a required field
   if (!SUPPORTED_CHAINID_LIST_HEX.includes(fromChainId)) {
     console.log(fromChainId + "not supported");
     return;
   }
-
   //Testnet validation
   if (isTestnet && !["0x5", "0x13881"].includes(fromChainId)) {
     console.log(fromChainId + "not supported for testnet operations");
     return;
   }
-
   //intialize fromTokenContractAddress for native token
   if (requiredToken === undefined || requiredToken === "") {
     requiredToken = getNativeTokenAddressForHexChainId(fromChainId);
   }
-
   globalThis.cypherWalletDetails = {
     address: walletAddress.toLowerCase(),
     fromChainId,
@@ -86,13 +80,27 @@ export const Cypher = async ({
 
   const sheet = document.createElement("style");
 
-  // popupBackground.innerHTML = portfolioLoadingHTML;
+  if (!showInfoScreen) popupBackground.innerHTML = portfolioLoadingHTML;
 
+  sdkContainer.appendChild(popupBackground);
+  sheet.innerHTML = noBalanceCSS;
+  globalThis.document.body.appendChild(sdkContainer);
+
+  globalThis.document.body.appendChild(sheet);
+
+
+  const range = document.createRange();
+  range.setStart(globalThis.document.body, 0);
+  globalThis.Colors = Colors;
+  globalThis.theme = theme;
+  globalThis.document.body.appendChild(
+    range.createContextualFragment(noBalanceScript())
+  );
 
 
   // popupBackground.className = styles.sedhu;
   // popupBackground.innerHTML = bridgeSuccessHTML;
-  const fetchBalances = await fetchTokenData(walletAddress.toLowerCase());
+  await fetchTokenData(walletAddress.toLowerCase());
   const tokenHoldings = store.getState().portfolioStore;
   // const sheet = document.createElement("style");
 
@@ -103,13 +111,11 @@ export const Cypher = async ({
   //     popupBackground.remove();
   //   }
   // });
-
   const requiredTokenDetail = await fetchRequiredTokenDetails(
     fromChainId,
     requiredToken
   );
   globalThis.requiredTokenDetail = { ...requiredTokenDetail };
-
   if (
     requiredTokenBalance === 0 ||
     !(await hasSufficientBalance(
@@ -119,22 +125,9 @@ export const Cypher = async ({
     ))
   ) {
     popupBackground.innerHTML = noBalanceHTML(
-      _.get(tokenHoldings, ["tokenPortfolio", "totalHoldings"])
+      _.get(tokenHoldings, ["tokenPortfolio", "totalHoldings"]), showInfoScreen
     );
-    sdkContainer.appendChild(popupBackground);
-    sheet.innerHTML = noBalanceCSS;
-    globalThis.document.body.appendChild(sdkContainer);
 
-    globalThis.document.body.appendChild(sheet);
-
-
-    const range = document.createRange();
-    range.setStart(globalThis.document.body, 0);
-    globalThis.Colors = Colors;
-    globalThis.theme = theme;
-    globalThis.document.body.appendChild(
-      range.createContextualFragment(noBalanceScript())
-    );
   } else {
     console.log("Hurray!!, you have enough Balance. Continue using the dapp.");
     callBack(true);
