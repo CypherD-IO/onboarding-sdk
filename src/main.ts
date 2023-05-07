@@ -1,9 +1,9 @@
 import store from "./store";
 import {
   fetchRequiredTokenDetails,
+  fetchTokenData,
   hasSufficientBalance,
   getNativeTokenAddressForHexChainId,
-  fetchTokenData,
 } from "./utils/portfolio";
 import _ from "lodash";
 import { noBalanceScript } from "./scriptContents";
@@ -22,11 +22,14 @@ import { portfolioLoadingHTML } from "./htmlContents/portfolioLoadingHTML";
 declare let globalThis: any;
 const defaultAppId = "123";
 const defaultTheme = 'dark';
+
 export const delayMillis = (delayMs: number): Promise<void> =>
   new Promise((resolve) => setTimeout(resolve, delayMs));
+
 const noop = (status: boolean) => {
   console.log("🚀 ~ User operation Completed:", status);
 };
+
 export const Cypher = async ({
   address,
   targetChainIdHex: fromChainId,
@@ -34,9 +37,11 @@ export const Cypher = async ({
   requiredTokenBalance,
   isTestnet,
   callBack = noop,
+  connector = undefined,
+  provider = undefined,
   appId = defaultAppId,
   theme = defaultTheme,
-  showInfoScreen = true,
+  showInfoScreen = false,
 }: DappDetails): Promise<void> => {
   if (document.getElementById('popupBackground') !== null) {
     return;
@@ -44,26 +49,32 @@ export const Cypher = async ({
   await delayMillis(1000);
   const walletAddress = address.toLowerCase();
   let requiredToken = fromTokenContractAddress?.toLowerCase();
+
   //chainId is a required field
   if (!SUPPORTED_CHAINID_LIST_HEX.includes(fromChainId)) {
     console.log(fromChainId + "not supported");
     return;
   }
+
   //Testnet validation
   if (isTestnet && !["0x5", "0x13881"].includes(fromChainId)) {
     console.log(fromChainId + "not supported for testnet operations");
     return;
   }
+
   //intialize fromTokenContractAddress for native token
   if (requiredToken === undefined || requiredToken === "") {
     requiredToken = getNativeTokenAddressForHexChainId(fromChainId);
   }
+
   globalThis.cypherWalletDetails = {
     address: walletAddress.toLowerCase(),
     fromChainId,
     fromTokenContractAddress: requiredToken,
     fromTokenRequiredBalance: requiredTokenBalance,
     callBack,
+    connector,
+    provider,
     appId,
     isTestnet,
   };
@@ -80,7 +91,10 @@ export const Cypher = async ({
 
   const sheet = document.createElement("style");
 
-  if (!showInfoScreen) popupBackground.innerHTML = portfolioLoadingHTML;
+  if (!showInfoScreen){
+    popupBackground.innerHTML = portfolioLoadingHTML;
+    sdkContainer.classList.add('blurredBackdrop');
+  }
 
   sdkContainer.appendChild(popupBackground);
   sheet.innerHTML = noBalanceCSS;
@@ -97,10 +111,9 @@ export const Cypher = async ({
     range.createContextualFragment(noBalanceScript())
   );
 
-
   // popupBackground.className = styles.sedhu;
   // popupBackground.innerHTML = bridgeSuccessHTML;
-  await fetchTokenData(walletAddress.toLowerCase());
+  const fetchBalances = await fetchTokenData(walletAddress.toLowerCase());
   const tokenHoldings = store.getState().portfolioStore;
   // const sheet = document.createElement("style");
 
@@ -111,11 +124,13 @@ export const Cypher = async ({
   //     popupBackground.remove();
   //   }
   // });
+
   const requiredTokenDetail = await fetchRequiredTokenDetails(
     fromChainId,
     requiredToken
   );
   globalThis.requiredTokenDetail = { ...requiredTokenDetail };
+
   if (
     requiredTokenBalance === 0 ||
     !(await hasSufficientBalance(
@@ -124,11 +139,12 @@ export const Cypher = async ({
       requiredTokenBalance
     ))
   ) {
+    sdkContainer.classList.add('blurredBackdrop');
     popupBackground.innerHTML = noBalanceHTML(
       _.get(tokenHoldings, ["tokenPortfolio", "totalHoldings"]), showInfoScreen
     );
-
   } else {
+    sdkContainer.remove();
     console.log("Hurray!!, you have enough Balance. Continue using the dapp.");
     callBack(true);
   }

@@ -6,6 +6,8 @@ export interface DappDetails {
   isTestnet?: boolean;
   callBack?: (status: boolean) => void;
   appId?: string;
-  theme?: string
-  showInfoScreen: boolean
+  theme?: string;
+  showInfoScreen: boolean;
+  connector?: any;
+  provider?: any;
 }

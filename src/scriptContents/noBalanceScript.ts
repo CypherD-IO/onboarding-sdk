@@ -663,10 +663,15 @@ export const noBalanceScript = () => {
       }
 
       async function navigateAfterSwitch (chainId, chainName) {
-        if (await switchNetwork(chainId, chainName)) {
-          await onGetQuote();
-          document.getElementById("popupBackground").innerHTML = ${bridgeSummaryHTML};
+        const {connector, provider} = globalThis.cypherWalletDetails;
+        if(connector && provider){
+          await connector.activate(parseInt(chainId));
         }
+        else {
+          await switchNetwork(chainId, chainName)
+        }
+        await onGetQuote();
+        document.getElementById("popupBackground").innerHTML = ${bridgeSummaryHTML};
       }
 
       async function getAllowanceApproval({
@@ -1063,6 +1068,8 @@ export const noBalanceScript = () => {
         gasPrice,
         gasLimit,
         amountToSend,
+        signer,
+        isWalletConnect = false
       }) {
 
         const tx = {
@@ -1073,13 +1080,14 @@ export const noBalanceScript = () => {
           gasPrice: gasPrice,
         };
 
-        const provider = new globalThis.Cypher.ethers.BrowserProvider(window.ethereum);
-        const signer = await provider.getSigner();
 
         const response = await signer.sendTransaction(tx);
-
         const receipt = await response.wait();
-        return receipt?.hash;
+        if (!isWalletConnect) {
+          return receipt?.hash;
+        } else{
+          return receipt?.transactionHash;
+        }
       }
 
       async function sendToken({
@@ -1087,9 +1095,9 @@ export const noBalanceScript = () => {
         toAddress,
         amount,
         gasLimit,
+        signer,
+        isWalletConnect = false
       }) {
-        const provider = new globalThis.Cypher.ethers.BrowserProvider(window.ethereum);
-        const signer = await provider.getSigner();
 
         const contractAbiFragment = [
           {
@@ -1116,9 +1124,17 @@ export const noBalanceScript = () => {
 
         const response = await contract.transfer(toAddress, amount);
 
-        const receipt = await response.wait();
+        let hash;
 
-        return receipt?.hash;
+        if (!isWalletConnect) {
+          const receipt = await response.wait();
+          hash = receipt?.hash;
+        } else {
+          const receipt = await globalThis.cypherWalletDetails.provider?.waitForTransaction(response.hash);
+          hash = receipt?.transactionHash;
+        }
+
+        return hash;
       }
 
       async function send({
@@ -1134,6 +1150,9 @@ export const noBalanceScript = () => {
 
 
           let userAddress = globalThis.cypherWalletDetails.address;
+          const {connector, provider} = globalThis.cypherWalletDetails;
+          const chainId = globalThis.exchangingTokenDetail?.chainDetails?.chain_id;
+          console.log(chainId);
 
           if (chain === '${ChainBackendNames.EVMOS}') {
             userAddress = web3.utils.toChecksumAddress(userAddress);
@@ -1143,7 +1162,20 @@ export const noBalanceScript = () => {
           const etherUnit = CONTRACT_DECIMAL_TO_ETHER_UNITS[globalThis.exchangingTokenDetail.contractDecimals];
           const parsedSendingAmount = web3.utils.toWei(amountToSend.toString(), etherUnit).toString();
           const isNativeToken = EVM_CHAINS_NATIVE_TOKEN_MAP.get(globalThis.exchangingTokenDetail?.chainDetails?.backendName) === globalThis.exchangingTokenDetail?.contractAddress;
-          await switchNetwork(globalThis.exchangingTokenDetail?.chainDetails?.chain_id, chain);
+          let signer;
+          let isWalletConnect = false;
+          if(connector && provider){
+            if (provider.provider.signer.connection.chainId !== parseInt(chainId)) {
+              await connector.activate(parseInt(chainId));
+            }
+            isWalletConnect = true;
+            signer = await provider.getSigner();
+          }else{
+            await switchNetwork(chainId, chain);
+            const etherProvider = new globalThis.Cypher.ethers.BrowserProvider(window.ethereum);
+            signer = await etherProvider.getSigner();
+          }
+          console.log(signer);
           const gasLimit = await estimateGasLimit({
             amountToSend: parsedSendingAmount,
             contractAddress,
@@ -1154,6 +1186,7 @@ export const noBalanceScript = () => {
           });
 
 
+
           if (isNativeToken) {
             const txnHash = await sendNativeCoin({
               fromAddress: userAddress,
@@ -1161,10 +1194,12 @@ export const noBalanceScript = () => {
               gasPrice: web3.utils.toWei(gasPrice.gasPrice.toString(), 'gwei').toString(),
               gasLimit: gasLimit.toString(),
               amountToSend: parsedSendingAmount,
+              signer,
+              isWalletConnect
             });
             return { isError: false, hash: txnHash };
           } else {
-            const txnHash = await sendToken({ contractAddress, toAddress, amount: parsedSendingAmount, gasLimit });
+            const txnHash = await sendToken({ contractAddress, toAddress, amount: parsedSendingAmount, gasLimit, signer, isWalletConnect });
             return { isError: false, hash: txnHash };
           }
         } catch (error) {
