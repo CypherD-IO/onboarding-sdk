@@ -15,7 +15,9 @@ export const noBalanceCSS = `
   width: 100%;
   height: 100%;
   color: black;
-  background-color: rgb(0,0,0);
+}
+
+.blurredBackdrop {
   background-color: rgba(0,0,0,0.4);
   backdrop-filter: blur(5px);
 }
@@ -28,15 +30,6 @@ export const noBalanceCSS = `
   align-items: center;
   width: 100%;
   height: 100%;
-}
-
-#popup {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-height: 85%;
-  justify-content: space-between;
-  border-radius: 30px;
 }
 
 #icon-flex-box {

@@ -37,8 +37,11 @@ export const Cypher = async ({
   requiredTokenBalance,
   isTestnet,
   callBack = noop,
+  connector = undefined,
+  provider = undefined,
   appId = defaultAppId,
-  theme = defaultTheme
+  theme = defaultTheme,
+  showInfoScreen = false,
 }: DappDetails): Promise<void> => {
   if (document.getElementById('popupBackground') !== null) {
     return;
@@ -70,6 +73,8 @@ export const Cypher = async ({
     fromTokenContractAddress: requiredToken,
     fromTokenRequiredBalance: requiredTokenBalance,
     callBack,
+    connector,
+    provider,
     appId,
     isTestnet,
   };
@@ -86,9 +91,25 @@ export const Cypher = async ({
 
   const sheet = document.createElement("style");
 
-  // popupBackground.innerHTML = portfolioLoadingHTML;
+  if (!showInfoScreen){
+    popupBackground.innerHTML = portfolioLoadingHTML;
+    sdkContainer.classList.add('blurredBackdrop');
+  }
+
+  sdkContainer.appendChild(popupBackground);
+  sheet.innerHTML = noBalanceCSS;
+  globalThis.document.body.appendChild(sdkContainer);
+
+  globalThis.document.body.appendChild(sheet);
 
 
+  const range = document.createRange();
+  range.setStart(globalThis.document.body, 0);
+  globalThis.Colors = Colors;
+  globalThis.theme = theme;
+  globalThis.document.body.appendChild(
+    range.createContextualFragment(noBalanceScript())
+  );
 
   // popupBackground.className = styles.sedhu;
   // popupBackground.innerHTML = bridgeSuccessHTML;
@@ -118,24 +139,12 @@ export const Cypher = async ({
       requiredTokenBalance
     ))
   ) {
+    sdkContainer.classList.add('blurredBackdrop');
     popupBackground.innerHTML = noBalanceHTML(
-      _.get(tokenHoldings, ["tokenPortfolio", "totalHoldings"])
-    );
-    sdkContainer.appendChild(popupBackground);
-    sheet.innerHTML = noBalanceCSS;
-    globalThis.document.body.appendChild(sdkContainer);
-
-    globalThis.document.body.appendChild(sheet);
-
-
-    const range = document.createRange();
-    range.setStart(globalThis.document.body, 0);
-    globalThis.Colors = Colors;
-    globalThis.theme = theme;
-    globalThis.document.body.appendChild(
-      range.createContextualFragment(noBalanceScript())
+      _.get(tokenHoldings, ["tokenPortfolio", "totalHoldings"]), showInfoScreen
     );
   } else {
+    sdkContainer.remove();
     console.log("Hurray!!, you have enough Balance. Continue using the dapp.");
     callBack(true);
   }
