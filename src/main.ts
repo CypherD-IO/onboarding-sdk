@@ -19,6 +19,7 @@ import { get, post, request } from "./utils/fetch";
 import { Colors } from "./constants/colors";
 import { portfolioLoadingHTML } from "./htmlContents/portfolioLoadingHTML";
 import { noBalanceHTML2 } from "./htmlContents/noBalance2";
+import { eventHandler } from "./utils/eventHandler";
 
 declare let globalThis: any;
 const defaultAppId = "123";
@@ -87,6 +88,7 @@ export const Cypher = async ({
 
   const popupBackground = document.createElement("div");
   popupBackground.id = "popupBackground";
+  popupBackground.addEventListener("click", (event) => {eventHandler(event)});
   const sdkContainer = document.createElement("div");
   sdkContainer.id = "sdkContainer";
 

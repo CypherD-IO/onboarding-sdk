@@ -12,29 +12,28 @@ export const noBalanceHTML2 = (parent: any, totalHoldings: any, showInfoScreen: 
   const bridgeableTokensList: any = {};
   totalHoldings?.map((tokenDetail: any) => { if (tokenDetail.actualBalance * tokenDetail.price >= 10 && tokenDetail.isVerified) { bridgeableTokensList[(tokenDetail.name).toLowerCase()] = tokenDetail } });
   console.log('totalt olding after check : ', Object.values(bridgeableTokensList));
-  globalThis.bridgeableTokensList = bridgeableTokensList;
   const tokensAvailableList = Object.values(bridgeableTokensList).map((tokenDetail: any) => `
-    <tr class='odd:bg-stripedTableBg h-[75px]'>
-      <td class='pl-2'>
-        <div id='cyd-chain'>
-          <img id='td-chain-icon' class='w-[20px] mr-1' src="https://public.cypherd.io/icons/logos/${_.get(tokenDetail, ['chainDetails', 'backendName'], '').toLowerCase()}.png" alt="${_.get(tokenDetail, ['chainDetails', 'backendName'], '').toLowerCase()} logo" />
+    <tr class="odd:bg-stripedTableBg h-[75px]">
+      <td class="pl-2">
+        <div id="cyd-chain">
+          <img id="td-chain-icon" class="w-[20px] mr-1" src="https://public.cypherd.io/icons/logos/${_.get(tokenDetail, ['chainDetails', 'backendName'], '').toLowerCase()}.png" alt="${_.get(tokenDetail, ['chainDetails', 'backendName'], '').toLowerCase()} logo" />
           <p class='text-[10px] lg:text-[14px] text-primaryText'>${_.get(tokenDetail, ['chainDetails', 'backendName'], '')}</p>
         </div>
       </td>
       <td>
-        <div id='cyd-token'>
-          <img id='td-token-icon' class='w-[20px] mr-1' src="${_.get(tokenDetail, ['logoUrl'])}" alt="${_.get(tokenDetail, ['name'])} logo">
-          <p id='td-token-name' class='text-[10px] lg:text-[14px] text-primaryText'>${_.get(tokenDetail, ['name'])}</p>
+        <div id="cyd-token">
+          <img id="td-token-icon" class="w-[20px] mr-1" src="${_.get(tokenDetail, ['logoUrl'])}" alt="${_.get(tokenDetail, ['name'])} logo">
+          <p id="td-token-name" class='text-[10px] lg:text-[14px] text-primaryText'>${_.get(tokenDetail, ['name'])}</p>
         </div>
       </td>
       <td>
-        <p id='td-usd-value' class='text-[10px] lg:text-[14px] text-primaryText font-semibold'>$ ${(_.get(tokenDetail, ['actualBalance']) * _.get(tokenDetail, ['price'])).toFixed(2)}</p>
+        <p id="td-usd-value" class='text-[10px] lg:text-[14px] text-primaryText font-semibold'>$ ${(_.get(tokenDetail, ['actualBalance']) * _.get(tokenDetail, ['price'])).toFixed(2)}</p>
       </td>
       <td>
-        <p id='td-token-balance' class='text-[10px] lg:text-[14px] text-primaryText'>${Number(_.get(tokenDetail, ['actualBalance'])).toFixed(5)}</p>
+        <p id="td-token-balance" class='text-[10px] lg:text-[14px] text-primaryText'>${Number(_.get(tokenDetail, ['actualBalance'])).toFixed(5)}</p>
       </td>
-      <td class='pr-2'>
-        <button id='exchange-token-button' param=${JSON.stringify({mohan: {hello: 'ram'}})} class='blue-button text-[10px] lg:text-[14px] text-primaryText p-1.5 lg:p-3'>Exchange</button>
+      <td class="pr-2">
+        <button class="blue-button text-[10px] lg:text-[14px] text-primaryText p-1.5 lg:p-3">Exchange</button>
       </td>
     </tr>
   `).join(' ');
@@ -187,16 +186,16 @@ export const noBalanceHTML2 = (parent: any, totalHoldings: any, showInfoScreen: 
   //   // const tokenDetail = _.omit(tokenDetail, ['about']);
   //   bridgePopup(JSON.stringify({"name":"Arbitrum","symbol":"ARB","logoUrl":"https://public.cypherd.io/assets/blockchains/arbitrum/assets/0x912CE59144191C1204E64559FE8253a0e49E6548/logo.png","price":1.1175300565679478,"contractAddress":"0x912ce59144191c1204e64559fe8253a0e49e6548","balance":"1025000000000000000000","contractDecimals":18,"totalValue":1145.4683079821464,"actualBalance":1025,"isVerified":true,"coinGeckoId":"arbitrum","chainDetails":{"chainName":"ethereum","name":"Arbitrum One","symbol":"ETH","id":10,"backendName":"ARBITRUM","chain_id":"0xa4b1","native_token_address":"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee","chainIdNumber":42161}}));
   // });
-  // const tokenListGroup = document.getElementById("tokens-list-table");
+  const tokenListGroup = document.getElementById("tokens-list-table");
 
-  // const buttonPressed = (e: any) => {
-  //   console.log('target details', e.target);
-  //   if (e.target.nodeName === 'BUTTON') {
-  //     console.log('pressed is a button : ', (e.target.parentNode.parentNode).querySelector("#td-token-name").innerHTML.toLowerCase());
-  //     globalThis.exchangingTokenDetail = bridgeableTokensList[(e.target.parentNode.parentNode).querySelector("#td-token-name").innerHTML.toLowerCase()];
-  //   }
-  //   bridgePopup();
-  // }
+  const buttonPressed = (e: any) => {
+    console.log('target details', e.target);
+    if (e.target.nodeName === 'BUTTON') {
+      console.log('pressed is a button : ', (e.target.parentNode.parentNode).querySelector("#td-token-name").innerHTML.toLowerCase());
+      globalThis.exchangingTokenDetail = bridgeableTokensList[(e.target.parentNode.parentNode).querySelector("#td-token-name").innerHTML.toLowerCase()];
+    }
+    bridgePopup();
+  }
 
   // if (rows) {
   //   Array.from(rows).forEach((row, index) => {
@@ -207,6 +206,6 @@ export const noBalanceHTML2 = (parent: any, totalHoldings: any, showInfoScreen: 
   //   });
   // }
 
-  // tokenListGroup?.addEventListener("click", buttonPressed);
+  tokenListGroup?.addEventListener("click", buttonPressed);
 
 };
