@@ -25,7 +25,7 @@ export const bridgeLoadingHTML = `
         '</div>'+
       '</div>'+
       '<div class="relative w-[55px] ml-[20px] flex items-center">'+
-          '<img id="chat-support" class="cursor-pointer" src="https://public.cypherd.io/icons/chat.png" onclick="openChat()">'+
+          '<img class="chat-support cursor-pointer" src="https://public.cypherd.io/icons/chat.png" onclick="openChat()">'+
       '</div>'+
     '</div>'+
   '</div>'+

@@ -1,1 +1,1 @@
-export * from './noBalanceScript';
+export * from './addTailwindScript';

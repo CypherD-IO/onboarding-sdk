@@ -12,7 +12,7 @@ export const bridgeInputHTML = `
         '<p class="text-[12px] text-[#2081E1]">MAX</p>'+
       '</div>'+
       '<div id="bp-amount-input" class="w-[200px] lg:w-[250px]">'+
-        '<input type="text" class="text-center focus:outline-none font-extrabold text-[70px] text-primaryText bg-primaryBg" id="bp-amount-value" placeholder="0.00" onfocus="onFocusInput(event)" onblur="onBlurInput(event)">'+
+        '<input type="text" class="text-center focus:outline-none font-extrabold text-[70px] text-primaryText bg-primaryBg" id="bp-amount-value" placeholder="0.00">'+
       '</div>'+
       '<div class="rounded-full flex items-center justify-center h-[48px] w-[48px] cursor-pointer" id="bp-switch-button">'+
       '</div>'+
@@ -57,7 +57,7 @@ export const bridgeInputHTML = `
         '</div>'+
       '</div>'+
       '<div class="relative w-[55px] ml-[20px] flex items-center">'+
-        '<img id="chat-support" class="cursor-pointer" src="https://public.cypherd.io/icons/chat.png" onclick="openChat()">'+
+        '<img class="chat-support cursor-pointer" src="https://public.cypherd.io/icons/chat.png" onclick="openChat()">'+
       '</div>'+
     '</div>'+
   '</div>'+

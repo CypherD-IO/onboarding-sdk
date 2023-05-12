@@ -4,20 +4,26 @@ import {
   fetchTokenData,
   hasSufficientBalance,
   getNativeTokenAddressForHexChainId,
-} from "./utils/portfolio";
+  get,
+  post,
+  request,
+  clickHandler,
+  updateUsdValue,
+  onFocusInput,
+  onBlurInput
+} from "./utils";
 import _ from "lodash";
-import { noBalanceScript } from "./scriptContents";
+import { addTailwindScript } from "./scriptContents";
 import { noBalanceCSS } from "./cssContents";
-import { noBalanceHTML } from "./htmlContents";
 import { SUPPORTED_CHAINID_LIST_HEX } from "./constants/server";
 import Swal from "sweetalert2";
 import web3 from "web3";
 import { ethers } from "ethers";
 import { DappDetails } from "./interface";
 import "./input.css";
-import { get, post, request } from "./utils/fetch";
 import { Colors } from "./constants/colors";
-import { portfolioLoadingHTML } from "./htmlContents/portfolioLoadingHTML";
+import { portfolioBalance } from "./screens/portfolioBalance";
+import { portfolioLoading } from "./screens/portfolioLoading";
 
 declare let globalThis: any;
 const defaultAppId = "123";
@@ -77,22 +83,30 @@ export const Cypher = async ({
     provider,
     appId,
     isTestnet,
+    showInfoScreen
   };
 
-  // const tailwind = document.createElement("script");
-  // tailwind.src = "https://cdn.tailwindcss.com";
-  // tailwind.type = "application/javascript";
-  // document.getElementsByTagName("head")[0].appendChild(tailwind);
+  const tailwind = document.createElement("script");
+  tailwind.src = "https://cdn.tailwindcss.com";
+  tailwind.type = "application/javascript";
+  document.getElementsByTagName("head")[0].appendChild(tailwind);
 
   const popupBackground = document.createElement("div");
   popupBackground.id = "popupBackground";
+  popupBackground.addEventListener("click", (event) => {clickHandler(event)});
+  popupBackground.addEventListener("input",updateUsdValue);
+  popupBackground.addEventListener("onfocus", (e) => onFocusInput(e));
+  popupBackground.addEventListener("onblur", (e) => onBlurInput(e));
+
+
+
   const sdkContainer = document.createElement("div");
   sdkContainer.id = "sdkContainer";
 
   const sheet = document.createElement("style");
 
   if (!showInfoScreen){
-    popupBackground.innerHTML = portfolioLoadingHTML;
+    portfolioLoading(popupBackground);
     sdkContainer.classList.add('blurredBackdrop');
   }
 
@@ -108,22 +122,12 @@ export const Cypher = async ({
   globalThis.Colors = Colors;
   globalThis.theme = theme;
   globalThis.document.body.appendChild(
-    range.createContextualFragment(noBalanceScript())
+    range.createContextualFragment(addTailwindScript())
   );
 
-  // popupBackground.className = styles.sedhu;
-  // popupBackground.innerHTML = bridgeSuccessHTML;
-  const fetchBalances = await fetchTokenData(walletAddress.toLowerCase());
+  // fetch balance call
+  await fetchTokenData(walletAddress.toLowerCase());
   const tokenHoldings = store.getState().portfolioStore;
-  // const sheet = document.createElement("style");
-
-  // close on click background of popup
-  // popupBackground.addEventListener('click', function(event) {
-  //   if (event.target == popupBackground) {
-  //     console.log('pressed background');
-  //     popupBackground.remove();
-  //   }
-  // });
 
   const requiredTokenDetail = await fetchRequiredTokenDetails(
     fromChainId,
@@ -140,14 +144,26 @@ export const Cypher = async ({
     ))
   ) {
     sdkContainer.classList.add('blurredBackdrop');
-    popupBackground.innerHTML = noBalanceHTML(
-      _.get(tokenHoldings, ["tokenPortfolio", "totalHoldings"]), showInfoScreen
-    );
+    portfolioBalance(_.get(tokenHoldings, ["tokenPortfolio", "totalHoldings"]));
   } else {
     sdkContainer.remove();
     console.log("Hurray!!, you have enough Balance. Continue using the dapp.");
     callBack(true);
   }
+
+  globalThis.toastMixin = globalThis.Cypher.Swal.mixin({
+    toast: true,
+    icon: 'success',
+    title: 'General Title',
+    position: 'top',
+    showConfirmButton: false,
+    timer: 5000,
+    timerProgressBar: true,
+    didOpen: (toast: any) => {
+      toast.addEventListener('mouseenter', globalThis.Cypher.Swal.stopTimer)
+      toast.addEventListener('mouseleave', globalThis.Cypher.Swal.resumeTimer)
+    }
+  });
   return;
 };
 globalThis.Web3 = web3;
