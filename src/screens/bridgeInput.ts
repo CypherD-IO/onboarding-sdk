@@ -1,13 +1,15 @@
 import { footer } from "../components";
 import { requiredUsdValue } from "../utils";
+import { portfolioBalance } from "./portfolioBalance";
 
 declare let globalThis: any;
 
-export const bridgeInput = (parentElement = document.getElementById("popupBackground")) => {
+export const bridgeInput = (parentElement = document.getElementById("popupBackground"), previousPage = portfolioBalance) => {
   const bridgeInputHTML = `
     <div class="bg-primaryBg rounded-[30px] z-50 flex flex-col justify-between items-center m-auto w-[90%] lg:w-[30%]" id="bridge-popup-css">
       <div class="bg-primaryBg rounded-t-[30px] p-5 flex flex-col justify-center items-center w-full h-full">
-        <div class="flex justify-end w-full mt-[5px]">
+        <div class="flex justify-between w-full mt-[5px]">
+          <img src="https://public.cypherd.io/icons/back_arrow.svg" class="back-button cursor-pointer"/>
           <img src="https://public.cypherd.io/icons/close_icon.svg" class="close-popup cursor-pointer">
         </div>
         <h2 class="font-semibold text-[28px] text-primaryText my-5 lg:my-10">Enter Token Amount</h2>
@@ -54,6 +56,7 @@ export const bridgeInput = (parentElement = document.getElementById("popupBackgr
     </div>
   `;
 
+  globalThis.previousPage = previousPage;
   if(parentElement) parentElement.innerHTML = bridgeInputHTML;
   // addInputEventListner();
 }

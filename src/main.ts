@@ -128,6 +128,7 @@ export const Cypher = async ({
   // fetch balance call
   await fetchTokenData(walletAddress.toLowerCase());
   const tokenHoldings = store.getState().portfolioStore;
+  globalThis.tokenHoldings = tokenHoldings;
 
   const requiredTokenDetail = await fetchRequiredTokenDetails(
     fromChainId,

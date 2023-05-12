@@ -4,7 +4,7 @@ import { __capitalize } from "../utils";
 
 declare let globalThis: any;
 
-export const portfolioBalance = (totalHoldings: any, parentElement = document.getElementById("popupBackground")) => {
+export const portfolioBalance = (totalHoldings = _.get(globalThis.tokenHoldings, ["tokenPortfolio", "totalHoldings"]), parentElement = document.getElementById("popupBackground")) => {
   const showInfoScreen: boolean = globalThis.cypherWalletDetails.showInfoScreen;
   const bridgeableTokensList: any = {};
   // only verified tokens and tokens with balance >= $10 is shown
@@ -135,3 +135,4 @@ export const portfolioBalance = (totalHoldings: any, parentElement = document.ge
 
   if (parentElement) parentElement.innerHTML = portfolioBalanceHTML;
 };
+

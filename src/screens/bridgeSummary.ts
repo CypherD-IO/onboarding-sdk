@@ -1,11 +1,13 @@
+import { bridgeInput } from ".";
 import { footer } from "../components";
 
 declare let globalThis: any;
 
-export const bridgeSummary = (parentElement = document.getElementById("popupBackground")) => {
+export const bridgeSummary = (parentElement = document.getElementById("popupBackground"), previousPage = bridgeInput) => {
   const bridgeSummaryHTML = `
   <div class="flex flex-col justify-evenly items-center w-[90%] lg:w-[35%] m-auto bg-primaryBg rounded-[30px]">
-    <div class="flex justify-end w-full px-[20px] mt-[20px]">
+    <div class="flex justify-between w-full px-[20px] mt-[20px]">
+      <img src="https://public.cypherd.io/icons/back_arrow.svg" class="back-button cursor-pointer"/>
       <img src="https://public.cypherd.io/icons/close_icon.svg" class="close-popup cursor-pointer">
     </div>
 
@@ -54,5 +56,6 @@ export const bridgeSummary = (parentElement = document.getElementById("popupBack
     ${footer()}
   </div>`
 
+  globalThis.previousPage = previousPage;
   if(parentElement) parentElement.innerHTML = bridgeSummaryHTML;
 }

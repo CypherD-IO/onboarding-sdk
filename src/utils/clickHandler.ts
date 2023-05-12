@@ -10,6 +10,8 @@ export const clickHandler = (event: any) => {
     params = JSON.parse(params);
     const triggerCallback = _.get(params, "triggerCallback");
     triggerCallback ? closePopup(true) : closePopup(false);
+  } if (event.target.classList.contains("back-button")) {
+    globalThis.previousPage();
   } if (event.target.classList.contains("toggle-input")) {
     switchTheme();
   } if (event.target.classList.contains("chat-support")) {
@@ -36,58 +38,3 @@ export const clickHandler = (event: any) => {
     navigateAfterSwitch(chainId);
   }
 }
-//   switch () {
-//     case ("close-popup"): {
-//       let params = event.target.getAttribute('params');
-//       params = JSON.parse(params);
-//       const triggerCallback = _.get(params, "triggerCallback");
-//       triggerCallback ? closePopup(true) : closePopup(false);
-//       break;
-//     } case ("toggle-input"): {
-//       switchTheme();
-//       break;
-//     } case ("chat-support"): {
-//       openChat();
-//       break;
-//     } case ("info-screen-continue"): {
-//       continueToPortfolio();
-//       break;
-//     } case ("exchange-token-button"): {
-//       triggerBridgePopup();
-//       break;
-//     } case ("bp-max-button"): {
-//       onMax();
-//       break;
-//     } case ("bridge-submit-blue-button"): {
-//       onBridgeClick();
-//       break;
-//     } case ("bridge-input-submit"): {
-//       bridgeSubmitConditionCheck();
-//       break;
-//     } case ("bridge-loading-container"): {
-//       maximizeWindow();
-//       break;
-//     } case ("minimize-button"): {
-//       minimizeWindow();
-//       break;
-//     } case ("switch-chain-button"): {
-//       let params = event.target.getAttribute('params');
-//       params = JSON.parse(params);
-//       const chainId = _.get(params, "chainId");
-//       navigateAfterSwitch(chainId);
-//       break;
-//     }
-//   }
-// }
-
-// function getCaseCondition(element: HTMLElement): string {
-//   if (element.classList.contains("close-popup")) {
-//     return "close-popup";
-//   } else if (element.classList.contains('toggle-input')) {
-//     return 'toggle-input';
-//   } else if (element.classList.contains('button3')) {
-//     return 'button3';
-//   }
-//   // Return a default case condition or handle other cases if needed
-//   return '';
-// }
