@@ -135,3 +135,8 @@ export const swap = async () => {
     });
   }
 };
+
+export const swapNativeTokenContractAddress = (contractAddress: string) => {
+  const nativeTokenAddress = Array.from(EVM_CHAINS_NATIVE_TOKEN_MAP.values());
+  return nativeTokenAddress.includes(contractAddress) ? '0x0000000000000000000000000000000000000000' : contractAddress;
+}

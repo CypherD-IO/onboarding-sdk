@@ -1,6 +1,7 @@
 import { get } from 'lodash';
 import { CHAIN_ETH, CHAIN_POLYGON, CHAIN_BSC, CHAIN_AVALANCHE, CHAIN_FTM, CHAIN_ARBITRUM, CHAIN_OPTIMISM, CHAIN_EVMOS, CHAIN_COSMOS, CHAIN_JUNO, CHAIN_OSMOSIS, CHAIN_STARGAZE, CHAIN_ETH_GOERLI, CHAIN_POLYGON_MUMBAI, ARCH_HOST, BACKEND_NAME_TO_CHAIN_ID_HEX } from '../constants/server';
 import { WalletHoldings, Holding, ChainHoldings } from '../interface';
+import { swapNativeTokenContractAddress } from '../utils';
 
 declare let globalThis: any;
 
@@ -90,7 +91,7 @@ export const getPortfolioModel = async (holdings: any) => {
       const chainId = BACKEND_NAME_TO_CHAIN_ID_HEX.get(holdings[i]?.chain_id);
 
       if (chainId === globalThis.cypherWalletDetails.fromChainId && swapSupport) {
-        if (!isTokenSwapSupported(swapSupportedRequiredTokensList, swapContractAddressCheck(holding.contract_address, chainId))) {
+        if (!isTokenSwapSupported(swapSupportedRequiredTokensList, swapContractAddressCheck(swapNativeTokenContractAddress(holding.contract_address), chainId))) {
           console.log('swap not supported : ', holding.name);
           swapSupport = false;
         }
