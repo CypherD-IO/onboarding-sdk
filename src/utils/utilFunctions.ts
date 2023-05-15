@@ -9,10 +9,9 @@ export const isSwap = () => {
 }
 
 export const swapContractAddressCheck = (contractAddress: string, chainId = '') => {
-  if (contractAddress === '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee') {
-    return '0x0000000000000000000000000000000000000000';
-  }
-  if (contractAddress === '0xdeaddeaddeaddeaddeaddeaddeaddeaddead0000' && chainId === '0xa') {
+  if ((contractAddress === '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee') ||
+    (contractAddress === '0xdeaddeaddeaddeaddeaddeaddeaddeaddead0000' && chainId === '0xa') ||
+    (contractAddress === '0x0000000000000000000000000000000000001010' && chainId === '0x89')) {
     return '0x0000000000000000000000000000000000000000';
   }
   return contractAddress;
