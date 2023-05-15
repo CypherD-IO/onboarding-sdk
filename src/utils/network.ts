@@ -19,7 +19,6 @@ export const fetchCurrentNetwork = async () => {
 }
 
 export const checkNetwork = async (targetNetworkId: string) => {
-  console.log('targetNetworkId', targetNetworkId);
   if (window.ethereum) {
     const currentChainId = await window.ethereum.request({
       method: 'eth_chainId',

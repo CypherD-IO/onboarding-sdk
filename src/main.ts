@@ -7,14 +7,9 @@ import {
   get,
   post,
   request,
-  clickHandler,
-  updateUsdValue,
-  onFocusInput,
-  onBlurInput
+  noop,
 } from "./utils";
 import _ from "lodash";
-import { addTailwindScript } from "./scriptContents";
-import { noBalanceCSS } from "./cssContents";
 import { SUPPORTED_CHAINID_LIST_HEX } from "./constants/server";
 import Swal from "sweetalert2";
 import web3 from "web3";
@@ -24,17 +19,13 @@ import "./input.css";
 import { Colors } from "./constants/colors";
 import { portfolioBalance } from "./screens/portfolioBalance";
 import { portfolioLoading } from "./screens/portfolioLoading";
+import { appendContainerToBody, createContainer } from "./utils/container";
+import { isBridgeOngoing } from "./core/bridge";
 
 declare let globalThis: any;
+
 const defaultAppId = "123";
 const defaultTheme = 'dark';
-
-export const delayMillis = (delayMs: number): Promise<void> =>
-  new Promise((resolve) => setTimeout(resolve, delayMs));
-
-const noop = (status: boolean) => {
-  console.log("🚀 ~ User operation Completed:", status);
-};
 
 export const Cypher = async ({
   address,
@@ -52,7 +43,6 @@ export const Cypher = async ({
   if (document.getElementById('popupBackground') !== null) {
     return;
   }
-  await delayMillis(1000);
   const walletAddress = address.toLowerCase();
   let requiredToken = fromTokenContractAddress?.toLowerCase();
 
@@ -86,72 +76,46 @@ export const Cypher = async ({
     showInfoScreen
   };
 
+  globalThis.Colors = Colors;
+  globalThis.theme = theme;
+
   const tailwind = document.createElement("script");
   tailwind.src = "https://cdn.tailwindcss.com";
   tailwind.type = "application/javascript";
   document.getElementsByTagName("head")[0].appendChild(tailwind);
 
-  const popupBackground = document.createElement("div");
-  popupBackground.id = "popupBackground";
-  popupBackground.addEventListener("click", (event) => {clickHandler(event)});
-  popupBackground.addEventListener("input",updateUsdValue);
-  popupBackground.addEventListener("onfocus", (e) => onFocusInput(e));
-  popupBackground.addEventListener("onblur", (e) => onBlurInput(e));
-
-
-
-  const sdkContainer = document.createElement("div");
-  sdkContainer.id = "sdkContainer";
-
-  const sheet = document.createElement("style");
-
-  if (!showInfoScreen){
-    portfolioLoading(popupBackground);
-    sdkContainer.classList.add('blurredBackdrop');
-  }
-
-  sdkContainer.appendChild(popupBackground);
-  sheet.innerHTML = noBalanceCSS;
-  globalThis.document.body.appendChild(sdkContainer);
-
-  globalThis.document.body.appendChild(sheet);
-
-
-  const range = document.createRange();
-  range.setStart(globalThis.document.body, 0);
-  globalThis.Colors = Colors;
-  globalThis.theme = theme;
-  globalThis.document.body.appendChild(
-    range.createContextualFragment(addTailwindScript())
-  );
-
-  // fetch balance call
-  await fetchTokenData(walletAddress.toLowerCase());
-  const tokenHoldings = store.getState().portfolioStore;
-  globalThis.tokenHoldings = tokenHoldings;
-
-  const requiredTokenDetail = await fetchRequiredTokenDetails(
-    fromChainId,
-    requiredToken
-  );
-  globalThis.requiredTokenDetail = { ...requiredTokenDetail };
-
-  if (
-    requiredTokenBalance === 0 ||
-    !(await hasSufficientBalance(
+  const fetchPortfolio = await isBridgeOngoing();
+  if (!fetchPortfolio) {
+    const {popupBackground, sdkContainer, sheet} = createContainer();
+    if (!showInfoScreen){
+      portfolioLoading(popupBackground);
+      sdkContainer.classList.add('blurredBackdrop');
+    }
+    appendContainerToBody(popupBackground, sdkContainer, sheet);
+    await fetchTokenData(walletAddress.toLowerCase());
+    const tokenHoldings = store.getState().portfolioStore;
+    globalThis.tokenHoldings = tokenHoldings;
+    const requiredTokenDetail = await fetchRequiredTokenDetails(
       fromChainId,
-      requiredToken,
-      requiredTokenBalance
-    ))
-  ) {
-    sdkContainer.classList.add('blurredBackdrop');
-    portfolioBalance(_.get(tokenHoldings, ["tokenPortfolio", "totalHoldings"]));
-  } else {
-    sdkContainer.remove();
-    console.log("Hurray!!, you have enough Balance. Continue using the dapp.");
-    callBack(true);
+      requiredToken
+    );
+    globalThis.requiredTokenDetail = { ...requiredTokenDetail };
+    if (
+      requiredTokenBalance === 0 ||
+      !(await hasSufficientBalance(
+        fromChainId,
+        requiredToken,
+        requiredTokenBalance
+      ))
+    ) {
+      sdkContainer.classList.add('blurredBackdrop');
+      portfolioBalance(_.get(tokenHoldings, ["tokenPortfolio", "totalHoldings"]));
+    } else {
+      sdkContainer.remove();
+      console.log("Hurray!!, you have enough Balance. Continue using the dapp.");
+      callBack(true);
+    }
   }
-
   globalThis.toastMixin = globalThis.Cypher.Swal.mixin({
     toast: true,
     icon: 'success',

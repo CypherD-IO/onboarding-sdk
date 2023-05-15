@@ -44,7 +44,6 @@ export const minimizeWindow = () => {
   event?.stopPropagation();
   const sdkContainer: any = document.getElementById("sdkContainer");
   const bridgeLoadingContainer = document.getElementById("bridge-loading-container");
-  console.log('bridge container : ', bridgeLoadingContainer);
   if (sdkContainer && bridgeLoadingContainer) {
     sdkContainer.style.backgroundColor = "transparent";
     sdkContainer.style.backdropFilter = "none";
@@ -81,3 +80,7 @@ export const onFocusInput = (e: any) => {
 export const onBlurInput = (e: any) => {
   e.target.placeholder="0.00";
 }
+
+export const noop = (status: boolean) => {
+  console.log("🚀 ~ User operation Completed:", status);
+};

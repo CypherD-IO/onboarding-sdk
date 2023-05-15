@@ -1,7 +1,6 @@
 import { footer } from "../components";
 
 export const portfolioLoading = (parentElement = document.getElementById("popupBackground")) => {
-  console.log('portfolio', parentElement);
   const portfolioLoadingHTML =`
     <div id="bridge-loading-container" class="bridge-loading-container flex flex-col rounded-[30px] bg-primaryBg pt-[25px] w-[90%] lg:w-[30%]">
       <div class="flex flex-row justify-end items-center w-full px-[20px]">

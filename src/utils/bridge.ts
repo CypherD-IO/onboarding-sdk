@@ -1,4 +1,4 @@
-import { post, checkNetwork, fetchCurrentNetwork, isSwap, requiredUsdValue, swapContractAddressCheck, switchNetwork, getGasPrice, send } from ".";
+import { post, checkNetwork, fetchCurrentNetwork, isSwap, requiredUsdValue, swapContractAddressCheck, switchNetwork, getGasPrice, send, closePopup } from ".";
 import { addChainData, ARCH_HOST, ChainBackendNames, CHAIN_ID_HEX_TO_ENUM_MAPPING, contractABI, CONTRACT_DECIMAL_TO_ETHER_UNITS, EVM_CHAINS_NATIVE_TOKEN_MAP } from "../constants/server";
 import { bridgeSummary, switchChain } from "../screens";
 
@@ -15,7 +15,6 @@ export const bridgeSubmit = async () => {
   globalThis.bridgeInputDetails = { usdValueEntered, tokenValueEntered, numericUsdBalance, tokenBalance };
   if (numericUsdBalance >= parseFloat(usdValueEntered)) {
     globalThis.currentChainId = await fetchCurrentNetwork();
-    console.log('#', chainId, "0x" + chainId.toString(16));
     if (await checkNetwork(chainId)) {
       await onGetQuote();
       bridgeSummary();
@@ -193,7 +192,6 @@ const onDepositFund = async (hash: string) => {
     const resp = post(`${ARCH_HOST}/v1/bridge/sdk/quote/${globalThis.bridgeQuote.quoteUuid}/deposit`, JSON.stringify(depositPostBody)).then(function(data)
     {
       if (!data.isError) {
-        console.log('SucessFully Bridged the amount.');
         resolve(data);
       } else {
         globalThis.toastMixin.fire({
@@ -229,6 +227,7 @@ export const bridge = async () => {
         icon: 'error'
       });
       console.log({ titleText: resp?.error?.message.toString() });
+      setTimeout(()=>{closePopup()}, 5000);
     }
   });
 }

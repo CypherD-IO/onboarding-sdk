@@ -78,16 +78,11 @@ export const send = async ({
   contractDecimal,
 }: any) => {
   try {
-    console.log('rpcendpoint', globalThis.exchangingTokenDetail.chainDetails.chain_id, CHAIN_ID_HEX_TO_ENUM_MAPPING.get(globalThis.exchangingTokenDetail.chainDetails.chain_id), addChainData[CHAIN_ID_HEX_TO_ENUM_MAPPING.get(globalThis.exchangingTokenDetail.chainDetails.chain_id)!]);
     const rpcEndpoint = addChainData[CHAIN_ID_HEX_TO_ENUM_MAPPING.get(globalThis.exchangingTokenDetail.chainDetails.chain_id)!].rpcUrls[0];
-    console.log('rpcendpoint', rpcEndpoint);
     const web3 = new globalThis.Cypher.Web3(rpcEndpoint);
-
-
     let userAddress = globalThis.cypherWalletDetails.address;
     const {connector, provider} = globalThis.cypherWalletDetails;
     const chainId = globalThis.exchangingTokenDetail?.chainDetails?.chain_id;
-    console.log(chainId);
 
     if (chain === ChainBackendNames.EVMOS) {
       userAddress = web3.utils.toChecksumAddress(userAddress);
@@ -110,7 +105,6 @@ export const send = async ({
       const etherProvider = new globalThis.Cypher.ethers.BrowserProvider(window.ethereum);
       signer = await etherProvider.getSigner();
     }
-    console.log(signer);
     const gasLimit = await estimateGasLimit({
       amountToSend: parsedSendingAmount,
       contractAddress,

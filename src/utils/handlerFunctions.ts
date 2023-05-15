@@ -1,10 +1,11 @@
 import { bridge, bridgeSubmit, checkNetwork, getSwapAllowanceApproval, maximizeWindow, minimizeWindow, onGetQuote, requiredUsdValue, swap, switchNetwork } from ".";
-import { ARCH_HOST, EVM_CHAINS_NATIVE_TOKEN_MAP, gasFeeReservation } from "../constants/server";
+import { ARCH_HOST, EVM_CHAINS_NATIVE_TOKEN_MAP, EXPIRATION_KEY, gasFeeReservation, ONONGOING_BRIDGE_DATA } from "../constants/server";
 import { bridgeInput } from "../screens/bridgeInput";
 import { get } from "./fetch";
 import { isSwap, isTokenSwapSupported, swapContractAddressCheck } from ".";
-import { bridgeLoading, bridgeSuccess, bridgeSummary } from "../screens";
+import { bridgeFailed, bridgeLoading, bridgeSuccess, bridgeSummary } from "../screens";
 import _ from "lodash";
+import { setLocalStorageExpiry } from "./localStorage";
 
 declare let globalThis: any;
 
@@ -64,7 +65,7 @@ export const triggerBridgePopup = () => {
 export const closePopup = (triggerCallback = false) => {
   const sdkContainer = document.getElementById("sdkContainer");
   sdkContainer?.remove();
-  if (triggerCallback) globalThis.callBack(true);
+  if (triggerCallback) globalThis.cypherWalletDetails.callBack(true);
 }
 
 export const onMax = async () => {
@@ -89,7 +90,6 @@ export const onMax = async () => {
 }
 
 export const onBridgeClick = async () => {
-  console.log('called');
   bridgeLoading();
   if (isSwap()) {
     if (globalThis.allowanceData.isAllowance) {
@@ -99,16 +99,25 @@ export const onBridgeClick = async () => {
   } else {
     const bridgeResult = bridge().then(async function(response: any) {
       if (response?.message === "success") {
+        window.localStorage.setItem(ONONGOING_BRIDGE_DATA, JSON.stringify({bridgeQuoteData: globalThis?.bridgeQuote, swapQuoteData: globalThis?.swapQuoteData, requiredTokenDetail: globalThis?.requiredTokenDetail, exchangingTokenDetail: globalThis?.exchangingTokenDetail, cypherWalletUrl: globalThis?.cypherWalletUrl}));
+        setLocalStorageExpiry();
         minimizeWindow();
         const interval = setInterval(() => {
-            const status = get(`${ARCH_HOST}/v1/activities/status/bridge/` + globalThis.bridgeQuote.quoteUuid).then(
-              async function (data) {
-                if (data?.activityStatus?.status === "COMPLETED") {
-                  maximizeWindow();
-                  bridgeSuccess(!await checkNetwork(globalThis.requiredTokenDetail.chainDetails.chain_id));
-                  clearInterval(interval);
-                }
-              });
+          const status = get(`${ARCH_HOST}/v1/activities/status/bridge/${globalThis.bridgeQuote.quoteUuid}`).then(
+            async function (data) {
+              if (data?.activityStatus?.status === "COMPLETED") {
+                window.localStorage.removeItem(ONONGOING_BRIDGE_DATA);
+                window.localStorage.removeItem(EXPIRATION_KEY);
+                bridgeSuccess(!await checkNetwork(globalThis.requiredTokenDetail.chainDetails.chain_id));
+                clearInterval(interval);
+              } else if (data?.activityStatus?.status === "FAILED") {
+                window.localStorage.removeItem(ONONGOING_BRIDGE_DATA);
+                window.localStorage.removeItem(EXPIRATION_KEY);
+                maximizeWindow();
+                bridgeFailed();
+              }
+            }
+          );
         }, 10000);
       }
     });
