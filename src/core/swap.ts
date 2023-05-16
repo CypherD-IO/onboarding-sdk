@@ -29,7 +29,7 @@ export const swapTokens = async ({
     });
     const tx = {
       chainId: chainId,
-      value: isNative ? web3.utils.toWei(String(amount), 'ether') : '0x0',
+      value: isNative ? web3.utils.toWei(Number(amount).toFixed(globalThis.exchangingTokenDetail?.contractDecimals), 'ether') : '0x0',
       to: routerAddress,
       data: contractData,
       gas: web3.utils.toHex(2 * Number(gasLimit)),

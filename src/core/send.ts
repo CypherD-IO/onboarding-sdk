@@ -91,7 +91,7 @@ export const send = async ({
 
     const gasPrice = await getGasPrice(chain);
     const etherUnit = CONTRACT_DECIMAL_TO_ETHER_UNITS[globalThis.exchangingTokenDetail.contractDecimals];
-    const parsedSendingAmount = web3.utils.toWei(amountToSend.toString(), etherUnit).toString();
+    const parsedSendingAmount = web3.utils.toWei(Number(amountToSend).toFixed(globalThis.exchangingTokenDetail?.contractDecimals), etherUnit).toString();
     let signer;
     let isWalletConnect = false;
     if(connector && provider){
@@ -118,7 +118,7 @@ export const send = async ({
       const txnHash = await sendNativeCoin({
         fromAddress: userAddress,
         toAddress,
-        gasPrice: web3.utils.toWei(gasPrice.gasPrice.toString(), 'gwei').toString(),
+        gasPrice: web3.utils.toWei(gasPrice.gasPrice.toFixed(9), 'gwei').toString(),
         gasLimit: gasLimit.toString(),
         amountToSend: parsedSendingAmount,
         signer,

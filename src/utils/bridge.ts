@@ -140,10 +140,10 @@ export const checkAllowance = async ({
   const contract = new web3.eth.Contract(contractABI, contractAddress);
   const response = await contract.methods.allowance(userAddress, routerAddress).call();
   const etherUnit = CONTRACT_DECIMAL_TO_ETHER_UNITS[globalThis.exchangingTokenDetail.contractDecimals];
-  const tokenAmount = web3.utils.toWei(amount, etherUnit).toString();
+  const tokenAmount = web3.utils.toWei(Number(amount).toFixed(globalThis.exchangingTokenDetail?.contractDecimals), etherUnit).toString();
   if (Number(tokenAmount) > Number(response)) {
     if (Number(amount) < 1000) amount = '1000';
-    const tokens = web3.utils.toWei((Number(amount) * 10).toString());
+    const tokens = web3.utils.toWei((Number(amount) * 10).toFixed(globalThis.exchangingTokenDetail?.contractDecimals));
     const resp = contract.methods.approve(routerAddress, tokens).encodeABI();
     const gasLimit = await web3.eth.estimateGas({
       from: userAddress,
