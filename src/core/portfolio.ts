@@ -76,7 +76,6 @@ export const getPortfolioModel = async (holdings: any) => {
 
       if (chainId === globalThis.cypherWalletDetails.fromChainId && swapSupport) {
         if (!isTokenSwapSupported(swapSupportedRequiredTokensList, swapContractAddressCheck(holding.contract_address, chainId))) {
-          console.log('swap not supported : ', holding.name);
           holdingTokenSwapSupport = false;
         }
       }
