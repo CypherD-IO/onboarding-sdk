@@ -1,4 +1,4 @@
-import { EXPIRATION_KEY, ONONGOING_BRIDGE_DATA } from "../constants/server";
+import { ACTIVITY_STATUS, EXPIRATION_KEY, ONONGOING_BRIDGE_DATA } from "../constants/server";
 import { appendContainerToBody, createContainer } from "../utils/container";
 import { get } from "../utils/fetch";
 import { checkNetwork, fetchCurrentNetwork } from "./network";
@@ -79,14 +79,14 @@ export const isBridgeOngoing = async () => {
     if (bridgeUuid) {
       get(`v1/activities/status/bridge/${bridgeUuid}`).then(
         async function (data) {
-          if (data?.activityStatus?.status === "COMPLETED") {
+          if (data?.activityStatus?.status === ACTIVITY_STATUS.COMPLETED) {
             window.localStorage.removeItem(ONONGOING_BRIDGE_DATA);
             window.localStorage.removeItem(EXPIRATION_KEY);
             const {popupBackground, sdkContainer, sheet} = createContainer();
             bridgeSuccess(!await checkNetwork(globalThis.requiredTokenDetail.chainDetails.chain_id), popupBackground);
             sdkContainer.classList.add('blurredBackdrop');
             appendContainerToBody(popupBackground, sdkContainer, sheet);
-          } else if (data?.activityStatus?.status === "FAILED") {
+          } else if (data?.activityStatus?.status === ACTIVITY_STATUS.FAILED) {
             window.localStorage.removeItem(ONONGOING_BRIDGE_DATA);
             window.localStorage.removeItem(EXPIRATION_KEY);
             const {popupBackground, sdkContainer, sheet} = createContainer();
@@ -103,12 +103,12 @@ export const isBridgeOngoing = async () => {
                 async function (data) {
                   const popupBackground = document.getElementById("popupBackground");
                   if(popupBackground) {
-                    if (data?.activityStatus?.status === "COMPLETED") {
+                    if (data?.activityStatus?.status === ACTIVITY_STATUS.COMPLETED) {
                       window.localStorage.removeItem(ONONGOING_BRIDGE_DATA);
                       window.localStorage.removeItem(EXPIRATION_KEY);
                       bridgeSuccess(!await checkNetwork(globalThis.requiredTokenDetail.chainDetails.chain_id));
                       clearInterval(interval);
-                    } else if (data?.activityStatus?.status === "FAILED") {
+                    } else if (data?.activityStatus?.status === ACTIVITY_STATUS.FAILED) {
                       window.localStorage.removeItem(ONONGOING_BRIDGE_DATA);
                       window.localStorage.removeItem(EXPIRATION_KEY);
                       bridgeFailed();

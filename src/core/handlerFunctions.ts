@@ -1,5 +1,5 @@
 import { isNativeToken, maximizeWindow, minimizeWindow, onGetQuote, requiredUsdValue } from "../utils";
-import { EXPIRATION_KEY, gasFeeReservation, MINIMUM_BRIDGE_AMOUNT, ONONGOING_BRIDGE_DATA } from "../constants/server";
+import { ACTIVITY_STATUS, EXPIRATION_KEY, gasFeeReservation, MINIMUM_BRIDGE_AMOUNT, ONONGOING_BRIDGE_DATA } from "../constants/server";
 import { bridgeInput } from "../screens/bridgeInput";
 import { get } from "../utils/fetch";
 import { isSwap, isTokenSwapSupported, swapContractAddressCheck } from "../utils";
@@ -103,12 +103,12 @@ export const onBridgeClick = async () => {
         const interval = setInterval(() => {
           const status = get(`v1/activities/status/bridge/${globalThis.bridgeQuote.quoteUuid}`).then(
             async function (data) {
-              if (data?.activityStatus?.status === "COMPLETED") {
+              if (data?.activityStatus?.status === ACTIVITY_STATUS.COMPLETED) {
                 window.localStorage.removeItem(ONONGOING_BRIDGE_DATA);
                 window.localStorage.removeItem(EXPIRATION_KEY);
                 bridgeSuccess(!await checkNetwork(globalThis.requiredTokenDetail.chainDetails.chain_id));
                 clearInterval(interval);
-              } else if (data?.activityStatus?.status === "FAILED") {
+              } else if (data?.activityStatus?.status === ACTIVITY_STATUS.FAILED) {
                 window.localStorage.removeItem(ONONGOING_BRIDGE_DATA);
                 window.localStorage.removeItem(EXPIRATION_KEY);
                 maximizeWindow();
