@@ -1,5 +1,5 @@
-import { bridge, bridgeSubmit, checkNetwork, getSwapAllowanceApproval, maximizeWindow, minimizeWindow, onGetQuote, requiredUsdValue, swap, switchNetwork } from ".";
-import { ARCH_HOST, EVM_CHAINS_NATIVE_TOKEN_MAP, EXPIRATION_KEY, gasFeeReservation, ONONGOING_BRIDGE_DATA } from "../constants/server";
+import { bridge, bridgeSubmit, checkNetwork, isNativeToken, maximizeWindow, minimizeWindow, onGetQuote, requiredUsdValue, swap, switchNetwork } from ".";
+import { ARCH_HOST, EXPIRATION_KEY, gasFeeReservation, MINIMUM_BRIDGE_AMOUNT, ONONGOING_BRIDGE_DATA } from "../constants/server";
 import { bridgeInput } from "../screens/bridgeInput";
 import { get } from "./fetch";
 import { isSwap, isTokenSwapSupported, swapContractAddressCheck } from ".";
@@ -70,7 +70,7 @@ export const closePopup = (triggerCallback = false) => {
 
 export const onMax = async () => {
   const reserve = _.get(gasFeeReservation, globalThis.exchangingTokenDetail.chainDetails.backendName);
-  if (globalThis.exchangingTokenDetail.contractAddress === EVM_CHAINS_NATIVE_TOKEN_MAP.get(globalThis.exchangingTokenDetail.chainDetails.backendName)) {
+  if (isNativeToken(globalThis.exchangingTokenDetail?.contractAddress)) {
     if (reserve && (globalThis.exchangingTokenDetail.actualBalance * globalThis.exchangingTokenDetail.price - reserve)) {
       const usdValueAfterReduction = (globalThis.exchangingTokenDetail.actualBalance * globalThis.exchangingTokenDetail.price - reserve);
       document.getElementById("bp-amount-value")!.value = usdValueAfterReduction.toFixed(2).toString();
@@ -92,9 +92,6 @@ export const onMax = async () => {
 export const onBridgeClick = async () => {
   bridgeLoading();
   if (isSwap()) {
-    if (globalThis.allowanceData.isAllowance) {
-      await getSwapAllowanceApproval();
-    }
     await swap();
   } else {
     const bridgeResult = bridge().then(async function(response: any) {
@@ -127,7 +124,7 @@ export const onBridgeClick = async () => {
 export const bridgeSubmitConditionCheck = async () => {
   const usdValueEntered = document.querySelector("#bp-amount-value")?.value;
   const amountRequired = requiredUsdValue(globalThis.requiredTokenDetail, globalThis.exchangingTokenDetail);
-  if (parseFloat(usdValueEntered) >= Math.max(10, amountRequired)) {
+  if (parseFloat(usdValueEntered) >= Math.max(MINIMUM_BRIDGE_AMOUNT, amountRequired)) {
     await bridgeSubmit ();
   } else {
     globalThis.toastMixin.fire({

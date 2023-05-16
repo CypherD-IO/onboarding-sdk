@@ -5,32 +5,33 @@ import { bridgeSubmitConditionCheck, closePopup, continueToPortfolio, navigateAf
 declare let globalThis: any;
 
 export const clickHandler = (event: any) => {
-  if (event.target.classList.contains("close-popup")) {
+  const classList = event.target.classList;
+  if (classList.contains("close-popup")) {
     let params = event.target.getAttribute('params');
     params = JSON.parse(params);
     const triggerCallback = _.get(params, "triggerCallback");
     triggerCallback ? closePopup(true) : closePopup(false);
-  } if (event.target.classList.contains("back-button")) {
+  } if (classList.contains("back-button")) {
     globalThis.previousPage();
-  } if (event.target.classList.contains("toggle-input")) {
+  } if (classList.contains("toggle-input")) {
     switchTheme();
-  } if (event.target.classList.contains("chat-support")) {
+  } if (classList.contains("chat-support")) {
     openChat();
-  } if (event.target.classList.contains("info-screen-continue")) {
+  } if (classList.contains("info-screen-continue")) {
     continueToPortfolio();
-  } if (event.target.classList.contains("exchange-token-button")) {
+  } if (classList.contains("exchange-token-button")) {
     triggerBridgePopup();
-  } if (event.target.classList.contains("bp-max-button")) {
+  } if (classList.contains("bp-max-button")) {
     onMax();
-  } if (event.target.classList.contains("bridge-submit-blue-button")) {
+  } if (classList.contains("bridge-submit-blue-button")) {
     onBridgeClick();
-  } if (event.target.classList.contains("bridge-input-submit")) {
+  } if (classList.contains("bridge-input-submit")) {
     bridgeSubmitConditionCheck();
-  } if (event.target.classList.contains("bridge-loading-container")) {
+  } if (classList.contains("bridge-loading-container")) {
     maximizeWindow();
-  } if (event.target.classList.contains("minimize-button")) {
+  } if (classList.contains("minimize-button")) {
     minimizeWindow();
-  } if (event.target.classList.contains("switch-chain-button")) {
+  } if (classList.contains("switch-chain-button")) {
     let params = event.target.getAttribute('params');
     params = JSON.parse(params);
     const chainId = _.get(params, "chainId");

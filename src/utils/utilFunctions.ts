@@ -1,3 +1,5 @@
+import { EVM_CHAINS_NATIVE_TOKEN_MAP } from "../constants/server";
+
 declare let globalThis: any;
 
 export const __capitalize = (str: string) => {
@@ -83,3 +85,7 @@ export const onBlurInput = (e: any) => {
 export const noop = (status: boolean) => {
   console.log("🚀 ~ User operation Completed:", status);
 };
+
+export const isNativeToken = (tokenContract: string) => {
+  return Array.from(EVM_CHAINS_NATIVE_TOKEN_MAP.values()).includes(tokenContract.toLowerCase())
+}

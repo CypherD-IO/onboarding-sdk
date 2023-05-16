@@ -8,6 +8,7 @@ import {
 import { getPortfolioModel } from '../core/portfolio';
 import store, { PORTFOLIO_EMPTY, PORTFOLIO_NOT_EMPTY, setPortfolioStore } from '../store';
 import { get } from './fetch';
+import { isNativeToken } from './utilFunctions';
 
 /*
   Function to generate token image CDN URL for a given chainId and tokenContract Address
@@ -17,7 +18,7 @@ export function getImageForToken(chainId: string, tokenContract: string) {
   const xyzChainNameForLogos = (CHAIN_ID_HEX_TO_CDN_IMAGE_CHAIN_NAME.get(chainId) == undefined)
     ? 'ethereum' : CHAIN_ID_HEX_TO_CDN_IMAGE_CHAIN_NAME.get(chainId);
   //If Native Token Contract
-  if (Array.from(EVM_CHAINS_NATIVE_TOKEN_MAP.values()).includes(tokenContract.toLowerCase())) {
+  if (isNativeToken(tokenContract)) {
     return `https://public.cypherd.io/assets/blockchains/${xyzChainNameForLogos}/info/logo.png`;
   }
   return `https://public.cypherd.io/assets/blockchains/${xyzChainNameForLogos}/assets/${tokenContract}/logo.png`;

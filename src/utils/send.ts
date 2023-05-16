@@ -1,5 +1,5 @@
-import { estimateGasLimit, getGasPrice, switchNetwork } from ".";
-import { addChainData, ChainBackendNames, CHAIN_ID_HEX_TO_ENUM_MAPPING, CONTRACT_DECIMAL_TO_ETHER_UNITS, EVM_CHAINS_NATIVE_TOKEN_MAP } from "../constants/server";
+import { estimateGasLimit, getGasPrice, isNativeToken, switchNetwork } from ".";
+import { addChainData, ChainBackendNames, CHAIN_ID_HEX_TO_ENUM_MAPPING, CONTRACT_DECIMAL_TO_ETHER_UNITS } from "../constants/server";
 
 declare let globalThis: any;
 declare let window: any;
@@ -91,7 +91,6 @@ export const send = async ({
     const gasPrice = await getGasPrice(chain);
     const etherUnit = CONTRACT_DECIMAL_TO_ETHER_UNITS[globalThis.exchangingTokenDetail.contractDecimals];
     const parsedSendingAmount = web3.utils.toWei(amountToSend.toString(), etherUnit).toString();
-    const isNativeToken = EVM_CHAINS_NATIVE_TOKEN_MAP.get(globalThis.exchangingTokenDetail?.chainDetails?.backendName) === globalThis.exchangingTokenDetail?.contractAddress;
     let signer;
     let isWalletConnect = false;
     if(connector && provider){
@@ -111,10 +110,10 @@ export const send = async ({
       fromAddress: userAddress,
       toAddress,
       web3,
-      isNative: EVM_CHAINS_NATIVE_TOKEN_MAP.get(globalThis.exchangingTokenDetail?.chainDetails?.backendName) === globalThis.exchangingTokenDetail?.contractAddress
+      isNative: isNativeToken(globalThis.exchangingTokenDetail?.contractAddress)
     });
 
-    if (isNativeToken) {
+    if (isNativeToken(globalThis.exchangingTokenDetail?.contractAddress)) {
       const txnHash = await sendNativeCoin({
         fromAddress: userAddress,
         toAddress,

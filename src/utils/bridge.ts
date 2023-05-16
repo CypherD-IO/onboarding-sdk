@@ -1,5 +1,5 @@
-import { post, checkNetwork, fetchCurrentNetwork, isSwap, requiredUsdValue, swapContractAddressCheck, switchNetwork, getGasPrice, send, closePopup } from ".";
-import { addChainData, ARCH_HOST, ChainBackendNames, CHAIN_ID_HEX_TO_ENUM_MAPPING, contractABI, CONTRACT_DECIMAL_TO_ETHER_UNITS, EVM_CHAINS_NATIVE_TOKEN_MAP } from "../constants/server";
+import { post, checkNetwork, fetchCurrentNetwork, isSwap, requiredUsdValue, swapContractAddressCheck, switchNetwork, getGasPrice, send, closePopup, isNativeToken } from ".";
+import { addChainData, ARCH_HOST, ChainBackendNames, CHAIN_ID_HEX_TO_ENUM_MAPPING, contractABI, CONTRACT_DECIMAL_TO_ETHER_UNITS } from "../constants/server";
 import { bridgeSummary, switchChain } from "../screens";
 
 declare let globalThis: any;
@@ -50,14 +50,14 @@ export const onGetQuote = async () => {
         document.getElementById("token-received")!.textContent = parseFloat(data.toToken.amount).toFixed(6) + ' ' + globalThis.requiredTokenDetail.symbol;
         document.getElementById("usd-received")!.textContent = '$ ' + parseFloat(data.value).toFixed(2);
         if (!data.isError) {
-          if (EVM_CHAINS_NATIVE_TOKEN_MAP.get(globalThis.exchangingTokenDetail?.chainDetails?.backendName) !== globalThis.exchangingTokenDetail?.contractAddress) {
+          if (!isNativeToken(globalThis.exchangingTokenDetail?.contractAddress)) {
             const allowanceResp: any = await checkAllowance({
               chain: globalThis.exchangingTokenDetail.chainDetails.backendName,
               contractAddress: swapContractAddressCheck(globalThis.exchangingTokenDetail.contractAddress, globalThis.exchangingTokenDetail.chainDetails.chain_id),
               routerAddress: data?.router,
               amount: globalThis.bridgeInputDetails.tokenValueEntered,
               contractDecimal: globalThis.exchangingTokenDetail.contractDecimals,
-              isNative: EVM_CHAINS_NATIVE_TOKEN_MAP.get(globalThis.exchangingTokenDetail?.chainDetails?.backendName) === globalThis.exchangingTokenDetail?.contractAddress
+              isNative: isNativeToken(globalThis.exchangingTokenDetail?.contractAddress)
             });
             if (!allowanceResp.isError) {
               if (
@@ -90,7 +90,7 @@ export const onGetQuote = async () => {
             }
           } else {
             globalThis.allowanceData = {
-              isAllowance: false
+              isAllowance: true
             };
             bridgeSubmitButton!.disabled = false;
             bridgeSubmitButton!.classList.remove("disabled-button");
@@ -156,7 +156,7 @@ async function checkAllowance({
   isNative
 }: any) {
   await switchNetwork(globalThis.exchangingTokenDetail?.chainDetails?.chain_id);
-  const rpcEndpoint = addChainData[CHAIN_ID_HEX_TO_ENUM_MAPPING.get(globalThis.exchangingTokenDetail.chainDetails.chain_id)!].rpcEndpoint;
+  const rpcEndpoint = addChainData[CHAIN_ID_HEX_TO_ENUM_MAPPING.get(globalThis.exchangingTokenDetail.chainDetails.chain_id)!].rpcUrls[0];
   const web3 = new globalThis.Cypher.Web3(rpcEndpoint);
   let userAddress = globalThis.cypherWalletDetails.address;
   if (chain === ChainBackendNames.EVMOS) {
