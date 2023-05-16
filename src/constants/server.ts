@@ -42,8 +42,6 @@ export const CHAIN_POLYGON_MUMBAI: Chain = {
   chainIdNumber: 80001
 };
 
-
-
 export const CHAIN_ETH: Chain = {
   chainName: 'ethereum',
   name: 'Ethereum',
@@ -76,7 +74,6 @@ export const CHAIN_BSC: Chain = {
   native_token_address: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
   chainIdNumber: 56
 };
-
 
 export const CHAIN_AVALANCHE: Chain = {
   chainName: 'ethereum',
@@ -328,7 +325,7 @@ export const EVM_CHAINS_NATIVE_TOKEN_MAP = new Map([
   ['ARBITRUM', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'],
   ['OPTIMISM', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'],
   ['POLYGON', '0x0000000000000000000000000000000000001010'],
-  ['AVALANCHE', '0xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'],
+  ['AVALANCHE', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'],
   ['BSC', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'],
   ['FANTOM', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'],
   ['EVMOS', '0x93581991f68dbae1ea105233b67f7fa0d6bdee7b'], // representation didnt work 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee so used ethereum address
@@ -388,3 +385,78 @@ export const CHAIN_ID_HEX_TO_NATIVE_TOKEN_NAME = new Map([
   ['0xa4b1', 'Arbitrum ETH'],
   ['0xa', 'Optimism ETH'],
 ]);
+
+export const gasFeeReservation = {
+  AVALANCHE: 0.001,
+  BSC: 0.001,
+  COSMOS: 0.1,
+  EVMOS: 0.1,
+  FANTOM: 0.1,
+  JUNO: 0.1,
+  OSMOSIS: 0.1,
+  POLYGON: 0.1,
+  ETH: 0.001,
+  ARBITRUM: 0.001,
+  OPTIMISM: 0.001,
+  STARGAZE: 0.1,
+};
+
+export const contractABI = [
+  {
+    constant: true,
+    inputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+    name: 'allowance',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    constant: false,
+    inputs: [
+      {
+        name: 'guy',
+        type: 'address',
+      },
+      {
+        name: 'wad',
+        type: 'uint256',
+      },
+    ],
+    name: 'approve',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    payable: false,
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+];
+
+export const ONONGOING_BRIDGE_DATA = 'ongoing-bridge-data';
+export const EXPIRATION_KEY = 'key_expiry';
+export const EXPIRATION_DURATION = 24 * 60 * 60 * 1000;
+// minimum bridge amount is $10
+export const MINIMUM_BRIDGE_AMOUNT = 10;
+
+export enum ACTIVITY_STATUS {
+  COMPLETED = "COMPLETED",
+  FAILED = "FAILED",
+}
