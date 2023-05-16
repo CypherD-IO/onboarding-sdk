@@ -13,6 +13,9 @@ export const portfolioBalance = (totalHoldings = _.get(globalThis.tokenHoldings,
       bridgeableTokensList[(tokenDetail.name).toLowerCase()] = tokenDetail
     }
   });
+  const {
+    requiredTokenDetail
+  } = globalThis;
 
   globalThis.bridgeableTokensList = bridgeableTokensList;
   const tokensAvailableList = Object.values(bridgeableTokensList).map((tokenDetail: any) => `
@@ -69,20 +72,20 @@ export const portfolioBalance = (totalHoldings = _.get(globalThis.tokenHoldings,
       <div class="my-[20px] px-10 lg:px-0 text-center">
         <span class="text-[23px] text-primaryText font-semibold float-left">You need</span>
         <img
-          src="${_.get(globalThis.requiredTokenDetail, ["logoUrl"])}"
-          alt="${_.get(globalThis.requiredTokenDetail, ["name"])} logo"
+          src="${_.get(requiredTokenDetail, ["logoUrl"])}"
+          alt="${_.get(requiredTokenDetail, ["name"])} logo"
           class="w-[32px] h-[32px] mx-[8px] float-left"
         />
         <span class="text-[23px] text-primaryText font-semibold float-left">
-          ${_.get(globalThis.requiredTokenDetail, ["symbol"]).toUpperCase()} in
+          ${_.get(requiredTokenDetail, ["symbol"]).toUpperCase()} in
         </span>
         <img
-          src="https://public.cypherd.io/icons/logos/${_.get(globalThis.requiredTokenDetail, ["chainDetails", "backendName"]).toLowerCase()}.png"
-          alt="${_.get(globalThis.requiredTokenDetail, ["chainDetails", "backendName"]).toLowerCase()} logo"
+          src="https://public.cypherd.io/icons/logos/${_.get(requiredTokenDetail, ["chainDetails", "backendName"]).toLowerCase()}.png"
+          alt="${_.get(requiredTokenDetail, ["chainDetails", "backendName"]).toLowerCase()} logo"
           class="w-[32px] h-[32px] mx-[8px] float-left"
         />
         <span class="text-[23px] text-primaryText font-semibold">
-          ${__capitalize(_.get(globalThis.requiredTokenDetail, ["chainDetails", "backendName"]).toLowerCase())} chain to use this dApp
+          ${__capitalize(_.get(requiredTokenDetail, ["chainDetails", "backendName"]).toLowerCase())} chain to use this dApp
         </span>
       </div>
       ${tokenListContainer}
@@ -112,17 +115,17 @@ export const portfolioBalance = (totalHoldings = _.get(globalThis.tokenHoldings,
             <img src="https://public.cypherd.io/icons/logos/switch_network.png" alt="switch icon" class="w-[100px] h-[100px]">
           </div>
           <div id="bp-switch-chain-container">
-            <img src="${_.get(globalThis.requiredTokenDetail, ['logoUrl'])}" class="w-[42px] h-[42px]" alt="${_.get(globalThis.requiredTokenDetail, ['name'])}">
+            <img src="${_.get(requiredTokenDetail, ['logoUrl'])}" class="w-[42px] h-[42px]" alt="${_.get(requiredTokenDetail, ['name'])}">
             <p class="text-[#929292] font-normal text-[16px] text-center mt-2 mb-">
-              ${_.get(globalThis.requiredTokenDetail, ['symbol'])}
+              ${_.get(requiredTokenDetail, ['symbol'])}
             </p>
             <p class="text-primaryText font-semibold text-[18px] text-center">
-              ${_.get(globalThis.requiredTokenDetail, ['chainDetails', 'backendName'])}
+              ${_.get(requiredTokenDetail, ['chainDetails', 'backendName'])}
             </p>
           </div>
         </div>
         <p class="text-[20px] text-primaryText text-center mt-[10px]">
-          You dont have enough ${_.get(globalThis.requiredTokenDetail, ['symbol'])} in ${_.get(globalThis.requiredTokenDetail, ['chainDetails', 'backendName'])} chain to use this dApp
+          You dont have enough ${_.get(requiredTokenDetail, ['symbol'])} in ${_.get(requiredTokenDetail, ['chainDetails', 'backendName'])} chain to use this dApp
         </p>
       </div>
       <div class="bg-primaryBg py-5 w-full flex items-center justify-center rounded-b-[30px]">

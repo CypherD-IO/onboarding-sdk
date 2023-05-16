@@ -10,8 +10,6 @@ import { bridge, bridgeSubmit, checkNetwork, swap, switchNetwork } from ".";
 
 declare let globalThis: any;
 
-
-
 export const switchTheme = (theme='') => {
   if(!theme) {
     globalThis.theme = globalThis.theme === "light" ? "dark" : "light";
@@ -36,25 +34,39 @@ export const continueToPortfolio = () => {
 }
 
 export const triggerBridgePopup = () => {
-  globalThis.exchangingTokenDetail = _.get(globalThis.bridgeableTokensList, (event.target.parentNode.parentNode).querySelector("#td-token-name").innerHTML.toLowerCase());
+  const {
+    swapSupportedChains,
+    bridgeableTokensList,
+    exchangingTokenDetail: {
+      chainDetails: {
+        chain_id,
+        backendName
+      },
+      contractAddress,
+      name
+    },
+    toastMixin
+  } = globalThis;
+
+  globalThis.exchangingTokenDetail = _.get(bridgeableTokensList, (event.target.parentNode.parentNode).querySelector("#td-token-name").innerHTML.toLowerCase());
   if (isSwap()) {
-    if (globalThis.swapSupportedChains?.includes(parseInt(globalThis.exchangingTokenDetail.chainDetails.chain_id, 16))) {
-      const swapSupportedChainList = get(`v1/swap/evm/chains/${parseInt(globalThis.exchangingTokenDetail.chainDetails.chain_id, 16)}/tokens`).then(
+    if (swapSupportedChains?.includes(parseInt(chain_id, 16))) {
+      const swapSupportedChainList = get(`v1/swap/evm/chains/${parseInt(chain_id, 16)}/tokens`).then(
           function (data) {
-            if (isTokenSwapSupported(data.tokens, swapContractAddressCheck(globalThis.exchangingTokenDetail.contractAddress, globalThis.exchangingTokenDetail.chainDetails.chain_id))) {
+            if (isTokenSwapSupported(data.tokens, swapContractAddressCheck(contractAddress, chain_id))) {
               bridgeInput();
             } else {
-              globalThis.toastMixin.fire({
+              toastMixin.fire({
                 title: 'Sorry...',
-                text: `Swap is not currently supported for ${globalThis.exchangingTokenDetail.name} token. Please choose other tokens.`,
+                text: `Swap is not currently supported for ${name} token. Please choose other tokens.`,
                 icon: 'error'
               });
             }
           });
     } else {
-      globalThis.toastMixin.fire({
+      toastMixin.fire({
         title: 'Sorry...',
-        text: 'Swap is not currently supported for ' + globalThis.exchangingTokenDetail.chainDetails.backendName + ' chain. Please choose any token from other chains.',
+        text: 'Swap is not currently supported for ' + backendName + ' chain. Please choose any token from other chains.',
         icon: 'error'
       });
     }
@@ -70,43 +82,68 @@ export const closePopup = (triggerCallback = false) => {
 }
 
 export const onMax = async () => {
-  const reserve = _.get(gasFeeReservation, globalThis.exchangingTokenDetail.chainDetails.backendName);
-  if (isNativeToken(globalThis.exchangingTokenDetail?.contractAddress)) {
-    if (reserve && (globalThis.exchangingTokenDetail.actualBalance * globalThis.exchangingTokenDetail.price - reserve)) {
-      const usdValueAfterReduction = (globalThis.exchangingTokenDetail.actualBalance * globalThis.exchangingTokenDetail.price - reserve);
+  const {
+    exchangingTokenDetail: {
+      contractAddress,
+      chainDetails: {
+        backendName
+      },
+      actualBalance,
+      price
+    },
+    toastMixin
+  } = globalThis;
+
+  const reserve = _.get(gasFeeReservation, backendName);
+  if (isNativeToken(contractAddress)) {
+    if (reserve && (actualBalance * price - reserve)) {
+      const usdValueAfterReduction = (actualBalance * price - reserve);
       document.getElementById("bp-amount-value")!.value = usdValueAfterReduction.toFixed(2).toString();
-      document.getElementById("bp-token-value")!.innerHTML = (usdValueAfterReduction / globalThis.exchangingTokenDetail.price).toFixed(6).toString();
+      document.getElementById("bp-token-value")!.innerHTML = (usdValueAfterReduction / price).toFixed(6).toString();
     } else {
       console.log({ titleText: 'Insufficient funds for gas' });
-      globalThis.toastMixin.fire({
+      toastMixin.fire({
         title: 'Oops...',
         text: 'Insufficient funds for gas',
         icon: 'error'
       });
     }
   } else {
-    document.getElementById("bp-amount-value")!.value = (globalThis.exchangingTokenDetail.actualBalance * globalThis.exchangingTokenDetail.price).toFixed(2).toString();
-    document.getElementById("bp-token-value")!.innerHTML = (parseFloat(globalThis.exchangingTokenDetail.actualBalance) / globalThis.exchangingTokenDetail.price).toFixed(6).toString();
+    document.getElementById("bp-amount-value")!.value = (actualBalance * price).toFixed(2).toString();
+    document.getElementById("bp-token-value")!.innerHTML = (parseFloat(actualBalance) / price).toFixed(6).toString();
   }
 }
 
 export const onBridgeClick = async () => {
+  const {
+    bridgeQuote,
+    swapQuoteData,
+    requiredTokenDetail,
+    exchangingTokenDetail,
+    cypherWalletUrl,
+    requiredTokenDetail: {
+      chainDetails: {
+        chain_id
+      }
+    }
+  } = globalThis;
+
   bridgeLoading();
   if (isSwap()) {
     await swap();
   } else {
     const bridgeResult = bridge().then(async function(response: any) {
       if (response?.message === "success") {
-        window.localStorage.setItem(ONONGOING_BRIDGE_DATA, JSON.stringify({bridgeQuoteData: globalThis?.bridgeQuote, swapQuoteData: globalThis?.swapQuoteData, requiredTokenDetail: globalThis?.requiredTokenDetail, exchangingTokenDetail: globalThis?.exchangingTokenDetail, cypherWalletUrl: globalThis?.cypherWalletUrl}));
+        window.localStorage.setItem(ONONGOING_BRIDGE_DATA, JSON.stringify({bridgeQuoteData: bridgeQuote, swapQuoteData: swapQuoteData, requiredTokenDetail: requiredTokenDetail, exchangingTokenDetail: exchangingTokenDetail, cypherWalletUrl: cypherWalletUrl}));
         setLocalStorageExpiry();
         minimizeWindow();
         const interval = setInterval(() => {
-          const status = get(`v1/activities/status/bridge/${globalThis.bridgeQuote.quoteUuid}`).then(
+          const status = get(`v1/activities/status/bridge/${bridgeQuote.quoteUuid}`).then(
             async function (data) {
               if (data?.activityStatus?.status === ACTIVITY_STATUS.COMPLETED) {
                 window.localStorage.removeItem(ONONGOING_BRIDGE_DATA);
                 window.localStorage.removeItem(EXPIRATION_KEY);
-                bridgeSuccess(!await checkNetwork(globalThis.requiredTokenDetail.chainDetails.chain_id));
+                bridgeSuccess(!await checkNetwork(chain_id));
                 clearInterval(interval);
               } else if (data?.activityStatus?.status === ACTIVITY_STATUS.FAILED) {
                 window.localStorage.removeItem(ONONGOING_BRIDGE_DATA);

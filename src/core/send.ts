@@ -79,19 +79,30 @@ export const send = async ({
   contractDecimal,
 }: any) => {
   try {
-    const rpcEndpoint = addChainData[CHAIN_ID_HEX_TO_ENUM_MAPPING.get(globalThis.exchangingTokenDetail.chainDetails.chain_id)!].rpcUrls[0];
+    const {
+      cypherWalletDetails,
+      exchangingTokenDetail: {
+        chainDetails: {
+          chain_id
+        },
+        contractAddress,
+        contractDecimals
+      }
+    } = globalThis;
+
+    const rpcEndpoint = addChainData[CHAIN_ID_HEX_TO_ENUM_MAPPING.get(chain_id)!].rpcUrls[0];
     const web3 = new globalThis.Cypher.Web3(rpcEndpoint);
-    let userAddress = globalThis.cypherWalletDetails.address;
-    const {connector, provider} = globalThis.cypherWalletDetails;
-    const chainId = globalThis.exchangingTokenDetail?.chainDetails?.chain_id;
+    let userAddress = cypherWalletDetails.address;
+    const {connector, provider} = cypherWalletDetails;
+    const chainId = chain_id;
 
     if (chain === ChainBackendNames.EVMOS) {
       userAddress = web3.utils.toChecksumAddress(userAddress);
     }
 
     const gasPrice = await getGasPrice(chain);
-    const etherUnit = CONTRACT_DECIMAL_TO_ETHER_UNITS[globalThis.exchangingTokenDetail.contractDecimals];
-    const parsedSendingAmount = web3.utils.toWei(Number(amountToSend).toFixed(globalThis.exchangingTokenDetail?.contractDecimals), etherUnit).toString();
+    const etherUnit = CONTRACT_DECIMAL_TO_ETHER_UNITS[contractDecimals];
+    const parsedSendingAmount = web3.utils.toWei(Number(amountToSend).toFixed(contractDecimals), etherUnit).toString();
     let signer;
     let isWalletConnect = false;
     if(connector && provider){
@@ -111,10 +122,10 @@ export const send = async ({
       fromAddress: userAddress,
       toAddress,
       web3,
-      isNative: isNativeToken(globalThis.exchangingTokenDetail?.contractAddress)
+      isNative: isNativeToken(contractAddress)
     });
 
-    if (isNativeToken(globalThis.exchangingTokenDetail?.contractAddress)) {
+    if (isNativeToken(contractAddress)) {
       const txnHash = await sendNativeCoin({
         fromAddress: userAddress,
         toAddress,

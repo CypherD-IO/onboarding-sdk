@@ -34,11 +34,29 @@ async function getAllowanceApproval({
   isNative
 }: any) {
   try {
-    const rpcEndpoint = addChainData[CHAIN_ID_HEX_TO_ENUM_MAPPING.get(globalThis.exchangingTokenDetail.chainDetails.chain_id)!].rpcUrls[0];
-
-    const web3 = new globalThis.Cypher.Web3(rpcEndpoint);
-
-    let userAddress = globalThis.cypherWalletDetails.address;
+    const {
+      exchangingTokenDetail: {
+        chainDetails: {
+          chain_id
+        },
+        contractDecimals
+      },
+      bridgeInputDetails: {
+        tokenValueEntered
+      },
+      Cypher: {
+        ether: {
+          BrowserProvider
+        },
+        Web3
+      },
+      cypherWalletDetails: {
+        address
+      }
+    } = globalThis;
+    const rpcEndpoint = addChainData[CHAIN_ID_HEX_TO_ENUM_MAPPING.get(chain_id)!].rpcUrls[0];
+    const web3 = new Web3(rpcEndpoint);
+    let userAddress = address;
 
     if (chain === ChainBackendNames.EVMOS) {
       userAddress = web3.utils.toChecksumAddress(userAddress);
@@ -48,11 +66,11 @@ async function getAllowanceApproval({
       to: contractAddress,
       gasPrice: web3.utils.toWei(gasPrice.toFixed(9), 'gwei').toString(),
       gas: gasLimit,
-      value: isNative ? web3.utils.toWei(Number(globalThis.bridgeInputDetails.tokenValueEntered).toFixed(globalThis.exchangingTokenDetail?.contractDecimals), 'ether') : '0x0',
+      value: isNative ? web3.utils.toWei(Number(tokenValueEntered).toFixed(contractDecimals), 'ether') : '0x0',
       data: contractData,
     };
 
-    const provider = new globalThis.Cypher.ethers.BrowserProvider(window.ethereum);
+    const provider = new BrowserProvider(window.ethereum);
     const signer = await provider.getSigner();
 
     const response = await signer.sendTransaction(tx);
@@ -66,18 +84,40 @@ async function getAllowanceApproval({
 }
 
 export const getSwapAllowanceApproval = async () => {
+  const {
+    exchangingTokenDetail: {
+      chainDetails: {
+        backendName,
+        chain_id
+      },
+      contractAddress
+    },
+    allowanceData: {
+      contractData,
+      gasPrice: {
+        gasPrice
+      }
+    },
+    swapQuoteData: {
+      data: {
+        gas
+      }
+    },
+    toastMixin
+  } = globalThis;
+
   const approvalResp = await getAllowanceApproval({
-    chain: globalThis.exchangingTokenDetail.chainDetails.backendName,
-    contractData: globalThis.allowanceData.contractData,
-    gasLimit: globalThis.swapQuoteData.data.gas,
-    gasPrice: globalThis.allowanceData.gasPrice.gasPrice,
-    contractAddress: swapContractAddressCheck(globalThis.exchangingTokenDetail.contractAddress, globalThis.exchangingTokenDetail.chainDetails.chain_id),
-    isNative: isNativeToken(globalThis.exchangingTokenDetail?.contractAddress)
+    chain: backendName,
+    contractData: contractData,
+    gasLimit: gas,
+    gasPrice: gasPrice,
+    contractAddress: swapContractAddressCheck(contractAddress, chain_id),
+    isNative: isNativeToken(contractAddress)
   });
   if (!approvalResp.isError) {
     globalThis.allowanceData = { ...globalThis.allowanceData, isAllowance: false };
   } else {
-    globalThis.toastMixin.fire({
+    toastMixin.fire({
       title: 'Oops...',
       text: approvalResp.error.toString(),
       icon: 'error'

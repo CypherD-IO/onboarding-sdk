@@ -12,8 +12,13 @@ import { closePopup, send } from ".";
 declare let globalThis: any;
 
 export const bridgeSubmit = async () => {
-  const chainId = globalThis.exchangingTokenDetail.chainDetails.chain_id;
-  const chainName = globalThis.exchangingTokenDetail.chainDetails.backendName;
+  const {exchangingTokenDetail: {
+    chainDetails: {
+      chain_id,
+    },
+  }}  = globalThis.exchangingTokenDetail;
+
+  const chainId = chain_id;
   const usdValueEntered = document.querySelector("#bp-amount-value")?.value;
   const tokenValueEntered = document.querySelector("#bp-token-value")?.textContent;
   const usdBalance = document.querySelector("#bp-balance-detail-usd-value");
@@ -38,12 +43,28 @@ export const bridgeSubmit = async () => {
 }
 
 export const bridge = async () => {
+  const {
+    bridgeInputDetails: {
+      tokenValueEntered
+    },
+    bridgeQuote: {
+      step1TargetWallet
+    },
+    exchangingTokenDetail: {
+      contractAddress,
+      chainDetails: {
+        backendName,
+      },
+      contractDecimals
+    }
+  } = globalThis.exchangingTokenDetail;
+
   const resp: any = await send({
-    amountToSend: parseFloat(globalThis.bridgeInputDetails.tokenValueEntered),
-    contractAddress: globalThis.exchangingTokenDetail?.contractAddress,
-    toAddress: globalThis.bridgeQuote?.step1TargetWallet,
-    chain: globalThis.exchangingTokenDetail?.chainDetails?.backendName,
-    contractDecimal: globalThis.exchangingTokenDetail?.contractDecimals,
+    amountToSend: parseFloat(tokenValueEntered),
+    contractAddress: contractAddress,
+    toAddress: step1TargetWallet,
+    chain: backendName,
+    contractDecimal: contractDecimals,
   });
 
   return new Promise((resolve)=>{
@@ -68,6 +89,13 @@ export const isBridgeOngoing = async () => {
   checkExpiry();
   let bridgeUuid;
   let bridgeData = window.localStorage.getItem(ONONGOING_BRIDGE_DATA);
+  const {
+    requiredTokenDetail: {
+      chainDetails: {
+        chain_id,
+      }
+    }
+  } = globalThis;
   if (bridgeData) {
     bridgeData = await JSON.parse(bridgeData);
     bridgeUuid = _.get(bridgeData, ['bridgeQuoteData', 'quoteUuid']);
@@ -83,7 +111,7 @@ export const isBridgeOngoing = async () => {
             window.localStorage.removeItem(ONONGOING_BRIDGE_DATA);
             window.localStorage.removeItem(EXPIRATION_KEY);
             const {popupBackground, sdkContainer, sheet} = createContainer();
-            bridgeSuccess(!await checkNetwork(globalThis.requiredTokenDetail.chainDetails.chain_id), popupBackground);
+            bridgeSuccess(!await checkNetwork(chain_id), popupBackground);
             sdkContainer.classList.add('blurredBackdrop');
             appendContainerToBody(popupBackground, sdkContainer, sheet);
           } else if (data?.activityStatus?.status === ACTIVITY_STATUS.FAILED) {
@@ -106,7 +134,7 @@ export const isBridgeOngoing = async () => {
                     if (data?.activityStatus?.status === ACTIVITY_STATUS.COMPLETED) {
                       window.localStorage.removeItem(ONONGOING_BRIDGE_DATA);
                       window.localStorage.removeItem(EXPIRATION_KEY);
-                      bridgeSuccess(!await checkNetwork(globalThis.requiredTokenDetail.chainDetails.chain_id));
+                      bridgeSuccess(!await checkNetwork(chain_id));
                       clearInterval(interval);
                     } else if (data?.activityStatus?.status === ACTIVITY_STATUS.FAILED) {
                       window.localStorage.removeItem(ONONGOING_BRIDGE_DATA);

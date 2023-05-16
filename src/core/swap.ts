@@ -14,7 +14,13 @@ export const swapTokens = async ({
   amount,
 }: any) => {
   try {
-    const rpcEndpoint = addChainData[CHAIN_ID_HEX_TO_ENUM_MAPPING.get(globalThis.exchangingTokenDetail.chainDetails.chain_id)!].rpcUrls[0];
+    const {exchangingTokenDetail: {
+      chainDetails: {
+        chain_id
+      },
+      contractDecimals
+    }} = globalThis;
+    const rpcEndpoint = addChainData[CHAIN_ID_HEX_TO_ENUM_MAPPING.get(chain_id)!].rpcUrls[0];
     const web3 = new globalThis.Cypher.Web3(rpcEndpoint);
     let userAddress = globalThis.cypherWalletDetails.address;
     if (chain === ChainBackendNames.EVMOS) {
@@ -24,12 +30,12 @@ export const swapTokens = async ({
     const gasLimit = await web3.eth.estimateGas({
       from: userAddress,
       to: routerAddress,
-      value: isNative ? web3.utils.toWei(Number(globalThis.bridgeInputDetails.tokenValueEntered).toFixed(globalThis.exchangingTokenDetail?.contractDecimals), 'ether') : '0x0',
+      value: isNative ? web3.utils.toWei(Number(globalThis.bridgeInputDetails.tokenValueEntered).toFixed(contractDecimals), 'ether') : '0x0',
       data: globalThis.allowanceData.isAllowance ? contractData : '',
     });
     const tx = {
       chainId: chainId,
-      value: isNative ? web3.utils.toWei(Number(amount).toFixed(globalThis.exchangingTokenDetail?.contractDecimals), 'ether') : '0x0',
+      value: isNative ? web3.utils.toWei(Number(amount).toFixed(contractDecimals), 'ether') : '0x0',
       to: routerAddress,
       data: contractData,
       gas: web3.utils.toHex(2 * Number(gasLimit)),
@@ -46,15 +52,32 @@ export const swapTokens = async ({
 }
 
 export const swap = async () => {
+  const {
+    exchangingTokenDetail: {
+      chainDetails: {
+        backendName
+      },
+      contractAddress
+    },
+    swapQuoteData: {
+      data: {
+        chainId,
+        data
+      },
+      router,
+    },
+    bridgeInputDetails: {
+      tokenValueEntered
+    }
+  } = globalThis;
   const swapResp = await swapTokens({
-    chain: globalThis.exchangingTokenDetail.chainDetails.backendName,
-    chainId: globalThis.swapQuoteData.data.chainId,
-    routerAddress: globalThis.swapQuoteData.router,
-    contractData: globalThis.swapQuoteData.data.data,
-    isNative: isNativeToken(globalThis.exchangingTokenDetail?.contractAddress),
-    amount: globalThis.bridgeInputDetails.tokenValueEntered.toString(),
+    chain: backendName,
+    chainId: chainId,
+    routerAddress: router,
+    contractData: data,
+    isNative: isNativeToken(contractAddress),
+    amount: tokenValueEntered.toString(),
   });
-  const popupBackground = document.getElementById("popupBackground");
   if (!swapResp.isError) {
     maximizeWindow();
     bridgeSuccess();

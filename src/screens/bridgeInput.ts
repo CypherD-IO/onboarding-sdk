@@ -5,6 +5,19 @@ import { portfolioBalance } from "./portfolioBalance";
 declare let globalThis: any;
 
 export const bridgeInput = (parentElement = document.getElementById("popupBackground"), previousPage = portfolioBalance) => {
+  const {
+    requiredTokenDetail,
+    exchangingTokenDetail: {
+      symbol,
+      logoUrl,
+      name,
+      actualBalance,
+      price,
+      chainDetails: {
+        backendName
+      }
+    }
+  } = globalThis;
   const bridgeInputHTML = `
     <div class="bg-primaryBg rounded-[30px] z-50 flex flex-col justify-between items-center m-auto w-[90%] lg:w-[30%]" id="bridge-popup-css">
       <div class="bg-primaryBg rounded-t-[30px] p-5 flex flex-col justify-center items-center w-full h-full">
@@ -26,22 +39,22 @@ export const bridgeInput = (parentElement = document.getElementById("popupBackgr
         </div>
         <div class="flex">
           <p class="mr-2 text-[18px] text-primaryText" id="bp-token-value">00</p>
-          <p class="text-[18px] text-primaryText">${globalThis.exchangingTokenDetail.symbol}</p>
+          <p class="text-[18px] text-primaryText">${symbol}</p>
         </div>
         <div class="flex my-[3]">
-          <p class="text-[14px] text-primaryText" id="bp-min-amount">Min amount: $${Math.max(10, requiredUsdValue(globalThis.requiredTokenDetail, globalThis.exchangingTokenDetail)).toFixed(2)}</p>
+          <p class="text-[14px] text-primaryText" id="bp-min-amount">Min amount: $${Math.max(10, requiredUsdValue(requiredTokenDetail, globalThis.exchangingTokenDetail)).toFixed(2)}</p>
         </div>
         <div class="bg-primaryBg border border-[#E4E4E4] p-2 flex rounded-2xl w-[90%] lg:w-[75%] mt-6">
-          <img src="${globalThis.exchangingTokenDetail.logoUrl}" alt="${globalThis.exchangingTokenDetail.name} logo"
+          <img src="${logoUrl}" alt="${name} logo"
           class="h-[45px] w-[45px] lg:h-[55px] lg:w-[55px] rounded-lg">
           <div class="w-full ml-3" id="bp-balance-detail">
             <div id="bp-balance-detail-usd" class="flex justify-between h-[25px]">
-              <p class="text-primaryText text-[18px] font-semibold">${globalThis.exchangingTokenDetail.chainDetails.backendName}</p>
-              <p class="text-primaryText text-[18px] font-semibold" id="bp-balance-detail-usd-value">$${(globalThis.exchangingTokenDetail.actualBalance * globalThis.exchangingTokenDetail.price).toFixed(2)}</p>
+              <p class="text-primaryText text-[18px] font-semibold">${backendName}</p>
+              <p class="text-primaryText text-[18px] font-semibold" id="bp-balance-detail-usd-value">$${(actualBalance * price).toFixed(2)}</p>
             </div>
             <div id="bp-balance-detail-token" class="flex justify-between h-[25px]">
-              <p class="text-[#929292] text-[16px] font-normal">${globalThis.exchangingTokenDetail.symbol}</p>
-              <p class="text-[#929292] text-[16px] font-normal" id="bp-balance-detail-token-value">${parseFloat(globalThis.exchangingTokenDetail.actualBalance).toFixed(6)}</p>
+              <p class="text-[#929292] text-[16px] font-normal">${symbol}</p>
+              <p class="text-[#929292] text-[16px] font-normal" id="bp-balance-detail-token-value">${parseFloat(actualBalance).toFixed(6)}</p>
             </div>
           </div>
         </div>
