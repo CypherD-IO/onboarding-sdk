@@ -6,39 +6,16 @@ export const __capitalize = (str: string) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-export const isSwap = () => {
-  return (globalThis.requiredTokenDetail.chainDetails.backendName === globalThis.exchangingTokenDetail?.chainDetails?.backendName);
-}
-
-export const swapContractAddressCheck = (contractAddress: string, chainId = '') => {
-  if ((contractAddress === '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee') ||
-    (contractAddress === '0xdeaddeaddeaddeaddeaddeaddeaddeaddead0000' && chainId === '0xa') ||
-    (contractAddress === '0x0000000000000000000000000000000000001010' && chainId === '0x89')) {
-    return '0x0000000000000000000000000000000000000000';
-  }
-  return contractAddress;
-}
-
-export const isTokenSwapSupported = (tokenArray: Array<any>, tokenToCheck: any) => {
-  const tokenPresent =  tokenArray.filter(function (token)
-  {
-    return token.address.toLowerCase() === tokenToCheck.toLowerCase();
-  });
-  return tokenPresent.length > 0;
-}
-
 export const requiredUsdValue = (requiredTokenDetail: any, exchangingTokenDetail: any) => {
   const amountRequired = (globalThis.cypherWalletDetails.fromTokenRequiredBalance * requiredTokenDetail.price) - (exchangingTokenDetail.actualBalance * exchangingTokenDetail.price);
   return amountRequired;
 }
 
 export const updateUsdValue = (event: any) => {
-  if (event.target && event.target.matches("input[type='text']")) {
     const tokenValueElement = document.querySelector("#bp-token-value");
     const price = parseFloat(globalThis.exchangingTokenDetail.price);
     const newValue = (parseFloat(event.target.value) / price).toFixed(6);
     if (tokenValueElement) tokenValueElement.innerHTML = newValue.toString();
-  }
 }
 
 export const minimizeWindow = () => {

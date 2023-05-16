@@ -1,11 +1,12 @@
-import { bridge, bridgeSubmit, checkNetwork, isNativeToken, maximizeWindow, minimizeWindow, onGetQuote, requiredUsdValue, swap, switchNetwork } from ".";
-import { ARCH_HOST, EXPIRATION_KEY, gasFeeReservation, MINIMUM_BRIDGE_AMOUNT, ONONGOING_BRIDGE_DATA } from "../constants/server";
+import { isNativeToken, maximizeWindow, minimizeWindow, onGetQuote, requiredUsdValue } from "../utils";
+import { EXPIRATION_KEY, gasFeeReservation, MINIMUM_BRIDGE_AMOUNT, ONONGOING_BRIDGE_DATA } from "../constants/server";
 import { bridgeInput } from "../screens/bridgeInput";
-import { get } from "./fetch";
-import { isSwap, isTokenSwapSupported, swapContractAddressCheck } from ".";
+import { get } from "../utils/fetch";
+import { isSwap, isTokenSwapSupported, swapContractAddressCheck } from "../utils";
 import { bridgeFailed, bridgeLoading, bridgeSuccess, bridgeSummary } from "../screens";
 import _ from "lodash";
-import { setLocalStorageExpiry } from "./localStorage";
+import { setLocalStorageExpiry } from "../utils/localStorage";
+import { bridge, bridgeSubmit, checkNetwork, swap, switchNetwork } from ".";
 
 declare let globalThis: any;
 
@@ -38,7 +39,7 @@ export const triggerBridgePopup = () => {
   globalThis.exchangingTokenDetail = _.get(globalThis.bridgeableTokensList, (event.target.parentNode.parentNode).querySelector("#td-token-name").innerHTML.toLowerCase());
   if (isSwap()) {
     if (globalThis.swapSupportedChains?.includes(parseInt(globalThis.exchangingTokenDetail.chainDetails.chain_id, 16))) {
-      const swapSupportedChainList = get(`${ARCH_HOST}/v1/swap/evm/chains/${parseInt(globalThis.exchangingTokenDetail.chainDetails.chain_id, 16)}/tokens`).then(
+      const swapSupportedChainList = get(`v1/swap/evm/chains/${parseInt(globalThis.exchangingTokenDetail.chainDetails.chain_id, 16)}/tokens`).then(
           function (data) {
             if (isTokenSwapSupported(data.tokens, swapContractAddressCheck(globalThis.exchangingTokenDetail.contractAddress, globalThis.exchangingTokenDetail.chainDetails.chain_id))) {
               bridgeInput();
@@ -74,7 +75,7 @@ export const onMax = async () => {
     if (reserve && (globalThis.exchangingTokenDetail.actualBalance * globalThis.exchangingTokenDetail.price - reserve)) {
       const usdValueAfterReduction = (globalThis.exchangingTokenDetail.actualBalance * globalThis.exchangingTokenDetail.price - reserve);
       document.getElementById("bp-amount-value")!.value = usdValueAfterReduction.toFixed(2).toString();
-      document.getElementById("bp-token-value")!.textContent = (usdValueAfterReduction / globalThis.exchangingTokenDetail.price).toFixed(6).toString();
+      document.getElementById("bp-token-value")!.innerHTML = (usdValueAfterReduction / globalThis.exchangingTokenDetail.price).toFixed(6).toString();
     } else {
       console.log({ titleText: 'Insufficient funds for gas' });
       globalThis.toastMixin.fire({
@@ -85,7 +86,7 @@ export const onMax = async () => {
     }
   } else {
     document.getElementById("bp-amount-value")!.value = (globalThis.exchangingTokenDetail.actualBalance * globalThis.exchangingTokenDetail.price).toFixed(2).toString();
-    document.getElementById("bp-token-value")!.textContent = (parseFloat(globalThis.exchangingTokenDetail.actualBalance) / globalThis.exchangingTokenDetail.price).toFixed(6).toString();
+    document.getElementById("bp-token-value")!.innerHTML = (parseFloat(globalThis.exchangingTokenDetail.actualBalance) / globalThis.exchangingTokenDetail.price).toFixed(6).toString();
   }
 }
 
@@ -100,7 +101,7 @@ export const onBridgeClick = async () => {
         setLocalStorageExpiry();
         minimizeWindow();
         const interval = setInterval(() => {
-          const status = get(`${ARCH_HOST}/v1/activities/status/bridge/${globalThis.bridgeQuote.quoteUuid}`).then(
+          const status = get(`v1/activities/status/bridge/${globalThis.bridgeQuote.quoteUuid}`).then(
             async function (data) {
               if (data?.activityStatus?.status === "COMPLETED") {
                 window.localStorage.removeItem(ONONGOING_BRIDGE_DATA);

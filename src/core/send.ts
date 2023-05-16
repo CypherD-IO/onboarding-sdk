@@ -1,5 +1,6 @@
-import { estimateGasLimit, getGasPrice, isNativeToken, switchNetwork } from ".";
+import { estimateGasLimit, getGasPrice, isNativeToken } from "../utils";
 import { addChainData, ChainBackendNames, CHAIN_ID_HEX_TO_ENUM_MAPPING, CONTRACT_DECIMAL_TO_ETHER_UNITS } from "../constants/server";
+import { switchNetwork } from ".";
 
 declare let globalThis: any;
 declare let window: any;

@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import {
-  ARCH_HOST,
   CHAIN_ID_HEX_TO_ENUM_MAPPING,
   EVM_CHAINS_NATIVE_TOKEN_MAP,
   CHAIN_ID_HEX_TO_CDN_IMAGE_CHAIN_NAME
@@ -35,7 +34,7 @@ export function getNativeTokenAddressForHexChainId(chainId: string) {
 }
 
 export const fetchRequiredTokenData = async (chainId: string, tokenContractAddress: string) => {
-  const tokenDetailUrl = `${ARCH_HOST}/v1/portfolio/tokenDetail?`;
+  const tokenDetailUrl = `v1/portfolio/tokenDetail?`;
   const params = [
     {
       key: 'chain',
@@ -53,7 +52,7 @@ export const fetchRequiredTokenData = async (chainId: string, tokenContractAddre
 declare let globalThis: any;
 export const fetchTokenData = async (address: any) => {
 
-  const portfolioUrl = `${ARCH_HOST}/v1/portfolio/balances?`;
+  const portfolioUrl = `v1/portfolio/balances?`;
   let params: any = [{
     key: 'address[]',
     value: [address]

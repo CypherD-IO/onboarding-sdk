@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { maximizeWindow, minimizeWindow } from ".";
+import { maximizeWindow, minimizeWindow } from "../utils";
 import { bridgeSubmitConditionCheck, closePopup, continueToPortfolio, navigateAfterSwitch, onBridgeClick, onMax, openChat, switchTheme, triggerBridgePopup } from "./handlerFunctions";
 
 declare let globalThis: any;

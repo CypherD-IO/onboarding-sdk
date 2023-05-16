@@ -1,34 +1,8 @@
-import { post, checkNetwork, fetchCurrentNetwork, isSwap, requiredUsdValue, swapContractAddressCheck, switchNetwork, getGasPrice, send, closePopup, isNativeToken } from ".";
-import { addChainData, ARCH_HOST, ChainBackendNames, CHAIN_ID_HEX_TO_ENUM_MAPPING, contractABI, CONTRACT_DECIMAL_TO_ETHER_UNITS } from "../constants/server";
-import { bridgeSummary, switchChain } from "../screens";
+import { post, isSwap, swapContractAddressCheck, getGasPrice, isNativeToken } from ".";
+import { addChainData, ChainBackendNames, CHAIN_ID_HEX_TO_ENUM_MAPPING, contractABI, CONTRACT_DECIMAL_TO_ETHER_UNITS } from "../constants/server";
+import { switchNetwork } from "../core";
 
 declare let globalThis: any;
-
-export const bridgeSubmit = async () => {
-  const chainId = globalThis.exchangingTokenDetail.chainDetails.chain_id;
-  const chainName = globalThis.exchangingTokenDetail.chainDetails.backendName;
-  const usdValueEntered = document.querySelector("#bp-amount-value")?.value;
-  const tokenValueEntered = document.querySelector("#bp-token-value")?.textContent;
-  const usdBalance = document.querySelector("#bp-balance-detail-usd-value");
-  const numericUsdBalance = parseFloat(usdBalance!.textContent!.slice(1));
-  const tokenBalance = document.querySelector("#bp-balance-detail-token-value")?.textContent;
-  globalThis.bridgeInputDetails = { usdValueEntered, tokenValueEntered, numericUsdBalance, tokenBalance };
-  if (numericUsdBalance >= parseFloat(usdValueEntered)) {
-    globalThis.currentChainId = await fetchCurrentNetwork();
-    if (await checkNetwork(chainId)) {
-      await onGetQuote();
-      bridgeSummary();
-    } else {
-      switchChain();
-    }
-  } else {
-    globalThis.toastMixin.fire({
-      title: 'Oops...',
-      text: 'Value entered is greater than your balance',
-      icon: 'error'
-    });
-  }
-}
 
 export const onGetQuote = async () => {
   if (isSwap()) {
@@ -43,7 +17,7 @@ export const onGetQuote = async () => {
       slippage: 0.4,
       walletAddress: globalThis.cypherWalletDetails.address,
     };
-      const response = post(`${ARCH_HOST}/v1/swap/sdk/evm/chains/${globalThis.exchangingTokenDetail.chainDetails.chain_id}/quote`, JSON.stringify(payload)).then(async function(data)
+      const response = post(`v1/swap/sdk/evm/chains/${globalThis.exchangingTokenDetail.chainDetails.chain_id}/quote`, JSON.stringify(payload)).then(async function(data)
       {
         globalThis.swapQuoteData = {...data};
         const bridgeSubmitButton: any = document.getElementById("bridge-submit-blue-button");
@@ -128,7 +102,7 @@ export const onGetQuote = async () => {
       fromTokenCoingeckoId: globalThis.exchangingTokenDetail.coinGeckoId,
       toTokenCoingeckoId: globalThis.requiredTokenDetail.coinGeckoId,
     };
-    const result = post(`${ARCH_HOST}/v1/bridge/sdk/quote`, JSON.stringify(reqQuoteData)).then(function(data){
+    const result = post(`v1/bridge/sdk/quote`, JSON.stringify(reqQuoteData)).then(function(data){
         if(data?.errors?.length > 0) {
           globalThis.toastMixin.fire({
             title: 'Oops...',
@@ -147,14 +121,14 @@ export const onGetQuote = async () => {
   }
 }
 
-async function checkAllowance({
+export const checkAllowance = async ({
   chain,
   contractAddress,
   routerAddress,
   amount,
   contractDecimal,
   isNative
-}: any) {
+}: any) => {
   await switchNetwork(globalThis.exchangingTokenDetail?.chainDetails?.chain_id);
   const rpcEndpoint = addChainData[CHAIN_ID_HEX_TO_ENUM_MAPPING.get(globalThis.exchangingTokenDetail.chainDetails.chain_id)!].rpcUrls[0];
   const web3 = new globalThis.Cypher.Web3(rpcEndpoint);
@@ -182,14 +156,14 @@ async function checkAllowance({
   return { isError: false, isAllowance: false };
 }
 
-const onDepositFund = async (hash: string) => {
+export const onDepositFund = async (hash: string) => {
   return new Promise((resolve)=>{
   const depositPostBody = {
     address: globalThis.cypherWalletDetails.address,
     quoteUUID: globalThis.bridgeQuote.quoteUuid,
     txnHash: hash,
   };
-    const resp = post(`${ARCH_HOST}/v1/bridge/sdk/quote/${globalThis.bridgeQuote.quoteUuid}/deposit`, JSON.stringify(depositPostBody)).then(function(data)
+    const resp = post(`v1/bridge/sdk/quote/${globalThis.bridgeQuote.quoteUuid}/deposit`, JSON.stringify(depositPostBody)).then(function(data)
     {
       if (!data.isError) {
         resolve(data);
@@ -204,30 +178,3 @@ const onDepositFund = async (hash: string) => {
     });
   })
 };
-
-export const bridge = async () => {
-  const resp: any = await send({
-    amountToSend: parseFloat(globalThis.bridgeInputDetails.tokenValueEntered),
-    contractAddress: globalThis.exchangingTokenDetail?.contractAddress,
-    toAddress: globalThis.bridgeQuote?.step1TargetWallet,
-    chain: globalThis.exchangingTokenDetail?.chainDetails?.backendName,
-    contractDecimal: globalThis.exchangingTokenDetail?.contractDecimals,
-  });
-
-  return new Promise((resolve)=>{
-    if (!resp.isError && resp.hash) {
-      const bridgeResponse = onDepositFund(resp?.hash).then(function(response: any) {
-          resolve(response);
-        }
-      );
-    } else {
-      globalThis.toastMixin.fire({
-        title: 'Oops...',
-        text: resp?.error?.message.toString(),
-        icon: 'error'
-      });
-      console.log({ titleText: resp?.error?.message.toString() });
-      setTimeout(()=>{closePopup()}, 5000);
-    }
-  });
-}

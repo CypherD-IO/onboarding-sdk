@@ -1,4 +1,6 @@
-declare let globalThis;
+import { ARCH_HOST } from "../constants/server";
+
+declare let globalThis: any;
 
 export const request = ( url: string, params:{key:string, value: string}[] = [], method = 'GET', body={} ) => {
   const {appId} = globalThis.cypherWalletDetails;
@@ -19,16 +21,9 @@ export const request = ( url: string, params:{key:string, value: string}[] = [],
       options['body'] = body;
       break;
   }
-  // if ( 'GET' === method ) {
-  //   const query = params.map(({ key,value }) => encodeURIComponent(key) + '=' + encodeURIComponent(value))
-  //   .join('&');
-
-  //   url += query;
-
-  // }
   return fetch( url, options ).then( response => response.json() );
 };
 
-export const get = ( url: string, params: any = [] ) => request( url, params, 'GET' );
+export const get = ( url: string, params: any = [] ) => request( `${ARCH_HOST}/${url}`, params, 'GET' );
 
-export const post = (url: string, body: any) => request(url, [], 'POST', body);
+export const post = (url: string, body: any) => request( `${ARCH_HOST}/${url}`, [], 'POST', body);

@@ -1,10 +1,9 @@
 import { get } from ".";
-import { ARCH_HOST } from "../constants/server";
 
 declare let globalThis: any;
 
 export const getGasPrice = async (chain: string) => {
-  const response = await get(`${ARCH_HOST}/v1/prices/gas/${chain}`);
+  const response = await get(`v1/prices/gas/${chain}`);
   return response;
 }
 

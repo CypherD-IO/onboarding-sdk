@@ -1,4 +1,5 @@
-import { clickHandler, onBlurInput, onFocusInput, updateUsdValue } from ".";
+import { onBlurInput, onFocusInput, updateUsdValue } from ".";
+import { clickHandler, inputHandler } from "../core";
 import { noBalanceCSS } from "../cssContents";
 import { addTailwindScript } from "../scriptContents";
 
@@ -6,9 +7,9 @@ export const createContainer = () => {
   const popupBackground = document.createElement("div");
   popupBackground.id = "popupBackground";
   popupBackground.addEventListener("click", (event) => {clickHandler(event)});
-  popupBackground.addEventListener("input",updateUsdValue);
-  popupBackground.addEventListener("onfocus", (e) => onFocusInput(e));
-  popupBackground.addEventListener("onblur", (e) => onBlurInput(e));
+  popupBackground.addEventListener("input", (event) => {inputHandler(event)});
+  popupBackground.addEventListener("onfocus", (event) => {onFocusInput(event)});
+  popupBackground.addEventListener("onblur", (event) => {onBlurInput(event)});
 
   const sdkContainer = document.createElement("div");
   sdkContainer.id = "sdkContainer";
