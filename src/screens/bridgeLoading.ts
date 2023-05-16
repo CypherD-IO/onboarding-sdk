@@ -11,7 +11,8 @@ export const bridgeLoading = (parentElement = document.getElementById("popupBack
       </div>
       <div class="flex flex-1 flex-col justify-center self-center items-center px-[30px] w-[72%]">
           <h2 class="text-[24px] text-primaryText text-center font-semibold mt-[40px]">Transaction submitted</h2>
-          <p class="text-[20px] text-primaryText text-center mt-[10px]">Your transaction is being processed. This can take upto 5 mins</p>
+          <p class="text-[20px] text-primaryText text-center mt-[10px]">Your transaction is being processed. This can take upto 5 mins.</p>
+          <p class="text-[20px] text-red text-center mt-[10px]">Please Don't Refresh the page or Close the popup</p>
           <img class="mt-[5px]" src="https://public.cypherd.io/icons/logos/loading.gif" alt="loading gif" width="300" height="300">
       </div>
       ${footer()}
