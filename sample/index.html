@@ -2,23 +2,22 @@
 
 <head>
   <title>Sample</title>
-  <script type="text/javascript" src="../dist/esbuild/onboardingsdk.js"></script>
+  <script type="text/javascript" src="https://public.cypherd.io/sdk/cypher-sdk.js"></script>
   <!-- <link rel="stylesheet" href="../dist/output.css"> -->
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 </head>
 
 <body>
-  <h1>Thank you for trying out Cypher Wallet On-Boarding SDK.</h1>
-  <button id="addPopup" onclick="test()">Trigger Popup</button>
+  <h1>Hello World</h1>
+  <button id="addPopup" onclick="test()">Add Popup</button>
   <script>
     function test() {
       window.Cypher({
-        address: '0x71D357Ef7e29f07473f9EDFB2140f14605C9f309',
-        targetChainIdHex: '0x89',
-        requiredTokenContractAddress: "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
+        address: '0x3d063C72b5A5b5457cb02076d134c806eca63Cff',
+        targetChainIdHex: '0x1',
+        requiredTokenContractAddress: "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
         requiredTokenBalance: 0,
-        showInfoScreen: false,
-        appId: '4a191303-8876-48a8-8c10-927ed3499f5c'
+        showInfoScreen: true
       });
     }
   </script>

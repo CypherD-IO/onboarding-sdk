@@ -79,10 +79,10 @@ export const Cypher = async ({
   globalThis.Colors = Colors;
   globalThis.theme = theme;
 
-  const tailwind = document.createElement("script");
-  tailwind.src = "https://cdn.tailwindcss.com";
-  tailwind.type = "application/javascript";
-  document.getElementsByTagName("head")[0].appendChild(tailwind);
+  // const tailwind = document.createElement("script");
+  // tailwind.src = "https://cdn.tailwindcss.com";
+  // tailwind.type = "application/javascript";
+  // document.getElementsByTagName("head")[0].appendChild(tailwind);
 
   const fetchPortfolio = await isBridgeOngoing();
   if (!fetchPortfolio) {
