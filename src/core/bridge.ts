@@ -65,6 +65,7 @@ export const bridge = async () => {
     toAddress: step1TargetWallet,
     chain: backendName,
     contractDecimal: contractDecimals,
+    isBridge : true,
   });
 
   return new Promise((resolve)=>{

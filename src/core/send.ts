@@ -1,5 +1,5 @@
-import { estimateGasLimit, getGasPrice, isNativeToken } from "../utils";
-import { addChainData, ChainBackendNames, CHAIN_ID_HEX_TO_ENUM_MAPPING, CONTRACT_DECIMAL_TO_ETHER_UNITS } from "../constants/server";
+import { estimateGasLimit, getGasPrice, isNativeToken, timeoutPromise } from "../utils";
+import { addChainData, ChainBackendNames, CHAIN_ID_HEX_TO_ENUM_MAPPING, CONTRACT_DECIMAL_TO_ETHER_UNITS, FALLBACK_TIMEOUT } from "../constants/server";
 import { switchNetwork } from ".";
 
 declare let globalThis: any;
@@ -12,7 +12,8 @@ async function sendNativeCoin({
   gasLimit,
   amountToSend,
   signer,
-  isWalletConnect = false
+  isWalletConnect = false,
+  isBridge
 }: any) {
   const tx = {
     from: fromAddress,
@@ -22,13 +23,25 @@ async function sendNativeCoin({
     gasPrice: gasPrice,
   };
   const response = await signer.sendTransaction(tx);
-  const receipt = await response.wait();
-  if (!isWalletConnect) {
-    return receipt?.hash;
-  } else{
-    return receipt?.transactionHash;
+  let hash: string | undefined;
+  if(!isBridge){
+      try {
+        const receipt = await Promise.race([response.wait(), timeoutPromise(FALLBACK_TIMEOUT)]);
+        if (!isWalletConnect) {
+          hash = receipt?.hash;
+        } else{
+          hash = receipt?.transactionHash;
+        }
+      } catch (error) {
+        hash = response.hash;
+      }
+      return hash;
+    }
+    else{
+      return response.hash;
+    }
   }
-}
+
 
 async function sendToken({
   contractAddress,
@@ -36,7 +49,8 @@ async function sendToken({
   amount,
   gasLimit,
   signer,
-  isWalletConnect = false
+  isWalletConnect = false,
+  isBridge
 }: any) {
   const contractAbiFragment = [
     {
@@ -60,15 +74,28 @@ async function sendToken({
   ];
   const contract = new globalThis.Cypher.ethers.Contract(contractAddress, contractAbiFragment, signer);
   const response = await contract.transfer(toAddress, amount);
-  let hash;
-  if (!isWalletConnect) {
-    const receipt = await response.wait();
-    hash = receipt?.hash;
-  } else {
-    const receipt = await globalThis.cypherWalletDetails.provider?.waitForTransaction(response.hash);
-    hash = receipt?.transactionHash;
+  let hash: string | undefined;
+  if(!isBridge){
+    try {
+      if (!isWalletConnect) {
+        const receipt = await Promise.race([response.wait(), timeoutPromise(FALLBACK_TIMEOUT)]);
+        hash = receipt?.hash;
+      } else {
+        const receipt = await Promise.race([
+          globalThis.cypherWalletDetails.provider?.waitForTransaction(response.hash),
+          timeoutPromise(FALLBACK_TIMEOUT),
+        ]);
+        hash = receipt?.transactionHash;
+      }
+    } catch (error) {
+      hash = response.hash;
+    }
+    return hash;
   }
+  else{
+  hash = response.hash;
   return hash;
+  }
 }
 
 export const send = async ({
@@ -77,6 +104,7 @@ export const send = async ({
   toAddress,
   contractAddress,
   contractDecimal,
+  isBridge=false,
 }: any) => {
   try {
     const {
@@ -133,11 +161,12 @@ export const send = async ({
         gasLimit: gasLimit.toString(),
         amountToSend: parsedSendingAmount,
         signer,
-        isWalletConnect
+        isWalletConnect,
+        isBridge
       });
       return { isError: false, hash: txnHash };
     } else {
-      const txnHash = await sendToken({ contractAddress, toAddress, amount: parsedSendingAmount, gasLimit, signer, isWalletConnect });
+      const txnHash = await sendToken({ contractAddress, toAddress, amount: parsedSendingAmount, gasLimit, signer, isWalletConnect, isBridge });
       return { isError: false, hash: txnHash };
     }
   } catch (error) {
