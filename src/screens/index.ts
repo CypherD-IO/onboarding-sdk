@@ -6,3 +6,5 @@ export * from './switchChain';
 export * from './portfolioLoading';
 export * from './bridgeSuccess';
 export * from './bridgeFailed';
+export * from './infoScreen';
+export * from './emptyWallet';

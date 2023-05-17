@@ -26,29 +26,22 @@ export const openChat = () => {
   window.open(url + '/?userId=' + globalThis.cypherWalletDetails.address + '&client=' + client, "_blank");
 }
 
-export const continueToPortfolio = () => {
-  const bridgeInfo = document.getElementById('bridge-info');
-  const popup = document.getElementById('popup');
-  bridgeInfo!.style.display = 'none';
-  popup!.style.display = 'flex';
-}
-
-export const triggerBridgePopup = () => {
+export const triggerBridgePopup = (exchangingTokenDetail: any) => {
   const {
     swapSupportedChains,
-    bridgeableTokensList,
-    exchangingTokenDetail: {
-      chainDetails: {
-        chain_id,
-        backendName
-      },
-      contractAddress,
-      name
-    },
     toastMixin
   } = globalThis;
 
-  globalThis.exchangingTokenDetail = _.get(bridgeableTokensList, (event.target.parentNode.parentNode).querySelector("#td-token-name").innerHTML.toLowerCase());
+  globalThis.exchangingTokenDetail = exchangingTokenDetail;
+  const {
+    chainDetails: {
+      chain_id,
+      backendName
+    },
+    contractAddress,
+    name
+  } = globalThis.exchangingTokenDetail;
+
   if (isSwap()) {
     if (swapSupportedChains?.includes(parseInt(chain_id, 16))) {
       const swapSupportedChainList = get(`v1/swap/evm/chains/${parseInt(chain_id, 16)}/tokens`).then(

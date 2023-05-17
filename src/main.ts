@@ -10,17 +10,16 @@ import {
   noop,
 } from "./utils";
 import _ from "lodash";
-import { SUPPORTED_CHAINID_LIST_HEX } from "./constants/server";
+import { MINIMUM_BALANCE_AMOUNT, SUPPORTED_CHAINID_LIST_HEX } from "./constants/server";
 import Swal from "sweetalert2";
 import web3 from "web3";
 import { ethers } from "ethers";
 import { DappDetails } from "./interface";
 import "./input.css";
 import { Colors } from "./constants/colors";
-import { portfolioBalance } from "./screens/portfolioBalance";
-import { portfolioLoading } from "./screens/portfolioLoading";
 import { appendContainerToBody, createContainer } from "./utils/container";
 import { isBridgeOngoing } from "./core/bridge";
+import { emptyWallet, infoScreen, portfolioBalance, portfolioLoading } from "./screens";
 
 declare let globalThis: any;
 
@@ -109,7 +108,21 @@ export const Cypher = async ({
       ))
     ) {
       sdkContainer.classList.add('blurredBackdrop');
-      portfolioBalance(_.get(tokenHoldings, ["tokenPortfolio", "totalHoldings"]));
+      const bridgeableTokensList: any = [];
+      // only verified tokens and tokens with balance >= $10 is shown
+      _.get(tokenHoldings, ["tokenPortfolio", "totalHoldings"])?.map((tokenDetail: any) => {
+        if (tokenDetail.actualBalance * tokenDetail.price >= MINIMUM_BALANCE_AMOUNT && tokenDetail.isVerified) {
+          bridgeableTokensList.push(tokenDetail);
+        }
+      });
+      globalThis.bridgeableTokensList = bridgeableTokensList;
+      if (showInfoScreen && bridgeableTokensList.length > 0) {
+        infoScreen();
+      } else if (!showInfoScreen && bridgeableTokensList.length > 0) {
+        portfolioBalance();
+      } else {
+        emptyWallet();
+      }
     } else {
       sdkContainer.remove();
       console.log("Hurray!!, you have enough Balance. Continue using the dapp.");

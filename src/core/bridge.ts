@@ -12,13 +12,7 @@ import { closePopup, send } from ".";
 declare let globalThis: any;
 
 export const bridgeSubmit = async () => {
-  const {exchangingTokenDetail: {
-    chainDetails: {
-      chain_id,
-    },
-  }}  = globalThis.exchangingTokenDetail;
-
-  const chainId = chain_id;
+  const chainId = globalThis.exchangingTokenDetail.chainDetails.chain_id;
   const usdValueEntered = document.querySelector("#bp-amount-value")?.value;
   const tokenValueEntered = document.querySelector("#bp-token-value")?.textContent;
   const usdBalance = document.querySelector("#bp-balance-detail-usd-value");
@@ -57,7 +51,7 @@ export const bridge = async () => {
       },
       contractDecimals
     }
-  } = globalThis.exchangingTokenDetail;
+  } = globalThis;
 
   const resp: any = await send({
     amountToSend: parseFloat(tokenValueEntered),
@@ -89,13 +83,6 @@ export const isBridgeOngoing = async () => {
   checkExpiry();
   let bridgeUuid;
   let bridgeData = window.localStorage.getItem(ONONGOING_BRIDGE_DATA);
-  const {
-    requiredTokenDetail: {
-      chainDetails: {
-        chain_id,
-      }
-    }
-  } = globalThis;
   if (bridgeData) {
     bridgeData = await JSON.parse(bridgeData);
     bridgeUuid = _.get(bridgeData, ['bridgeQuoteData', 'quoteUuid']);
@@ -111,7 +98,7 @@ export const isBridgeOngoing = async () => {
             window.localStorage.removeItem(ONONGOING_BRIDGE_DATA);
             window.localStorage.removeItem(EXPIRATION_KEY);
             const {popupBackground, sdkContainer, sheet} = createContainer();
-            bridgeSuccess(!await checkNetwork(chain_id), popupBackground);
+            bridgeSuccess(!await checkNetwork(globalThis.requiredTokenDetail.chainDetails.chain_id), popupBackground);
             sdkContainer.classList.add('blurredBackdrop');
             appendContainerToBody(popupBackground, sdkContainer, sheet);
           } else if (data?.activityStatus?.status === ACTIVITY_STATUS.FAILED) {
@@ -134,7 +121,7 @@ export const isBridgeOngoing = async () => {
                     if (data?.activityStatus?.status === ACTIVITY_STATUS.COMPLETED) {
                       window.localStorage.removeItem(ONONGOING_BRIDGE_DATA);
                       window.localStorage.removeItem(EXPIRATION_KEY);
-                      bridgeSuccess(!await checkNetwork(chain_id));
+                      bridgeSuccess(!await checkNetwork(globalThis.requiredTokenDetail.chainDetails.chain_id));
                       clearInterval(interval);
                     } else if (data?.activityStatus?.status === ACTIVITY_STATUS.FAILED) {
                       window.localStorage.removeItem(ONONGOING_BRIDGE_DATA);
