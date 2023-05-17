@@ -20,7 +20,9 @@ export const clickHandler = (event: any) => {
   } if (classList.contains("info-screen-continue")) {
     continueToPortfolio();
   } if (classList.contains("exchange-token-button")) {
-    triggerBridgePopup();
+    let params = event.target.getAttribute('params');
+    params = JSON.parse(params);
+    triggerBridgePopup(params.exchangingTokenDetail);
   } if (classList.contains("bp-max-button")) {
     onMax();
   } if (classList.contains("bridge-submit-blue-button")) {

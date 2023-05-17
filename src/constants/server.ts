@@ -455,7 +455,8 @@ export const EXPIRATION_KEY = 'key_expiry';
 export const EXPIRATION_DURATION = 24 * 60 * 60 * 1000;
 // minimum bridge amount is $10
 export const MINIMUM_BRIDGE_AMOUNT = 10;
-
+// minimum balance amount is $10. Tokens with balance >= $10 will only be shown
+export const MINIMUM_BALANCE_AMOUNT = 10;
 export enum ACTIVITY_STATUS {
   COMPLETED = "COMPLETED",
   FAILED = "FAILED",

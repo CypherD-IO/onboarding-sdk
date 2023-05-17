@@ -1,48 +1,50 @@
 import _ from "lodash";
 import { footer } from "../components/footer";
+import { MINIMUM_BALANCE_AMOUNT } from "../constants/server";
 import { __capitalize } from "../utils";
 
 declare let globalThis: any;
 
 export const portfolioBalance = (totalHoldings = _.get(globalThis.tokenHoldings, ["tokenPortfolio", "totalHoldings"]), parentElement = document.getElementById("popupBackground")) => {
   const showInfoScreen: boolean = globalThis.cypherWalletDetails.showInfoScreen;
-  const bridgeableTokensList: any = {};
+  const bridgeableTokensList: any = [];
   // only verified tokens and tokens with balance >= $10 is shown
   totalHoldings?.map((tokenDetail: any) => {
-    if (tokenDetail.actualBalance * tokenDetail.price >= 10 && tokenDetail.isVerified) {
-      bridgeableTokensList[(tokenDetail.name).toLowerCase()] = tokenDetail
+    if (tokenDetail.actualBalance * tokenDetail.price >= MINIMUM_BALANCE_AMOUNT && tokenDetail.isVerified) {
+      bridgeableTokensList.push(tokenDetail);
     }
   });
   const {
     requiredTokenDetail
   } = globalThis;
 
-  globalThis.bridgeableTokensList = bridgeableTokensList;
-  const tokensAvailableList = Object.values(bridgeableTokensList).map((tokenDetail: any) => `
-    <tr class='odd:bg-stripedTableBg h-[75px]'>
-      <td class='pl-2'>
-        <div id='cyd-chain'>
-          <img id='td-chain-icon' class='w-[20px] mr-1' src="https://public.cypherd.io/icons/logos/${_.get(tokenDetail, ['chainDetails', 'backendName'], '').toLowerCase()}.png" alt="${_.get(tokenDetail, ['chainDetails', 'backendName'], '').toLowerCase()} logo" />
-          <p class='text-[10px] lg:text-[14px] text-primaryText'>${_.get(tokenDetail, ['chainDetails', 'backendName'], '')}</p>
-        </div>
-      </td>
-      <td>
-        <div id='cyd-token'>
-          <img id='td-token-icon' class='w-[20px] mr-1' src="${_.get(tokenDetail, ['logoUrl'])}" alt="${_.get(tokenDetail, ['name'])} logo">
-          <p id='td-token-name' class='text-[10px] lg:text-[14px] text-primaryText'>${_.get(tokenDetail, ['name'])}</p>
-        </div>
-      </td>
-      <td>
-        <p id='td-usd-value' class='text-[10px] lg:text-[14px] text-primaryText font-semibold'>$ ${(_.get(tokenDetail, ['actualBalance']) * _.get(tokenDetail, ['price'])).toFixed(2)}</p>
-      </td>
-      <td>
-        <p id='td-token-balance' class='text-[10px] lg:text-[14px] text-primaryText'>${Number(_.get(tokenDetail, ['actualBalance'])).toFixed(5)}</p>
-      </td>
-      <td class='pr-2'>
-        <button class='exchange-token-button blue-button text-[10px] lg:text-[14px] text-primaryText p-1.5 lg:p-3'>Exchange</button>
-      </td>
-    </tr>
-  `).join(' ');
+  const tokensAvailableList = bridgeableTokensList.map((tokenDetail: any) => (
+      `
+        <tr class='odd:bg-stripedTableBg h-[75px]'>
+          <td class='pl-2'>
+            <div id='cyd-chain'>
+              <img id='td-chain-icon' class='w-[20px] mr-1' src="https://public.cypherd.io/icons/logos/${_.get(tokenDetail, ['chainDetails', 'backendName'], '').toLowerCase()}.png" alt="${_.get(tokenDetail, ['chainDetails', 'backendName'], '').toLowerCase()} logo" />
+              <p class='text-[10px] lg:text-[14px] text-primaryText'>${_.get(tokenDetail, ['chainDetails', 'backendName'], '')}</p>
+            </div>
+          </td>
+          <td>
+            <div id='cyd-token'>
+              <img id='td-token-icon' class='w-[20px] mr-1' src="${_.get(tokenDetail, ['logoUrl'])}" alt="${_.get(tokenDetail, ['name'])} logo">
+              <p id='td-token-name' class='text-[10px] lg:text-[14px] text-primaryText'>${_.get(tokenDetail, ['name'])}</p>
+            </div>
+          </td>
+          <td>
+            <p id='td-usd-value' class='text-[10px] lg:text-[14px] text-primaryText font-semibold'>$ ${(_.get(tokenDetail, ['actualBalance']) * _.get(tokenDetail, ['price'])).toFixed(2)}</p>
+          </td>
+          <td>
+            <p id='td-token-balance' class='text-[10px] lg:text-[14px] text-primaryText'>${Number(_.get(tokenDetail, ['actualBalance'])).toFixed(5)}</p>
+          </td>
+          <td class='pr-2'>
+            <button params='` + JSON.stringify({exchangingTokenDetail: tokenDetail}) + `'class='exchange-token-button blue-button text-[10px] lg:text-[14px] text-primaryText p-1.5 lg:p-3'>Exchange</button>
+          </td>
+        </tr>
+      `
+  )).join(' ');
 
   // display the balces if tokens with sufficient balances are present, else show empty wallet screen
   const tokenListContainer = Object.keys(bridgeableTokensList).length ? `

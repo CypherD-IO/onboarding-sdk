@@ -33,14 +33,13 @@ export const continueToPortfolio = () => {
   popup!.style.display = 'flex';
 }
 
-export const triggerBridgePopup = () => {
+export const triggerBridgePopup = (exchangingTokenDetail: any) => {
   const {
     swapSupportedChains,
-    bridgeableTokensList,
     toastMixin
   } = globalThis;
 
-  globalThis.exchangingTokenDetail = _.get(bridgeableTokensList, (event.target.parentNode.parentNode).querySelector("#td-token-name").innerHTML.toLowerCase());
+  globalThis.exchangingTokenDetail = exchangingTokenDetail;
   const {
     chainDetails: {
       chain_id,
