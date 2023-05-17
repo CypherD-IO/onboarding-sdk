@@ -38,6 +38,7 @@ export const clickHandler = (event: any) => {
     let params = event.target.getAttribute('params');
     params = JSON.parse(params);
     const chainId = _.get(params, "chainId");
-    navigateAfterSwitch(chainId);
+    const triggerCallback = _.get(params, "triggerCallback");
+    triggerCallback ?  navigateAfterSwitch(chainId, false) : navigateAfterSwitch(chainId);
   }
 }

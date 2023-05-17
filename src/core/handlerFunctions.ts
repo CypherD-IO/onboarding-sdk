@@ -166,7 +166,7 @@ export const bridgeSubmitConditionCheck = async () => {
   }
 }
 
-export const navigateAfterSwitch = async (chainId: string) => {
+export const navigateAfterSwitch = async (chainId: string, doNavigateAfterSwitch = true) => {
   const {connector, provider} = globalThis.cypherWalletDetails;
   if(connector && provider){
     await connector.activate(parseInt(chainId));
@@ -174,6 +174,8 @@ export const navigateAfterSwitch = async (chainId: string) => {
   else {
     await switchNetwork(chainId);
   }
-  await onGetQuote();
-  bridgeSummary();
+  if (doNavigateAfterSwitch) {
+    await onGetQuote();
+    bridgeSummary();
+  }
 }
