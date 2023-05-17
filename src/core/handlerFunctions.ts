@@ -37,18 +37,19 @@ export const triggerBridgePopup = () => {
   const {
     swapSupportedChains,
     bridgeableTokensList,
-    exchangingTokenDetail: {
-      chainDetails: {
-        chain_id,
-        backendName
-      },
-      contractAddress,
-      name
-    },
     toastMixin
   } = globalThis;
 
   globalThis.exchangingTokenDetail = _.get(bridgeableTokensList, (event.target.parentNode.parentNode).querySelector("#td-token-name").innerHTML.toLowerCase());
+  const {
+    chainDetails: {
+      chain_id,
+      backendName
+    },
+    contractAddress,
+    name
+  } = globalThis.exchangingTokenDetail;
+
   if (isSwap()) {
     if (swapSupportedChains?.includes(parseInt(chain_id, 16))) {
       const swapSupportedChainList = get(`v1/swap/evm/chains/${parseInt(chain_id, 16)}/tokens`).then(
