@@ -30,7 +30,7 @@ export const clickHandler = (event: any) => {
     onBridgeClick();
   } if (classList.contains("bridge-input-submit")) {
     bridgeSubmitConditionCheck();
-  } if (classList.contains("bridge-loading-container")) {
+  } if (classList.contains("maximize-onclick")) {
     maximizeWindow();
   } if (classList.contains("minimize-button")) {
     minimizeWindow();
