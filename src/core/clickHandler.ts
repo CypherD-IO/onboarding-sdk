@@ -24,13 +24,13 @@ export const clickHandler = (event: any) => {
     let params = event.target.getAttribute('params');
     params = JSON.parse(params);
     triggerBridgePopup(params.exchangingTokenDetail);
-  } if (classList.contains("bp-max-button")) {
+  } if (classList.contains("bp-max-button") || event.target.closest(".bp-max-button")) {
     onMax();
   } if (classList.contains("bridge-submit-blue-button")) {
     onBridgeClick();
   } if (classList.contains("bridge-input-submit")) {
     bridgeSubmitConditionCheck();
-  } if (classList.contains("maximize-onclick")) {
+  } if (classList.contains("maximize-onclick") || event.target.closest(".maximize-onclick")) {
     maximizeWindow();
   } if (classList.contains("minimize-button")) {
     minimizeWindow();
