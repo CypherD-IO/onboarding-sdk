@@ -26,13 +26,6 @@ export const openChat = () => {
   window.open(url + '/?userId=' + globalThis.cypherWalletDetails.address + '&client=' + client, "_blank");
 }
 
-export const continueToPortfolio = () => {
-  const bridgeInfo = document.getElementById('bridge-info');
-  const popup = document.getElementById('popup');
-  bridgeInfo!.style.display = 'none';
-  popup!.style.display = 'flex';
-}
-
 export const triggerBridgePopup = (exchangingTokenDetail: any) => {
   const {
     swapSupportedChains,

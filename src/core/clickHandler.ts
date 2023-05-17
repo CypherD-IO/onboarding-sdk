@@ -1,6 +1,7 @@
 import _ from "lodash";
+import { portfolioBalance } from "../screens";
 import { maximizeWindow, minimizeWindow } from "../utils";
-import { bridgeSubmitConditionCheck, closePopup, continueToPortfolio, navigateAfterSwitch, onBridgeClick, onMax, openChat, switchTheme, triggerBridgePopup } from "./handlerFunctions";
+import { bridgeSubmitConditionCheck, closePopup, navigateAfterSwitch, onBridgeClick, onMax, openChat, switchTheme, triggerBridgePopup } from "./handlerFunctions";
 
 declare let globalThis: any;
 
@@ -18,7 +19,7 @@ export const clickHandler = (event: any) => {
   } if (classList.contains("chat-support")) {
     openChat();
   } if (classList.contains("info-screen-continue")) {
-    continueToPortfolio();
+    portfolioBalance();
   } if (classList.contains("exchange-token-button")) {
     let params = event.target.getAttribute('params');
     params = JSON.parse(params);
