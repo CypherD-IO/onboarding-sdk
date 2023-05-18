@@ -461,3 +461,5 @@ export enum ACTIVITY_STATUS {
   COMPLETED = "COMPLETED",
   FAILED = "FAILED",
 }
+
+export const FALLBACK_TIMEOUT = 15000;

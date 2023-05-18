@@ -66,3 +66,7 @@ export const noop = (status: boolean) => {
 export const isNativeToken = (tokenContract: string) => {
   return Array.from(EVM_CHAINS_NATIVE_TOKEN_MAP.values()).includes(tokenContract.toLowerCase())
 }
+
+export async function timeoutPromise(timeout: number): Promise<never> {
+  return new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), timeout));
+}
