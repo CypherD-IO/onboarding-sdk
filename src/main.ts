@@ -20,6 +20,7 @@ import { Colors } from "./constants/colors";
 import { appendContainerToBody, createContainer } from "./utils/container";
 import { isBridgeOngoing } from "./core/bridge";
 import { emptyWallet, infoScreen, portfolioBalance, portfolioLoading } from "./screens";
+import { switchTheme } from "./core";
 
 declare let globalThis: any;
 
@@ -77,6 +78,7 @@ export const Cypher = async ({
 
   globalThis.Colors = Colors;
   globalThis.theme = theme;
+  switchTheme(globalThis.theme);
 
   // const tailwind = document.createElement("script");
   // tailwind.src = "https://cdn.tailwindcss.com";

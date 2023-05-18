@@ -92,7 +92,7 @@ export const onMax = async () => {
     if (reserve && (actualBalance * price - reserve)) {
       const usdValueAfterReduction = (actualBalance * price - reserve);
       document.getElementById("bp-amount-value")!.value = usdValueAfterReduction.toFixed(2).toString();
-      document.getElementById("bp-token-value")!.innerHTML = (usdValueAfterReduction / price).toFixed(6).toString();
+      document.getElementById("bp-token-value")!.textContent = (usdValueAfterReduction / price).toFixed(6).toString();
     } else {
       console.log({ titleText: 'Insufficient funds for gas' });
       toastMixin.fire({
@@ -103,7 +103,7 @@ export const onMax = async () => {
     }
   } else {
     document.getElementById("bp-amount-value")!.value = (actualBalance * price).toFixed(2).toString();
-    document.getElementById("bp-token-value")!.innerHTML = (parseFloat(actualBalance) / price).toFixed(6).toString();
+    document.getElementById("bp-token-value")!.textContent = (parseFloat(actualBalance) / price).toFixed(6).toString();
   }
 }
 
@@ -166,7 +166,7 @@ export const bridgeSubmitConditionCheck = async () => {
   }
 }
 
-export const navigateAfterSwitch = async (chainId: string) => {
+export const navigateAfterSwitch = async (chainId: string, doNavigateAfterSwitch = true) => {
   const {connector, provider} = globalThis.cypherWalletDetails;
   if(connector && provider){
     await connector.activate(parseInt(chainId));
@@ -174,6 +174,8 @@ export const navigateAfterSwitch = async (chainId: string) => {
   else {
     await switchNetwork(chainId);
   }
-  await onGetQuote();
-  bridgeSummary();
+  if (doNavigateAfterSwitch) {
+    await onGetQuote();
+    bridgeSummary();
+  }
 }
