@@ -28,7 +28,7 @@ export const bridgeSuccess = (switchChain = false, parentElement = document.getE
         <img src="https://public.cypherd.io/icons/logos/success.png" class="w-[42px] h-[42px]" alt="successLogo">
         <h2 class="text-[23px] text-primaryText font-semibold mt-[3px]">Congrats</h2>
       </div>
-      <p class="text-center text-primaryText text-[18px] mt-[5px] px-20 lg:px-0">You have ${(bridgeQuote?.transferAmount)?.toString()} ${requiredTokenDetail?.symbol} tokens added in ${requiredTokenDetail?.chainDetails?.backendName} chain. You can now use dapp. Switch chain back to ${requiredTokenDetail?.chainDetails?.backendName}</p>
+      <p class="text-center text-primaryText text-[18px] mt-[10px] px-10 lg:px-10">You have ${(bridgeQuote?.transferAmount)?.toFixed(6)} ${requiredTokenDetail?.symbol} tokens added in ${requiredTokenDetail?.chainDetails?.backendName} chain. You can now use dapp. Switch chain back to ${requiredTokenDetail?.chainDetails?.backendName}</p>
       <div id="bp-switch-container" class="mt-[5px] px-[50px]">
         <div id="bp-switch-chain-container">
           <img src="https://public.cypherd.io/icons/logos/${exchangingTokenDetail?.chainDetails?.backendName?.toLowerCase()}.png" class="w-[42px] h-[42px]" alt="${exchangingTokenDetail?.chainDetails?.backendName} logo">
