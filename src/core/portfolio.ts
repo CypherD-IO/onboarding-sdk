@@ -86,71 +86,67 @@ export const getPortfolioModel = async (holdings: any) => {
         }
       }
 
-      if (chainId !== fromChainId || (chainId === fromChainId && swapSupport && holdingTokenSwapSupport)) {
-        // if (holding.actual_balance * holding.price >= 10 && holding.is_verified) {
-          const tokenHolding: Holding = {
-            name: holding.name,
-            symbol: holding.symbol,
-            logoUrl: holding.logo_url,
-            price: holding.price,
-            contractAddress: holding.contract_address,
-            balance: holding.balance,
-            contractDecimals: holding.contract_decimals,
-            totalValue: holding.total_value,
-            actualBalance: holding.actual_balance,
-            isVerified: holding.is_verified,
-            coinGeckoId: holding.coin_gecko_id,
-            about: holding.about,
-            price24h: holding.price24h,
-          };
-          switch (holdings[i]?.chain_id) {
-            case CHAIN_ETH_GOERLI.backendName:
-              tokenHolding.chainDetails = CHAIN_ETH_GOERLI;
-              break;
-            case CHAIN_POLYGON_MUMBAI.backendName:
-              tokenHolding.chainDetails = CHAIN_POLYGON_MUMBAI;
-              break;
-            case CHAIN_ETH.backendName:
-              tokenHolding.chainDetails = CHAIN_ETH;
-              break;
-            case CHAIN_POLYGON.backendName:
-              tokenHolding.chainDetails = CHAIN_POLYGON;
-              break;
-            case CHAIN_BSC.backendName:
-              tokenHolding.chainDetails = CHAIN_BSC;
-              break;
-            case CHAIN_AVALANCHE.backendName:
-              tokenHolding.chainDetails = CHAIN_AVALANCHE;
-              break;
-            case CHAIN_FTM.backendName:
-              tokenHolding.chainDetails = CHAIN_FTM;
-              break;
-            case CHAIN_ARBITRUM.backendName:
-              tokenHolding.chainDetails = CHAIN_ARBITRUM;
-              break;
-            case CHAIN_OPTIMISM.backendName:
-              tokenHolding.chainDetails = CHAIN_OPTIMISM;
-              break;
-            case CHAIN_EVMOS.backendName:
-              tokenHolding.chainDetails = CHAIN_EVMOS;
-              break;
-            case CHAIN_COSMOS.backendName:
-              tokenHolding.chainDetails = CHAIN_COSMOS;
-              break;
-            case CHAIN_OSMOSIS.backendName:
-              tokenHolding.chainDetails = CHAIN_OSMOSIS;
-              break;
-            case CHAIN_JUNO.backendName:
-              tokenHolding.chainDetails = CHAIN_JUNO;
-              break;
-            case CHAIN_STARGAZE.backendName:
-              tokenHolding.chainDetails = CHAIN_STARGAZE;
-              break;
-          }
-          tokenHoldings.push(tokenHolding);
-          totalHoldings.push(tokenHolding);
-        // }
+      const tokenHolding: Holding = {
+        name: holding.name,
+        symbol: holding.symbol,
+        logoUrl: holding.logo_url,
+        price: holding.price,
+        contractAddress: holding.contract_address,
+        balance: holding.balance,
+        contractDecimals: holding.contract_decimals,
+        totalValue: holding.total_value,
+        actualBalance: holding.actual_balance,
+        isVerified: holding.is_verified,
+        coinGeckoId: holding.coin_gecko_id,
+        about: holding.about,
+        price24h: holding.price24h,
+      };
+      switch (holdings[i]?.chain_id) {
+        case CHAIN_ETH_GOERLI.backendName:
+          tokenHolding.chainDetails = CHAIN_ETH_GOERLI;
+          break;
+        case CHAIN_POLYGON_MUMBAI.backendName:
+          tokenHolding.chainDetails = CHAIN_POLYGON_MUMBAI;
+          break;
+        case CHAIN_ETH.backendName:
+          tokenHolding.chainDetails = CHAIN_ETH;
+          break;
+        case CHAIN_POLYGON.backendName:
+          tokenHolding.chainDetails = CHAIN_POLYGON;
+          break;
+        case CHAIN_BSC.backendName:
+          tokenHolding.chainDetails = CHAIN_BSC;
+          break;
+        case CHAIN_AVALANCHE.backendName:
+          tokenHolding.chainDetails = CHAIN_AVALANCHE;
+          break;
+        case CHAIN_FTM.backendName:
+          tokenHolding.chainDetails = CHAIN_FTM;
+          break;
+        case CHAIN_ARBITRUM.backendName:
+          tokenHolding.chainDetails = CHAIN_ARBITRUM;
+          break;
+        case CHAIN_OPTIMISM.backendName:
+          tokenHolding.chainDetails = CHAIN_OPTIMISM;
+          break;
+        case CHAIN_EVMOS.backendName:
+          tokenHolding.chainDetails = CHAIN_EVMOS;
+          break;
+        case CHAIN_COSMOS.backendName:
+          tokenHolding.chainDetails = CHAIN_COSMOS;
+          break;
+        case CHAIN_OSMOSIS.backendName:
+          tokenHolding.chainDetails = CHAIN_OSMOSIS;
+          break;
+        case CHAIN_JUNO.backendName:
+          tokenHolding.chainDetails = CHAIN_JUNO;
+          break;
+        case CHAIN_STARGAZE.backendName:
+          tokenHolding.chainDetails = CHAIN_STARGAZE;
+          break;
       }
+      tokenHoldings.push(tokenHolding);
+      totalHoldings.push(tokenHolding);
     }
 
     const chainTotalBalance = holdings[i]?.total_value ? parseFloat(holdings[i]?.total_value) : 0;

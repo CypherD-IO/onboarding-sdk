@@ -101,13 +101,14 @@ export const Cypher = async ({
       requiredToken
     );
     globalThis.requiredTokenDetail = { ...requiredTokenDetail };
+    const haveEnoughBalance = await hasSufficientBalance(
+      fromChainId,
+      requiredToken,
+      requiredTokenBalance
+    );
     if (
       requiredTokenBalance === 0 ||
-      !(await hasSufficientBalance(
-        fromChainId,
-        requiredToken,
-        requiredTokenBalance
-      ))
+      !haveEnoughBalance
     ) {
       sdkContainer.classList.add('blurredBackdrop');
       const bridgeableTokensList: any = [];
