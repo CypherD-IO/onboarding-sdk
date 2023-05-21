@@ -463,3 +463,5 @@ export enum ACTIVITY_STATUS {
 }
 
 export const FALLBACK_TIMEOUT = 15000;
+
+export const coinColors = ['coinCyan', 'coinBlue', 'coinRed', 'coinPurple', 'coinPink', 'coinGreen'];

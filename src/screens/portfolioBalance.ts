@@ -1,5 +1,6 @@
 import _ from "lodash";
 import { footer } from "../components/footer";
+import { coinColors } from "../constants/server";
 import { __capitalize } from "../utils";
 
 declare let globalThis: any;
@@ -12,16 +13,20 @@ export const portfolioBalance = ( bridgeableTokensList = globalThis.bridgeableTo
   const tokensAvailableList = bridgeableTokensList.map((tokenDetail: any) => (
       `
         <tr class='odd:bg-stripedTableBg h-[75px]'>
-          <td class='pl-2'>
-            <div id='cyd-chain'>
-              <img id='td-chain-icon' class='w-[20px] mr-1' src="https://public.cypherd.io/icons/logos/${_.get(tokenDetail, ['chainDetails', 'backendName'], '').toLowerCase()}.png" alt="${_.get(tokenDetail, ['chainDetails', 'backendName'], '').toLowerCase()} logo" />
-              <p class='text-[10px] lg:text-[14px] text-primaryText'>${_.get(tokenDetail, ['chainDetails', 'backendName'], '')}</p>
+          <td class='pl-[10px] pr-[5px]'>
+            <div class="relative w-[32px] h-[32px] lg:w-[42px] lg:h-[42px] overflow-visible">
+              <img id='td-token-icon' onerror="this.src='https://public.cypherd.io/icons/logos/' +  '${coinColors[Math.floor(Math.random() * coinColors.length)]}.png'" src="${_.get(tokenDetail, ['logoUrl'])}" alt="${_.get(tokenDetail, ['name'])} logo" class="object-cover w-full h-full" />
+              <div class="absolute bottom-[-5px] right-[-5px]">
+                <div class="w-[16px] h-[16px] lg:w-[22px] lg:h-[22px] overflow-visible">
+                  <img id='td-chain-icon' src="https://public.cypherd.io/icons/logos/${_.get(tokenDetail, ['chainDetails', 'backendName'], '').toLowerCase()}.png" alt="${_.get(tokenDetail, ['chainDetails', 'backendName'], '').toLowerCase()} logo" class="object-cover w-full h-full" />
+                </div>
+              </div>
             </div>
           </td>
           <td>
-            <div id='cyd-token'>
-              <img id='td-token-icon' class='w-[20px] mr-1' src="${_.get(tokenDetail, ['logoUrl'])}" alt="${_.get(tokenDetail, ['name'])} logo">
-              <p id='td-token-name' class='text-[10px] lg:text-[14px] text-primaryText'>${_.get(tokenDetail, ['name'])}</p>
+            <div class="text-left">
+              <p class="text-[14px] lg:text-[16px] text-primaryText font-bold">${_.get(tokenDetail, ['name'])}</h1>
+              <p class="text-[10px] lg:text-[12px] text-primaryText">${_.get(tokenDetail, ['chainDetails', 'backendName'], '')}</p>
             </div>
           </td>
           <td>
@@ -83,4 +88,3 @@ export const portfolioBalance = ( bridgeableTokensList = globalThis.bridgeableTo
 
   if (parentElement) parentElement.innerHTML = portfolioBalanceHTML;
 };
-
