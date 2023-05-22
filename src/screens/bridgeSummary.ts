@@ -28,11 +28,11 @@ export const bridgeSummary = (parentElement = document.getElementById("popupBack
       <div class="bp-summary-row exchange-row py-[15px] px-[10px] bg-secondaryBg rounded-t-[10px]">
         <p class="w-[30%] text-[14px] text-primaryText font-semibold">Exchange from</p>
         <div class="flex flex-row items-center w-[30%]">
-          <img src="https://public.cypherd.io/icons/logos/${exchangingTokenDetail.chainDetails.backendName.toLowerCase()}.png" alt="${exchangingTokenDetail.chainDetails.backendName.toLowerCase()} logo" width="22" height="22">
+          <img src="https://public.cypherd.io/icons/logos/${exchangingTokenDetail.chainDetails.backendName.toLowerCase()}.png" alt="${exchangingTokenDetail.chainDetails.backendName.toLowerCase()} logo" class="w-[22px] h-[22px] rounded-full">
           <p class="text-[14px] text-primaryText ml-[7px]">${exchangingTokenDetail.chainDetails.backendName}</p>
         </div>
         <div class="flex flex-row items-center w-[30%]">
-          <img src="${exchangingTokenDetail.logoUrl}" alt="${exchangingTokenDetail.name} logo" width="22" height="22">
+          <img src="${exchangingTokenDetail.logoUrl}" alt="${exchangingTokenDetail.name} logo" class="w-[22px] h-[22px] rounded-full">
           <p class="text-[14px] text-primaryText ml-[7px]">${exchangingTokenDetail.name}</p>
         </div>
       </div>
@@ -44,11 +44,11 @@ export const bridgeSummary = (parentElement = document.getElementById("popupBack
       <div class="bp-summary-row exchange-row py-[15px] px-[10px] bg-secondaryBg">
         <p class="w-[30%] text-[14px] text-primaryText font-semibold">Exchange to</p>
         <div class="flex flex-row items-center w-[30%]">
-          <img src="https://public.cypherd.io/icons/logos/${requiredTokenDetail.chainDetails.backendName.toLowerCase()}.png" alt="${requiredTokenDetail.chainDetails.backendName.toLowerCase()} logo" width="22" height="22">
+          <img src="https://public.cypherd.io/icons/logos/${requiredTokenDetail.chainDetails.backendName.toLowerCase()}.png" alt="${requiredTokenDetail.chainDetails.backendName.toLowerCase()} logo" class="w-[22px] h-[22px] rounded-full">
           <p class="text-[14px] text-primaryText ml-[7px]">${requiredTokenDetail.chainDetails.backendName}</p>
         </div>
         <div class="flex flex-row items-center w-[30%]">
-          <img src="${requiredTokenDetail.logoUrl}" alt="${requiredTokenDetail.name} logo" width="22" height="22">
+          <img src="${requiredTokenDetail.logoUrl}" alt="${requiredTokenDetail.name} logo" class="w-[22px] h-[22px] rounded-full">
           <p class="text-[14px] text-primaryText ml-[7px]">${requiredTokenDetail.name}</p>
         </div>
       </div>

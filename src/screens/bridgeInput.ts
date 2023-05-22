@@ -46,7 +46,7 @@ export const bridgeInput = (parentElement = document.getElementById("popupBackgr
         </div>
         <div class="bg-primaryBg border border-[#E4E4E4] p-2 flex rounded-2xl w-[90%] lg:w-[75%] mt-6">
           <img src="${logoUrl}" alt="${name} logo"
-          class="h-[45px] w-[45px] lg:h-[55px] lg:w-[55px] rounded-lg">
+          class="h-[45px] w-[45px] lg:h-[55px] lg:w-[55px] rounded-full">
           <div class="w-full ml-3" id="bp-balance-detail">
             <div id="bp-balance-detail-usd" class="flex justify-between h-[25px]">
               <p class="text-primaryText text-[18px] font-semibold">${backendName}</p>
