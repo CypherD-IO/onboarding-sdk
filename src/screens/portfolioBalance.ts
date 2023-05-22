@@ -14,10 +14,10 @@ export const portfolioBalance = ( bridgeableTokensList = globalThis.bridgeableTo
       `
         <tr class='odd:bg-stripedTableBg h-[75px]'>
           <td class='pl-[10px] pr-[5px]'>
-            <div class="relative w-[32px] h-[32px] lg:w-[42px] lg:h-[42px] overflow-visible">
+            <div class="relative w-[32px] h-[32px] rounded-full lg:w-[38px] lg:h-[38px] overflow-visible">
               <img id='td-token-icon' onerror="this.src='https://public.cypherd.io/icons/logos/' +  '${coinColors[Math.floor(Math.random() * coinColors.length)]}.png'" src="${_.get(tokenDetail, ['logoUrl'])}" alt="${_.get(tokenDetail, ['name'])} logo" class="object-cover w-full h-full" />
-              <div class="absolute bottom-[-5px] right-[-5px]">
-                <div class="w-[16px] h-[16px] lg:w-[22px] lg:h-[22px] overflow-visible">
+              <div class="absolute bottom-[-3px] right-[-5px]">
+                <div class="rounded-full w-[16px] h-[16px] lg:w-[20px] lg:h-[20px] overflow-visible bg-white p-[1px]">
                   <img id='td-chain-icon' src="https://public.cypherd.io/icons/logos/${_.get(tokenDetail, ['chainDetails', 'backendName'], '').toLowerCase()}.png" alt="${_.get(tokenDetail, ['chainDetails', 'backendName'], '').toLowerCase()} logo" class="object-cover w-full h-full" />
                 </div>
               </div>
@@ -25,7 +25,7 @@ export const portfolioBalance = ( bridgeableTokensList = globalThis.bridgeableTo
           </td>
           <td>
             <div class="text-left">
-              <p class="text-[14px] lg:text-[16px] text-primaryText font-bold">${_.get(tokenDetail, ['name'])}</h1>
+              <p class="text-[14px] lg:text-[16px] text-primaryText font-bold mb-[4px]">${_.get(tokenDetail, ['name'])}</h1>
               <p class="text-[10px] lg:text-[12px] text-primaryText">${_.get(tokenDetail, ['chainDetails', 'backendName'], '')}</p>
             </div>
           </td>
@@ -63,12 +63,12 @@ export const portfolioBalance = ( bridgeableTokensList = globalThis.bridgeableTo
       <div class="flex flex-row justify-end w-[95%] mt-[20px] mx-[30px] bg-primaryBg">
         <img src="https://public.cypherd.io/icons/close_icon.svg" class="close-popup cursor-pointer">
       </div>
-      <div class="my-[20px] px-10 lg:px-0 text-center">
+      <div class="my-[20px] px-10 lg:px-0 text-center ">
         <span class="text-[23px] text-primaryText font-semibold float-left">You need</span>
         <img
           src="${_.get(requiredTokenDetail, ["logoUrl"])}"
           alt="${_.get(requiredTokenDetail, ["name"])} logo"
-          class="w-[32px] h-[32px] mx-[8px] float-left"
+          class="w-[32px] h-[32px] mx-[8px] float-left rounded-full"
         />
         <span class="text-[23px] text-primaryText font-semibold float-left">
           ${_.get(requiredTokenDetail, ["symbol"]).toUpperCase()} in
@@ -76,7 +76,7 @@ export const portfolioBalance = ( bridgeableTokensList = globalThis.bridgeableTo
         <img
           src="https://public.cypherd.io/icons/logos/${_.get(requiredTokenDetail, ["chainDetails", "backendName"]).toLowerCase()}.png"
           alt="${_.get(requiredTokenDetail, ["chainDetails", "backendName"]).toLowerCase()} logo"
-          class="w-[32px] h-[32px] mx-[8px] float-left"
+          class="w-[32px] h-[32px] mx-[8px] float-left rounded-full"
         />
         <span class="text-[23px] text-primaryText font-semibold">
           ${__capitalize(_.get(requiredTokenDetail, ["chainDetails", "backendName"]).toLowerCase())} chain to use this dApp

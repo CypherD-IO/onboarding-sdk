@@ -22,7 +22,7 @@ export const emptyWallet = (parentElement = document.getElementById("popupBackgr
       <img
         src="${_.get(requiredTokenDetail, ["logoUrl"])}"
         alt="${_.get(requiredTokenDetail, ["name"])} logo"
-        class="w-[32px] h-[32px] mx-[8px] float-left"
+        class="w-[32px] h-[32px] mx-[8px] float-left rounded-full"
       />
       <span class="text-[23px] text-primaryText font-semibold float-left">
         ${_.get(requiredTokenDetail, ["symbol"]).toUpperCase()} in
@@ -30,7 +30,7 @@ export const emptyWallet = (parentElement = document.getElementById("popupBackgr
       <img
         src="https://public.cypherd.io/icons/logos/${_.get(requiredTokenDetail, ["chainDetails", "backendName"]).toLowerCase()}.png"
         alt="${_.get(requiredTokenDetail, ["chainDetails", "backendName"]).toLowerCase()} logo"
-        class="w-[32px] h-[32px] mx-[8px] float-left"
+        class="w-[32px] h-[32px] mx-[8px] float-left rounded-full"
       />
       <span class="text-[23px] text-primaryText font-semibold">
         ${__capitalize(_.get(requiredTokenDetail, ["chainDetails", "backendName"]).toLowerCase())} chain to use this dApp

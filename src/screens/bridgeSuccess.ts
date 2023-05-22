@@ -31,7 +31,7 @@ export const bridgeSuccess = (switchChain = false, parentElement = document.getE
       <p class="text-center text-primaryText text-[18px] mt-[10px] px-10 lg:px-10">You have ${(bridgeQuote?.transferAmount)?.toFixed(6)} ${requiredTokenDetail?.symbol} tokens added in ${requiredTokenDetail?.chainDetails?.backendName} chain. You can now use dapp. Switch chain back to ${requiredTokenDetail?.chainDetails?.backendName}</p>
       <div id="bp-switch-container" class="mt-[5px] px-[50px]">
         <div id="bp-switch-chain-container">
-          <img src="https://public.cypherd.io/icons/logos/${exchangingTokenDetail?.chainDetails?.backendName?.toLowerCase()}.png" class="w-[42px] h-[42px]" alt="${exchangingTokenDetail?.chainDetails?.backendName} logo">
+          <img src="https://public.cypherd.io/icons/logos/${exchangingTokenDetail?.chainDetails?.backendName?.toLowerCase()}.png" class="w-[42px] h-[42px] rounded-full" alt="${exchangingTokenDetail?.chainDetails?.backendName} logo">
           <p class="text-[14px] text-primaryText">${exchangingTokenDetail?.symbol}</p>
           <p class="text-[16px] text-primaryText font-semibold">${exchangingTokenDetail?.chainDetails?.backendName}</p>
         </div>
@@ -39,7 +39,7 @@ export const bridgeSuccess = (switchChain = false, parentElement = document.getE
           <img src="https://public.cypherd.io/icons/logos/switch_network.png" alt="switch icon" class="w-[120px] h-[120px]">
         </div>
         <div id="bp-switch-chain-container">
-          <img src="https://public.cypherd.io/icons/logos/${requiredTokenDetail?.chainDetails?.backendName?.toLowerCase()}.png" class="w-[42px] h-[42px]" alt="${requiredTokenDetail?.chainDetails?.backendName?.toLowerCase()} logo">
+          <img src="https://public.cypherd.io/icons/logos/${requiredTokenDetail?.chainDetails?.backendName?.toLowerCase()}.png" class="w-[42px] h-[42px] rounded-full" alt="${requiredTokenDetail?.chainDetails?.backendName?.toLowerCase()} logo">
           <p class="text-[14px] text-primaryText">${requiredTokenDetail?.symbol}</p>
           <p class="text-[16px] text-primaryText font-semibold">${requiredTokenDetail?.chainDetails?.backendName}</p>
         </div>

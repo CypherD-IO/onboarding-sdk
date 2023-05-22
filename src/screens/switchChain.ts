@@ -25,7 +25,7 @@ export const switchChain = (parentElement = document.getElementById("popupBackgr
         </div>
         <div class="flex items-start justify-evenly w-[95%] my-[50px]">
           <div id="bp-switch-chain-container">
-            <img src="https://public.cypherd.io/icons/logos/${CHAIN_ID_HEX_TO_ENUM_MAPPING.get(currentChainId)?.toLowerCase()}.png" class="w-[42px] h-[42px]" alt="${CHAIN_ID_HEX_TO_ENUM_MAPPING.get(currentChainId)?.toLowerCase()} logo">
+            <img src="https://public.cypherd.io/icons/logos/${CHAIN_ID_HEX_TO_ENUM_MAPPING.get(currentChainId)?.toLowerCase()}.png" class="w-[42px] h-[42px] rounded-full" alt="${CHAIN_ID_HEX_TO_ENUM_MAPPING.get(currentChainId)?.toLowerCase()} logo">
             <p class="text-[#929292] font-normal text-[16px] text-center mt-2 mb-1">${addChainData[CHAIN_ID_HEX_TO_ENUM_MAPPING.get(currentChainId)!].nativeCurrency.symbol}</p>
             <p class="text-primaryText font-semibold text-[18px] text-center">${addChainData[CHAIN_ID_HEX_TO_ENUM_MAPPING.get(currentChainId)!].chainName}</p>
           </div>
@@ -33,7 +33,7 @@ export const switchChain = (parentElement = document.getElementById("popupBackgr
             <img src="https://public.cypherd.io/icons/logos/switch_network.png" alt="switch icon" class="w-[100px] h-[100px]">
           </div>
           <div id="bp-switch-chain-container">
-            <img src="https://public.cypherd.io/icons/logos/${CHAIN_ID_HEX_TO_ENUM_MAPPING.get(chain_id)?.toLowerCase()}.png" class="w-[42px] h-[42px]" alt="${CHAIN_ID_HEX_TO_ENUM_MAPPING.get(chain_id)?.toLowerCase()} logo">
+            <img src="https://public.cypherd.io/icons/logos/${CHAIN_ID_HEX_TO_ENUM_MAPPING.get(chain_id)?.toLowerCase()}.png" class="w-[42px] h-[42px] rounded-full" alt="${CHAIN_ID_HEX_TO_ENUM_MAPPING.get(chain_id)?.toLowerCase()} logo">
             <p class="text-[#929292] font-normal text-[16px] text-center mt-2 mb-">${addChainData[CHAIN_ID_HEX_TO_ENUM_MAPPING.get(chain_id)!].nativeCurrency.symbol}</p>
             <p class="text-primaryText font-semibold text-[18px] text-center">${addChainData[CHAIN_ID_HEX_TO_ENUM_MAPPING.get(chain_id)!].chainName}</p>
           </div>
