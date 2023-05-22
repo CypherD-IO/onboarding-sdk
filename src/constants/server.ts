@@ -323,7 +323,7 @@ export const EVM_CHAINS_NATIVE_TOKEN_MAP = new Map([
   ['ETH_GOERLI', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'],
   ['POLYGON_MUMBAI', '0x0000000000000000000000000000000000001010'],
   ['ARBITRUM', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'],
-  ['OPTIMISM', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'],
+  ['OPTIMISM', '0xdeaddeaddeaddeaddeaddeaddeaddeaddead0000'],
   ['POLYGON', '0x0000000000000000000000000000000000001010'],
   ['AVALANCHE', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'],
   ['BSC', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'],
