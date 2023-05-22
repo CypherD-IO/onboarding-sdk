@@ -1,5 +1,6 @@
-import { isNativeToken } from ".";
-import { addChainData, ChainBackendNames, CHAIN_ID_HEX_TO_ENUM_MAPPING } from "../constants/server";
+import { getGasPrice, isNativeToken } from ".";
+import { addChainData, ChainBackendNames, CHAIN_ID_HEX_TO_ENUM_MAPPING, contractABI, CONTRACT_DECIMAL_TO_ETHER_UNITS } from "../constants/server";
+import { switchNetwork } from "../core";
 
 declare let globalThis: any;
 declare let window: any;
@@ -45,7 +46,7 @@ async function getAllowanceApproval({
         tokenValueEntered
       },
       Cypher: {
-        ether: {
+        ethers: {
           BrowserProvider
         },
         Web3
@@ -116,11 +117,65 @@ export const getSwapAllowanceApproval = async () => {
   });
   if (!approvalResp.isError) {
     globalThis.allowanceData = { ...globalThis.allowanceData, isAllowance: false };
+    return true;
   } else {
     toastMixin.fire({
       title: 'Oops...',
       text: approvalResp.error.toString(),
       icon: 'error'
     });
+    return false;
   }
 };
+
+export const checkAllowance = async ({
+  chain,
+  contractAddress,
+  routerAddress,
+  amount,
+  contractDecimal,
+  isNative
+}: any) => {
+  const {
+    exchangingTokenDetail: {
+      chainDetails: {
+        chain_id
+      },
+      contractDecimals
+    },
+    cypherWalletDetails: {
+      address
+    },
+    bridgeInputDetails: {
+      tokenValueEntered
+    },
+    Cypher: {
+      Web3
+    }
+  } = globalThis;
+  await switchNetwork(chain_id);
+  const rpcEndpoint = addChainData[CHAIN_ID_HEX_TO_ENUM_MAPPING.get(chain_id)!].rpcUrls[0];
+  const web3 = new Web3(rpcEndpoint);
+  let userAddress = address;
+  if (chain === ChainBackendNames.EVMOS) {
+    userAddress = web3.utils.toChecksumAddress(userAddress);
+  }
+  const gasPrice = await getGasPrice(chain);
+  const contract = new web3.eth.Contract(contractABI, contractAddress);
+  const response = await contract.methods.allowance(userAddress, routerAddress).call();
+  const etherUnit = CONTRACT_DECIMAL_TO_ETHER_UNITS[contractDecimals];
+  const tokenAmount = web3.utils.toWei(Number(amount).toFixed(contractDecimals), etherUnit).toString();
+  if (Number(tokenAmount) > Number(response)) {
+    if (Number(amount) < 1000) amount = '1000';
+    const tokens = web3.utils.toWei((Number(amount) * 10).toFixed(contractDecimals));
+    const resp = contract.methods.approve(routerAddress, tokens).encodeABI();
+    const gasLimit = await web3.eth.estimateGas({
+      from: userAddress,
+      to: contractAddress,
+      value: isNative ? web3.utils.toWei(Number(tokenValueEntered).toFixed(contractDecimals), 'ether') : '0x0',
+      data: resp,
+    });
+    return { isError: false, isAllowance: true, contractData: resp, gasLimit: gasLimit, gasPrice };
+  }
+  return { isError: false, isAllowance: false };
+}

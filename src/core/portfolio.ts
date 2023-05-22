@@ -65,7 +65,6 @@ export const getPortfolioModel = async (holdings: any) => {
   }
 
   if (swapSupport && !isTokenSwapSupported(swapSupportedRequiredTokensList, swapContractAddressCheck(fromTokenContractAddress, fromChainId))) {
-    console.log('swap not supported : ', fromChainId);
     swapSupport = false;
   }
 
@@ -73,10 +72,10 @@ export const getPortfolioModel = async (holdings: any) => {
   for (let i = 0; i < holdings.length; i++) {
     const tokenHoldings: Holding[] = [];
     const currentHoldings = holdings[i]?.token_holdings || [];
-    let holdingTokenSwapSupport = true;
 
     for (const holding of currentHoldings) {
-      // change to 10
+      let holdingTokenSwapSupport = true;
+
 
       const chainId = BACKEND_NAME_TO_CHAIN_ID_HEX.get(holdings[i]?.chain_id);
 
