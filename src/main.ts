@@ -114,7 +114,7 @@ export const Cypher = async ({
       const bridgeableTokensList: any = [];
       // only verified tokens and tokens with balance >= $10 is shown
       _.get(tokenHoldings, ["tokenPortfolio", "totalHoldings"])?.map((tokenDetail: any) => {
-        if (tokenDetail.actualBalance * tokenDetail.price >= MINIMUM_BALANCE_AMOUNT && tokenDetail.isVerified) {
+        if (tokenDetail.actualBalance * tokenDetail.price >= MINIMUM_BALANCE_AMOUNT && tokenDetail.isVerified && (tokenDetail.contractAddress !== requiredTokenDetail.contractAddress)) {
           bridgeableTokensList.push(tokenDetail);
         }
       });
