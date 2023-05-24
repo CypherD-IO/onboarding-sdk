@@ -216,7 +216,7 @@ export const addChainData: Record<string, NetworkInterface> = {
       symbol: 'ETH',
       decimals: 18,
     },
-    rpcUrls: ['https://api.mycryptoapi.com/eth', 'https://cloudflare-eth.com'],
+    rpcUrls: ['https://rpc.ankr.com/eth', 'https://cloudflare-eth.com'],
     blockExplorerUrls: ['https://etherscan.io'],
   },
   POLYGON: {
