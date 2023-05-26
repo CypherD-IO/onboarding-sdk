@@ -31,9 +31,9 @@ export const clickHandler = (event: any) => {
   } if (classList.contains("bridge-input-submit")) {
     bridgeSubmitConditionCheck();
   } if (classList.contains("maximize-onclick") || event.target.closest(".maximize-onclick")) {
-    maximizeWindow();
+    maximizeWindow(event.target);
   } if (classList.contains("minimize-button")) {
-    minimizeWindow();
+    minimizeWindow(event.target);
   } if (classList.contains("switch-chain-button")) {
     let params = event.target.getAttribute('params');
     params = JSON.parse(params);

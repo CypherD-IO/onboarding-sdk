@@ -57,8 +57,8 @@ export const portfolioBalance = ( bridgeableTokensList = globalThis.bridgeableTo
 
   const portfolioBalanceHTML = `
     <div
-      id="popup"
-      class="flex flex-col items-center justify-between max-h-[85%] rounded-[30px] bg-primaryBg w-11/12 lg:w-3/5"
+      id="portfolio-balance-screen"
+      class="flex flex-col items-center maximize-onclick justify-between max-h-[85%] rounded-[30px] bg-primaryBg w-11/12 lg:w-3/5"
     >
       <div class="flex flex-row justify-end w-[95%] mt-[20px] mx-[30px] bg-primaryBg">
         <img src="https://public.cypherd.io/icons/close_icon.svg" class="close-popup cursor-pointer">
@@ -68,6 +68,7 @@ export const portfolioBalance = ( bridgeableTokensList = globalThis.bridgeableTo
         <img
           src="${_.get(requiredTokenDetail, ["logoUrl"])}"
           alt="${_.get(requiredTokenDetail, ["name"])} logo"
+          id="required-token-img"
           class="w-[32px] h-[32px] mx-[8px] float-left rounded-full"
         />
         <span class="text-[23px] text-primaryText font-semibold float-left">
@@ -76,6 +77,7 @@ export const portfolioBalance = ( bridgeableTokensList = globalThis.bridgeableTo
         <img
           src="https://public.cypherd.io/icons/logos/${_.get(requiredTokenDetail, ["chainDetails", "backendName"]).toLowerCase()}.png"
           alt="${_.get(requiredTokenDetail, ["chainDetails", "backendName"]).toLowerCase()} logo"
+          id="required-chain-img"
           class="w-[32px] h-[32px] mx-[8px] float-left rounded-full"
         />
         <span class="text-[23px] text-primaryText font-semibold">

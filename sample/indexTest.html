@@ -1,0 +1,56 @@
+<html>
+
+<head>
+  <title>Sample</title>
+  <script type="text/javascript" src="../dist/esbuild/onboardingsdk.js"></script>
+  <!-- <link rel="stylesheet" href="../dist/output.css"> -->
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+</head>
+
+<body>
+  <p>Wallet Address :</p>
+  <input type="text" id="address" placeholder="Enter wallet address">
+  <br>
+  <br>
+
+  <p>Chain ID :</p>
+  <input type="text" id="targetChainIdHex" placeholder="Enter required token's chain ID">
+  <br>
+  <br>
+
+  <p>Token Contract Address :</p>
+  <input type="text" id="requiredTokenContractAddress" placeholder="Enter required token's contract address">
+  <br>
+  <br>
+
+  <p>Token Balance :</p>
+  <input type="number" id="requiredTokenBalance" placeholder="Enter number of tokens required">
+  <br>
+  <br>
+
+  <p>Show Info Screen :</p>
+  <input type="radio" name="showInfoScreen" value="true" id="showInfoScreenTrue">
+  <label for="showInfoScreenTrue">True</label>
+  <br>
+  <input type="radio" name="showInfoScreen" value="false" id="showInfoScreenFalse">
+  <label for="showInfoScreenFalse">False</label>
+  <br>
+  <br>
+
+  <button id="addPopup" onclick="test()">Add Popup</button>
+  <script>
+    function test() {
+      console.log('values: ', document.getElementById('address').value, document.getElementById('targetChainIdHex').value, document.getElementById('requiredTokenContractAddress').value, parseFloat(document.getElementById('requiredTokenBalance').value), document.querySelector('input[name="showInfoScreen"]:checked').value);
+
+      window.Cypher({
+        address: document.getElementById('address').value,
+        targetChainIdHex: document.getElementById('targetChainIdHex').value,
+        requiredTokenContractAddress: document.getElementById('requiredTokenContractAddress').value,
+        requiredTokenBalance: parseFloat(document.getElementById('requiredTokenBalance').value),
+        showInfoScreen: document.querySelector('input[name="showInfoScreen"]:checked').value === 'true'
+      });
+    }
+  </script>
+</body>
+
+</html>

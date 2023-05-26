@@ -2,7 +2,7 @@ import { footer } from "../components";
 
 export const bridgeLoading = (parentElement = document.getElementById("popupBackground")) => {
   const bridgeLoadingHTML = `
-    <div id="bridge-loading-container" class="maximize-onclick flex flex-col rounded-[30px] bg-primaryBg pt-[25px] w-[90%] lg:w-[30%]">
+    <div id="bridge-loading-screen" class="maximize-onclick flex flex-col rounded-[30px] bg-primaryBg pt-[25px] w-[90%] lg:w-[30%]">
       <div class="flex flex-row justify-end items-center w-full px-[20px]">
         <div class="minimize-button flex flex-row justify-center items-center px-[5px] py-[5px] mr-[15px] cursor-pointer">
           <img src="https://public.cypherd.io/icons/minimize_icon.png" class="cursor-pointer minimize-button w-[20px] h-[3px]">

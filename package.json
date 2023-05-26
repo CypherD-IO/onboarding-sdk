@@ -40,6 +40,7 @@
     "@typescript-eslint/parser": "^5.20.0",
     "autoprefixer": "^10.4.14",
     "css-tree": "^2.3.1",
+    "cypress": "^12.13.0",
     "esbuild": "^0.14.38",
     "esbuild-css-modules-plugin": "^2.7.1",
     "esbuild-postcss-plugin": "^0.0.7",

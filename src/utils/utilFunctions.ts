@@ -18,11 +18,10 @@ export const updateUsdValue = (event: any) => {
     if (tokenValueElement) tokenValueElement.innerHTML = newValue.toString();
 }
 
-export const minimizeWindow = () => {
+export const minimizeWindow = (container = document.getElementById("bridge-loading-container")) => {
   event?.stopPropagation();
   const sdkContainer: any = document.getElementById("sdkContainer");
-  const bridgeLoadingContainer = document.getElementById("bridge-loading-container");
-  if (sdkContainer && bridgeLoadingContainer) {
+  if (sdkContainer && container) {
     sdkContainer.style.backgroundColor = "transparent";
     sdkContainer.style.backdropFilter = "none";
     sdkContainer.style.zoom = 0.4;
@@ -30,15 +29,14 @@ export const minimizeWindow = () => {
     sdkContainer.style.width = "40%";
     sdkContainer.style.top = "70%";
     sdkContainer.style.left = "60%";
-    bridgeLoadingContainer.classList.remove("lg:w-[30%]");
-    bridgeLoadingContainer.classList.add("lg:w-[70%]");
+    container.classList.remove("lg:w-[30%]");
+    container.classList.add("lg:w-[70%]");
   }
 }
 
-export const maximizeWindow = () => {
+export const maximizeWindow = (container = document.getElementById("bridge-loading-container")) => {
   const sdkContainer: any = document.getElementById("sdkContainer");
-  const bridgeLoadingContainer = document.getElementById("bridge-loading-container");
-  if(sdkContainer && bridgeLoadingContainer && sdkContainer.style.zoom === "0.4"){
+  if(sdkContainer && container && sdkContainer.style.zoom === "0.4"){
     sdkContainer.style.backgroundColor = "rgba(0,0,0,0.4)";
     sdkContainer.style.backdropFilter = "blur(5px)";
     sdkContainer.style.zoom = 1;
@@ -46,8 +44,8 @@ export const maximizeWindow = () => {
     sdkContainer.style.width = "100%";
     sdkContainer.style.top = 0;
     sdkContainer.style.left = 0;
-    bridgeLoadingContainer.classList.remove("lg:w-[70%]");
-    bridgeLoadingContainer.classList.add("lg:w-[30%]");
+    container.classList.remove("lg:w-[70%]");
+    container.classList.add("lg:w-[30%]");
   }
 }
 
