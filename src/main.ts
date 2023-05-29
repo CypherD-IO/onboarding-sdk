@@ -27,6 +27,22 @@ declare let globalThis: any;
 const defaultAppId = "123";
 const defaultTheme = 'dark';
 
+
+export const loadTailwind = (): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    const tailwind = document.createElement("script");
+    tailwind.src = "https://cdn.tailwindcss.com";
+    tailwind.type = "application/javascript";
+    tailwind.onload = () => {
+      resolve();
+    };
+    tailwind.onerror = (error) => {
+      reject(error);
+    };
+    document.getElementsByTagName("head")[0].appendChild(tailwind);
+  });
+};
+
 export const Cypher = async ({
   address,
   targetChainIdHex: fromChainId,
@@ -80,11 +96,8 @@ export const Cypher = async ({
   globalThis.theme = theme;
   switchTheme(globalThis.theme);
 
-  // const tailwind = document.createElement("script");
-  // tailwind.src = "https://cdn.tailwindcss.com";
-  // tailwind.type = "application/javascript";
-  // document.getElementsByTagName("head")[0].appendChild(tailwind);
-
+try{
+  await loadTailwind();
   const fetchPortfolio = await isBridgeOngoing();
   if (!fetchPortfolio) {
     const {popupBackground, sdkContainer, sheet} = createContainer();
@@ -146,6 +159,11 @@ export const Cypher = async ({
     }
   });
   return;
+  }catch(error){
+    console.error("Failed to load Tailwind CSS:", error);
+    return;
+  }
+
 };
 globalThis.Web3 = web3;
 Cypher.Swal = Swal;
