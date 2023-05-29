@@ -97,7 +97,7 @@ export const Cypher = async ({
   switchTheme(globalThis.theme);
 
 try{
-  await loadTailwind();
+  // await loadTailwind();
   const fetchPortfolio = await isBridgeOngoing();
   if (!fetchPortfolio) {
     const {popupBackground, sdkContainer, sheet} = createContainer();
