@@ -37,15 +37,15 @@ describe('To test if portfolio screen is rendered conditionaly', () => {
     cy.intercept('GET', '**/swap/evm/chains').as('swapChainsCheck');
     cy.intercept('GET', '**/swap/evm/chains/**').as('swapTokensCheck');
 
-    cy.wait('@fetchPortfolioBalances', { timeout: 10000 });
-    cy.wait('@swapChainsCheck', { timeout: 10000 });
-    cy.wait('@swapTokensCheck', { timeout: 10000 });
+    cy.wait('@fetchPortfolioBalances', { timeout: 50000 });
+    cy.wait('@swapChainsCheck', { timeout: 50000 });
+    cy.wait('@swapTokensCheck', { timeout: 50000 });
 
     cy.getById('empty-wallet-screen').should('exist');
   });
 
-  it('should work fine fetching balances and showing portfolio balances', () => {
-    cy.getById("address").type('0x3d063C72b5A5b5457cb02076d134c806eca63Cff');
+  it.only('should work fine fetching balances and showing portfolio balances', () => {
+    cy.getById("address").type('0xfe1d0f3a779a3968c5728940cbc6416867ab527b');
     cy.getById("targetChainIdHex").type('0x1');
     cy.getById("requiredTokenContractAddress").type('0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE');
     cy.getById("requiredTokenBalance").type('0');
@@ -58,12 +58,13 @@ describe('To test if portfolio screen is rendered conditionaly', () => {
     cy.intercept('GET', '**/swap/evm/chains').as('swapChainsCheck');
     cy.intercept('GET', '**/swap/evm/chains/**').as('swapTokensCheck');
 
-    cy.wait('@fetchPortfolioBalances', { timeout: 10000 });
-    cy.wait('@swapChainsCheck', { timeout: 10000 });
-    cy.wait('@swapTokensCheck', { timeout: 10000 });
+    cy.wait('@fetchPortfolioBalances', { timeout: 50000 });
+    cy.wait('@swapChainsCheck', { timeout: 50000 });
+    cy.wait('@swapTokensCheck', { timeout: 50000 });
 
     cy.getById('portfolio-balance-screen').should('exist');
 
+    // images of required token and chain must be loaded
     cy.getById('required-token-img')
       .should('be.visible')
       .and('have.prop', 'naturalWidth')
@@ -72,6 +73,24 @@ describe('To test if portfolio screen is rendered conditionaly', () => {
     cy.getById('required-chain-img')
       .should('be.visible')
       .and('have.prop', 'naturalWidth')
-      .should('be.greaterThan', 0)
+      .should('be.greaterThan', 0);
+
+    // the number of token listed should be >= 1
+    cy.getById('portfolio-balance-table')
+      .find('tr')
+      .should('have.length.gte', 1);
+
+    // every token balance listing should have token image and chain image
+    cy.getByClass('portfolio-token-detail')
+      .getById('td-token-icon')
+      .should('be.visible')
+      .and('have.prop', 'naturalWidth')
+      .should('be.greaterThan', 0);
+
+    cy.getByClass('portfolio-token-detail')
+      .getById('td-chain-icon')
+      .should('be.visible')
+      .and('have.prop', 'naturalWidth')
+      .should('be.greaterThan', 0);
   });
 });

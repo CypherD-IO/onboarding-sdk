@@ -19,7 +19,7 @@ export const bridgeInput = (parentElement = document.getElementById("popupBackgr
     }
   } = globalThis;
   const bridgeInputHTML = `
-    <div class="bg-primaryBg rounded-[30px] z-50 flex flex-col justify-between items-center m-auto w-[90%] lg:w-[30%]" id="bridge-popup-css">
+    <div class="bg-primaryBg rounded-[30px] z-50 flex flex-col justify-between items-center m-auto w-[90%] lg:w-[30%]" id="bridge-input-screen">
       <div class="bg-primaryBg rounded-t-[30px] p-5 flex flex-col justify-center items-center w-full h-full">
         <div class="flex justify-between w-full mt-[5px]">
           <img src="https://public.cypherd.io/icons/back_arrow.svg" class="back-button cursor-pointer"/>
@@ -29,7 +29,7 @@ export const bridgeInput = (parentElement = document.getElementById("popupBackgr
         <h3 class="font-extrabold text-[22px] text-primaryText">USD</h3>
         <div class="flex justify-evenly w-full items-center">
           <div class="bp-max-button rounded-full flex items-center justify-center h-[40px] w-[40px] lg:h-[40px] lg:w-[40px] bg-white cursor-pointer">
-            <p class="bp-max-button text-[12px] text-[#2081E1]">MAX</p>
+            <p class="text-[12px] text-[#2081E1]">MAX</p>
           </div>
           <div id="bp-amount-input" class="w-[200px] lg:w-[250px]">
             <input type="text" class="text-center focus:outline-none font-extrabold text-[70px] text-primaryText bg-primaryBg" id="bp-amount-value" placeholder="0.00">

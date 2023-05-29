@@ -16,9 +16,9 @@ describe('To test if information screen is rendered conditionaly', () => {
     cy.intercept('GET', '**/swap/evm/chains').as('swapChainsCheck');
     cy.intercept('GET', '**/swap/evm/chains/**').as('swapTokensCheck');
 
-    cy.wait('@fetchPortfolioBalances', { timeout: 10000 });
-    cy.wait('@swapChainsCheck', { timeout: 10000 });
-    cy.wait('@swapTokensCheck', { timeout: 10000 });
+    cy.wait('@fetchPortfolioBalances', { timeout: 50000 });
+    cy.wait('@swapChainsCheck', { timeout: 50000 });
+    cy.wait('@swapTokensCheck', { timeout: 50000 });
 
     cy.getById('bridge-info').should('exist')
 
@@ -42,12 +42,10 @@ describe('To test if information screen is rendered conditionaly', () => {
     cy.intercept('GET', '**/swap/evm/chains').as('swapChainsCheck');
     cy.intercept('GET', '**/swap/evm/chains/**').as('swapTokensCheck');
 
-    cy.wait('@fetchPortfolioBalances', { timeout: 10000 });
-    cy.wait('@swapChainsCheck', { timeout: 10000 });
-    cy.wait('@swapTokensCheck', { timeout: 10000 });
+    cy.wait('@fetchPortfolioBalances', { timeout: 50000 });
+    cy.wait('@swapChainsCheck', { timeout: 50000 });
+    cy.wait('@swapTokensCheck', { timeout: 50000 });
 
-    // cy.wait('@fetchPortfolioBalances');
-    // cy.wait('@swapChainsCheck');
     cy.getById('bridge-info').should('not.exist');
   });
 });

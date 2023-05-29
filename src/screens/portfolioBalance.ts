@@ -12,7 +12,7 @@ export const portfolioBalance = ( bridgeableTokensList = globalThis.bridgeableTo
 
   const tokensAvailableList = bridgeableTokensList.map((tokenDetail: any) => (
       `
-        <tr class='odd:bg-stripedTableBg h-[75px]'>
+        <tr class='odd:bg-stripedTableBg h-[75px] portfolio-token-detail'>
           <td class='pl-[10px] pr-[5px]'>
             <div class="relative w-[32px] h-[32px] rounded-full lg:w-[38px] lg:h-[38px] overflow-visible">
               <img id='td-token-icon' onerror="this.src='https://public.cypherd.io/icons/logos/' +  '${coinColors[Math.floor(Math.random() * coinColors.length)]}.png'" src="${_.get(tokenDetail, ['logoUrl'])}" alt="${_.get(tokenDetail, ['name'])} logo" class="object-cover w-full h-full" />
@@ -48,7 +48,7 @@ export const portfolioBalance = ( bridgeableTokensList = globalThis.bridgeableTo
         You can exchange with below tokens in your wallet
       </p>
       <div id='tokens-available-flex-box' class='w-[90%] lg:w-[80%] mt-2 lg:mt-0'>
-        <table class='w-[100%]'>
+        <table class='w-[100%]' id="portfolio-balance-table">
           ${tokensAvailableList}
         </table>
       </div>
