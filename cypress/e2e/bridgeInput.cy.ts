@@ -19,7 +19,8 @@ describe('To check if bridge input screen is rendered fine', () => {
 
     cy.getByClass('exchange-token-button').eq(0).click()
   })
-  it.only('should render bridge input when exchange clicked', () => {
+
+  it('should render bridge input when exchange clicked', () => {
     cy.getById('bridge-input-screen').should('exist');
 
     // it should show a error toast when empty value is submitted
@@ -48,4 +49,10 @@ describe('To check if bridge input screen is rendered fine', () => {
     cy.getByClass('bp-max-button').click();
     cy.getById('bp-amount-value').should('not.have.value', '');
   });
+
+    // check if back button works
+  it('should go back to portfolio balance screen', () => {
+    cy.getByClass('back-button').click();
+    cy.getById('portfolio-balance-screen').should('exist');
+    });
 });
