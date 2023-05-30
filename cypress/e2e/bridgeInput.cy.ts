@@ -1,8 +1,7 @@
 describe('To check if bridge input screen is rendered fine', () => {
   beforeEach(() => {
     cy.visit('http://localhost:8080/sample/indexTest.html');
-  })
-  it('should render bridge input when exchange clicked', () => {
+
     cy.getById("address").type('0xfe1d0f3a779a3968c5728940cbc6416867ab527b');
     cy.getById("targetChainIdHex").type('0x1');
     cy.getById("requiredTokenContractAddress").type('0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE');
@@ -19,7 +18,8 @@ describe('To check if bridge input screen is rendered fine', () => {
     cy.wait('@swapTokensCheck', { timeout: 50000 });
 
     cy.getByClass('exchange-token-button').eq(0).click()
-
+  })
+  it.only('should render bridge input when exchange clicked', () => {
     cy.getById('bridge-input-screen').should('exist');
 
     // it should show a error toast when empty value is submitted
@@ -47,6 +47,5 @@ describe('To check if bridge input screen is rendered fine', () => {
     cy.getById('bp-amount-value').type('{selectall}{backspace}')
     cy.getByClass('bp-max-button').click();
     cy.getById('bp-amount-value').should('not.have.value', '');
-
   });
 });
