@@ -18,10 +18,10 @@ export const updateUsdValue = (event: any) => {
     if (tokenValueElement) tokenValueElement.innerHTML = newValue.toString();
 }
 
-export const minimizeWindow = (container = document.getElementById("bridge-loading-container")) => {
+export const minimizeWindow = () => {
   event?.stopPropagation();
   const sdkContainer: any = document.getElementById("sdkContainer");
-  if (sdkContainer && container) {
+  if (sdkContainer) {
     sdkContainer.style.backgroundColor = "transparent";
     sdkContainer.style.backdropFilter = "none";
     sdkContainer.style.zoom = 0.4;
@@ -29,14 +29,12 @@ export const minimizeWindow = (container = document.getElementById("bridge-loadi
     sdkContainer.style.width = "40%";
     sdkContainer.style.top = "70%";
     sdkContainer.style.left = "60%";
-    container.classList.remove("lg:w-[30%]");
-    container.classList.add("lg:w-[70%]");
   }
 }
 
-export const maximizeWindow = (container = document.getElementById("bridge-loading-container")) => {
+export const maximizeWindow = () => {
   const sdkContainer: any = document.getElementById("sdkContainer");
-  if(sdkContainer && container && sdkContainer.style.zoom === "0.4"){
+  if(sdkContainer && sdkContainer.style.zoom === "0.4"){
     sdkContainer.style.backgroundColor = "rgba(0,0,0,0.4)";
     sdkContainer.style.backdropFilter = "blur(5px)";
     sdkContainer.style.zoom = 1;
@@ -44,8 +42,6 @@ export const maximizeWindow = (container = document.getElementById("bridge-loadi
     sdkContainer.style.width = "100%";
     sdkContainer.style.top = 0;
     sdkContainer.style.left = 0;
-    container.classList.remove("lg:w-[70%]");
-    container.classList.add("lg:w-[30%]");
   }
 }
 
