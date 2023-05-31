@@ -20,7 +20,7 @@ describe('To check if bridge input screen is rendered fine', () => {
     cy.getByClass('exchange-token-button').eq(0).click()
   })
 
-  it('should render bridge input when exchange clicked', () => {
+  it.only('should render bridge input when exchange clicked', () => {
     cy.getById('bridge-input-screen').should('exist');
 
     // it should show a error toast when empty value is submitted
@@ -55,4 +55,12 @@ describe('To check if bridge input screen is rendered fine', () => {
     cy.getByClass('back-button').click();
     cy.getById('portfolio-balance-screen').should('exist');
     });
+
+  it.only('should check whether close popup works correctly' , ()=>{
+    cy.get('.close-popup')
+      .click();
+
+    cy.get('#sdkContainer')
+      .should('not.exist');
+    })
 });

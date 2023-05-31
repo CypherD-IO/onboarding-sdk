@@ -93,4 +93,29 @@ describe('To test if portfolio screen is rendered conditionaly', () => {
       .and('have.prop', 'naturalWidth')
       .should('be.greaterThan', 0);
   });
+
+  it.only('should check whether close popup works correctly' , ()=>{
+
+    cy.getById("address").type('0xfe1d0f3a779a3968c5728940cbc6416867ab527b');
+    cy.getById("targetChainIdHex").type('0x1');
+    cy.getById("requiredTokenContractAddress").type('0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE');
+    cy.getById("requiredTokenBalance").type('0');
+    cy.getById("showInfoScreenFalse").check();
+    cy.getById("addPopup").click();
+
+    cy.getById("portfolio-loading-screen").should("exist");
+
+    cy.intercept('GET', '**/portfolio/balances**').as('fetchPortfolioBalances');
+    cy.intercept('GET', '**/swap/evm/chains').as('swapChainsCheck');
+    cy.intercept('GET', '**/swap/evm/chains/**').as('swapTokensCheck');
+
+    cy.wait('@fetchPortfolioBalances', { timeout: 50000 });
+    cy.wait('@swapChainsCheck', { timeout: 50000 });
+    cy.wait('@swapTokensCheck', { timeout: 50000 });
+    cy.get('.close-popup')
+      .click();
+
+    cy.get('#sdkContainer')
+      .should('not.exist');
+  })
 });

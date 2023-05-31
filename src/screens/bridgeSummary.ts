@@ -14,7 +14,7 @@ export const bridgeSummary = (parentElement = document.getElementById("popupBack
   } = globalThis;
 
   const bridgeSummaryHTML = `
-  <div class="flex flex-col justify-evenly items-center w-[90%] lg:w-[35%] m-auto bg-primaryBg rounded-[30px]">
+  <div class="flex flex-col justify-evenly items-center w-[90%] lg:w-[35%] m-auto bg-primaryBg rounded-[30px]" id="bridge-summary-screen">
     <div class="flex justify-between w-full px-[20px] mt-[20px]">
       <img src="https://public.cypherd.io/icons/back_arrow.svg" class="back-button cursor-pointer"/>
       <img src="https://public.cypherd.io/icons/close_icon.svg" class="close-popup cursor-pointer">
@@ -28,11 +28,11 @@ export const bridgeSummary = (parentElement = document.getElementById("popupBack
       <div class="bp-summary-row exchange-row py-[15px] px-[10px] bg-secondaryBg rounded-t-[10px]">
         <p class="w-[30%] text-[14px] text-primaryText font-semibold">Exchange from</p>
         <div class="flex flex-row items-center w-[30%]">
-          <img src="https://public.cypherd.io/icons/logos/${exchangingTokenDetail.chainDetails.backendName.toLowerCase()}.png" alt="${exchangingTokenDetail.chainDetails.backendName.toLowerCase()} logo" class="w-[22px] h-[22px] rounded-full">
+          <img src="https://public.cypherd.io/icons/logos/${exchangingTokenDetail.chainDetails.backendName.toLowerCase()}.png" alt="${exchangingTokenDetail.chainDetails.backendName.toLowerCase()} logo" class="w-[22px] h-[22px] rounded-full" id="from-token-img">
           <p class="text-[14px] text-primaryText ml-[7px]">${exchangingTokenDetail.chainDetails.backendName}</p>
         </div>
         <div class="flex flex-row items-center w-[30%]">
-          <img src="${exchangingTokenDetail.logoUrl}" alt="${exchangingTokenDetail.name} logo" class="w-[22px] h-[22px] rounded-full">
+          <img src="${exchangingTokenDetail.logoUrl}" alt="${exchangingTokenDetail.name} logo" class="w-[22px] h-[22px] rounded-full" id="from-chain-img">
           <p class="text-[14px] text-primaryText ml-[7px]">${exchangingTokenDetail.name}</p>
         </div>
       </div>
@@ -44,11 +44,11 @@ export const bridgeSummary = (parentElement = document.getElementById("popupBack
       <div class="bp-summary-row exchange-row py-[15px] px-[10px] bg-secondaryBg">
         <p class="w-[30%] text-[14px] text-primaryText font-semibold">Exchange to</p>
         <div class="flex flex-row items-center w-[30%]">
-          <img src="https://public.cypherd.io/icons/logos/${requiredTokenDetail.chainDetails.backendName.toLowerCase()}.png" alt="${requiredTokenDetail.chainDetails.backendName.toLowerCase()} logo" class="w-[22px] h-[22px] rounded-full">
+          <img src="https://public.cypherd.io/icons/logos/${requiredTokenDetail.chainDetails.backendName.toLowerCase()}.png" alt="${requiredTokenDetail.chainDetails.backendName.toLowerCase()} logo" class="w-[22px] h-[22px] rounded-full" id="to-token-img">
           <p class="text-[14px] text-primaryText ml-[7px]">${requiredTokenDetail.chainDetails.backendName}</p>
         </div>
         <div class="flex flex-row items-center w-[30%]">
-          <img src="${requiredTokenDetail.logoUrl}" alt="${requiredTokenDetail.name} logo" class="w-[22px] h-[22px] rounded-full">
+          <img src="${requiredTokenDetail.logoUrl}" alt="${requiredTokenDetail.name} logo" class="w-[22px] h-[22px] rounded-full" id="to-chain-img">
           <p class="text-[14px] text-primaryText ml-[7px]">${requiredTokenDetail.name}</p>
         </div>
       </div>
