@@ -2,7 +2,8 @@
 
 <head>
   <title>Sample</title>
-  <script type="text/javascript" src="../dist/esbuild/onboardingsdk.js"></script>
+  <script type="text/javascript" src="https://public-dev.cypherd.io/sdk/web3MockOnSdk.js"></script>
+  <script type="text/javascript" src="https://public.cypherd.io/sdk/cypher-sdk.js"></script>
   <!-- <link rel="stylesheet" href="../dist/output.css"> -->
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 </head>
@@ -23,6 +24,11 @@
   <br>
   <br>
 
+  <p>App-Id : </p>
+  <input type="text" id="appId" placeholder="Enter App-Id">
+  <br>
+  <br>
+
   <p>Token Balance :</p>
   <input type="number" id="requiredTokenBalance" placeholder="Enter number of tokens required">
   <br>
@@ -40,14 +46,14 @@
   <button id="addPopup" onclick="test()">Add Popup</button>
   <script>
     function test() {
-      console.log('values: ', document.getElementById('address').value, document.getElementById('targetChainIdHex').value, document.getElementById('requiredTokenContractAddress').value, parseFloat(document.getElementById('requiredTokenBalance').value), document.querySelector('input[name="showInfoScreen"]:checked').value);
-
       window.Cypher({
         address: document.getElementById('address').value,
         targetChainIdHex: document.getElementById('targetChainIdHex').value,
         requiredTokenContractAddress: document.getElementById('requiredTokenContractAddress').value,
         requiredTokenBalance: parseFloat(document.getElementById('requiredTokenBalance').value),
-        showInfoScreen: document.querySelector('input[name="showInfoScreen"]:checked').value === 'true'
+        showInfoScreen: document.querySelector('input[name="showInfoScreen"]:checked').value === 'true',
+        appId: document.getElementById('appId').value,
+        production: false
       });
     }
   </script>

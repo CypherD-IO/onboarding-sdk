@@ -1,6 +1,5 @@
 import { Chain } from "../interface";
 
-export const ARCH_HOST = 'https://arch.cypherd.io';
 // import AppImages from '../../public/assets/appImages';
 
 export enum ChainBackendNames {

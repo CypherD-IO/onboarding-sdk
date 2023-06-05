@@ -3,7 +3,7 @@ import { footer } from "../components";
 declare let globalThis: any;
 
 export const bridgeFailed = (parentElement = document.getElementById("popupBackground")) => {
-  const bridgeFailedHTML = `<div id="bridge-popup-css" class="rounded-[30px] pt-[30px] w-[35%] justify-evenly bg-primaryBg">
+  const bridgeFailedHTML = `<div id="bridge-popup-css" class="maximize-onclick rounded-[30px] pt-[30px] w-[35%] justify-evenly bg-primaryBg">
       <div class="flex justify-end w-full mt-[5px] px-[20px]">
         <img src="https://public.cypherd.io/icons/close_icon.svg" class="cursor-pointer close-popup">
       </div>

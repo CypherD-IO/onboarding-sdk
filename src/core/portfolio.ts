@@ -1,5 +1,5 @@
 import { get } from 'lodash';
-import { CHAIN_ETH, CHAIN_POLYGON, CHAIN_BSC, CHAIN_AVALANCHE, CHAIN_FTM, CHAIN_ARBITRUM, CHAIN_OPTIMISM, CHAIN_EVMOS, CHAIN_COSMOS, CHAIN_JUNO, CHAIN_OSMOSIS, CHAIN_STARGAZE, CHAIN_ETH_GOERLI, CHAIN_POLYGON_MUMBAI, ARCH_HOST, BACKEND_NAME_TO_CHAIN_ID_HEX } from '../constants/server';
+import { CHAIN_ETH, CHAIN_POLYGON, CHAIN_BSC, CHAIN_AVALANCHE, CHAIN_FTM, CHAIN_ARBITRUM, CHAIN_OPTIMISM, CHAIN_EVMOS, CHAIN_COSMOS, CHAIN_JUNO, CHAIN_OSMOSIS, CHAIN_STARGAZE, CHAIN_ETH_GOERLI, CHAIN_POLYGON_MUMBAI, BACKEND_NAME_TO_CHAIN_ID_HEX } from '../constants/server';
 import { WalletHoldings, Holding, ChainHoldings } from '../interface';
 import { isTokenSwapSupported, swapContractAddressCheck } from '../utils';
 
@@ -42,7 +42,7 @@ export const getPortfolioModel = async (holdings: any) => {
     }
   } = globalThis;
 
-  const response = await fetch( `${ARCH_HOST}/v1/swap/evm/chains`, {
+  const response = await fetch( `${globalThis.ARCH_HOST}/v1/swap/evm/chains`, {
     method: 'GET',
   });
   const responseData = await response.json();
@@ -57,7 +57,7 @@ export const getPortfolioModel = async (holdings: any) => {
   let swapSupportedRequiredTokensList = [];
 
   if (swapSupport) {
-    const responseRequiredTokenList = await fetch( `${ARCH_HOST}/v1/swap/evm/chains/` + parseInt(fromChainId, 16) + `/tokens`, {
+    const responseRequiredTokenList = await fetch( `${globalThis.ARCH_HOST}/v1/swap/evm/chains/` + parseInt(fromChainId, 16) + `/tokens`, {
       method: 'GET',
     } );
     const responseJSONRequiredTokenList = await responseRequiredTokenList.json();

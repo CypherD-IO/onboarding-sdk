@@ -5,7 +5,7 @@ import { checkNetwork, fetchCurrentNetwork } from "./network";
 import _ from "lodash";
 import { checkExpiry } from "../utils/localStorage";
 import { bridgeFailed, bridgeLoading, bridgeSuccess, bridgeSummary, switchChain } from "../screens";
-import { onDepositFund, onGetQuote } from "../utils";
+import { maximizeWindow, minimizeWindow, onDepositFund, onGetQuote } from "../utils";
 import { closePopup, send } from ".";
 
 
@@ -99,7 +99,7 @@ export const isBridgeOngoing = async () => {
             window.localStorage.removeItem(ONONGOING_BRIDGE_DATA);
             window.localStorage.removeItem(EXPIRATION_KEY);
             const {popupBackground, sdkContainer, sheet} = createContainer();
-            bridgeSuccess(!await checkNetwork(globalThis.requiredTokenDetail.chainDetails.chain_id), popupBackground);
+            bridgeSuccess(!(await checkNetwork(globalThis.requiredTokenDetail.chainDetails.chain_id)), popupBackground);
             sdkContainer.classList.add('blurredBackdrop');
             appendContainerToBody(popupBackground, sdkContainer, sheet);
           } else if (data?.activityStatus?.status === ACTIVITY_STATUS.FAILED) {
@@ -114,6 +114,7 @@ export const isBridgeOngoing = async () => {
             bridgeLoading(popupBackground);
             sdkContainer.classList.add('blurredBackdrop');
             appendContainerToBody(popupBackground, sdkContainer, sheet);
+            minimizeWindow();
             const interval = setInterval(() => {
               const status = get(`v1/activities/status/bridge/${globalThis.bridgeQuote.quoteUuid}`).then(
                 async function (data) {
@@ -122,11 +123,13 @@ export const isBridgeOngoing = async () => {
                     if (data?.activityStatus?.status === ACTIVITY_STATUS.COMPLETED) {
                       window.localStorage.removeItem(ONONGOING_BRIDGE_DATA);
                       window.localStorage.removeItem(EXPIRATION_KEY);
-                      bridgeSuccess(!await checkNetwork(globalThis.requiredTokenDetail.chainDetails.chain_id));
+                      maximizeWindow();
+                      bridgeSuccess(!(await checkNetwork(globalThis.requiredTokenDetail.chainDetails.chain_id)));
                       clearInterval(interval);
                     } else if (data?.activityStatus?.status === ACTIVITY_STATUS.FAILED) {
                       window.localStorage.removeItem(ONONGOING_BRIDGE_DATA);
                       window.localStorage.removeItem(EXPIRATION_KEY);
+                      maximizeWindow();
                       bridgeFailed();
                     }
                   }

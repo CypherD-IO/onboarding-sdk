@@ -36,7 +36,7 @@ export const portfolioBalance = ( bridgeableTokensList = globalThis.bridgeableTo
             <p id='td-token-balance' class='text-[10px] lg:text-[14px] text-primaryText'>${Number(_.get(tokenDetail, ['actualBalance'])).toFixed(5)}</p>
           </td>
           <td class='pr-2'>
-            <button params='` + JSON.stringify({exchangingTokenDetail: tokenDetail}) + `'class='exchange-token-button blue-button text-[10px] lg:text-[14px] text-primaryText p-1.5 lg:p-3'>Exchange</button>
+            <button params='` + JSON.stringify({exchangingTokenDetail: _.omit(tokenDetail, ['about'])}) + `'class='exchange-token-button blue-button text-[10px] lg:text-[14px] text-primaryText p-1.5 lg:p-3'>Exchange</button>
           </td>
         </tr>
       `

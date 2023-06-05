@@ -10,4 +10,5 @@ export interface DappDetails {
   showInfoScreen: boolean;
   connector?: any;
   provider?: any;
+  production?: boolean;
 }

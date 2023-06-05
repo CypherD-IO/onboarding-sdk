@@ -15,7 +15,7 @@ export const switchChain = (parentElement = document.getElementById("popupBackgr
     currentChainId
   } = globalThis;
   const switchChainHTML = `
-    <div class="rounded-[30px] z-50 m-auto bg-primaryBg w-[90%] lg:w-[30%] justify-between items-center" id="bridge-popup-css">
+    <div class="rounded-[30px] z-50 m-auto bg-primaryBg w-[90%] lg:w-[30%] justify-between items-center" id="switch-chain-screen">
       <div class=" bg-primaryBg] rounded-t-[30px] p-5 flex flex-col justify-start items-center w-full">
         <div class="flex justify-end w-full ">
           <img src="https://public.cypherd.io/icons/close_icon.svg" class="close-popup cursor-pointer">

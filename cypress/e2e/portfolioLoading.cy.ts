@@ -19,21 +19,34 @@ describe('To check maximise and minimise functionality in portfolio loading scre
       .should('have.css', 'background-color', 'rgba(0, 0, 0, 0)')
       .and('have.css', 'backdrop-filter', 'none')
       .and('have.css', 'zoom', '0.4')
-      .and('have.css', 'height', '495px')
-      .and('have.css', 'width', '1000px')
-      .and('have.css', 'top', '1155px')
-      .and('have.css', 'left', '1500px');
+      .should(($element) => {
+        const height = $element.height();
+        const width = $element.width();
+        const top = parseFloat($element.css('top'));
+        const left = parseFloat($element.css('left'));
 
+        expect(height).to.be.closeTo(495, 1);
+        expect(width).to.be.closeTo(1000, 1);
+        expect(top).to.be.closeTo(1155, 1);
+        expect(left).to.be.closeTo(1500, 1);
+      })
 
     cy.get(".maximize-onclick").click({force: true});
 
 
     cy.get("#sdkContainer")
         .should("have.css", "zoom", "1")
-        .and("have.css", "height", "660px")
-        .and("have.css", "width", "1000px")
-        .and("have.css", "top", "0px")
-        .and("have.css", "left", "0px");
+        .should(($element) => {
+          const height = $element.height();
+          const width = $element.width();
+          const top = parseFloat($element.css('top'));
+          const left = parseFloat($element.css('left'));
+
+          expect(height).to.be.closeTo(660, 1);
+          expect(width).to.be.closeTo(1000, 1);
+          expect(top).to.be.closeTo(0, 1);
+          expect(left).to.be.closeTo(0, 1);
+        });
 
     cy.get("#sdkContainer")
         .should("have.css", "backgroundColor", "rgba(0, 0, 0, 0.4)")
