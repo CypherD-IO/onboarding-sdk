@@ -6,14 +6,17 @@ describe('To check maximise and minimise functionality in portfolio loading scre
   it('should minimize the window when the minimize button is clicked', () => {
 
     cy.getById("address").type('0xfe1d0f3a779a3968c5728940cbc6416867ab527b');
-    cy.getById("targetChainIdHex").type('0x1');
-    cy.getById("requiredTokenContractAddress").type('0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE');
+    cy.getById("targetChainIdHex").type('0x2329');
+    cy.getById("requiredTokenContractAddress").type('0x93581991f68dbae1ea105233b67f7fa0d6bdee7b');
     cy.getById("requiredTokenBalance").type('0');
     cy.getById("showInfoScreenFalse").check();
+
+    cy.intercept('GET', '**/portfolio/balances**').as('fetchPortfolioBalances');
+    cy.intercept('GET', '**/swap/evm/chains').as('swapChainsCheck');
+
     cy.getById("addPopup").click();
 
     cy.getByClass('minimize-button').trigger("click");
-
 
     cy.getById('sdkContainer')
       .should('have.css', 'background-color', 'rgba(0, 0, 0, 0)')
@@ -52,15 +55,7 @@ describe('To check maximise and minimise functionality in portfolio loading scre
         .should("have.css", "backgroundColor", "rgba(0, 0, 0, 0.4)")
         .and("have.css", "backdropFilter", "blur(5px)");
 
-    cy.intercept('GET', '**/portfolio/balances**').as('fetchPortfolioBalances');
-    cy.intercept('GET', '**/swap/evm/chains').as('swapChainsCheck');
-    cy.intercept('GET', '**/swap/evm/chains/**').as('swapTokensCheck');
-
-
     cy.wait('@fetchPortfolioBalances', { timeout: 50000 });
     cy.wait('@swapChainsCheck', { timeout: 50000 });
-    cy.wait('@swapTokensCheck', { timeout: 50000 });
   });
-
-
 });

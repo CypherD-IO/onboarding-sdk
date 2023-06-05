@@ -3,6 +3,8 @@
 /lib/
 /dist/
 /docs/
+/cypress/screenshots/
+/cypress/videos/
 .idea/*
 
 .DS_Store
