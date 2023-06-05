@@ -32,7 +32,7 @@ export const clickHandler = (event: any) => {
     bridgeSubmitConditionCheck();
   } if (classList.contains("maximize-onclick") || event.target.closest(".maximize-onclick")) {
     maximizeWindow();
-  } if (classList.contains("minimize-button")) {
+  } if (classList.contains("minimize-button") || event.target.closest(".minimize-button")) {
     minimizeWindow();
   } if (classList.contains("switch-chain-button")) {
     let params = event.target.getAttribute('params');

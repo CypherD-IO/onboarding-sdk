@@ -55,10 +55,18 @@ export const Cypher = async ({
   appId = defaultAppId,
   theme = defaultTheme,
   showInfoScreen = false,
+  production = true
 }: DappDetails): Promise<void> => {
   if (document.getElementById('popupBackground') !== null) {
     return;
   }
+
+  if(production) {
+    globalThis.ARCH_HOST = 'https://arch.cypherd.io';
+  } else {
+    globalThis.ARCH_HOST = 'https://arch-dev.cypherd.io';
+  }
+
   const walletAddress = address.toLowerCase();
   let requiredToken = fromTokenContractAddress?.toLowerCase();
 

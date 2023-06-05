@@ -19,8 +19,6 @@ async function sendNativeCoin({
     from: fromAddress,
     to: toAddress,
     value: amountToSend,
-    gasLimit: gasLimit,
-    gasPrice: gasPrice,
   };
   const response = await signer.sendTransaction(tx);
   let hash: string | undefined;
@@ -144,14 +142,7 @@ export const send = async ({
       const etherProvider = new globalThis.Cypher.ethers.BrowserProvider(window.ethereum);
       signer = await etherProvider.getSigner();
     }
-    const gasLimit = await estimateGasLimit({
-      amountToSend: parsedSendingAmount,
-      contractAddress,
-      fromAddress: userAddress,
-      toAddress,
-      web3,
-      isNative: isNativeToken(contractAddress)
-    });
+    const gasLimit = '';
 
     if (isNativeToken(contractAddress)) {
       const txnHash = await sendNativeCoin({

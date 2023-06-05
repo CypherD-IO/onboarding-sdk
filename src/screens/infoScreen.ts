@@ -32,7 +32,11 @@ export const infoScreen = (parentElement = document.getElementById("popupBackgro
             <img src="https://public.cypherd.io/icons/logos/switch_network.png" alt="switch icon" class="w-[100px] h-[100px]">
           </div>
           <div id="bp-switch-chain-container">
-            <img src="${_.get(requiredTokenDetail, ['logoUrl'])}" class="w-[42px] h-[42px]" alt="${_.get(requiredTokenDetail, ['name'])}">
+            <img src="${_.get(requiredTokenDetail, ['logoUrl'])}"
+              class="w-[42px] h-[42px]"
+              alt="${_.get(requiredTokenDetail, ['name'])}"
+              id="required-token-img"
+            >
             <p class="text-[#929292] font-normal text-[16px] text-center mt-2 mb-">
               ${_.get(requiredTokenDetail, ['symbol'])}
             </p>

@@ -11,7 +11,7 @@ export const emptyWallet = (parentElement = document.getElementById("popupBackgr
 
   const emptyWalletHTML = `
   <div
-    id="popup"
+    id="empty-wallet-screen"
     class="flex flex-col items-center justify-between max-h-[85%] rounded-[30px] bg-primaryBg w-11/12 lg:w-3/5"
   >
     <div class="flex flex-row justify-end w-[95%] mt-[20px] mx-[30px] bg-primaryBg">

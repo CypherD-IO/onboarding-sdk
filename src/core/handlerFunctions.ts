@@ -126,7 +126,7 @@ export const onBridgeClick = async () => {
     await swap();
   } else {
     const bridgeResult = bridge().then(async function(response: any) {
-      if (response?.message === "success") {
+      if (globalThis.cypherWalletDetails.production ? response?.message === 'success' : response?.message ) {
         window.localStorage.setItem(ONONGOING_BRIDGE_DATA, JSON.stringify({bridgeQuoteData: bridgeQuote, swapQuoteData: swapQuoteData, requiredTokenDetail: requiredTokenDetail, exchangingTokenDetail: exchangingTokenDetail, cypherWalletUrl: cypherWalletUrl}));
         setLocalStorageExpiry();
         minimizeWindow();
@@ -136,7 +136,8 @@ export const onBridgeClick = async () => {
               if (data?.activityStatus?.status === ACTIVITY_STATUS.COMPLETED) {
                 window.localStorage.removeItem(ONONGOING_BRIDGE_DATA);
                 window.localStorage.removeItem(EXPIRATION_KEY);
-                bridgeSuccess(!await checkNetwork(chain_id));
+                maximizeWindow();
+                bridgeSuccess(!(await checkNetwork(chain_id)));
                 clearInterval(interval);
               } else if (data?.activityStatus?.status === ACTIVITY_STATUS.FAILED) {
                 window.localStorage.removeItem(ONONGOING_BRIDGE_DATA);

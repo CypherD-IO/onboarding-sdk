@@ -21,8 +21,7 @@ export const updateUsdValue = (event: any) => {
 export const minimizeWindow = () => {
   event?.stopPropagation();
   const sdkContainer: any = document.getElementById("sdkContainer");
-  const bridgeLoadingContainer = document.getElementById("bridge-loading-container");
-  if (sdkContainer && bridgeLoadingContainer) {
+  if (sdkContainer) {
     sdkContainer.style.backgroundColor = "transparent";
     sdkContainer.style.backdropFilter = "none";
     sdkContainer.style.zoom = 0.4;
@@ -30,15 +29,12 @@ export const minimizeWindow = () => {
     sdkContainer.style.width = "40%";
     sdkContainer.style.top = "70%";
     sdkContainer.style.left = "60%";
-    bridgeLoadingContainer.classList.remove("lg:w-[30%]");
-    bridgeLoadingContainer.classList.add("lg:w-[70%]");
   }
 }
 
 export const maximizeWindow = () => {
   const sdkContainer: any = document.getElementById("sdkContainer");
-  const bridgeLoadingContainer = document.getElementById("bridge-loading-container");
-  if(sdkContainer && bridgeLoadingContainer && sdkContainer.style.zoom === "0.4"){
+  if(sdkContainer && sdkContainer.style.zoom === "0.4"){
     sdkContainer.style.backgroundColor = "rgba(0,0,0,0.4)";
     sdkContainer.style.backdropFilter = "blur(5px)";
     sdkContainer.style.zoom = 1;
@@ -46,8 +42,6 @@ export const maximizeWindow = () => {
     sdkContainer.style.width = "100%";
     sdkContainer.style.top = 0;
     sdkContainer.style.left = 0;
-    bridgeLoadingContainer.classList.remove("lg:w-[70%]");
-    bridgeLoadingContainer.classList.add("lg:w-[30%]");
   }
 }
 
