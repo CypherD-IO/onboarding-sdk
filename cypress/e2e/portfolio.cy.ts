@@ -44,7 +44,7 @@ describe('To test if portfolio screen is rendered conditionaly', () => {
     cy.getById('empty-wallet-screen').should('exist');
   });
 
-  it.only('should work fine fetching balances and showing portfolio balances', () => {
+  it('should work fine fetching balances and showing portfolio balances', () => {
     cy.getById("address").type('0xfe1d0f3a779a3968c5728940cbc6416867ab527b');
     cy.getById("targetChainIdHex").type('0x1');
     cy.getById("requiredTokenContractAddress").type('0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE');
@@ -94,7 +94,7 @@ describe('To test if portfolio screen is rendered conditionaly', () => {
       .should('be.greaterThan', 0);
   });
 
-  it.only('should check whether close popup works correctly' , ()=>{
+  it('should check whether close popup works correctly' , ()=>{
 
     cy.getById("address").type('0xfe1d0f3a779a3968c5728940cbc6416867ab527b');
     cy.getById("targetChainIdHex").type('0x1');
