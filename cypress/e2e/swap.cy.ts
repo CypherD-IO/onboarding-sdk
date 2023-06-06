@@ -27,12 +27,12 @@ describe('To check if swap condition is addressed and success is rendered fine',
     cy.getById('bp-amount-value').type('10');
     cy.getByClass('bridge-input-submit').click();
 
+    cy.intercept('POST', '**v1/swap/sdk/evm/chains/**/quote').as('getSwapQuote');
+
     cy.getById('switch-chain-screen').should('exist');
     cy.getByClass('switch-chain-button').click();
 
     cy.getById('bridge-summary-screen').should('exist');
-
-    cy.intercept('POST', '**v1/swap/sdk/evm/chains/**/quote').as('getSwapQuote');
 
     cy.wait('@getSwapQuote', {timeout: 50000})
       .its('response.statusCode')
