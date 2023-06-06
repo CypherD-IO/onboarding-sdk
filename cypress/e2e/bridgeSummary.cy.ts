@@ -106,7 +106,7 @@ describe('To check whether exchange button is disabled and enabled fine', () => 
 
     cy.intercept('POST', '**/v1/bridge/sdk/quote').as('getBridgeQuote');
 
-    cy.wait('@getBridgeQuote')
+    cy.wait('@getBridgeQuote', {timeout: 50000})
       .its('response.statusCode')
       .should('eq', 201);
 

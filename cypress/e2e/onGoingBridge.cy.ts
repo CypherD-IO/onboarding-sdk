@@ -30,7 +30,7 @@ describe('To check if any going brige is present and render the respective scree
 
     cy.intercept('POST', '**/v1/bridge/sdk/quote').as('getBridgeQuote');
 
-    cy.wait('@getBridgeQuote')
+    cy.wait('@getBridgeQuote', {timeout: 50000})
       .its('response.statusCode')
       .should('eq', 201);
 

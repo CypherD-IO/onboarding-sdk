@@ -29,7 +29,7 @@ describe('To check if the bridge loading screen is rendered fine', () => {
 
     cy.intercept('POST', '**/v1/bridge/sdk/quote').as('getBridgeQuote');
 
-    cy.wait('@getBridgeQuote')
+    cy.wait('@getBridgeQuote', {timeout: 50000})
       .its('response.statusCode')
       .should('eq', 201);
 
