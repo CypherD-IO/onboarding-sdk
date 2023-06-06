@@ -13,9 +13,6 @@ describe('To check if bridge input screen is rendered fine', () => {
 
     cy.getById("addPopup").click();
 
-    cy.intercept('GET', '**/portfolio/balances**').as('fetchPortfolioBalances');
-    cy.intercept('GET', '**/swap/evm/chains').as('swapChainsCheck');
-
     cy.wait('@fetchPortfolioBalances', { timeout: 50000 });
     cy.wait('@swapChainsCheck', { timeout: 50000 });
 
