@@ -13,7 +13,7 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v5
         with:
-          install: npm i -f
+          install: npm install --force
           build: npm run esbuild-browser
 
 
