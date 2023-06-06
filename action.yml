@@ -1,0 +1,7 @@
+name: 'On-Boarding-SDK'
+author: 'MohanramCypherD'
+description: 'Cypress Test Integration'
+
+runs:
+  using: 'node16'
+  main: 'dist/esbuild/onboardingsdk.js'
