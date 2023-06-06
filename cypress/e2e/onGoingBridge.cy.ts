@@ -4,20 +4,19 @@ describe('To check if any going brige is present and render the respective scree
   });
   it('should render the success screen without switch back button', () => {
     cy.getById("address").type('0x71d357ef7e29f07473f9edfb2140f14605c9f309');
-    cy.getById("targetChainIdHex").type('0xa');
-    cy.getById("requiredTokenContractAddress").type('0x7F5c764cBc14f9669B88837ca1490cCa17c31607');
+    cy.getById("targetChainIdHex").type('0x2329');
+    cy.getById("requiredTokenContractAddress").type('0x93581991f68dbae1ea105233b67f7fa0d6bdee7b');
     cy.getById("requiredTokenBalance").type('0');
     cy.getById("showInfoScreenFalse").check();
     cy.getById("appId").type("CYPRESS_TEST")
-    cy.getById("addPopup").click();
 
     cy.intercept('GET', '**/portfolio/balances**').as('fetchPortfolioBalances');
     cy.intercept('GET', '**/swap/evm/chains').as('swapChainsCheck');
-    cy.intercept('GET', '**/swap/evm/chains/**').as('swapTokensCheck');
+
+    cy.getById("addPopup").click();
 
     cy.wait('@fetchPortfolioBalances', { timeout: 50000 });
     cy.wait('@swapChainsCheck', { timeout: 50000 });
-    cy.wait('@swapTokensCheck', { timeout: 50000 });
 
     cy.contains('tr', 'Matic Token').find('.exchange-token-button').eq(0).click()
 

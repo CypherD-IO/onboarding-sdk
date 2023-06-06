@@ -3,19 +3,21 @@ describe('To check if bridge input screen is rendered fine', () => {
     cy.visit('http://localhost:8080/sample/indexTest.html');
 
     cy.getById("address").type('0xfe1d0f3a779a3968c5728940cbc6416867ab527b');
-    cy.getById("targetChainIdHex").type('0x1');
-    cy.getById("requiredTokenContractAddress").type('0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE');
+    cy.getById("targetChainIdHex").type('0x2329');
+    cy.getById("requiredTokenContractAddress").type('0x93581991f68dbae1ea105233b67f7fa0d6bdee7b');
     cy.getById("requiredTokenBalance").type('0');
     cy.getById("showInfoScreenFalse").check();
+
+    cy.intercept('GET', '**/portfolio/balances**').as('fetchPortfolioBalances');
+    cy.intercept('GET', '**/swap/evm/chains').as('swapChainsCheck');
+
     cy.getById("addPopup").click();
 
     cy.intercept('GET', '**/portfolio/balances**').as('fetchPortfolioBalances');
     cy.intercept('GET', '**/swap/evm/chains').as('swapChainsCheck');
-    cy.intercept('GET', '**/swap/evm/chains/**').as('swapTokensCheck');
 
     cy.wait('@fetchPortfolioBalances', { timeout: 50000 });
     cy.wait('@swapChainsCheck', { timeout: 50000 });
-    cy.wait('@swapTokensCheck', { timeout: 50000 });
 
     cy.getByClass('exchange-token-button').eq(0).click()
   })
