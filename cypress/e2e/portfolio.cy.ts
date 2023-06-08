@@ -1,6 +1,6 @@
 describe('To test if portfolio screen is rendered conditionaly', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:8080/sample/indexTest.html');
+    cy.visit('/sdkTest.html');
   })
   it('should work fine for empty wallet when showInfoScreen is TRUE', () => {
     cy.getById("address").type('0x5759664ddb0100029b618f9c32be1d31c2b68863');

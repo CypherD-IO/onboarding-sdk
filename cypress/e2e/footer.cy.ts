@@ -1,6 +1,6 @@
 describe('To test if footer section is rendered conditionally' , ()=> {
    beforeEach(()=>{
-    cy.visit('http://localhost:8080/sample/indexTest.html');
+    cy.visit('/sdkTest.html');
 
     cy.getById("address").type('0x3d063C72b5A5b5457cb02076d134c806eca63Cff');
     cy.getById("targetChainIdHex").type('0x2329');

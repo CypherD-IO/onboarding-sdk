@@ -1,6 +1,6 @@
 describe('To check if the brige success screen is rendered fine', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:8080/sample/indexTest.html');
+    cy.visit('/sdkTest.html');
   });
   it('should render the success screen with switch back button', () => {
     cy.getById("address").type('0x71d357ef7e29f07473f9edfb2140f14605c9f309');
@@ -30,7 +30,7 @@ describe('To check if the brige success screen is rendered fine', () => {
 
     cy.intercept('POST', '**/v1/bridge/sdk/quote').as('getBridgeQuote');
 
-    cy.wait('@getBridgeQuote')
+    cy.wait('@getBridgeQuote', {timeout: 50000})
       .its('response.statusCode')
       .should('eq', 201);
 

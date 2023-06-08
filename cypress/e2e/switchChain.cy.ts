@@ -1,6 +1,6 @@
 describe('To check if the switch chain screen is rendered fine', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:8080/sample/indexTest.html');
+    cy.visit('/sdkTest.html');
   })
   it('should render the switch chain screen conditionally', () => {
     cy.getById("address").type('0xfe1d0f3a779a3968c5728940cbc6416867ab527b');

@@ -1,6 +1,6 @@
 describe('To check if the bridge loading screen is rendered fine', () => {
   it('should render the bridge loading and maximize / minimize should work fine', () => {
-    cy.visit('http://localhost:8080/sample/indexTest.html');
+    cy.visit('/sdkTest.html');
 
     cy.getById("address").type('0x71d357ef7e29f07473f9edfb2140f14605c9f309');
     cy.getById("targetChainIdHex").type('0x2329');
@@ -29,7 +29,7 @@ describe('To check if the bridge loading screen is rendered fine', () => {
 
     cy.intercept('POST', '**/v1/bridge/sdk/quote').as('getBridgeQuote');
 
-    cy.wait('@getBridgeQuote')
+    cy.wait('@getBridgeQuote', {timeout: 50000})
       .its('response.statusCode')
       .should('eq', 201);
 

@@ -1,6 +1,6 @@
 describe('To check if bridge summary screen is rendered fine', ()=>{
   beforeEach(() => {
-    cy.visit('http://localhost:8080/sample/indexTest.html');
+    cy.visit('/sdkTest.html');
 
     cy.getById("address").type('0xfe1d0f3a779a3968c5728940cbc6416867ab527b');
     cy.getById("targetChainIdHex").type('0x2329');
@@ -78,7 +78,7 @@ describe('To check if bridge summary screen is rendered fine', ()=>{
 
 describe('To check whether exchange button is disabled and enabled fine', () => {
   it('should check whether exchange button is disabled and enabled properly',()=>{
-    cy.visit('http://localhost:8080/sample/indexTest.html');
+    cy.visit('/sdkTest.html');
     cy.getById("address").type('0xfe1d0f3a779a3968c5728940cbc6416867ab527b');
     cy.getById("targetChainIdHex").type('0x89');
     cy.getById("requiredTokenContractAddress").type('0x0000000000000000000000000000000000001010');
@@ -106,7 +106,7 @@ describe('To check whether exchange button is disabled and enabled fine', () => 
 
     cy.intercept('POST', '**/v1/bridge/sdk/quote').as('getBridgeQuote');
 
-    cy.wait('@getBridgeQuote')
+    cy.wait('@getBridgeQuote', {timeout: 50000})
       .its('response.statusCode')
       .should('eq', 201);
 
