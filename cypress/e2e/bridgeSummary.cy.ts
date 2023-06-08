@@ -99,12 +99,12 @@ describe('To check whether exchange button is disabled and enabled fine', () => 
     cy.contains('tr', 'ETH').find('.exchange-token-button').eq(0).click()
 
     cy.getById('bp-amount-value').type('10');
+    cy.intercept('POST', '**/v1/bridge/sdk/quote').as('getBridgeQuote');
+
     cy.getByClass('bridge-input-submit').click();
 
     cy.get('#bridge-submit-blue-button')
       .should('be.disabled');
-
-    cy.intercept('POST', '**/v1/bridge/sdk/quote').as('getBridgeQuote');
 
     cy.wait('@getBridgeQuote', {timeout: 50000})
       .its('response.statusCode')

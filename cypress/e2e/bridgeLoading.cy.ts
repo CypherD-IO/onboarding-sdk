@@ -23,11 +23,10 @@ describe('To check if the bridge loading screen is rendered fine', () => {
     cy.getByClass('bridge-input-submit').click();
 
     cy.getById('switch-chain-screen').should('exist');
+    cy.intercept('POST', '**/v1/bridge/sdk/quote').as('getBridgeQuote');
     cy.getByClass('switch-chain-button').click();
 
     cy.getById('bridge-summary-screen').should('exist');
-
-    cy.intercept('POST', '**/v1/bridge/sdk/quote').as('getBridgeQuote');
 
     cy.wait('@getBridgeQuote', {timeout: 50000})
       .its('response.statusCode')
