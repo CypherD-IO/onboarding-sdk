@@ -28,8 +28,7 @@ jobs:
         run: npm run esbuild-browser
 
       - name: Start local server
-        run: npx http-server -p 8080
-
+        run: npx http-server -p 8080 -c-1
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
       - name: Cypress run
