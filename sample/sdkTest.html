@@ -59,18 +59,11 @@
   <br>
   <br>
 
+  <p id="op"></p>
   <button id="addPopup" onclick="test()">Add Popup</button>
   <script>
-    fetch('../dist/esbuild/web3MockOnSdk.js')
-    .then(response => response.text())
-    .then(contents => {
-      const lines = contents.split('\n');
-      const startIndex = lines.findIndex(line => line.includes('globalThis.hdWallet = {'));
-      const matchingLines = lines.slice(startIndex, startIndex + 11);
-      console.log(matchingLines); // Log the matching lines to the browser console
-      document.body.innerHTML += '<pre>' + matchingLines.join('\n') + '</pre>'; // Display the matching lines in a <pre> element
-    })
-    .catch(error => console.error(error));
+    const outputElement = document.getElementById("op");
+    outputElement.textContent = window.ethereum;
     function test() {
       window.Cypher({
         address: document.getElementById('address').value,
