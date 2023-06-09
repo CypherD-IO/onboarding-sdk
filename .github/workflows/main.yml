@@ -13,13 +13,16 @@ jobs:
         run: npm install --force
 
       - name: Injecting secrets
-        uses: bluwy/substitute-string-action@v1
-        id: sub
-        with:
-          _input-file: './dist/esbuild/web3MockOnSdk.js'
-          CYD_TEST_WALLET_ADDRESS: ${{ secrets.CYD_TEST_WALLET_ADDRESS }}
-          CYD_TEST_WALLET_PRIVATE_KEY: ${{ secrets.CYD_TEST_WALLET_PRIVATE_KEY }}
-      - run: echo ${{ steps.sub.outputs.result }}
+        run: |
+          sed -i 's/CYD_TEST_WALLET_ADDRESS/${{ secrets.CYD_TEST_WALLET_ADDRESS }}/g' ./dist/esbuild/web3MockOnSdk.js
+          sed -i 's/CYD_TEST_WALLET_PRIVATE_KEY/${{ secrets.CYD_TEST_WALLET_PRIVATE_KEY }}/g' ./dist/esbuild/web3MockOnSdk.js
+      #   uses: bluwy/substitute-string-action@v1
+      #   id: sub
+      #   with:
+      #     _input-file: './dist/esbuild/web3MockOnSdk.js'
+      #     CYD_TEST_WALLET_ADDRESS: ${{ secrets.CYD_TEST_WALLET_ADDRESS }}
+      #     CYD_TEST_WALLET_PRIVATE_KEY: ${{ secrets.CYD_TEST_WALLET_PRIVATE_KEY }}
+      # - run: echo ${{ steps.sub.outputs.result }}
 
       - name: Build
         run: npm run esbuild-browser
