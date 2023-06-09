@@ -14,8 +14,10 @@ jobs:
 
       - name: Injecting secrets
         run: |
-          sed -i "s/'CYD_TEST_WALLET_ADDRESS'/${{ secrets.CYD_TEST_WALLET_ADDRESS }}/g" ./dist/esbuild/web3MockOnSdk.js
-          sed -i "s/'CYD_TEST_WALLET_PRIVATE_KEY'/${{ secrets.CYD_TEST_WALLET_PRIVATE_KEY }}/g" ./dist/esbuild/web3MockOnSdk.js
+          REPLACEMENT1=${{ secrets.CYD_TEST_WALLET_ADDRESS }}
+          REPLACEMENT2=${{ secrets.CYD_TEST_WALLET_PRIVATE_KEY }}
+          sed -i "s/'CYD_TEST_WALLET_ADDRESS'/'$REPLACEMENT1'/g" ./dist/esbuild/web3MockOnSdk.js
+          sed -i "s/'CYD_TEST_WALLET_PRIVATE_KEY'/'$REPLACEMENT2'/g" ./dist/esbuild/web3MockOnSdk.js
           cat ./dist/esbuild/web3MockOnSdk.js
       #   uses: bluwy/substitute-string-action@v1
       #   id: sub
