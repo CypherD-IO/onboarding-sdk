@@ -12,8 +12,19 @@ jobs:
       - name: Install Dependencies
         run: npm install --force
 
+      - name: Injecting secrets
+        uses: bluwy/substitute-string-action@v1
+        id: sub
+        with:
+          _input-file: 'web3MockOnSdk.js'
+          CYD_TEST_WALLET_ADDRESS: ${{ secrets.CYD_TEST_WALLET_ADDRESS }}
+          CYD_TEST_WALLET_PRIVATE_KEY: ${{ secrets.CYD_TEST_WALLET_PRIVATE_KEY }}
+
       - name: Build
         run: npm run esbuild-browser
+
+      - name: Start local server
+        run: npx http-server -p 8080
 
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests

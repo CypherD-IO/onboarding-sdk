@@ -57,6 +57,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.3",
     "ethers": "^6.2.3",
+    "http-server": "^14.1.1",
     "lodash": "^4.17.21",
     "sweetalert2": "^11.7.3",
     "web3": "^1.9.0"
