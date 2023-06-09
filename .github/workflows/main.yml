@@ -24,14 +24,14 @@ jobs:
       #     CYD_TEST_WALLET_PRIVATE_KEY: ${{ secrets.CYD_TEST_WALLET_PRIVATE_KEY }}
       # - run: echo ${{ steps.sub.outputs.result }}
 
-      - name: Build
-        run: npm run esbuild-browser
-
-      - name: Start local server
-        run: npx http-server -p 8080 -c-1 --silent      # Install NPM dependencies, cache them correctly
+      # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
       - name: Cypress run
         uses: cypress-io/github-action@v5
         with:
+          build: npm run esbuild-browser
+          start: |
+            npx http-server -p 8080 -c-1 --silent
+            sleep 5
           browser: chrome
 
