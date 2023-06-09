@@ -19,6 +19,8 @@ jobs:
           sed -i "s/'CYD_TEST_WALLET_ADDRESS'/'$REPLACEMENT1'/g" ./dist/esbuild/web3MockOnSdk.js
           sed -i "s/'CYD_TEST_WALLET_PRIVATE_KEY'/'$REPLACEMENT2'/g" ./dist/esbuild/web3MockOnSdk.js
           cat ./dist/esbuild/web3MockOnSdk.js
+          pwd
+          ls
       #   uses: bluwy/substitute-string-action@v1
       #   id: sub
       #   with:
