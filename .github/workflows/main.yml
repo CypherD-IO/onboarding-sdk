@@ -31,15 +31,18 @@ jobs:
 
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
-      # - name: Cypress run
-      #   uses: cypress-io/github-action@v5
-      #   with:
-      #     build: npm run esbuild-browser
-      #     start: |
-      #       npx http-server -p 8080 -c-1 --silent
-      #       sleep 5
-      #     browser: chrome
-
+      - name: Cypress run
+        uses: cypress-io/github-action@v5
+        with:
+          build: npm run esbuild-browser
+          start: |
+            npx http-server -p 8080 -c-1 --silent
+            sleep 5
+          browser: chrome
+          record: true
+          parallel: true
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
 
 
 
