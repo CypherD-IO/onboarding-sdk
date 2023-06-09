@@ -14,8 +14,8 @@ jobs:
 
       - name: Injecting secrets
         run: |
-          REPLACEMENT1=${{ env.CYD_TEST_WALLET_ADDRESS_OPEN }}
-          REPLACEMENT2=${{ env.CYD_TEST_WALLET_PRIVATE_KEY_OPEN }}
+          REPLACEMENT1=${{ vars.CYD_TEST_WALLET_ADDRESS_OPEN }}
+          REPLACEMENT2=${{ vars.CYD_TEST_WALLET_PRIVATE_KEY_OPEN }}
           sed -i "s/'CYD_TEST_WALLET_ADDRESS'/'$REPLACEMENT1'/g" ./dist/esbuild/web3MockOnSdk.js
           sed -i "s/'CYD_TEST_WALLET_PRIVATE_KEY'/'$REPLACEMENT2'/g" ./dist/esbuild/web3MockOnSdk.js
           cat ./dist/esbuild/web3MockOnSdk.js
