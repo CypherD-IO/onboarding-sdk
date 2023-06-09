@@ -59,11 +59,14 @@
   <br>
   <br>
 
-  <p id="op"></p>
+  <p id="op">pp</p>
   <button id="addPopup" onclick="test()">Add Popup</button>
   <script>
-    const outputElement = document.getElementById("op");
-    outputElement.textContent = window.ethereum;
+    const a = async () => {
+      const outputElement = document.getElementById("op");
+      outputElement.textContent = await window.ethereum.request({method: 'eth_chainId'});
+    }
+    a();
     function test() {
       window.Cypher({
         address: document.getElementById('address').value,
