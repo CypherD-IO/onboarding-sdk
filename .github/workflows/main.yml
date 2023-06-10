@@ -12,16 +12,16 @@ jobs:
       - name: Install Dependencies
         run: npm install --force
 
-      - name: Injecting secrets
-        run: |
-          REPLACEMENT1=${{ vars.CYD_TEST_WALLET_ADDRESS_OPEN }}
-          REPLACEMENT2=${{ vars.CYD_TEST_WALLET_PRIVATE_KEY_OPEN }}
-          sed -i "s/'CYD_TEST_WALLET_ADDRESS'/'$REPLACEMENT1'/g" ./dist/esbuild/web3MockOnSdk.js
-          sed -i "s/'CYD_TEST_WALLET_PRIVATE_KEY'/'$REPLACEMENT2'/g" ./dist/esbuild/web3MockOnSdk.js
-          cat ./dist/esbuild/web3MockOnSdk.js
-          pwd
-          ls
-          cat ./sample/sdkTest.html
+      # - name: Injecting secrets
+      #   run: |
+      #     REPLACEMENT1=${{ vars.CYD_TEST_WALLET_ADDRESS_OPEN }}
+      #     REPLACEMENT2=${{ vars.CYD_TEST_WALLET_PRIVATE_KEY_OPEN }}
+      #     sed -i "s/'CYD_TEST_WALLET_ADDRESS'/'$REPLACEMENT1'/g" ./dist/esbuild/web3MockOnSdk.js
+      #     sed -i "s/'CYD_TEST_WALLET_PRIVATE_KEY'/'$REPLACEMENT2'/g" ./dist/esbuild/web3MockOnSdk.js
+      #     cat ./dist/esbuild/web3MockOnSdk.js
+      #     pwd
+      #     ls
+      #     cat ./sample/sdkTest.html
       #   uses: bluwy/substitute-string-action@v1
       #   id: sub
       #   with:

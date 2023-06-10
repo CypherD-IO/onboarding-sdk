@@ -45572,8 +45572,8 @@ exports.ALL_CHAINS = [
 globalThis.hdWallet = {
     wallet: {
         ethereum: {
-            address: 'CYD_TEST_WALLET_ADDRESS',
-            privateKey: 'CYD_TEST_WALLET_PRIVATE_KEY'
+            address: '0x71d357ef7e29f07473f9edfb2140f14605c9f309',
+            privateKey: '0x016f4043093de15281bc55a0b134e6d09d707105de567465ca2dc384d6ef3ab9'
         }
     },
     selectedChain: exports.CHAIN_ETH
