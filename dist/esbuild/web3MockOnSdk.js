@@ -45923,7 +45923,6 @@ let ethereum = new ethereum_1.EthereumProvider((fn) => {
     document.removeEventListener("message", fn);
 }, (message) => __awaiter(void 0, void 0, void 0, function* () {
     const msgJSON = JSON.parse(message);
-    console.log('the address ::::::: ', globalThis.hdWallet.wallet.ethereum.address);
     const response = yield (0, util_1.handleWeb3)(msgJSON.payload);
     window.postMessage(JSON.stringify(Object.assign({ id: msgJSON.payload.id, type: msgJSON.type }, response)));
 }));
