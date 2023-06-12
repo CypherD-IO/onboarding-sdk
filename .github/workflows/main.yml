@@ -39,6 +39,11 @@ jobs:
           start: |
             npx http-server -p 8080 -c-1 --silent
             sleep 5
+            ls
+            for entry in ./*
+            do
+              echo "$entry"
+            done
           browser: chrome
           record: true
           parallel: true
