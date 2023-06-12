@@ -1,6 +1,6 @@
 name: Cypress Tests
 
-on: push
+on: [push]
 
 jobs:
   cypress-run:
@@ -13,51 +13,40 @@ jobs:
         run: npm install --force
 
 
-      - name: Checkout all files present
-        run : |
-          ls
-          ls ./dist
-          ls ./dist/esbuild
-
-          print_directory_contents() {
-            local dir="$1"
-            local indent="${2:-}"
-
-            # Print current directory name
-            echo "${indent}Directory: $dir"
-
-            # Iterate over files and subdirectories in the current directory
-            for item in "$dir"/*; do
-                if [ -d "$item" ]; then
-                    # Recursive call for subdirectories
-                    print_directory_contents "$item" "${indent}  "
-                elif [ -f "$item" ]; then
-                    # Print file name
-                    echo "${indent}  File: $item"
-                fi
-            done
-          }
-
-          target_directory="./dist/esbuild"
-
-          print_directory_contents "$target_directory"
-      # - name: Injecting secrets
-      #   run: |
-      #     REPLACEMENT1=${{ vars.CYD_TEST_WALLET_ADDRESS_OPEN }}
-      #     REPLACEMENT2=${{ vars.CYD_TEST_WALLET_PRIVATE_KEY_OPEN }}
-      #     sed -i "s/'CYD_TEST_WALLET_ADDRESS'/'$REPLACEMENT1'/g" ./dist/esbuild/web3MockOnSdk.js
-      #     sed -i "s/'CYD_TEST_WALLET_PRIVATE_KEY'/'$REPLACEMENT2'/g" ./dist/esbuild/web3MockOnSdk.js
-      #     cat ./dist/esbuild/web3MockOnSdk.js
-      #     pwd
+      # - name: Checkout all files present
+      #   run : |
       #     ls
-      #     cat ./sample/sdkTest.html
-      #   uses: bluwy/substitute-string-action@v1
-      #   id: sub
-      #   with:
-      #     _input-file: './dist/esbuild/web3MockOnSdk.js'
-      #     CYD_TEST_WALLET_ADDRESS: ${{ secrets.CYD_TEST_WALLET_ADDRESS }}
-      #     CYD_TEST_WALLET_PRIVATE_KEY: ${{ secrets.CYD_TEST_WALLET_PRIVATE_KEY }}
-      # - run: echo ${{ steps.sub.outputs.result }}
+      #     ls ./dist
+      #     ls ./dist/esbuild
+
+      #     print_directory_contents() {
+      #       local dir="$1"
+      #       local indent="${2:-}"
+
+      #       # Print current directory name
+      #       echo "${indent}Directory: $dir"
+
+      #       # Iterate over files and subdirectories in the current directory
+      #       for item in "$dir"/*; do
+      #           if [ -d "$item" ]; then
+      #               # Recursive call for subdirectories
+      #               print_directory_contents "$item" "${indent}  "
+      #           elif [ -f "$item" ]; then
+      #               # Print file name
+      #               echo "${indent}  File: $item"
+      #           fi
+      #       done
+      #     }
+
+      #     target_directory="./dist/esbuild"
+
+      #     print_directory_contents "$target_directory"
+      - name: Injecting secrets
+        run: |
+          REPLACEMENT1=${{ secrets.CYD_TEST_WALLET_ADDRESS_OPEN }}
+          REPLACEMENT2=${{ secrets.CYD_TEST_WALLET_PRIVATE_KEY_OPEN }}
+          sed -i "s/'CYD_TEST_WALLET_ADDRESS'/'$REPLACEMENT1'/g" ./dist/esbuild/web3MockOnSdk.js
+          sed -i "s/'CYD_TEST_WALLET_PRIVATE_KEY'/'$REPLACEMENT2'/g" ./dist/esbuild/web3MockOnSdk.js
 
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
