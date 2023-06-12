@@ -12,6 +12,14 @@ jobs:
       - name: Install Dependencies
         run: npm install --force
 
+
+      - name: Checkout all files present
+        run : |
+          ls
+          for entry in ./*
+          do
+            echo "$entry"
+          done
       # - name: Injecting secrets
       #   run: |
       #     REPLACEMENT1=${{ vars.CYD_TEST_WALLET_ADDRESS_OPEN }}
@@ -39,11 +47,6 @@ jobs:
           start: |
             npx http-server -p 8080 -c-1 --silent
             sleep 5
-            ls
-            for entry in ./*
-            do
-              echo "$entry"
-            done
           browser: chrome
           record: true
           parallel: true
