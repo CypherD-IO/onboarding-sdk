@@ -16,6 +16,9 @@ jobs:
       - name: Checkout all files present
         run : |
           ls
+          ls ./dist
+          ls ./dist/esbuild
+
           print_directory_contents() {
             local dir="$1"
             local indent="${2:-}"
@@ -35,7 +38,9 @@ jobs:
             done
           }
 
-          print_directory_contents "/"
+          target_directory="./dist/esbuild"
+
+          print_directory_contents "$target_directory"
       # - name: Injecting secrets
       #   run: |
       #     REPLACEMENT1=${{ vars.CYD_TEST_WALLET_ADDRESS_OPEN }}
