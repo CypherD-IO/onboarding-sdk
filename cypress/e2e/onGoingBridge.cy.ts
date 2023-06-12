@@ -2,7 +2,7 @@ describe('To check if any going brige is present and render the respective scree
   beforeEach(() => {
     cy.visit('/sdkTest.html');
   });
-  it('should render the success screen without switch back button', () => {
+  it('should render the success screen without switch-back button', () => {
     cy.getById("address").type('0x6baa80fa2ad0cc622198b5a5128caf135ca34374');
     cy.getById("targetChainIdHex").type('0x2329');
     cy.getById("requiredTokenContractAddress").type('0x93581991f68dbae1ea105233b67f7fa0d6bdee7b');
