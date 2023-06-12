@@ -43,8 +43,8 @@ jobs:
       #     print_directory_contents "$target_directory"
       - name: Injecting secrets
         run: |
-          REPLACEMENT1=${{ secrets.CYD_TEST_WALLET_ADDRESS_OPEN }}
-          REPLACEMENT2=${{ secrets.CYD_TEST_WALLET_PRIVATE_KEY_OPEN }}
+          REPLACEMENT1=${{ secrets.CYD_TEST_WALLET_ADDRESS }}
+          REPLACEMENT2=${{ secrets.CYD_TEST_WALLET_PRIVATE_KEY }}
           sed -i "s/'CYD_TEST_WALLET_ADDRESS'/'$REPLACEMENT1'/g" ./test/web3MockOnSdk.js
           sed -i "s/'CYD_TEST_WALLET_PRIVATE_KEY'/'$REPLACEMENT2'/g" ./test/web3MockOnSdk.js
 

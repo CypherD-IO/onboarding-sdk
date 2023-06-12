@@ -2,7 +2,7 @@ describe('To check if the bridge loading screen is rendered fine', () => {
   it('should render the bridge loading and maximize / minimize should work fine', () => {
     cy.visit('/sdkTest.html');
 
-    cy.getById("address").type('0x71d357ef7e29f07473f9edfb2140f14605c9f309');
+    cy.getById("address").type('0x6baa80fa2ad0cc622198b5a5128caf135ca34374');
     cy.getById("targetChainIdHex").type('0x2329');
     cy.getById("requiredTokenContractAddress").type('0x93581991f68dbae1ea105233b67f7fa0d6bdee7b');
     cy.getById("requiredTokenBalance").type('0');
