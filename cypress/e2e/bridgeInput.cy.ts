@@ -1,4 +1,4 @@
-describe('To check if bridge input screen is rendered fine', () => {
+describe('To check if bridge input screen is rendered fine ', () => {
   beforeEach(() => {
     cy.visit('/sdkTest.html');
 
