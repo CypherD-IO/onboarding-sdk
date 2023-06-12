@@ -70,7 +70,6 @@ describe('To check if any going brige is present and render the respective scree
 
       cy.wait('@statusCheck', {timeout: 50000}).then((interception) => {
         const response = interception.response;
-        cy.log('response : ', response);
         if (response.body.activityStatus.status !== 'COMPLETED') {
           interceptAndWait();
         }
