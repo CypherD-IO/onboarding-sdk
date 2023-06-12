@@ -2,8 +2,8 @@ import { defineConfig } from "cypress";
 
 export default defineConfig({
   e2e: {
-    viewportHeight: 1000,
-    viewportWidth: 660,
+    viewportHeight: 660,
+    viewportWidth: 1000,
     projectId: "s47waj",
     baseUrl: 'http://127.0.0.1:8080/test',
     setupNodeEvents(on, config) {

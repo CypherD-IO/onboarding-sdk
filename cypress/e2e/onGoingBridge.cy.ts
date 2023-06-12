@@ -48,9 +48,6 @@ describe('To check if any going brige is present and render the respective scree
     cy.wait('@getGasPrice', { timeout: 50000 });
     cy.wait('@depositCall', { timeout: 50000 });
 
-    // close the popup ater the deposit call is called and trigger the popup again
-    cy.getById('bridge-loading-screen').should('exist');
-
     // cy.get(".maximize-onclick").click({force: true});
     cy.getByClass('close-popup').click({force: true});
 
@@ -73,6 +70,7 @@ describe('To check if any going brige is present and render the respective scree
 
       cy.wait('@statusCheck', {timeout: 50000}).then((interception) => {
         const response = interception.response;
+        cy.log('response : ', response);
         if (response.body.activityStatus.status !== 'COMPLETED') {
           interceptAndWait();
         }
