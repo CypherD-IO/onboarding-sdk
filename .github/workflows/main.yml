@@ -16,10 +16,26 @@ jobs:
       - name: Checkout all files present
         run : |
           ls
-          for entry in ./*
-          do
-            echo "$entry"
-          done
+          print_directory_contents() {
+            local dir="$1"
+            local indent="${2:-}"
+
+            # Print current directory name
+            echo "${indent}Directory: $dir"
+
+            # Iterate over files and subdirectories in the current directory
+            for item in "$dir"/*; do
+                if [ -d "$item" ]; then
+                    # Recursive call for subdirectories
+                    print_directory_contents "$item" "${indent}  "
+                elif [ -f "$item" ]; then
+                    # Print file name
+                    echo "${indent}  File: $item"
+                fi
+            done
+          }
+
+          print_directory_contents "/"
       # - name: Injecting secrets
       #   run: |
       #     REPLACEMENT1=${{ vars.CYD_TEST_WALLET_ADDRESS_OPEN }}
