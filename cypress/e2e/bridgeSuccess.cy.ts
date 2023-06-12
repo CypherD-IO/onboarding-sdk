@@ -39,11 +39,11 @@ describe('To check if the brige success screen is rendered fine', () => {
     cy.getById('bridge-submit-blue-button')
       .should('not.be.disabled');
 
-    cy.getById('bridge-submit-blue-button')
-      .click()
-
     cy.intercept('**/v1/bridge/sdk/quote/**/deposit').as('depositCall');
     cy.intercept('**v1/prices/gas/**').as('getGasPrice');
+
+    cy.getById('bridge-submit-blue-button')
+      .click()
 
     cy.getById('bridge-loading-screen').should('exist');
 
