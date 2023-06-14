@@ -12,11 +12,10 @@ describe('To check if any going brige is present and render the respective scree
 
     cy.intercept('GET', '**/portfolio/balances**').as('fetchPortfolioBalances');
     cy.getById("addPopup").click();
+    cy.intercept('GET', '**/swap/evm/chains').as('swapChainsCheck');
     cy.wait('@fetchPortfolioBalances', { timeout: 50000 }).then(() => {
-      cy.intercept('GET', '**/swap/evm/chains').as('swapChainsCheck');
       cy.wait('@swapChainsCheck', { timeout: 50000 });
     });
-   })
 
     cy.contains('tr', 'Matic Token').find('.exchange-token-button').eq(0).click()
 
@@ -45,8 +44,9 @@ describe('To check if any going brige is present and render the respective scree
 
     cy.getById('bridge-loading-screen').should('exist');
 
-    cy.wait('@getGasPrice', { timeout: 50000 });
-    cy.wait('@depositCall', { timeout: 50000 });
+    cy.wait('@getGasPrice', { timeout: 50000 }).then(() => {
+      cy.wait('@depositCall', { timeout: 50000 });
+    });
 
     // cy.get(".maximize-onclick").click({force: true});
     cy.getByClass('close-popup').click({force: true});

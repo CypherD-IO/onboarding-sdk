@@ -13,6 +13,7 @@ describe('To check maximise and minimise functionality in portfolio loading scre
     cy.intercept('GET', '**/portfolio/balances**').as('fetchPortfolioBalances');
 
     cy.getById("addPopup").click();
+    cy.intercept('GET', '**/swap/evm/chains').as('swapChainsCheck');
 
     cy.getByClass('minimize-button').trigger("click");
 
@@ -54,7 +55,6 @@ describe('To check maximise and minimise functionality in portfolio loading scre
         .and("have.css", "backdropFilter", "blur(5px)");
 
     cy.wait('@fetchPortfolioBalances', { timeout: 50000 }).then(() => {
-      cy.intercept('GET', '**/swap/evm/chains').as('swapChainsCheck');
       cy.wait('@swapChainsCheck', { timeout: 50000 });
     });
   });

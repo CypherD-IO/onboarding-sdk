@@ -11,8 +11,8 @@ describe('To check if the bridge loading screen is rendered fine', () => {
 
     cy.intercept('GET', '**/portfolio/balances**').as('fetchPortfolioBalances');
     cy.getById("addPopup").click();
+    cy.intercept('GET', '**/swap/evm/chains').as('swapChainsCheck');
     cy.wait('@fetchPortfolioBalances', { timeout: 50000 }).then(() => {
-      cy.intercept('GET', '**/swap/evm/chains').as('swapChainsCheck');
       cy.wait('@swapChainsCheck', { timeout: 50000 });
     });
 
@@ -42,8 +42,9 @@ describe('To check if the bridge loading screen is rendered fine', () => {
 
     cy.getById('bridge-loading-screen').should('exist');
 
-    cy.wait('@getGasPrice', { timeout: 50000 });
-    cy.wait('@depositCall', { timeout: 50000 });
+    cy.wait('@getGasPrice', { timeout: 50000 }).then(() => {
+      cy.wait('@depositCall', { timeout: 50000 });
+    });
 
     cy.getById('sdkContainer')
       .should('have.css', 'background-color', 'rgba(0, 0, 0, 0)')
