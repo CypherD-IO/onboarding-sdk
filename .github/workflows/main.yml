@@ -62,7 +62,7 @@ jobs:
             npx http-server -p 8080 -c-1 --silent
             sleep 5
           browser: chrome
-          # record: true
+          record: true
           parallel: true
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
