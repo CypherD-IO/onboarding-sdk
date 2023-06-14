@@ -10,7 +10,9 @@ describe('To test if footer section is rendered conditionally' , ()=> {
 
     cy.intercept('GET', '**/portfolio/balances**').as('fetchPortfolioBalances');
     cy.getById("addPopup").click();
-    cy.intercept('GET', '**/swap/evm/chains').as('swapChainsCheck');
+    cy.intercept('GET', '**/swap/evm/chains', {
+      fixture: 'swapChains.json'
+    }).as('swapChainsCheck');
     cy.wait('@fetchPortfolioBalances', { timeout: 50000 });
     cy.wait('@swapChainsCheck', { timeout: 50000 });
    })

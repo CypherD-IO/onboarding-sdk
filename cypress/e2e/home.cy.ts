@@ -12,7 +12,9 @@ describe('To test if information screen is rendered conditionaly', () => {
     cy.intercept('GET', '**/portfolio/balances**').as('fetchPortfolioBalances');
     cy.getById("addPopup").click();
     cy.getById("portfolio-loading-screen").should("not.exist");
-    cy.intercept('GET', '**/swap/evm/chains').as('swapChainsCheck');
+    cy.intercept('GET', '**/swap/evm/chains', {
+      fixture: 'swapChains.json'
+    }).as('swapChainsCheck');
     cy.wait('@fetchPortfolioBalances', { timeout: 50000 });
     cy.wait('@swapChainsCheck', { timeout: 50000 });
 
@@ -34,7 +36,9 @@ describe('To test if information screen is rendered conditionaly', () => {
     cy.intercept('GET', '**/portfolio/balances**').as('fetchPortfolioBalances');
     cy.getById("addPopup").click();
     cy.getById("portfolio-loading-screen").should("exist");
-    cy.intercept('GET', '**/swap/evm/chains').as('swapChainsCheck');
+    cy.intercept('GET', '**/swap/evm/chains', {
+      fixture: 'swapChains.json'
+    }).as('swapChainsCheck');
     cy.wait('@fetchPortfolioBalances', { timeout: 50000 });
     cy.wait('@swapChainsCheck', { timeout: 50000 });
 

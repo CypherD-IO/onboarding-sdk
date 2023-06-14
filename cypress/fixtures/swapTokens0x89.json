@@ -1,0 +1,1363 @@
+{
+  "tokens": [
+      {
+          "address": "0x0000000000000000000000000000000000000000",
+          "decimals": 18,
+          "name": "Matic",
+          "symbol": "MATIC",
+          "logo": "https://logos.covalenthq.com/tokens/1/0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0.png",
+          "isNative": true,
+          "isVerified": true
+      },
+      {
+          "address": "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
+          "decimals": 18,
+          "name": "Wrapped Matic",
+          "symbol": "WMATIC",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/14073/large/matic.png?1628852392"
+      },
+      {
+          "address": "0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6",
+          "decimals": 8,
+          "name": "(PoS) Wrapped BTC",
+          "symbol": "WBTC",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1548822744"
+      },
+      {
+          "address": "0xDBf31dF14B66535aF65AaC99C32e9eA844e14501",
+          "decimals": 8,
+          "name": "renBTC (renBTC)",
+          "symbol": "renBTC",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/11370/large/Bitcoin.jpg?1628072791"
+      },
+      {
+          "address": "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
+          "decimals": 6,
+          "name": "USD Coin (PoS)",
+          "symbol": "USDC",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/6319/large/USD_Coin_icon.png?1547042389"
+      },
+      {
+          "address": "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
+          "decimals": 18,
+          "name": "Wrapped Ether",
+          "symbol": "WETH",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/2518/large/weth.png?1628852295"
+      },
+      {
+          "address": "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
+          "decimals": 18,
+          "name": "(PoS) Dai Stablecoin",
+          "symbol": "DAI",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/9956/large/4943.png?1636636734"
+      },
+      {
+          "address": "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
+          "decimals": 6,
+          "name": "(PoS) Tether USD",
+          "symbol": "USDT",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/325/large/Tether-logo.png?1598003707"
+      },
+      {
+          "address": "0xb33EaAd8d922B1083446DC23f610c2567fB5180f",
+          "decimals": 18,
+          "name": "Uniswap (PoS)",
+          "symbol": "UNI",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/12504/large/uniswap-uni.png?1600306604"
+      },
+      {
+          "address": "0x53E0bca35eC356BD5ddDFebbD1Fc0fD03FaBad39",
+          "decimals": 18,
+          "name": "ChainLink Token",
+          "symbol": "LINK",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/877/large/chainlink-new-logo.png?1547034700"
+      },
+      {
+          "address": "0x9C78EE466D6Cb57A4d01Fd887D2b5dFb2D46288f",
+          "decimals": 18,
+          "name": "Must",
+          "symbol": "MUST",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/13688/large/must_logo.png?1610949645"
+      },
+      {
+          "address": "0x45c32fA6DF82ead1e2EF74d17b76547EDdFaFF89",
+          "decimals": 18,
+          "name": "Frax",
+          "symbol": "FRAX",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/13422/large/frax_logo.png?1608476506"
+      },
+      {
+          "address": "0xD6DF932A45C0f255f85145f286eA0b292B21C90B",
+          "decimals": 18,
+          "name": "Aave (PoS)",
+          "symbol": "AAVE",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/12645/large/AAVE.png?1601374110"
+      },
+      {
+          "address": "0xdF7837DE1F2Fa4631D716CF2502f8b230F1dcc32",
+          "decimals": 2,
+          "name": "Telcoin (PoS)",
+          "symbol": "TEL",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/1899/large/tel.png?1547036203"
+      },
+      {
+          "address": "0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
+          "decimals": 18,
+          "name": "miMATIC",
+          "symbol": "miMATIC",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/15264/large/mimatic-red.png?1620281018"
+      },
+      {
+          "address": "0x172370d5Cd63279eFa6d502DAB29171933a610AF",
+          "decimals": 18,
+          "name": "CRV (PoS)",
+          "symbol": "CRV",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/12124/large/Curve.png?1597369484"
+      },
+      {
+          "address": "0x580A84C73811E1839F75d86d75d88cCa0c241fF4",
+          "decimals": 18,
+          "name": "Qi Dao",
+          "symbol": "QI",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/15329/large/qi.png?1620540969"
+      },
+      {
+          "address": "0x9a71012B13CA4d3D0Cdc72A177DF3ef03b0E76A3",
+          "decimals": 18,
+          "name": "Balancer (PoS)",
+          "symbol": "BAL",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/11683/large/Balancer.png?1592792958"
+      },
+      {
+          "address": "0x7DfF46370e9eA5f0Bad3C4E29711aD50062EA7A4",
+          "decimals": 18,
+          "name": "SOL",
+          "symbol": "SOL",
+          "isNative": false,
+          "isVerified": false,
+          "logo": "https://public.cypherd.io/assets/blockchains/polygon/assets/0x7DfF46370e9eA5f0Bad3C4E29711aD50062EA7A4/logo.png"
+      },
+      {
+          "address": "0x2e1AD108fF1D8C782fcBbB89AAd783aC49586756",
+          "decimals": 18,
+          "name": "TrueUSD (PoS)",
+          "symbol": "TUSD",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/3449/large/tusd.png?1618395665"
+      },
+      {
+          "address": "0x50B728D8D964fd00C2d0AAD81718b71311feF68a",
+          "decimals": 18,
+          "name": "Synthetix Network Token (PoS)",
+          "symbol": "SNX",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/3406/large/SNX.png?1598631139"
+      },
+      {
+          "address": "0x5fe2B58c013d7601147DcdD68C143A77499f5531",
+          "decimals": 18,
+          "name": "Graph Token (PoS)",
+          "symbol": "GRT",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/13397/large/Graph_Token.png?1608145566"
+      },
+      {
+          "address": "0x0b3F868E0BE5597D5DB7fEB59E1CADBb0fdDa50a",
+          "decimals": 18,
+          "name": "SushiToken (PoS)",
+          "symbol": "SUSHI",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/12271/large/512x512_Logo_no_chop.png?1606986688"
+      },
+      {
+          "address": "0xFbdd194376de19a88118e84E279b977f165d01b8",
+          "decimals": 18,
+          "name": "beefy.finance",
+          "symbol": "BIFI",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/12704/large/token.png?1601876182"
+      },
+      {
+          "address": "0xA1c57f48F0Deb89f569dFbE6E2B7f46D33606fD4",
+          "decimals": 18,
+          "name": "(PoS) Decentraland MANA",
+          "symbol": "MANA",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/878/large/decentraland-mana.png?1550108745"
+      },
+      {
+          "address": "0x385Eeac5cB85A38A9a07A70c73e0a3271CfB54A7",
+          "decimals": 18,
+          "name": "Aavegotchi GHST Token (PoS)",
+          "symbol": "GHST",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/12467/large/ghst_200.png?1600750321"
+      },
+      {
+          "address": "0x3a3Df212b7AA91Aa0402B9035b098891d276572B",
+          "decimals": 18,
+          "name": "Fish",
+          "symbol": "FISH",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/15226/large/smallLogo.png?1620269393"
+      },
+      {
+          "address": "0xD86b5923F3AD7b585eD81B448170ae026c65ae9a",
+          "decimals": 18,
+          "name": "IRON Stablecoin",
+          "symbol": "IRON",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/14588/large/logo_-_2021-03-31T123525.615.png?1617165339"
+      },
+      {
+          "address": "0x8A953CfE442c5E8855cc6c61b1293FA648BAE472",
+          "decimals": 18,
+          "name": "PolyDoge",
+          "symbol": "PolyDoge",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/15146/large/p1kSco1h_400x400.jpg?1619842715"
+      },
+      {
+          "address": "0xC168E40227E4ebD8C1caE80F7a55a4F0e6D66C97",
+          "decimals": 18,
+          "name": "DFYN Token (PoS)",
+          "symbol": "DFYN",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/15368/large/SgqhfWz4_400x400_%281%29.jpg?1620666919"
+      },
+      {
+          "address": "0xd78C475133731CD54daDCb430F7aAE4F03C1E660",
+          "decimals": 18,
+          "name": "Firebird.Finance",
+          "symbol": "HOPE",
+          "isNative": false,
+          "isVerified": false,
+          "logo": "https://public.cypherd.io/assets/blockchains/polygon/assets/0xd78C475133731CD54daDCb430F7aAE4F03C1E660/logo.png"
+      },
+      {
+          "address": "0x16ECCfDbb4eE1A85A33f3A9B21175Cd7Ae753dB4",
+          "decimals": 18,
+          "name": "Route",
+          "symbol": "ROUTE (PoS)",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/13709/large/route_token_200x200-19.png?1611057698"
+      },
+      {
+          "address": "0x70c006878a5A50Ed185ac4C87d837633923De296",
+          "decimals": 18,
+          "name": "REVV",
+          "symbol": "REVV",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/12373/large/REVV_TOKEN_Refined_2021_%281%29.png?1627652390"
+      },
+      {
+          "address": "0xcf32822ff397Ef82425153a9dcb726E5fF61DCA7",
+          "decimals": 18,
+          "name": "GAMEE",
+          "symbol": "GMEE",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/14716/large/gmee-200x200.png?1621827468"
+      },
+      {
+          "address": "0x1C954E8fe737F99f68Fa1CCda3e51ebDB291948C",
+          "decimals": 18,
+          "name": "Kyber Network Crystal v2 (PoS)",
+          "symbol": "KNC",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/14899/large/RwdVsGcw_400x400.jpg?1618923851"
+      },
+      {
+          "address": "0xE7a24EF0C5e95Ffb0f6684b813A78F2a3AD7D171",
+          "decimals": 18,
+          "name": "Curve.fi amDAI/amUSDC/amUSDT",
+          "symbol": "am3CRV",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/26740/large/W1sQNVWo_400x400.jpeg?1659953467"
+      },
+      {
+          "address": "0x104592a158490a9228070E0A8e5343B499e125D0",
+          "decimals": 18,
+          "name": "Frax (PoS)",
+          "symbol": "FRAX (PoS)",
+          "isNative": false,
+          "isVerified": false,
+          "logo": "https://public.cypherd.io/assets/blockchains/polygon/assets/0x104592a158490a9228070E0A8e5343B499e125D0/logo.png"
+      },
+      {
+          "address": "0x4c28f48448720e9000907BC2611F73022fdcE1fA",
+          "decimals": 18,
+          "name": "WMATIC 2",
+          "symbol": "WMATIC 2",
+          "isNative": false,
+          "isVerified": false,
+          "logo": "https://public.cypherd.io/assets/blockchains/polygon/assets/0x4c28f48448720e9000907BC2611F73022fdcE1fA/logo.png"
+      },
+      {
+          "address": "0x613a489785C95afEB3b404CC41565cCff107B6E0",
+          "decimals": 18,
+          "name": "RadioShack",
+          "symbol": "RADIO",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/25307/large/ZVoPiysPJq6dPIZm_Se-6vjmsBepwhHlTQfdYZRILbHyVVTRUYCO-wmJJ4zT10HXCGv1j-ZyWr2u2sBaVlap5Y-ILqeXZuIquWdBDxxG0E0qDpgH7omLqYdgWWLSM_TUK9d1PiiYdu6bERdCDaucgFjlqwmhVQK4uV4jyUiXzchVUnu8Qt6SnxlNxz88G0mQ_tfiwkFv_vKqtgb1CcPycVZVz9.jpg?1651211260"
+      },
+      {
+          "address": "0x430EF9263E76DAE63c84292C3409D61c598E9682",
+          "decimals": 18,
+          "name": "Vulcan Forge",
+          "symbol": "PYR",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/14770/large/1617088937196.png?1619414736"
+      },
+      {
+          "address": "0x6E65Ae5572DF196FAe40Be2545Ebc2A9A24eAcE9",
+          "decimals": 18,
+          "name": "Shack Token",
+          "symbol": "SHACK",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/25699/large/shack_no_bg_no_pad3.png?1653441433"
+      },
+      {
+          "address": "0x255707B70BF90aa112006E1b07B9AeA6De021424",
+          "decimals": 18,
+          "name": "TETU",
+          "symbol": "TETU",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/17882/large/gradient_icon_926.png?1629707907"
+      },
+      {
+          "address": "0xe4Bf2864ebeC7B7fDf6Eeca9BaCAe7cDfDAffe78",
+          "decimals": 18,
+          "name": "DODO bird (POS)",
+          "symbol": "DODO",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/12651/large/dodo_logo.png?1601433025"
+      },
+      {
+          "address": "0x82362Ec182Db3Cf7829014Bc61E9BE8a2E82868a",
+          "decimals": 18,
+          "name": "Meshswap Protocol",
+          "symbol": "MESH",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/25609/large/VxtSquTp_400x400.jpeg?1652844613"
+      },
+      {
+          "address": "0x0169eC1f8f639B32Eec6D923e24C2A2ff45B9DD6",
+          "decimals": 18,
+          "name": "Algebra",
+          "symbol": "ALGB",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/19580/large/13211.png?1635469023"
+      },
+      {
+          "address": "0xBbba073C31bF03b8ACf7c28EF0738DeCF3695683",
+          "decimals": 18,
+          "name": "SAND",
+          "symbol": "SAND",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/12129/large/sandbox_logo.jpg?1597397942"
+      },
+      {
+          "address": "0xfa68FB4628DFF1028CFEc22b4162FCcd0d45efb6",
+          "decimals": 18,
+          "name": "Liquid Staking Matic (PoS)",
+          "symbol": "MaticX",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/25383/large/6GWyFVHD_400x400.jpg?1651615396"
+      },
+      {
+          "address": "0x3A58a54C066FdC0f2D55FC9C89F0415C92eBf3C4",
+          "decimals": 18,
+          "name": "Staked MATIC (PoS)",
+          "symbol": "stMATIC",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/24185/large/stMATIC.png?1646789287"
+      },
+      {
+          "address": "0x2F800Db0fdb5223b3C3f354886d907A671414A7F",
+          "decimals": 18,
+          "name": "Toucan Protocol: Base Carbon Tonne",
+          "symbol": "BCT",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/19240/large/bct_exchange_enhanced.png?1641441498"
+      },
+      {
+          "address": "0x1a3acf6D19267E2d3e7f898f42803e90C9219062",
+          "decimals": 18,
+          "name": "Frax Share",
+          "symbol": "FXS",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/13423/large/frax_share.png?1608478989"
+      },
+      {
+          "address": "0x3e121107F6F22DA4911079845a470757aF4e1A1b",
+          "decimals": 18,
+          "name": "Frax Share (PoS)",
+          "symbol": "FXS (PoS)",
+          "isNative": false,
+          "isVerified": false,
+          "logo": "https://public.cypherd.io/assets/blockchains/polygon/assets/0x3e121107F6F22DA4911079845a470757aF4e1A1b/logo.png"
+      },
+      {
+          "address": "0x4e3Decbb3645551B8A19f0eA1678079FCB33fB4c",
+          "decimals": 18,
+          "name": "Jarvis Synthetic Euro",
+          "symbol": "jEUR",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/15725/large/jEUR.png?1634046044"
+      },
+      {
+          "address": "0x236eeC6359fb44CCe8f97E99387aa7F8cd5cdE1f",
+          "decimals": 6,
+          "name": "USD+",
+          "symbol": "USD+",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/25757/large/USD__logo.png?1653519267"
+      },
+      {
+          "address": "0x431CD3C9AC9Fc73644BF68bF5691f4B83F9E104f",
+          "decimals": 18,
+          "name": "Rainbow Token",
+          "symbol": "RBW",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/24498/large/icon_rbw.png?1648019306"
+      },
+      {
+          "address": "0x431D5dfF03120AFA4bDf332c61A6e1766eF37BDB",
+          "decimals": 18,
+          "name": "JPY Coin",
+          "symbol": "JPYC",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/25971/large/WoZ8rruL_400x400.png?1655102508"
+      },
+      {
+          "address": "0x6AE7Dfc73E0dDE2aa99ac063DcF7e8A63265108c",
+          "decimals": 18,
+          "name": "JPY Coin (PoS)",
+          "symbol": "JPYC (PoS)",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/17277/large/WoZ8rruL_400x400.png?1627016492"
+      },
+      {
+          "address": "0x840195888Db4D6A99ED9F73FcD3B225Bb3cB1A79",
+          "decimals": 18,
+          "name": "SportX (PoS)",
+          "symbol": "SX",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/13779/large/sx.png?1636034699"
+      },
+      {
+          "address": "0x2C89bbc92BD86F8075d1DEcc58C7F4E0107f286b",
+          "decimals": 18,
+          "name": "Avalanche Token",
+          "symbol": "AVAX",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/15075/large/wrapped-avax.png?1629873618"
+      },
+      {
+          "address": "0x39aB6574c289c3Ae4d88500eEc792AB5B947A5Eb",
+          "decimals": 18,
+          "name": "Dystopia token",
+          "symbol": "DYST",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/25786/large/dystopialogo.jpg?1653882298"
+      },
+      {
+          "address": "0x27F8D03b3a2196956ED754baDc28D73be8830A6e",
+          "decimals": 18,
+          "name": "Aave Matic Market DAI",
+          "symbol": "amDAI",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/17251/large/amDAI_2x.png?1626942084"
+      },
+      {
+          "address": "0x1a13F4Ca1d028320A707D99520AbFefca3998b7F",
+          "decimals": 6,
+          "name": "Aave Matic Market USDC",
+          "symbol": "amUSDC",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/17249/large/amUSDC_2x.png?1626941306"
+      },
+      {
+          "address": "0x60D55F02A771d515e077c9C2403a1ef324885CeC",
+          "decimals": 6,
+          "name": "Aave Matic Market USDT",
+          "symbol": "amUSDT",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/17264/large/amUSDT_2x.png?1626966594"
+      },
+      {
+          "address": "0x5c2ed810328349100A66B82b78a1791B101C9D61",
+          "decimals": 8,
+          "name": "Aave Matic Market WBTC",
+          "symbol": "amWBTC",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/17265/large/amWBTC_2x.png?1626966974"
+      },
+      {
+          "address": "0x28424507fefb6f7f8E9D3860F56504E4e5f5f390",
+          "decimals": 18,
+          "name": "Aave Matic Market WETH",
+          "symbol": "amWETH",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/17266/large/amWETH_2x.png?1626967258"
+      },
+      {
+          "address": "0x8dF3aad3a84da6b69A4DA8aeC3eA40d9091B2Ac4",
+          "decimals": 18,
+          "name": "Aave Matic Market WMATIC",
+          "symbol": "amWMATIC",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/17267/large/amWMATIC_2x.png?1626967624"
+      },
+      {
+          "address": "0x1d2a0E5EC8E5bBDCA5CB219e649B565d8e5c3360",
+          "decimals": 18,
+          "name": "Aave Matic Market AAVE",
+          "symbol": "amAAVE",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/17239/large/amAAVE_2x.png?1626940769"
+      },
+      {
+          "address": "0x080b5BF8f360F624628E0fb961F4e67c9e3c7CF1",
+          "decimals": 18,
+          "name": "Aave Matic Market GHST",
+          "symbol": "amGHST",
+          "isNative": false,
+          "isVerified": false,
+          "logo": "https://public.cypherd.io/assets/blockchains/polygon/assets/0x080b5BF8f360F624628E0fb961F4e67c9e3c7CF1/logo.png"
+      },
+      {
+          "address": "0xc4195D4060DaEac44058Ed668AA5EfEc50D77ff6",
+          "decimals": 18,
+          "name": "Aave Matic Market BAL",
+          "symbol": "amBAL",
+          "isNative": false,
+          "isVerified": false,
+          "logo": "https://public.cypherd.io/assets/blockchains/polygon/assets/0xc4195D4060DaEac44058Ed668AA5EfEc50D77ff6/logo.png"
+      },
+      {
+          "address": "0x81fB82aAcB4aBE262fc57F06fD4c1d2De347D7B1",
+          "decimals": 18,
+          "name": "Aave Matic Market DPI",
+          "symbol": "amDPI",
+          "isNative": false,
+          "isVerified": false,
+          "logo": "https://public.cypherd.io/assets/blockchains/polygon/assets/0x81fB82aAcB4aBE262fc57F06fD4c1d2De347D7B1/logo.png"
+      },
+      {
+          "address": "0x3Df8f92b7E798820ddcCA2EBEA7BAbda2c90c4aD",
+          "decimals": 18,
+          "name": "Aave Matic Market CRV",
+          "symbol": "amCRV",
+          "isNative": false,
+          "isVerified": false,
+          "logo": "https://public.cypherd.io/assets/blockchains/polygon/assets/0x3Df8f92b7E798820ddcCA2EBEA7BAbda2c90c4aD/logo.png"
+      },
+      {
+          "address": "0x21eC9431B5B55c5339Eb1AE7582763087F98FAc2",
+          "decimals": 18,
+          "name": "Aave Matic Market SUSHI",
+          "symbol": "amSUSHI",
+          "isNative": false,
+          "isVerified": false,
+          "logo": "https://public.cypherd.io/assets/blockchains/polygon/assets/0x21eC9431B5B55c5339Eb1AE7582763087F98FAc2/logo.png"
+      },
+      {
+          "address": "0x0Ca2e42e8c21954af73Bc9af1213E4e81D6a669A",
+          "decimals": 18,
+          "name": "Aave Matic Market LINK",
+          "symbol": "amLINK",
+          "isNative": false,
+          "isVerified": false,
+          "logo": "https://public.cypherd.io/assets/blockchains/polygon/assets/0x0Ca2e42e8c21954af73Bc9af1213E4e81D6a669A/logo.png"
+      },
+      {
+          "address": "0x82E64f49Ed5EC1bC6e43DAD4FC8Af9bb3A2312EE",
+          "decimals": 18,
+          "name": "Aave Polygon DAI",
+          "symbol": "aPolDAI",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/14242/large/aDAI.84b6c41f.png?1615528749"
+      },
+      {
+          "address": "0x191c10Aa4AF7C30e871E70C95dB0E4eb77237530",
+          "decimals": 18,
+          "name": "Aave Polygon LINK",
+          "symbol": "aPolLINK",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/14315/large/aLINK.412c6589.png?1615527827"
+      },
+      {
+          "address": "0x625E7708f30cA75bfd92586e17077590C60eb4cD",
+          "decimals": 6,
+          "name": "Aave PolygonUSDC",
+          "symbol": "aPolUSDC",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/14318/large/aUSDC.e260d492.png?1615527797"
+      },
+      {
+          "address": "0x078f358208685046a11C85e8ad32895DED33A249",
+          "decimals": 8,
+          "name": "Aave Polygon WBTC",
+          "symbol": "aPolWBTC",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/14244/large/aWBTC.41453c2a.png?1615528721"
+      },
+      {
+          "address": "0xe50fA9b3c56FfB159cB0FCA61F5c9D750e8128c8",
+          "decimals": 18,
+          "name": "Aave Polygon WETH",
+          "symbol": "aPolWETH",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/17238/large/aWETH_2x.png?1626940782"
+      },
+      {
+          "address": "0x6ab707Aca953eDAeFBc4fD23bA73294241490620",
+          "decimals": 6,
+          "name": "Aave Polygon USDT",
+          "symbol": "aPolUSDT",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/14243/large/aUSDT.78f5faae.png?1615528400"
+      },
+      {
+          "address": "0xf329e36C7bF6E5E86ce2150875a84Ce77f477375",
+          "decimals": 18,
+          "name": "Aave Polygon AAVE",
+          "symbol": "aPolAAVE",
+          "isNative": false,
+          "isVerified": false,
+          "logo": "https://public.cypherd.io/assets/blockchains/polygon/assets/0xf329e36C7bF6E5E86ce2150875a84Ce77f477375/logo.png"
+      },
+      {
+          "address": "0x6d80113e533a2C0fe82EaBD35f1875DcEA89Ea97",
+          "decimals": 18,
+          "name": "Aave Polygon WMATIC",
+          "symbol": "aPolWMATIC",
+          "isNative": false,
+          "isVerified": false,
+          "logo": "https://public.cypherd.io/assets/blockchains/polygon/assets/0x6d80113e533a2C0fe82EaBD35f1875DcEA89Ea97/logo.png"
+      },
+      {
+          "address": "0x513c7E3a9c69cA3e22550eF58AC1C0088e918FFf",
+          "decimals": 18,
+          "name": "Aave Polygon CRV",
+          "symbol": "aPolCRV",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/17250/large/aCRV_2x.png?1626941642"
+      },
+      {
+          "address": "0xc45A479877e1e9Dfe9FcD4056c699575a1045dAA",
+          "decimals": 18,
+          "name": "Aave Polygon SUSHI",
+          "symbol": "aPolSUSHI",
+          "isNative": false,
+          "isVerified": false,
+          "logo": "https://public.cypherd.io/assets/blockchains/polygon/assets/0xc45A479877e1e9Dfe9FcD4056c699575a1045dAA/logo.png"
+      },
+      {
+          "address": "0x8Eb270e296023E9D92081fdF967dDd7878724424",
+          "decimals": 18,
+          "name": "Aave Polygon GHST",
+          "symbol": "aPolGHST",
+          "isNative": false,
+          "isVerified": false,
+          "logo": "https://public.cypherd.io/assets/blockchains/polygon/assets/0x8Eb270e296023E9D92081fdF967dDd7878724424/logo.png"
+      },
+      {
+          "address": "0x8ffDf2DE812095b1D19CB146E4c004587C0A0692",
+          "decimals": 18,
+          "name": "Aave Polygon BAL",
+          "symbol": "aPolBAL",
+          "isNative": false,
+          "isVerified": false,
+          "logo": "https://public.cypherd.io/assets/blockchains/polygon/assets/0x8ffDf2DE812095b1D19CB146E4c004587C0A0692/logo.png"
+      },
+      {
+          "address": "0x724dc807b04555b71ed48a6896b6F41593b8C637",
+          "decimals": 18,
+          "name": "Aave Polygon DPI",
+          "symbol": "aPolDPI",
+          "isNative": false,
+          "isVerified": false,
+          "logo": "https://public.cypherd.io/assets/blockchains/polygon/assets/0x724dc807b04555b71ed48a6896b6F41593b8C637/logo.png"
+      },
+      {
+          "address": "0x38d693cE1dF5AaDF7bC62595A37D667aD57922e5",
+          "decimals": 2,
+          "name": "Aave Polygon EURS",
+          "symbol": "aPolEURS",
+          "isNative": false,
+          "isVerified": false,
+          "logo": "https://public.cypherd.io/assets/blockchains/polygon/assets/0x38d693cE1dF5AaDF7bC62595A37D667aD57922e5/logo.png"
+      },
+      {
+          "address": "0x6533afac2E7BCCB20dca161449A13A32D391fb00",
+          "decimals": 18,
+          "name": "Aave Polygon JEUR",
+          "symbol": "aPolJEUR",
+          "isNative": false,
+          "isVerified": false,
+          "logo": "https://public.cypherd.io/assets/blockchains/polygon/assets/0x6533afac2E7BCCB20dca161449A13A32D391fb00/logo.png"
+      },
+      {
+          "address": "0x8437d7C167dFB82ED4Cb79CD44B7a32A1dd95c77",
+          "decimals": 18,
+          "name": "Aave Polygon AGEUR",
+          "symbol": "aPolAGEUR",
+          "isNative": false,
+          "isVerified": false,
+          "logo": "https://public.cypherd.io/assets/blockchains/polygon/assets/0x8437d7C167dFB82ED4Cb79CD44B7a32A1dd95c77/logo.png"
+      },
+      {
+          "address": "0x6f7C932e7684666C9fd1d44527765433e01fF61d",
+          "decimals": 18,
+          "name": "Maker",
+          "symbol": "MKR",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/1364/large/Mark_Maker.png?1585191826"
+      },
+      {
+          "address": "0xAa9654BECca45B5BDFA5ac646c939C62b527D394",
+          "decimals": 18,
+          "name": "DinoSwap (PoS)",
+          "symbol": "DINO",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/17103/large/DINO.png?1626244014"
+      },
+      {
+          "address": "0x980111ae1B84E50222C8843e3A7a038F36Fecd2b",
+          "decimals": 18,
+          "name": "StackOS",
+          "symbol": "STACK",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/14989/large/stackos_logo.png?1619280732"
+      },
+      {
+          "address": "0x5d47bAbA0d66083C52009271faF3F50DCc01023C",
+          "decimals": 18,
+          "name": "ApeSwapFinance Banana",
+          "symbol": "BANANA",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/14870/large/banana.png?1638884287"
+      },
+      {
+          "address": "0x8b1f836491903743fE51ACd13f2CC8Ab95b270f6",
+          "decimals": 18,
+          "name": "ACY (PoS)",
+          "symbol": "ACY",
+          "isNative": false,
+          "isVerified": false,
+          "logo": "https://public.cypherd.io/assets/blockchains/polygon/assets/0x8b1f836491903743fE51ACd13f2CC8Ab95b270f6/logo.png"
+      },
+      {
+          "address": "0x22a31bD4cB694433B6de19e0aCC2899E553e9481",
+          "decimals": 18,
+          "name": "Mad Meerkat Finance",
+          "symbol": "MMF",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/26840/large/1.png?1660352178"
+      },
+      {
+          "address": "0xE06Bd4F5aAc8D0aA337D13eC88dB6defC6eAEefE",
+          "decimals": 18,
+          "name": "PlanetIX",
+          "symbol": "IXT",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/20927/large/IXT_SYMBOL_SVG_RGB_BLACK.png?1637934555"
+      },
+      {
+          "address": "0xE5417Af564e4bFDA1c483642db72007871397896",
+          "decimals": 18,
+          "name": "Gains Network",
+          "symbol": "GNS",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/19737/large/logo.png?1635909203"
+      },
+      {
+          "address": "0xE0B52e49357Fd4DAf2c15e02058DCE6BC0057db4",
+          "decimals": 18,
+          "name": "agEUR",
+          "symbol": "agEUR",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/19479/large/agEUR.png?1635283566"
+      },
+      {
+          "address": "0xE111178A87A3BFf0c8d18DECBa5798827539Ae99",
+          "decimals": 2,
+          "name": "STASIS EURS Token (PoS)",
+          "symbol": "EURS",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/5164/large/EURS_300x300.png?1550571779"
+      },
+      {
+          "address": "0xB25e20De2F2eBb4CfFD4D16a55C7B395e8a94762",
+          "decimals": 18,
+          "name": "Request",
+          "symbol": "REQ",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/1031/large/Request_icon_green.png?1643250951"
+      },
+      {
+          "address": "0x34d4ab47Bee066F361fA52d792e69AC7bD05ee23",
+          "decimals": 18,
+          "name": "RaiderAurum",
+          "symbol": "AURUM",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/18131/large/xcqAUkU.png?1630627565"
+      },
+      {
+          "address": "0xE2Aa7db6dA1dAE97C5f5C6914d285fBfCC32A128",
+          "decimals": 18,
+          "name": "PAR Stablecoin",
+          "symbol": "PAR",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/14153/large/par_round_200.png?1614670422"
+      },
+      {
+          "address": "0xef938b6da8576a896f6E0321ef80996F4890f9c4",
+          "decimals": 18,
+          "name": "Decentral Games (PoS)",
+          "symbol": "DG",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/21173/large/Decentral_Games_Logo-1.png?1638441275"
+      },
+      {
+          "address": "0x229b1b6C23ff8953D663C4cBB519717e323a0a84",
+          "decimals": 18,
+          "name": "BLOK",
+          "symbol": "BLOK",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/18819/large/logo-bholdus-6.png?1633518105"
+      },
+      {
+          "address": "0x596eBE76e2DB4470966ea395B0d063aC6197A8C5",
+          "decimals": 18,
+          "name": "Jarvis Reward Token (PoS)",
+          "symbol": "JRT",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/10390/large/cfeii0y.png?1578868949"
+      },
+      {
+          "address": "0x2Ab4f9aC80F33071211729e45Cfc346C1f8446d5",
+          "decimals": 18,
+          "name": "ChainGuardians Governance Token (PoS)",
+          "symbol": "CGG",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/14326/large/cgg_logo.png?1615429976"
+      },
+      {
+          "address": "0xf50D05A1402d0adAfA880D36050736f9f6ee7dee",
+          "decimals": 18,
+          "name": "Instadapp (PoS)",
+          "symbol": "INST",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/14688/large/30hFM0-n_400x400.jpg?1617786420"
+      },
+      {
+          "address": "0xeEeEEb57642040bE42185f49C52F7E9B38f8eeeE",
+          "decimals": 18,
+          "name": "Elk",
+          "symbol": "ELK",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/17813/large/elk.png?1629336971"
+      },
+      {
+          "address": "0xE1C110E1B1b4A1deD0cAf3E42BfBdbB7b5d7cE1C",
+          "decimals": 18,
+          "name": "Elk (Old)",
+          "symbol": "oELK",
+          "isNative": false,
+          "isVerified": false,
+          "logo": "https://public.cypherd.io/assets/blockchains/polygon/assets/0xE1C110E1B1b4A1deD0cAf3E42BfBdbB7b5d7cE1C/logo.png"
+      },
+      {
+          "address": "0xE1C8f3d529BEa8E3fA1FAC5B416335a2f998EE1C",
+          "decimals": 18,
+          "name": "Elk (Legacy)",
+          "symbol": "lELK",
+          "isNative": false,
+          "isVerified": false,
+          "logo": "https://public.cypherd.io/assets/blockchains/polygon/assets/0xE1C8f3d529BEa8E3fA1FAC5B416335a2f998EE1C/logo.png"
+      },
+      {
+          "address": "0xB5C064F955D8e7F38fE0460C556a72987494eE17",
+          "decimals": 18,
+          "name": "Quickswap",
+          "symbol": "QUICK",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/25393/large/quickswap.jpg?1651680141"
+      },
+      {
+          "address": "0x831753DD7087CaC61aB5644b308642cc1c33Dc13",
+          "decimals": 18,
+          "name": "Quickswap (OLD)",
+          "symbol": "QUICK (OLD)",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/13970/large/1_pOU6pBMEmiL-ZJVb0CYRjQ.png?1613386659"
+      },
+      {
+          "address": "0x00e5646f60AC6Fb446f621d146B6E1886f002905",
+          "decimals": 18,
+          "name": "Rai Reflex Index (PoS)",
+          "symbol": "RAI",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://public.cypherd.io/assets/blockchains/polygon/assets/0x00e5646f60AC6Fb446f621d146B6E1886f002905/logo.png"
+      },
+      {
+          "address": "0xaAa5B9e6c589642f98a1cDA99B9D024B8407285A",
+          "decimals": 18,
+          "name": "IRON Titanium Token",
+          "symbol": "TITAN",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/16031/large/titan.png?1636080284"
+      },
+      {
+          "address": "0x709A4B6217584188DDb93c82f5d716D969accE1C",
+          "decimals": 12,
+          "name": "Hanu Yokia (PoS)",
+          "symbol": "HANU",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/17161/large/Goji_Hanu_Logo_200x200.png?1627127472"
+      },
+      {
+          "address": "0xD1e6354fb05bF72A8909266203dAb80947dcEccF",
+          "decimals": 18,
+          "name": "Cryption Network Token",
+          "symbol": "CNT",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/16171/large/Cryption_Logo_Gradient_White_Text.png?1623191284"
+      },
+      {
+          "address": "0x85955046DF4668e1DD369D2DE9f3AEB98DD2A369",
+          "decimals": 18,
+          "name": "DefiPulse Index (PoS)",
+          "symbol": "DPI",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/12465/large/defi_pulse_index_set.png?1600051053"
+      },
+      {
+          "address": "0xb5106A3277718eCaD2F20aB6b86Ce0Fee7A21F09",
+          "decimals": 18,
+          "name": "CafeSwap Token",
+          "symbol": "pBREW",
+          "isNative": false,
+          "isVerified": false,
+          "logo": "https://public.cypherd.io/assets/blockchains/polygon/assets/0xb5106A3277718eCaD2F20aB6b86Ce0Fee7A21F09/logo.png"
+      },
+      {
+          "address": "0xc82B9659A6d18A1a93f537731D2cA330181670Ae",
+          "decimals": 18,
+          "name": "BambooDeFi",
+          "symbol": "BAMBOO",
+          "isNative": false,
+          "isVerified": false,
+          "logo": "https://public.cypherd.io/assets/blockchains/polygon/assets/0xc82B9659A6d18A1a93f537731D2cA330181670Ae/logo.png"
+      },
+      {
+          "address": "0xF84BD51eab957c2e7B7D646A3427C5A50848281D",
+          "decimals": 18,
+          "name": "AGA Rewards (PoS)",
+          "symbol": "AGAr",
+          "isNative": false,
+          "isVerified": false,
+          "logo": "https://public.cypherd.io/assets/blockchains/polygon/assets/0xF84BD51eab957c2e7B7D646A3427C5A50848281D/logo.png"
+      },
+      {
+          "address": "0x033d942A6b495C4071083f4CDe1f17e986FE856c",
+          "decimals": 4,
+          "name": "AGA Token (PoS)",
+          "symbol": "AGA",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/12180/large/aga-logo.png?1597937396"
+      },
+      {
+          "address": "0x669ddc70273084Ea30e6cd4f28CA6e2C70735065",
+          "decimals": 18,
+          "name": "AGA Carbon Credit (PoS)",
+          "symbol": "AGAc",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://public.cypherd.io/assets/blockchains/polygon/assets/0x669ddc70273084Ea30e6cd4f28CA6e2C70735065/logo.png"
+      },
+      {
+          "address": "0x44A6e0BE76e1D9620A7F76588e4509fE4fa8E8C8",
+          "decimals": 18,
+          "name": "Aavegotchi FOMO",
+          "symbol": "FOMO",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/24737/large/fomo.png?1648769659"
+      },
+      {
+          "address": "0x3801C3B3B5c98F88a9c9005966AA96aa440B9Afc",
+          "decimals": 18,
+          "name": "GAX Liquidity Token Reward",
+          "symbol": "GLTR",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/25790/large/gltr-token.png?1653917818"
+      },
+      {
+          "address": "0x6a3E7C3c6EF65Ee26975b12293cA1AAD7e1dAeD2",
+          "decimals": 18,
+          "name": "Aavegotchi ALPHA",
+          "symbol": "ALPHA",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/24738/large/alpha.png?1648769768"
+      },
+      {
+          "address": "0x42E5E06EF5b90Fe15F853F59299Fc96259209c5C",
+          "decimals": 18,
+          "name": "Aavegotchi KEK",
+          "symbol": "KEK",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/24739/large/kek.png?1648769879"
+      },
+      {
+          "address": "0x403E967b044d4Be25170310157cB1A4Bf10bdD0f",
+          "decimals": 18,
+          "name": "Aavegotchi FUD",
+          "symbol": "FUD",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/24736/large/fud.png?1648769512"
+      },
+      {
+          "address": "0x3Ad707dA309f3845cd602059901E39C4dcd66473",
+          "decimals": 18,
+          "name": "ETH 2x Flexible Leverage Index",
+          "symbol": "ETH2x-FLI-P",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/21183/large/ETH2x-FLO_token_logo.jpg?1638512434"
+      },
+      {
+          "address": "0xd6cA869a4EC9eD2C7E618062Cdc45306d8dBBc14",
+          "decimals": 18,
+          "name": "BTC 2x Flexible Leverage Index",
+          "symbol": "BTC2x-FLI-P",
+          "isNative": false,
+          "isVerified": false,
+          "logo": "https://public.cypherd.io/assets/blockchains/polygon/assets/0xd6cA869a4EC9eD2C7E618062Cdc45306d8dBBc14/logo.png"
+      },
+      {
+          "address": "0xfe712251173A2cd5F5bE2B46Bb528328EA3565E1",
+          "decimals": 18,
+          "name": "Metaverse Index",
+          "symbol": "MVI",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/14684/large/MVI_logo.png?1617776444"
+      },
+      {
+          "address": "0xDfCe1e99A31C4597a3f8A8945cBfa9037655e335",
+          "decimals": 18,
+          "name": "Astrafer",
+          "symbol": "ASTRAFER",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/26246/large/ATSRA_Token.png?1657276411"
+      },
+      {
+          "address": "0xBF9f916bBda29A7F990F5F55c7607D94D7C3A60b",
+          "decimals": 18,
+          "name": "DEFY (PoS)",
+          "symbol": "DEFY",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://public.cypherd.io/assets/blockchains/polygon/assets/0xBF9f916bBda29A7F990F5F55c7607D94D7C3A60b/logo.png"
+      },
+      {
+          "address": "0x1B815d120B3eF02039Ee11dC2d33DE7aA4a8C603",
+          "decimals": 18,
+          "name": "Wootrade Network (PoS)",
+          "symbol": "WOO",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/12921/large/w2UiemF__400x400.jpg?1603670367"
+      },
+      {
+          "address": "0x2bC07124D8dAc638E290f401046Ad584546BC47b",
+          "decimals": 18,
+          "name": "TOWER",
+          "symbol": "TOWER",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/14134/large/tower-circular-1000.png?1632195469"
+      },
+      {
+          "address": "0x2F6F07CDcf3588944Bf4C42aC74ff24bF56e7590",
+          "decimals": 18,
+          "name": "StargateToken",
+          "symbol": "STG",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/24413/large/STG_LOGO.png?1647654518"
+      },
+      {
+          "address": "0xC3C7d422809852031b44ab29EEC9F1EfF2A58756",
+          "decimals": 18,
+          "name": "Lido DAO Token (PoS)",
+          "symbol": "LDO",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/13573/large/Lido_DAO.png?1609873644"
+      },
+      {
+          "address": "0xB0B195aEFA3650A6908f15CdaC7D92F8a5791B0B",
+          "decimals": 18,
+          "name": "BOB",
+          "symbol": "BOB",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/27266/large/Bob-logo.png?1663073030"
+      },
+      {
+          "address": "0x9C9e5fD8bbc25984B178FdCE6117Defa39d2db39",
+          "decimals": 18,
+          "name": "Binance USD",
+          "symbol": "BUSD",
+          "isNative": false,
+          "isVerified": false,
+          "logo": "https://public.cypherd.io/assets/blockchains/polygon/assets/0x9C9e5fD8bbc25984B178FdCE6117Defa39d2db39/logo.png"
+      },
+      {
+          "address": "0xd0258a3fD00f38aa8090dfee343f10A9D4d30D3F",
+          "decimals": 18,
+          "name": "VOXEL Token",
+          "symbol": "VOXEL",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/21260/large/voxies.png?1638789903"
+      },
+      {
+          "address": "0x2760E46d9BB43dafCbEcaad1F64b93207f9f0eD7",
+          "decimals": 18,
+          "name": "Metavault Trade",
+          "symbol": "MVX",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/25402/large/mvx.png?1660380728"
+      },
+      {
+          "address": "0x4e78011Ce80ee02d2c3e649Fb657E45898257815",
+          "decimals": 9,
+          "name": "Klima DAO",
+          "symbol": "KLIMA",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/19169/large/klima-logo.png?1634606729"
+      },
+      {
+          "address": "0x361A5a4993493cE00f61C32d4EcCA5512b82CE90",
+          "decimals": 18,
+          "name": "Stake DAO Token (PoS)",
+          "symbol": "SDT",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/13724/large/stakedao_logo.jpg?1611195011"
+      },
+      {
+          "address": "0x67eB41A14C0fe5CD701FC9d5A3D6597A72F641a6",
+          "decimals": 18,
+          "name": "Giddy Token",
+          "symbol": "GDDY",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/24960/large/gddy.png?1649573862"
+      },
+      {
+          "address": "0x9246a5F10A79a5a939b0C2a75A3AD196aAfDB43b",
+          "decimals": 18,
+          "name": "BetSwirl Token",
+          "symbol": "BETS",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/26618/large/icon_200.png?1659073275"
+      },
+      {
+          "address": "0x7BDF330f423Ea880FF95fC41A280fD5eCFD3D09f",
+          "decimals": 6,
+          "name": "Euro Tether (PoS)",
+          "symbol": "EURT",
+          "isNative": false,
+          "isVerified": false,
+          "logo": "https://public.cypherd.io/assets/blockchains/polygon/assets/0x7BDF330f423Ea880FF95fC41A280fD5eCFD3D09f/logo.png"
+      },
+      {
+          "address": "0x03b54A6e9a984069379fae1a4fC4dBAE93B3bCCD",
+          "decimals": 18,
+          "name": "Wrapped liquid staked Ether 2.0",
+          "symbol": "wstETH",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/18834/large/wstETH.png?1633565443"
+      },
+      {
+          "address": "0xbD1463F02f61676d53fd183C2B19282BFF93D099",
+          "decimals": 18,
+          "name": "Jarvis Synthetic Swiss Franc",
+          "symbol": "jCHF",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://public.cypherd.io/assets/blockchains/polygon/assets/0xbD1463F02f61676d53fd183C2B19282BFF93D099/logo.png"
+      },
+      {
+          "address": "0xB7b31a6BC18e48888545CE79e83E06003bE70930",
+          "decimals": 18,
+          "name": "ApeCoin (PoS)",
+          "symbol": "APE",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/24383/large/apecoin.jpg?1647476455"
+      },
+      {
+          "address": "0x958d208Cdf087843e9AD98d23823d32E17d723A1",
+          "decimals": 18,
+          "name": "Dragon QUICK",
+          "symbol": "dQUICK",
+          "isNative": false,
+          "isVerified": false,
+          "logo": "https://public.cypherd.io/assets/blockchains/polygon/assets/0x958d208Cdf087843e9AD98d23823d32E17d723A1/logo.png"
+      },
+      {
+          "address": "0x23D29D30e35C5e8D321e1dc9A8a61BFD846D4C5C",
+          "decimals": 8,
+          "name": "HEX (PoS)",
+          "symbol": "HEX",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://assets.coingecko.com/coins/images/10103/large/HEX-logo.png?1575942673"
+      },
+      {
+          "address": "0x4e36D8006416EA1d939A0EeaE73AFDAcA86BD376",
+          "decimals": 6,
+          "name": "Wrapped USD+",
+          "symbol": "wUSD+",
+          "isNative": false,
+          "isVerified": false,
+          "logo": "https://public.cypherd.io/assets/blockchains/polygon/assets/0x4e36D8006416EA1d939A0EeaE73AFDAcA86BD376/logo.png"
+      },
+      {
+          "address": "0xAF0D9D65fC54de245cdA37af3d18cbEc860A4D4b",
+          "decimals": 9,
+          "name": "Wrapped USDR",
+          "symbol": "wUSDR",
+          "isNative": false,
+          "isVerified": true,
+          "logo": "https://public.cypherd.io/assets/blockchains/polygon/assets/0xAF0D9D65fC54de245cdA37af3d18cbEc860A4D4b/logo.png"
+      }
+  ]
+}

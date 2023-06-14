@@ -11,7 +11,9 @@ describe('To check if bridge summary screen is rendered fine', ()=>{
 
     cy.intercept('GET', '**/portfolio/balances**').as('fetchPortfolioBalances');
     cy.getById("addPopup").click();
-    cy.intercept('GET', '**/swap/evm/chains').as('swapChainsCheck');
+    cy.intercept('GET', '**/swap/evm/chains', {
+      fixture: 'swapChains.json'
+    }).as('swapChainsCheck');
     cy.wait('@fetchPortfolioBalances', { timeout: 50000 });
     cy.wait('@swapChainsCheck', { timeout: 50000 });
 
@@ -86,10 +88,14 @@ describe('To check whether exchange button is disabled and enabled fine', () => 
 
     cy.intercept('GET', '**/portfolio/balances**').as('fetchPortfolioBalances');
     cy.getById("addPopup").click();
-    cy.intercept('GET', '**/swap/evm/chains').as('swapChainsCheck');
+    cy.intercept('GET', '**/swap/evm/chains', {
+      fixture: 'swapChains.json'
+    }).as('swapChainsCheck');
     cy.wait('@fetchPortfolioBalances', { timeout: 50000 });
     cy.wait('@swapChainsCheck', { timeout: 50000 });
-    cy.intercept({method: 'GET', url: '**/swap/evm/chains/**', times: 1}).as('swapTokensCheck');
+    cy.intercept('GET', '**/swap/evm/chains/**', {
+      fixture: 'swapTokens0x89.json'
+    }).as('swapTokensCheck');
     cy.wait('@swapTokensCheck', { timeout: 50000 });
 
     cy.contains('tr', 'ETH').find('.exchange-token-button').eq(0).click()
