@@ -12,8 +12,8 @@ describe('To check if swap condition is addressed and success is rendered fine',
 
     cy.intercept('GET', '**/portfolio/balances**').as('fetchPortfolioBalances');
     cy.getById("addPopup").click();
-    cy.wait('@fetchPortfolioBalances', { timeout: 50000 });
     cy.intercept('GET', '**/swap/evm/chains').as('swapChainsCheck');
+    cy.wait('@fetchPortfolioBalances', { timeout: 50000 });
     cy.wait('@swapChainsCheck', { timeout: 50000 });
     cy.intercept('GET', '**/swap/evm/chains/**').as('swapTokensCheck');
     cy.wait('@swapTokensCheck', { timeout: 50000 });

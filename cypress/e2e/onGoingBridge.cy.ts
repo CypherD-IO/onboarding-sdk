@@ -12,8 +12,8 @@ describe('To check if any going brige is present and render the respective scree
 
     cy.intercept('GET', '**/portfolio/balances**').as('fetchPortfolioBalances');
     cy.getById("addPopup").click();
-    cy.wait('@fetchPortfolioBalances', { timeout: 50000 });
     cy.intercept('GET', '**/swap/evm/chains').as('swapChainsCheck');
+    cy.wait('@fetchPortfolioBalances', { timeout: 50000 });
     cy.wait('@swapChainsCheck', { timeout: 50000 });
 
     cy.contains('tr', 'Matic Token').find('.exchange-token-button').eq(0).click()
