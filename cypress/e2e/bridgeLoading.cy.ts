@@ -13,6 +13,7 @@ describe('To check if the bridge loading screen is rendered fine', () => {
     cy.intercept('GET', '**/portfolio/balances**').as('fetchPortfolioBalances');
     cy.getById("addPopup").click();
     cy.intercept('GET', '**/swap/evm/chains').as('swapChainsCheck');
+    cy.wait(5000);
     cy.wait('@fetchPortfolioBalances', { timeout: 50000 }).then(() => {
       cy.wait('@swapChainsCheck', { timeout: 50000 });
     });

@@ -10,9 +10,11 @@ describe('To check if the brige success screen is rendered fine', () => {
     cy.getById("showInfoScreenFalse").check();
     cy.getById("appId").type("CYPRESS_TEST")
 
+    cy.wait(5000);
     cy.intercept('GET', '**/portfolio/balances**').as('fetchPortfolioBalances');
     cy.getById("addPopup").click();
     cy.intercept('GET', '**/swap/evm/chains').as('swapChainsCheck');
+    cy.wait(5000);
     cy.wait('@fetchPortfolioBalances', { timeout: 50000 }).then(() => {
       cy.wait('@swapChainsCheck', { timeout: 50000 });
     });

@@ -10,6 +10,7 @@ describe('To check maximise and minimise functionality in portfolio loading scre
     cy.getById("requiredTokenBalance").type('0');
     cy.getById("showInfoScreenFalse").check();
 
+    cy.wait(5000);
     cy.intercept('GET', '**/portfolio/balances**').as('fetchPortfolioBalances');
 
     cy.getById("addPopup").click();
