@@ -8,6 +8,7 @@ describe('To test if footer section is rendered conditionally' , ()=> {
     cy.getById("requiredTokenBalance").type('0');
     cy.getById("showInfoScreenTrue").check();
 
+    cy.wait(5000);
     cy.intercept('GET', '**/portfolio/balances**').as('fetchPortfolioBalances');
     cy.getById("addPopup").click();
     cy.intercept('GET', '**/swap/evm/chains').as('swapChainsCheck');

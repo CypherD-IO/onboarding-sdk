@@ -9,6 +9,7 @@ describe('To check if the bridge loading screen is rendered fine', () => {
     cy.getById("showInfoScreenFalse").check();
     cy.getById("appId").type("CYPRESS_TEST")
 
+    cy.wait(5000);
     cy.intercept('GET', '**/portfolio/balances**').as('fetchPortfolioBalances');
     cy.getById("addPopup").click();
     cy.intercept('GET', '**/swap/evm/chains').as('swapChainsCheck');

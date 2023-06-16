@@ -32,9 +32,9 @@ describe('To test if information screen is rendered conditionaly', () => {
     cy.getById("showInfoScreenFalse").check();
 
     cy.intercept('GET', '**/portfolio/balances**').as('fetchPortfolioBalances');
+    cy.intercept('GET', '**/swap/evm/chains').as('swapChainsCheck');
     cy.getById("addPopup").click();
     cy.getById("portfolio-loading-screen").should("exist");
-    cy.intercept('GET', '**/swap/evm/chains').as('swapChainsCheck');
     cy.wait('@fetchPortfolioBalances', { timeout: 50000 }).then(() => {
       cy.wait('@swapChainsCheck', { timeout: 50000 });
     });
