@@ -5,10 +5,11 @@ on: [push]
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        containers: [1, 2, 3, 4, 5, 6, 7, 8]
+    # enable for running in cypress cloud
+    # strategy:
+    #   fail-fast: false
+    #   matrix:
+    #     containers: [1, 2, 3, 4, 5, 6, 7, 8]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -16,35 +17,6 @@ jobs:
       - name: Install Dependencies
         run: npm install --force
 
-
-      # - name: Checkout all files present
-      #   run : |
-      #     ls
-      #     ls ./dist
-      #     ls ./dist/esbuild
-
-      #     print_directory_contents() {
-      #       local dir="$1"
-      #       local indent="${2:-}"
-
-      #       # Print current directory name
-      #       echo "${indent}Directory: $dir"
-
-      #       # Iterate over files and subdirectories in the current directory
-      #       for item in "$dir"/*; do
-      #           if [ -d "$item" ]; then
-      #               # Recursive call for subdirectories
-      #               print_directory_contents "$item" "${indent}  "
-      #           elif [ -f "$item" ]; then
-      #               # Print file name
-      #               echo "${indent}  File: $item"
-      #           fi
-      #       done
-      #     }
-
-      #     target_directory="./dist/esbuild"
-
-      #     print_directory_contents "$target_directory"
       - name: Injecting secrets
         run: |
           REPLACEMENT1=${{ secrets.CYD_TEST_WALLET_ADDRESS }}
@@ -62,10 +34,11 @@ jobs:
             npx http-server -p 8080 -c-1 --silent
             sleep 5
           browser: chrome
-          record: true
-          parallel: true
-        env:
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
 
+        # enable the following for running in cypress cloud
+          # record: true
+          # parallel: true
+        # env:
+        #   CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
 
 
