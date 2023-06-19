@@ -78,13 +78,13 @@ describe('To test if portfolio screen is rendered conditionaly', () => {
       .should('have.length.gte', 1);
 
     // every token balance listing should have token image and chain image
-    cy.getByClass('portfolio-token-detail')
+    cy.getByClass('cyd-portfolio-token-detail')
       .getById('cyd-td-token-icon')
       .should('be.visible')
       .and('have.prop', 'naturalWidth')
       .should('be.greaterThan', 0);
 
-    cy.getByClass('portfolio-token-detail')
+    cy.getByClass('cyd-portfolio-token-detail')
       .getById('cyd-td-chain-icon')
       .should('be.visible')
       .and('have.prop', 'naturalWidth')
@@ -108,7 +108,7 @@ describe('To test if portfolio screen is rendered conditionaly', () => {
 
     cy.wait('@fetchPortfolioBalances', { timeout: 50000 });
     cy.wait('@swapChainsCheck', { timeout: 50000 });
-    cy.get('.close-popup')
+    cy.get('.cyd-close-popup')
       .click();
 
     cy.get('#cyd-sdkContainer')

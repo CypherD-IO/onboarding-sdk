@@ -17,33 +17,33 @@ describe('To check if bridge summary screen is rendered fine', ()=>{
     cy.wait('@fetchPortfolioBalances', { timeout: 50000 });
     cy.wait('@swapChainsCheck', { timeout: 50000 });
 
-    cy.contains('tr', 'ETH').find('.exchange-token-button').eq(0).click()
+    cy.contains('tr', 'ETH').find('.cyd-exchange-token-button').eq(0).click()
   })
   it('should check whether summary screen renders correctly without switch chain' , ()=>{
     cy.getById('cyd-bp-amount-value').type('10');
-    cy.getByClass('bridge-input-submit').click();
+    cy.getByClass('cyd-bridge-input-submit').click();
     cy.getById('cyd-switch-chain-screen').should('not.exist');
     cy.get('#cyd-bridge-summary-screen').should('exist');
   });
 
   it('should check whether summary screen renders correctly' , ()=>{
     cy.getById('cyd-bp-amount-value').type('10');
-    cy.getByClass('bridge-input-submit').click();
+    cy.getByClass('cyd-bridge-input-submit').click();
     cy.get('#cyd-bridge-summary-screen').should('exist');
   });
 
   it('should go back to enter screen when back button is clicked',()=>{
     cy.getById('cyd-bp-amount-value').type('10');
-    cy.getByClass('bridge-input-submit').click();
+    cy.getByClass('cyd-bridge-input-submit').click();
     cy.wait(1000)
-    cy.getByClass('back-button').click();
+    cy.getByClass('cyd-back-button').click();
     cy.getById('cyd-bridge-input-screen').should('exist');
   })
 
   it('should check if images are rendered properly' , ()=>{
 
     cy.getById('cyd-bp-amount-value').type('10');
-    cy.getByClass('bridge-input-submit').click();
+    cy.getByClass('cyd-bridge-input-submit').click();
 
     cy.getById('cyd-from-token-img')
       .should('be.visible')
@@ -67,7 +67,7 @@ describe('To check if bridge summary screen is rendered fine', ()=>{
   })
 
   it('should check whether close popup works correctly' , ()=>{
-    cy.get('.close-popup')
+    cy.get('.cyd-close-popup')
       .click();
 
     cy.get('#cyd-sdkContainer')
@@ -96,12 +96,12 @@ describe('To check whether exchange button is disabled and enabled fine', () => 
     cy.wait('@swapChainsCheck', { timeout: 50000 });
     cy.wait('@swapTokensCheck', { timeout: 50000 });
 
-    cy.contains('tr', 'ETH').find('.exchange-token-button').eq(0).click()
+    cy.contains('tr', 'ETH').find('.cyd-exchange-token-button').eq(0).click()
 
     cy.getById('cyd-bp-amount-value').type('10');
     cy.intercept('POST', '**/v1/bridge/sdk/quote').as('getBridgeQuote');
 
-    cy.getByClass('bridge-input-submit').click();
+    cy.getByClass('cyd-bridge-input-submit').click();
 
     cy.get('#cyd-bridge-submit-button')
       .should('be.disabled');

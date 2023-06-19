@@ -12,15 +12,15 @@ export const footer = () => {
         </a>
       <div class="h-[35px] w-[50%] flex flex-row justify-end">
         <div class="h-[35px] w-[70px] flex flex-row">
-          <div class="toggle-switch">
-              <label>
-                  <input class="toggle-input" type="checkbox">
-                  <span class="slider"></span>
+          <div class="cyd-toggle-switch">
+              <label class="cyd-label">
+                  <input class="cyd-toggle-input" type="checkbox">
+                  <span class="cyd-slider"></span>
               </label>
           </div>
         </div>
         <div class="relative w-[55px] ml-[20px] flex items-center">
-          <img class="chat-support cursor-pointer" src="https://public.cypherd.io/icons/chat.png">
+          <img class="cyd-chat-support cursor-pointer" src="https://public.cypherd.io/icons/chat.png">
         </div>
       </div>
     </div>

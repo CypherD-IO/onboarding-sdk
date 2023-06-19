@@ -22,13 +22,13 @@ export const bridgeInput = (parentElement = document.getElementById("cyd-popup-b
     <div class="bg-primaryBg rounded-[30px] z-50 flex flex-col justify-between items-center m-auto w-[90%] lg:w-[30%]" id="cyd-bridge-input-screen">
       <div class="bg-primaryBg rounded-t-[30px] p-5 flex flex-col justify-center items-center w-full h-full">
         <div class="flex justify-between w-full mt-[5px]">
-          <img src="https://public.cypherd.io/icons/back_arrow.svg" class="back-button cursor-pointer"/>
-          <img src="https://public.cypherd.io/icons/close_icon.svg" class="close-popup cursor-pointer">
+          <img src="https://public.cypherd.io/icons/back_arrow.svg" class="cyd-back-button cursor-pointer"/>
+          <img src="https://public.cypherd.io/icons/close_icon.svg" class="cyd-close-popup cursor-pointer">
         </div>
         <h2 class="font-semibold text-[28px] text-primaryText my-5 lg:my-10">Enter Token Amount</h2>
         <h3 class="font-extrabold text-[22px] text-primaryText">USD</h3>
         <div class="flex justify-evenly w-full items-center">
-          <div class="bp-max-button rounded-full flex items-center justify-center h-[40px] w-[40px] lg:h-[40px] lg:w-[40px] bg-white cursor-pointer">
+          <div class="cyd-bp-max-button rounded-full flex items-center justify-center h-[40px] w-[40px] lg:h-[40px] lg:w-[40px] bg-white cursor-pointer">
             <p class="text-[12px] text-[#2081E1]">MAX</p>
           </div>
           <div id="cyd-bp-amount-input" class="w-[200px] lg:w-[250px]">
@@ -61,7 +61,7 @@ export const bridgeInput = (parentElement = document.getElementById("cyd-popup-b
       </div>
 
       <div class="bg-primaryBg py-5 lg:py-10 w-full flex items-center justify-center rounded-b-[30px]">
-        <button class="bridge-input-submit bg-[#2081E2] w-[60%] py-4 rounded-lg text-white text-[16px] font-semibold">
+        <button class="cyd-bridge-input-submit bg-[#2081E2] w-[60%] py-4 rounded-lg text-white text-[16px] font-semibold">
           Submit
         </button>
       </div>

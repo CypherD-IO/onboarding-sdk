@@ -21,16 +21,16 @@ describe('To check if swap condition is addressed and success is rendered fine',
     cy.wait('@swapChainsCheck', { timeout: 50000 });
     cy.wait('@swapTokensCheck', { timeout: 50000 });
 
-    cy.contains('tr', 'Matic Token').find('.exchange-token-button').eq(0).click()
+    cy.contains('tr', 'Matic Token').find('.cyd-exchange-token-button').eq(0).click()
 
     cy.wait('@swapTokensCheck', { timeout: 50000 });
     cy.getById('cyd-bp-amount-value').type('10');
-    cy.getByClass('bridge-input-submit').click();
+    cy.getByClass('cyd-bridge-input-submit').click();
 
     cy.intercept('POST', '**v1/swap/sdk/evm/chains/**/quote').as('getSwapQuote');
 
     cy.getById('cyd-switch-chain-screen').should('exist');
-    cy.getByClass('switch-chain-button').click();
+    cy.getByClass('cyd-switch-chain-button').click();
 
     cy.getById('cyd-bridge-summary-screen').should('exist');
 

@@ -18,13 +18,13 @@ describe('To check if the switch chain screen is rendered fine', () => {
     cy.wait('@fetchPortfolioBalances', { timeout: 50000 });
     cy.wait('@swapChainsCheck', { timeout: 50000 });
 
-    cy.getByClass('exchange-token-button').eq(0).click()
+    cy.getByClass('cyd-exchange-token-button').eq(0).click()
 
     cy.getById('cyd-bp-amount-value').type('20');
-    cy.getByClass('bridge-input-submit').click();
+    cy.getByClass('cyd-bridge-input-submit').click();
 
     cy.getById('cyd-switch-chain-screen').should('exist');
-    cy.getByClass('switch-chain-button').click();
+    cy.getByClass('cyd-switch-chain-button').click();
 
     cy.get('#cyd-bridge-summary-screen').should('exist');
   })

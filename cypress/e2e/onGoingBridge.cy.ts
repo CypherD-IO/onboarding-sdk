@@ -18,15 +18,15 @@ describe('To check if any going brige is present and render the respective scree
     cy.wait('@fetchPortfolioBalances', { timeout: 50000 });
     cy.wait('@swapChainsCheck', { timeout: 50000 });
 
-    cy.contains('tr', 'Matic Token').find('.exchange-token-button').eq(0).click()
+    cy.contains('tr', 'Matic Token').find('.cyd-exchange-token-button').eq(0).click()
 
     cy.getById('cyd-bp-amount-value').type('10');
-    cy.getByClass('bridge-input-submit').click();
+    cy.getByClass('cyd-bridge-input-submit').click();
 
     cy.getById('cyd-switch-chain-screen').should('exist');
     cy.intercept('POST', '**/v1/bridge/sdk/quote').as('getBridgeQuote');
 
-    cy.getByClass('switch-chain-button').click();
+    cy.getByClass('cyd-switch-chain-button').click();
 
     cy.getById('cyd-bridge-summary-screen').should('exist');
 
@@ -48,8 +48,8 @@ describe('To check if any going brige is present and render the respective scree
     cy.wait('@getGasPrice', { timeout: 50000 });
     cy.wait('@depositCall', { timeout: 50000 });
 
-    // cy.get(".maximize-onclick").click({force: true});
-    cy.getByClass('close-popup').click({force: true});
+    // cy.get(".cyd-maximize-onclick").click({force: true});
+    cy.getByClass('cyd-close-popup').click({force: true});
 
     cy.getById('cyd-sdkContainer')
       .should('not.exist');

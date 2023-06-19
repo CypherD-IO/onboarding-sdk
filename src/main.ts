@@ -111,7 +111,7 @@ try{
     const {popupBackground, sdkContainer, sheet} = createContainer();
     if (!showInfoScreen){
       portfolioLoading(popupBackground);
-      sdkContainer.classList.add('blurredBackdrop');
+      sdkContainer.classList.add('cyd-blurredBackdrop');
     }
     appendContainerToBody(popupBackground, sdkContainer, sheet);
     await fetchTokenData(walletAddress.toLowerCase());
@@ -131,7 +131,7 @@ try{
       requiredTokenBalance === 0 ||
       !haveEnoughBalance
     ) {
-      sdkContainer.classList.add('blurredBackdrop');
+      sdkContainer.classList.add('cyd-blurredBackdrop');
       const bridgeableTokensList: any = [];
       // only verified tokens and tokens with balance >= $10 is shown
       _.get(tokenHoldings, ["tokenPortfolio", "totalHoldings"])?.map((tokenDetail: any) => {

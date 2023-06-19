@@ -16,8 +16,8 @@ export const bridgeSummary = (parentElement = document.getElementById("cyd-popup
   const bridgeSummaryHTML = `
   <div class="flex flex-col justify-evenly items-center w-[90%] lg:w-[35%] m-auto bg-primaryBg rounded-[30px]" id="cyd-bridge-summary-screen">
     <div class="flex justify-between w-full px-[20px] mt-[20px]">
-      <img src="https://public.cypherd.io/icons/back_arrow.svg" class="back-button cursor-pointer"/>
-      <img src="https://public.cypherd.io/icons/close_icon.svg" class="close-popup cursor-pointer">
+      <img src="https://public.cypherd.io/icons/back_arrow.svg" class="cyd-back-button cursor-pointer"/>
+      <img src="https://public.cypherd.io/icons/close_icon.svg" class="cyd-close-popup cursor-pointer">
     </div>
 
     <div class="mt-[20px]">
@@ -25,7 +25,7 @@ export const bridgeSummary = (parentElement = document.getElementById("cyd-popup
     </div>
 
     <div class="flex flex-col items-center ml-[-20px] mr-[-20px] mt-[50px] w-[95%] border-[1px] border-borderColor rounded-[10px]">
-      <div class="bp-summary-row exchange-row py-[15px] px-[10px] bg-secondaryBg rounded-t-[10px]">
+      <div class="cyd-bp-summary-row exchange-row py-[15px] px-[10px] bg-secondaryBg rounded-t-[10px]">
         <p class="w-[30%] text-[14px] text-primaryText font-semibold">Exchange from</p>
         <div class="flex flex-row items-center w-[30%]">
           <img src="https://public.cypherd.io/icons/logos/${exchangingTokenDetail.chainDetails.backendName.toLowerCase()}.png" alt="${exchangingTokenDetail.chainDetails.backendName.toLowerCase()} logo" class="w-[22px] h-[22px] rounded-full" id="cyd-from-token-img">
@@ -36,12 +36,12 @@ export const bridgeSummary = (parentElement = document.getElementById("cyd-popup
           <p class="text-[14px] text-primaryText ml-[7px]">${exchangingTokenDetail.name}</p>
         </div>
       </div>
-      <div class="bp-summary-row amount-row py-[15px] px-[10px] bg-primaryBg">
+      <div class="cyd-bp-summary-row amount-row py-[15px] px-[10px] bg-primaryBg">
         <p class="w-[30%] text-[14px] text-primaryText">Amount Sending</p>
         <p class="w-[30%] text-[14px] text-primaryText">${parseFloat(tokenValueEntered).toFixed(6)} ${exchangingTokenDetail.symbol}</p>
         <p class="w-[30%] text-[14px] text-primaryText">$${parseFloat(usdValueEntered).toFixed(2)}</p>
       </div>
-      <div class="bp-summary-row exchange-row py-[15px] px-[10px] bg-secondaryBg">
+      <div class="cyd-bp-summary-row exchange-row py-[15px] px-[10px] bg-secondaryBg">
         <p class="w-[30%] text-[14px] text-primaryText font-semibold">Exchange to</p>
         <div class="flex flex-row items-center w-[30%]">
           <img src="https://public.cypherd.io/icons/logos/${requiredTokenDetail.chainDetails.backendName.toLowerCase()}.png" alt="${requiredTokenDetail.chainDetails.backendName.toLowerCase()} logo" class="w-[22px] h-[22px] rounded-full" id="cyd-to-token-img">
@@ -52,7 +52,7 @@ export const bridgeSummary = (parentElement = document.getElementById("cyd-popup
           <p class="text-[14px] text-primaryText ml-[7px]">${requiredTokenDetail.name}</p>
         </div>
       </div>
-      <div class="bp-summary-row amount-row py-[15px] px-[10px] bg-primaryBg rounded-b-[10px]">
+      <div class="cyd-bp-summary-row amount-row py-[15px] px-[10px] bg-primaryBg rounded-b-[10px]">
         <p class="w-[30%] text-[14px] text-primaryText">Amount Receiving</p>
         <p id="cyd-token-received" class="w-[30%] text-[14px] text-primaryText"> ... ${requiredTokenDetail.symbol}</p>
         <p id="cyd-usd-received" class="w-[30%] text-[14px] text-primaryText">$ ... </p>
@@ -60,7 +60,7 @@ export const bridgeSummary = (parentElement = document.getElementById("cyd-popup
     </div>
 
     <div class=" flex flex-row justify-center items-center w-[100%] mt-[50px]">
-      <button disabled id="cyd-bridge-submit-button" class="cyd-bridge-submit-button blue-button disabled-button bg-[#2081E2] text-[16px] font-semibold border-none text-white py-4 w-[60%] rounded-[3px]">Exchange</button>
+      <button disabled id="cyd-bridge-submit-button" class="cyd-bridge-submit-button cyd-blue-button cyd-disabled-button bg-[#2081E2] text-[16px] font-semibold border-none text-white py-4 w-[60%] rounded-[3px]">Exchange</button>
     </div>
     ${footer()}
   </div>`

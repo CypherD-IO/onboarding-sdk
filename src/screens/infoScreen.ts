@@ -15,7 +15,7 @@ export const infoScreen = (parentElement = document.getElementById("cyd-popup-ba
     >
       <div class="bg-primaryBg] rounded-t-[30px] p-5 flex flex-col justify-start items-center w-full">
         <div class="flex justify-end w-full">
-          <img src="https://public.cypherd.io/icons/close_icon.svg" class="close-popup cursor-pointer">
+          <img src="https://public.cypherd.io/icons/close_icon.svg" class="cyd-close-popup cursor-pointer">
         </div>
         <div>
           <h2 class="font-semibold text-[28px] my-5 text-primaryText text-center">
@@ -50,7 +50,7 @@ export const infoScreen = (parentElement = document.getElementById("cyd-popup-ba
         </p>
       </div>
       <div class="bg-primaryBg py-5 w-full flex items-center justify-center rounded-b-[30px]">
-        <button class="info-screen-continue bg-[#2081E2] py-4 w-[60%] rounded-lg text-white text-[16px] font-semibold">
+        <button class="cyd-info-screen-continue bg-[#2081E2] py-4 w-[60%] rounded-lg text-white text-[16px] font-semibold">
           Continue
         </button>
       </div>

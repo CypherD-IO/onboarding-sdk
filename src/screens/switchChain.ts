@@ -18,7 +18,7 @@ export const switchChain = (parentElement = document.getElementById("cyd-popup-b
     <div class="rounded-[30px] z-50 m-auto bg-primaryBg w-[90%] lg:w-[30%] justify-between items-center" id="cyd-switch-chain-screen">
       <div class=" bg-primaryBg] rounded-t-[30px] p-5 flex flex-col justify-start items-center w-full">
         <div class="flex justify-end w-full ">
-          <img src="https://public.cypherd.io/icons/close_icon.svg" class="close-popup cursor-pointer">
+          <img src="https://public.cypherd.io/icons/close_icon.svg" class="cyd-close-popup cursor-pointer">
         </div>
         <div>
           <h2 class="font-semibold text-[28px] my-5 lg:my-10 text-primaryText text-center">Switch to ${_.get(addChainData, CHAIN_ID_HEX_TO_ENUM_MAPPING.get(chain_id)!).chainName} for this exchange</h2>
@@ -41,7 +41,7 @@ export const switchChain = (parentElement = document.getElementById("cyd-popup-b
       </div>
 
       <div class="bg-primaryBg py-5 lg:py-10 w-full flex items-center justify-center rounded-b-[30px]">
-        <button params=${JSON.stringify({chainId: chain_id})} class="switch-chain-button bg-[#2081E2] py-4 w-[60%] rounded-lg text-white text-[16px] font-semibold">Switch</button>
+        <button params=${JSON.stringify({chainId: chain_id})} class="cyd-switch-chain-button bg-[#2081E2] py-4 w-[60%] rounded-lg text-white text-[16px] font-semibold">Switch</button>
       </div>
       ${footer()}
     </div>`;

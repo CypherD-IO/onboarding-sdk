@@ -29,7 +29,7 @@ describe('To test if footer section is rendered conditionally' , ()=> {
      const isDarkMode = bgColor === 'rgb(22, 22, 25)';
      const isLightMode = bgColor === 'rgb(255, 255, 255)';
      expect(isDarkMode).to.be.true;
-     cy.getByClass('toggle-input').click({force:true});
+     cy.getByClass('cyd-toggle-input').click({force:true});
      cy.getById('cyd-bridge-info-screen').should(($el) => {
        const newBgColor = $el.css('background-color');
        if (isDarkMode) {

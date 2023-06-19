@@ -15,7 +15,7 @@ export const emptyWallet = (parentElement = document.getElementById("cyd-popup-b
     class="flex flex-col items-center justify-between max-h-[85%] rounded-[30px] bg-primaryBg w-11/12 lg:w-3/5"
   >
     <div class="flex flex-row justify-end w-[95%] mt-[20px] mx-[30px] bg-primaryBg">
-      <img src="https://public.cypherd.io/icons/close_icon.svg" class="close-popup cursor-pointer">
+      <img src="https://public.cypherd.io/icons/close_icon.svg" class="cyd-close-popup cursor-pointer">
     </div>
     <div class="my-[20px] px-10 lg:px-0 text-center">
       <span class="text-[23px] text-primaryText font-semibold float-left">You need</span>

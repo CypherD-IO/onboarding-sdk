@@ -58,14 +58,14 @@ export const onGetQuote = async () => {
                 };
                 if(await getSwapAllowanceApproval()) {
                   bridgeSubmitButton!.disabled = false;
-                  bridgeSubmitButton!.classList.remove("disabled-button");
+                  bridgeSubmitButton!.classList.remove("cyd-disabled-button");
                 }
               } else {
                 globalThis.allowanceData = {
                   isAllowance: false
                 };
                 bridgeSubmitButton!.disabled = false;
-                bridgeSubmitButton!.classList.remove("disabled-button");
+                bridgeSubmitButton!.classList.remove("cyd-disabled-button");
               }
             } else {
               globalThis.toastMixin.fire({
@@ -79,7 +79,7 @@ export const onGetQuote = async () => {
               isAllowance: false
             };
             bridgeSubmitButton!.disabled = false;
-            bridgeSubmitButton!.classList.remove("disabled-button");
+            bridgeSubmitButton!.classList.remove("cyd-disabled-button");
           }
         } else {
           if (data.error?.errors) {
@@ -127,7 +127,7 @@ export const onGetQuote = async () => {
           document.getElementById("cyd-token-received")!.textContent = data.transferAmount.toFixed(6) + ' ' + requiredTokenDetail.symbol;
           document.getElementById("cyd-usd-received")!.textContent = '$ ' + data.usdValue.toFixed(2);
           bridgeSubmitButton!.disabled = false;
-          bridgeSubmitButton!.classList.remove("disabled-button");
+          bridgeSubmitButton!.classList.remove("cyd-disabled-button");
         }
       });
   }

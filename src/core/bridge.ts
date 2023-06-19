@@ -100,19 +100,19 @@ export const isBridgeOngoing = async () => {
             window.localStorage.removeItem(EXPIRATION_KEY);
             const {popupBackground, sdkContainer, sheet} = createContainer();
             bridgeSuccess(!(await checkNetwork(globalThis.requiredTokenDetail.chainDetails.chain_id)), popupBackground);
-            sdkContainer.classList.add('blurredBackdrop');
+            sdkContainer.classList.add('cyd-blurredBackdrop');
             appendContainerToBody(popupBackground, sdkContainer, sheet);
           } else if (data?.activityStatus?.status === ACTIVITY_STATUS.FAILED) {
             window.localStorage.removeItem(ONONGOING_BRIDGE_DATA);
             window.localStorage.removeItem(EXPIRATION_KEY);
             const {popupBackground, sdkContainer, sheet} = createContainer();
             bridgeFailed(popupBackground);
-            sdkContainer.classList.add('blurredBackdrop');
+            sdkContainer.classList.add('cyd-blurredBackdrop');
             appendContainerToBody(popupBackground, sdkContainer, sheet);
           } else {
             const {popupBackground, sdkContainer, sheet} = createContainer();
             bridgeLoading(popupBackground);
-            sdkContainer.classList.add('blurredBackdrop');
+            sdkContainer.classList.add('cyd-blurredBackdrop');
             appendContainerToBody(popupBackground, sdkContainer, sheet);
             minimizeWindow();
             const interval = setInterval(() => {

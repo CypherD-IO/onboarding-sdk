@@ -15,7 +15,7 @@ describe('To check maximise and minimise functionality in portfolio loading scre
 
     cy.getById("cyd-addPopup").click();
 
-    cy.getByClass('minimize-button').trigger("click");
+    cy.getByClass('cyd-minimize-button').trigger("click");
 
     cy.getById('cyd-sdkContainer')
       .should('have.css', 'background-color', 'rgba(0, 0, 0, 0)')
@@ -33,7 +33,7 @@ describe('To check maximise and minimise functionality in portfolio loading scre
         expect(left).to.be.closeTo(1500, 1);
       })
 
-    cy.get(".maximize-onclick").click({force: true});
+    cy.get(".cyd-maximize-onclick").click({force: true});
 
 
     cy.get("#cyd-sdkContainer")
