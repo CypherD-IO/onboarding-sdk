@@ -1,4 +1,4 @@
-describe('To check if bridge input screen is rendered fine ', () => {
+describe('To check if bridge input screen is rendered fine', () => {
   beforeEach(() => {
     cy.visit('/sdkTest.html');
 
@@ -8,18 +8,13 @@ describe('To check if bridge input screen is rendered fine ', () => {
     cy.getById("requiredTokenBalance").type('0');
     cy.getById("showInfoScreenFalse").check();
 
-    cy.wait(5000);
-    cy.log('intercept getportfoliocall');
     cy.intercept('GET', '**/portfolio/balances**').as('fetchPortfolioBalances');
-    cy.getById("addPopup").click();
-    cy.log('intercept swapChani call');
     cy.intercept('GET', '**/swap/evm/chains').as('swapChainsCheck');
-    cy.log('wait for intercept getportfoliocall');
-    cy.wait(5000);
-    cy.wait('@fetchPortfolioBalances', { timeout: 50000 }).then(() => {
-      cy.log('wait for swapChani call');
-      cy.wait('@swapChainsCheck', { timeout: 50000 });
-    });
+
+    cy.getById("addPopup").click();
+
+    cy.wait('@fetchPortfolioBalances', { timeout: 50000 });
+    cy.wait('@swapChainsCheck', { timeout: 50000 });
 
     cy.getByClass('exchange-token-button').eq(0).click()
   })

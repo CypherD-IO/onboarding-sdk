@@ -10,14 +10,13 @@ describe('To check if the brige success screen is rendered fine', () => {
     cy.getById("showInfoScreenFalse").check();
     cy.getById("appId").type("CYPRESS_TEST")
 
-    cy.wait(5000);
     cy.intercept('GET', '**/portfolio/balances**').as('fetchPortfolioBalances');
-    cy.getById("addPopup").click();
     cy.intercept('GET', '**/swap/evm/chains').as('swapChainsCheck');
-    cy.wait(5000);
-    cy.wait('@fetchPortfolioBalances', { timeout: 50000 }).then(() => {
-      cy.wait('@swapChainsCheck', { timeout: 50000 });
-    });
+
+    cy.getById("addPopup").click();
+
+    cy.wait('@fetchPortfolioBalances', { timeout: 50000 });
+    cy.wait('@swapChainsCheck', { timeout: 50000 });
 
     cy.contains('tr', 'Matic Token').find('.exchange-token-button').eq(0).click()
 
@@ -41,13 +40,15 @@ describe('To check if the brige success screen is rendered fine', () => {
       .should('not.be.disabled');
 
     cy.intercept('**/v1/bridge/sdk/quote/**/deposit').as('depositCall');
+    cy.intercept('**v1/prices/gas/**').as('getGasPrice');
+
     cy.getById('bridge-submit-blue-button')
       .click()
+
     cy.getById('bridge-loading-screen').should('exist');
-    cy.intercept('**v1/prices/gas/**').as('getGasPrice');
-    cy.wait('@getGasPrice', { timeout: 50000 }).then(() => {
-      cy.wait('@depositCall', { timeout: 50000 });
-    });
+
+    cy.wait('@getGasPrice', { timeout: 50000 });
+    cy.wait('@depositCall', { timeout: 50000 });
 
     const interceptAndWait = () => {
       cy.intercept('**/v1/activities/status/bridge/**').as('statusCheck')
@@ -67,4 +68,3 @@ describe('To check if the brige success screen is rendered fine', () => {
     cy.getById('bp-switch-container').click();
   })
 })
-

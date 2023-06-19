@@ -10,22 +10,21 @@ describe('To check if swap condition is addressed and success is rendered fine',
     cy.getById("showInfoScreenFalse").check();
     cy.getById("appId").type("CYPRESS_TEST")
 
-    cy.wait(5000);
     cy.intercept('GET', '**/portfolio/balances**').as('fetchPortfolioBalances');
-    cy.getById("addPopup").click();
     cy.intercept('GET', '**/swap/evm/chains').as('swapChainsCheck');
-    cy.intercept({method: 'GET', url: '**/swap/evm/chains/**', times: 1}).as('swapTokensCheck');
-    cy.wait(5000);
-    cy.wait('@fetchPortfolioBalances', { timeout: 50000 }).then(() => {
-      cy.wait('@swapChainsCheck', { timeout: 50000 }).then(() => {
-        cy.wait('@swapTokensCheck', { timeout: 50000 });
-      });
-    });
+    cy.intercept('GET', '**/swap/evm/chains/**').as('swapTokensCheck');
+    cy.intercept('GET', '**/swap/evm/chains/**').as('swapTokensCheck');
+
+    cy.getById("addPopup").click();
+
+    cy.wait('@fetchPortfolioBalances', { timeout: 50000 });
+    cy.wait('@swapChainsCheck', { timeout: 50000 });
+    cy.wait('@swapTokensCheck', { timeout: 50000 });
 
     cy.contains('tr', 'Matic Token').find('.exchange-token-button').eq(0).click()
 
+    cy.wait('@swapTokensCheck', { timeout: 50000 });
     cy.getById('bp-amount-value').type('10');
-
     cy.getByClass('bridge-input-submit').click();
 
     cy.intercept('POST', '**v1/swap/sdk/evm/chains/**/quote').as('getSwapQuote');
