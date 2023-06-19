@@ -10,12 +10,15 @@ describe('To test if information screen is rendered conditionaly', () => {
     cy.getById("showInfoScreenTrue").check();
 
     cy.intercept('GET', '**/portfolio/balances**').as('fetchPortfolioBalances');
-    cy.getById("addPopup").click();
-    cy.getById("portfolio-loading-screen").should("not.exist");
     cy.intercept('GET', '**/swap/evm/chains').as('swapChainsCheck');
-    cy.wait('@fetchPortfolioBalances', { timeout: 50000 }).then(() => {
-      cy.wait('@swapChainsCheck', { timeout: 50000 });
-    });
+
+    cy.getById("addPopup").click();
+
+    cy.getById("portfolio-loading-screen").should("not.exist");
+
+    cy.wait('@fetchPortfolioBalances', { timeout: 50000 });
+    cy.wait('@swapChainsCheck', { timeout: 50000 });
+
     cy.getById('bridge-info').should('exist')
 
     cy.getById('required-token-img')
@@ -33,11 +36,13 @@ describe('To test if information screen is rendered conditionaly', () => {
 
     cy.intercept('GET', '**/portfolio/balances**').as('fetchPortfolioBalances');
     cy.intercept('GET', '**/swap/evm/chains').as('swapChainsCheck');
+
     cy.getById("addPopup").click();
+
     cy.getById("portfolio-loading-screen").should("exist");
-    cy.wait('@fetchPortfolioBalances', { timeout: 50000 }).then(() => {
-      cy.wait('@swapChainsCheck', { timeout: 50000 });
-    });
+
+    cy.wait('@fetchPortfolioBalances', { timeout: 50000 });
+    cy.wait('@swapChainsCheck', { timeout: 50000 });
 
     cy.getById('bridge-info').should('not.exist');
   });
