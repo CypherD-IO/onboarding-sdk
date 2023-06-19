@@ -1,0 +1,86 @@
+<html>
+
+<head>
+  <title>Sample</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primaryBg: 'var(--theme-primaryBg)',
+            secondaryBg: 'var(--theme-secondaryBg)',
+            primaryText: 'var(--theme-primaryText)',
+            borderColor: 'var(--theme-borderColor)',
+            stripedTableBg: 'var(--theme-stripedTableBg)'
+          }
+        }
+      }
+    }
+  </script>
+  <script type="text/javascript" src="./web3MockOnSdk.js"></script>
+  <script>setTimeout('', 10000)</script>
+  <script type="text/javascript" src="../dist/esbuild/onboardingsdk.js"></script>
+  <script>setTimeout('', 10000)</script>
+  <!-- <link rel="stylesheet" href="../dist/output.css"> -->
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+</head>
+
+<body>
+  <p>Wallet Address :</p>
+  <input type="text" id="address" placeholder="Enter wallet address">
+  <br>
+  <br>
+
+  <p>Chain ID :</p>
+  <input type="text" id="targetChainIdHex" placeholder="Enter required token's chain ID">
+  <br>
+  <br>
+
+  <p>Token Contract Address :</p>
+  <input type="text" id="requiredTokenContractAddress" placeholder="Enter required token's contract address">
+  <br>
+  <br>
+
+  <p>App-Id : </p>
+  <input type="text" id="appId" placeholder="Enter App-Id">
+  <br>
+  <br>
+
+  <p>Token Balance :</p>
+  <input type="number" id="requiredTokenBalance" placeholder="Enter number of tokens required">
+  <br>
+  <br>
+
+  <p>Show Info Screen :</p>
+  <input type="radio" name="showInfoScreen" value="true" id="showInfoScreenTrue">
+  <label for="showInfoScreenTrue">True</label>
+  <br>
+  <input type="radio" name="showInfoScreen" value="false" id="showInfoScreenFalse">
+  <label for="showInfoScreenFalse">False</label>
+  <br>
+  <br>
+
+  <p id="op">pp</p>
+  <button id="addPopup" onclick="test()">Add Popup</button>
+  <script>
+    const a = async () => {
+      const outputElement = document.getElementById("op");
+      outputElement.textContent = await window.ethereum.request({method: 'eth_chainId'});
+    }
+    a();
+    function test() {
+      window.Cypher({
+        address: document.getElementById('address').value,
+        targetChainIdHex: document.getElementById('targetChainIdHex').value,
+        requiredTokenContractAddress: document.getElementById('requiredTokenContractAddress').value,
+        requiredTokenBalance: parseFloat(document.getElementById('requiredTokenBalance').value),
+        showInfoScreen: document.querySelector('input[name="showInfoScreen"]:checked').value === 'true',
+        appId: document.getElementById('appId').value,
+        production: false
+      });
+    }
+  </script>
+</body>
+
+</html>

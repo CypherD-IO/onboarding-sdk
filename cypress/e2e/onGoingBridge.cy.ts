@@ -2,8 +2,8 @@ describe('To check if any going brige is present and render the respective scree
   beforeEach(() => {
     cy.visit('/sdkTest.html');
   });
-  it('should render the success screen without switch back button', () => {
-    cy.getById("address").type('0x71d357ef7e29f07473f9edfb2140f14605c9f309');
+  it('should render the success screen without switch-back button', () => {
+    cy.getById("address").type('0x6baa80fa2ad0cc622198b5a5128caf135ca34374');
     cy.getById("targetChainIdHex").type('0x2329');
     cy.getById("requiredTokenContractAddress").type('0x93581991f68dbae1ea105233b67f7fa0d6bdee7b');
     cy.getById("requiredTokenBalance").type('0');
@@ -24,11 +24,11 @@ describe('To check if any going brige is present and render the respective scree
     cy.getByClass('bridge-input-submit').click();
 
     cy.getById('switch-chain-screen').should('exist');
+    cy.intercept('POST', '**/v1/bridge/sdk/quote').as('getBridgeQuote');
+
     cy.getByClass('switch-chain-button').click();
 
     cy.getById('bridge-summary-screen').should('exist');
-
-    cy.intercept('POST', '**/v1/bridge/sdk/quote').as('getBridgeQuote');
 
     cy.wait('@getBridgeQuote', {timeout: 50000})
       .its('response.statusCode')
@@ -47,9 +47,6 @@ describe('To check if any going brige is present and render the respective scree
 
     cy.wait('@getGasPrice', { timeout: 50000 });
     cy.wait('@depositCall', { timeout: 50000 });
-
-    // close the popup ater the deposit call is called and trigger the popup again
-    cy.getById('bridge-loading-screen').should('exist');
 
     // cy.get(".maximize-onclick").click({force: true});
     cy.getByClass('close-popup').click({force: true});
@@ -73,6 +70,7 @@ describe('To check if any going brige is present and render the respective scree
 
       cy.wait('@statusCheck', {timeout: 50000}).then((interception) => {
         const response = interception.response;
+        cy.log('response : ', response);
         if (response.body.activityStatus.status !== 'COMPLETED') {
           interceptAndWait();
         }

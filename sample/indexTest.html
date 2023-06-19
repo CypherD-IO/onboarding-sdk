@@ -2,8 +2,24 @@
 
 <head>
   <title>Sample</title>
-  <script type="text/javascript" src="https://public-dev.cypherd.io/sdk/web3MockOnSdk.js"></script>
-  <script type="text/javascript" src="https://public-dev.cypherd.io/sdk/cypher-sdk.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primaryBg: 'var(--theme-primaryBg)',
+            secondaryBg: 'var(--theme-secondaryBg)',
+            primaryText: 'var(--theme-primaryText)',
+            borderColor: 'var(--theme-borderColor)',
+            stripedTableBg: 'var(--theme-stripedTableBg)'
+          }
+        }
+      }
+    }
+  </script>
+  <script type="text/javascript" src="../dist/esbuild/web3MockOnSdk.js"></script>
+  <script type="text/javascript" src="../dist/esbuild/onboardingsdk.js"></script>
   <!-- <link rel="stylesheet" href="../dist/output.css"> -->
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 </head>

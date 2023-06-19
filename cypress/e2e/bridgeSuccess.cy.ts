@@ -3,7 +3,7 @@ describe('To check if the brige success screen is rendered fine', () => {
     cy.visit('/sdkTest.html');
   });
   it('should render the success screen with switch back button', () => {
-    cy.getById("address").type('0x71d357ef7e29f07473f9edfb2140f14605c9f309');
+    cy.getById("address").type('0x6baa80fa2ad0cc622198b5a5128caf135ca34374');
     cy.getById("targetChainIdHex").type('0x2329');
     cy.getById("requiredTokenContractAddress").type('0x93581991f68dbae1ea105233b67f7fa0d6bdee7b');
     cy.getById("requiredTokenBalance").type('0');
@@ -24,11 +24,13 @@ describe('To check if the brige success screen is rendered fine', () => {
     cy.getByClass('bridge-input-submit').click();
 
     cy.getById('switch-chain-screen').should('exist');
+
+    cy.intercept('POST', '**/v1/bridge/sdk/quote').as('getBridgeQuote');
+
     cy.getByClass('switch-chain-button').click();
 
     cy.getById('bridge-summary-screen').should('exist');
 
-    cy.intercept('POST', '**/v1/bridge/sdk/quote').as('getBridgeQuote');
 
     cy.wait('@getBridgeQuote', {timeout: 50000})
       .its('response.statusCode')
@@ -37,11 +39,11 @@ describe('To check if the brige success screen is rendered fine', () => {
     cy.getById('bridge-submit-blue-button')
       .should('not.be.disabled');
 
-    cy.getById('bridge-submit-blue-button')
-      .click()
-
     cy.intercept('**/v1/bridge/sdk/quote/**/deposit').as('depositCall');
     cy.intercept('**v1/prices/gas/**').as('getGasPrice');
+
+    cy.getById('bridge-submit-blue-button')
+      .click()
 
     cy.getById('bridge-loading-screen').should('exist');
 
@@ -66,4 +68,3 @@ describe('To check if the brige success screen is rendered fine', () => {
     cy.getById('bp-switch-container').click();
   })
 })
-

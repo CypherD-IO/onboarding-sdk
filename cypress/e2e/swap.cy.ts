@@ -3,7 +3,7 @@ describe('To check if swap condition is addressed and success is rendered fine',
     cy.visit('/sdkTest.html');
   })
   it('should call the swap contract and render the success screen without switch back button', () => {
-    cy.getById("address").type('0x71d357ef7e29f07473f9edfb2140f14605c9f309');
+    cy.getById("address").type('0x6baa80fa2ad0cc622198b5a5128caf135ca34374');
     cy.getById("targetChainIdHex").type('0x89');
     cy.getById("requiredTokenContractAddress").type('0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174');
     cy.getById("requiredTokenBalance").type('0');

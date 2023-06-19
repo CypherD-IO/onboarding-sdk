@@ -1,7 +1,6 @@
 describe('To check maximise and minimise functionality in portfolio loading screem', () => {
   beforeEach(() => {
     cy.visit('/sdkTest.html');
-    cy.viewport(1000, 660);
   })
   it('should minimize the window when the minimize button is clicked', () => {
 

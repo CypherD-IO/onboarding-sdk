@@ -87,8 +87,8 @@ describe('To check whether exchange button is disabled and enabled fine', () => 
     cy.getById("appId").type("CYPRESS_TEST")
 
     cy.intercept('GET', '**/portfolio/balances**').as('fetchPortfolioBalances');
-    cy.intercept('GET', '**/swap/evm/chains').as('swapChainsCheck');
-    cy.intercept('GET', '**/swap/evm/chains/**').as('swapTokensCheck');
+    cy.intercept({method: 'GET', url: '**/swap/evm/chains', times: 1}).as('swapChainsCheck');
+    cy.intercept({method: 'GET', url: '**/swap/evm/chains/**', times: 1}).as('swapTokensCheck');
 
     cy.getById("addPopup").click();
 
@@ -99,12 +99,12 @@ describe('To check whether exchange button is disabled and enabled fine', () => 
     cy.contains('tr', 'ETH').find('.exchange-token-button').eq(0).click()
 
     cy.getById('bp-amount-value').type('10');
+    cy.intercept('POST', '**/v1/bridge/sdk/quote').as('getBridgeQuote');
+
     cy.getByClass('bridge-input-submit').click();
 
     cy.get('#bridge-submit-blue-button')
       .should('be.disabled');
-
-    cy.intercept('POST', '**/v1/bridge/sdk/quote').as('getBridgeQuote');
 
     cy.wait('@getBridgeQuote', {timeout: 50000})
       .its('response.statusCode')
