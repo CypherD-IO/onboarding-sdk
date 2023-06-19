@@ -3,7 +3,7 @@ import { footer } from "../components/footer";
 
 declare let globalThis: any;
 
-export const infoScreen = (parentElement = document.getElementById("popupBackground")) => {
+export const infoScreen = (parentElement = document.getElementById("cyd-popup-background")) => {
   const {
     requiredTokenDetail
   } = globalThis;
@@ -11,31 +11,31 @@ export const infoScreen = (parentElement = document.getElementById("popupBackgro
   const infoScreenHTML = `
     <div
       class="rounded-[30px] z-50 m-auto bg-primaryBg w-[90%] lg:w-[40%] justify-between items-center"
-      id="bridge-info"
+      id="cyd-bridge-info-screen"
     >
       <div class="bg-primaryBg] rounded-t-[30px] p-5 flex flex-col justify-start items-center w-full">
         <div class="flex justify-end w-full">
           <img src="https://public.cypherd.io/icons/close_icon.svg" class="close-popup cursor-pointer">
         </div>
-        <div id="bp-heading">
+        <div>
           <h2 class="font-semibold text-[28px] my-5 text-primaryText text-center">
             You need to bridge first
           </h2>
         </div>
         <div class="flex items-start justify-evenly w-[95%] my-5">
-          <div id="bp-switch-chain-container">
+          <div class="flex flex-col justify-center items-center w-[100px]">
             <img src="https://public.cypherd.io/assets/dapps/unknownToken.png" class="w-[42px] h-[42px]" alt="">
             <p class="text-[#929292] font-normal text-[16px] text-center mt-2 mb-1">Any Token</p>
             <p class="text-primaryText font-semibold text-[18px] text-center">Any Chain</p>
           </div>
-          <div id="bp-switch-icon-container">
+          <div>
             <img src="https://public.cypherd.io/icons/logos/switch_network.png" alt="switch icon" class="w-[100px] h-[100px]">
           </div>
-          <div id="bp-switch-chain-container">
+          <div class="flex flex-col justify-center items-center w-[100px]">
             <img src="${_.get(requiredTokenDetail, ['logoUrl'])}"
               class="w-[42px] h-[42px]"
               alt="${_.get(requiredTokenDetail, ['name'])}"
-              id="required-token-img"
+              id="cyd-required-token-img"
             >
             <p class="text-[#929292] font-normal text-[16px] text-center mt-2 mb-">
               ${_.get(requiredTokenDetail, ['symbol'])}

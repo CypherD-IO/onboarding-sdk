@@ -11,7 +11,7 @@ describe('To test if footer section is rendered conditionally' , ()=> {
    cy.intercept('GET', '**/portfolio/balances**').as('fetchPortfolioBalances');
    cy.intercept('GET', '**/swap/evm/chains').as('swapChainsCheck');
 
-   cy.getById("addPopup").click();
+   cy.getById("cyd-addPopup").click();
 
    cy.wait('@fetchPortfolioBalances', { timeout: 50000 });
    cy.wait('@swapChainsCheck', { timeout: 50000 });
@@ -24,13 +24,13 @@ describe('To test if footer section is rendered conditionally' , ()=> {
  });
 
  it('should toggle dark mode when the toggle label is clicked', () => {
-   cy.getById('bridge-info').then(($el) => {
+   cy.getById('cyd-bridge-info-screen').then(($el) => {
      const bgColor = $el.css('background-color');
      const isDarkMode = bgColor === 'rgb(22, 22, 25)';
      const isLightMode = bgColor === 'rgb(255, 255, 255)';
      expect(isDarkMode).to.be.true;
      cy.getByClass('toggle-input').click({force:true});
-     cy.getById('bridge-info').should(($el) => {
+     cy.getById('cyd-bridge-info-screen').should(($el) => {
        const newBgColor = $el.css('background-color');
        if (isDarkMode) {
          expect(newBgColor).to.equal('rgb(255, 255, 255)');

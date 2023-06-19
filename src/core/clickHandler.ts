@@ -26,7 +26,7 @@ export const clickHandler = (event: any) => {
     triggerBridgePopup(params.exchangingTokenDetail);
   } if (classList.contains("bp-max-button") || event.target.closest(".bp-max-button")) {
     onMax();
-  } if (classList.contains("bridge-submit-blue-button")) {
+  } if (classList.contains("cyd-bridge-submit-button")) {
     onBridgeClick();
   } if (classList.contains("bridge-input-submit")) {
     bridgeSubmitConditionCheck();

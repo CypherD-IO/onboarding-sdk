@@ -1,8 +1,8 @@
 import { footer } from "../components";
 
-export const portfolioLoading = (parentElement = document.getElementById("popupBackground")) => {
+export const portfolioLoading = (parentElement = document.getElementById("cyd-popup-background")) => {
   const portfolioLoadingHTML =`
-    <div id="portfolio-loading-screen"
+    <div id="cyd-portfolio-loading-screen"
       class="maximize-onclick flex flex-col rounded-[30px] bg-primaryBg pt-[25px] w-[90%] lg:w-[30%]"
     >
       <div class="flex flex-row justify-end items-center w-full px-[20px]">

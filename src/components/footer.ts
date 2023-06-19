@@ -14,7 +14,7 @@ export const footer = () => {
         <div class="h-[35px] w-[70px] flex flex-row">
           <div class="toggle-switch">
               <label>
-                  <input id="theme-toggle" class="toggle-input" type="checkbox">
+                  <input class="toggle-input" type="checkbox">
                   <span class="slider"></span>
               </label>
           </div>

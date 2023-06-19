@@ -3,7 +3,7 @@ export const noBalanceCSS = `
   z-index: 2147483647;
 }
 
-#sdkContainer {
+#cyd-sdkContainer {
   display: flex;
   flex-direction: column;
   position: fixed;
@@ -22,7 +22,7 @@ export const noBalanceCSS = `
   backdrop-filter: blur(5px);
 }
 
-#popupBackground {
+#cyd-popup-background {
   display: flex;
   flex-direction: column;
   position: relative;
@@ -38,7 +38,7 @@ export const noBalanceCSS = `
   justify-content: space-between;
 }
 
-#tokens-available-flex-box {
+.tokens-available-flex-box {
   height: 100%;
   overflow: scroll;
   border-radius: 10px;
@@ -105,17 +105,7 @@ tr{
   color: black;
 }
 
-// #bridge-popup-css {
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: space-between;
-//   align-items: center;
-//   margin: auto;
-//   width: 30%;
-//   background-color: #fefefe;
-// }
-
-#bp-amount-input {
+#cyd-bp-amount-input {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -123,7 +113,21 @@ tr{
   align-items: stretch;
 }
 
-#bp-token-value-flex-box {
+#cyd-bp-token-value-flex-box {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#cyd-bp-balance-detail-usd {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#cyd-bp-balance-detail-token {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -131,49 +135,12 @@ tr{
 }
 
 
-#bp-balance-detail {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-#bp-balance-detail-usd {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-}
-
-#bp-balance-detail-token {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
-
-
-#bp-switch-container {
+#cyd-bp-switch-container {
   display: flex;
   flex-direction: row;
   justify-content: center;
   width: 100%;
   align-items: center;
-}
-
-#bp-switch-chain-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100px;
-}
-
-#bp-summary-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-left: -20px;
-  margin-right: -20px;
 }
 
 .bp-summary-row {

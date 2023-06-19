@@ -12,41 +12,41 @@ describe('To check if the bridge loading screen is rendered fine', () => {
     cy.intercept('GET', '**/portfolio/balances**').as('fetchPortfolioBalances');
     cy.intercept('GET', '**/swap/evm/chains').as('swapChainsCheck');
 
-    cy.getById("addPopup").click();
+    cy.getById("cyd-addPopup").click();
 
     cy.wait('@fetchPortfolioBalances', { timeout: 50000 });
     cy.wait('@swapChainsCheck', { timeout: 50000 });
 
     cy.contains('tr', 'Matic Token').find('.exchange-token-button').eq(0).click()
 
-    cy.getById('bp-amount-value').type('10');
+    cy.getById('cyd-bp-amount-value').type('10');
     cy.getByClass('bridge-input-submit').click();
 
-    cy.getById('switch-chain-screen').should('exist');
+    cy.getById('cyd-switch-chain-screen').should('exist');
     cy.intercept('POST', '**/v1/bridge/sdk/quote').as('getBridgeQuote');
     cy.getByClass('switch-chain-button').click();
 
-    cy.getById('bridge-summary-screen').should('exist');
+    cy.getById('cyd-bridge-summary-screen').should('exist');
 
     cy.wait('@getBridgeQuote', {timeout: 50000})
       .its('response.statusCode')
       .should('eq', 201);
 
-    cy.getById('bridge-submit-blue-button')
+    cy.getById('cyd-bridge-submit-button')
       .should('not.be.disabled');
 
-    cy.getById('bridge-submit-blue-button')
+    cy.getById('cyd-bridge-submit-button')
       .click()
 
     cy.intercept('**/v1/bridge/sdk/quote/**/deposit').as('depositCall');
     cy.intercept('**v1/prices/gas/**').as('getGasPrice');
 
-    cy.getById('bridge-loading-screen').should('exist');
+    cy.getById('cyd-bridge-loading-screen').should('exist');
 
     cy.wait('@getGasPrice', { timeout: 50000 });
     cy.wait('@depositCall', { timeout: 50000 });
 
-    cy.getById('sdkContainer')
+    cy.getById('cyd-sdkContainer')
       .should('have.css', 'background-color', 'rgba(0, 0, 0, 0)')
       .and('have.css', 'backdrop-filter', 'none')
       .and('have.css', 'zoom', '0.4')
@@ -65,7 +65,7 @@ describe('To check if the bridge loading screen is rendered fine', () => {
     cy.get(".maximize-onclick").click({force: true});
 
 
-    cy.get("#sdkContainer")
+    cy.get("#cyd-sdkContainer")
         .should("have.css", "zoom", "1")
         .should(($element) => {
           const height = $element.height();
@@ -93,7 +93,7 @@ describe('To check if the bridge loading screen is rendered fine', () => {
     interceptAndWait();
 
 
-    cy.getById('bridge-success-screen').should('exist');
+    cy.getById('cyd-bridge-success-screen').should('exist');
 
   })
 });

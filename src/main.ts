@@ -57,7 +57,7 @@ export const Cypher = async ({
   showInfoScreen = false,
   production = true
 }: DappDetails): Promise<void> => {
-  if (document.getElementById('popupBackground') !== null) {
+  if (document.getElementById('cyd-popup-background') !== null) {
     return;
   }
 

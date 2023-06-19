@@ -12,7 +12,7 @@ describe('To check if bridge summary screen is rendered fine', ()=>{
     cy.intercept('GET', '**/portfolio/balances**').as('fetchPortfolioBalances');
     cy.intercept('GET', '**/swap/evm/chains').as('swapChainsCheck');
 
-    cy.getById("addPopup").click();
+    cy.getById("cyd-addPopup").click();
 
     cy.wait('@fetchPortfolioBalances', { timeout: 50000 });
     cy.wait('@swapChainsCheck', { timeout: 50000 });
@@ -20,47 +20,47 @@ describe('To check if bridge summary screen is rendered fine', ()=>{
     cy.contains('tr', 'ETH').find('.exchange-token-button').eq(0).click()
   })
   it('should check whether summary screen renders correctly without switch chain' , ()=>{
-    cy.getById('bp-amount-value').type('10');
+    cy.getById('cyd-bp-amount-value').type('10');
     cy.getByClass('bridge-input-submit').click();
-    cy.getById('switch-chain-screen').should('not.exist');
-    cy.get('#bridge-summary-screen').should('exist');
+    cy.getById('cyd-switch-chain-screen').should('not.exist');
+    cy.get('#cyd-bridge-summary-screen').should('exist');
   });
 
   it('should check whether summary screen renders correctly' , ()=>{
-    cy.getById('bp-amount-value').type('10');
+    cy.getById('cyd-bp-amount-value').type('10');
     cy.getByClass('bridge-input-submit').click();
-    cy.get('#bridge-summary-screen').should('exist');
+    cy.get('#cyd-bridge-summary-screen').should('exist');
   });
 
   it('should go back to enter screen when back button is clicked',()=>{
-    cy.getById('bp-amount-value').type('10');
+    cy.getById('cyd-bp-amount-value').type('10');
     cy.getByClass('bridge-input-submit').click();
     cy.wait(1000)
     cy.getByClass('back-button').click();
-    cy.getById('bridge-input-screen').should('exist');
+    cy.getById('cyd-bridge-input-screen').should('exist');
   })
 
   it('should check if images are rendered properly' , ()=>{
 
-    cy.getById('bp-amount-value').type('10');
+    cy.getById('cyd-bp-amount-value').type('10');
     cy.getByClass('bridge-input-submit').click();
 
-    cy.getById('from-token-img')
+    cy.getById('cyd-from-token-img')
       .should('be.visible')
       .and('have.prop', 'naturalWidth')
       .should('be.greaterThan', 0);
 
-    cy.getById('from-chain-img')
+    cy.getById('cyd-from-chain-img')
       .should('be.visible')
       .and('have.prop', 'naturalWidth')
       .should('be.greaterThan', 0);
 
-    cy.getById('to-token-img')
+    cy.getById('cyd-to-token-img')
       .should('be.visible')
       .and('have.prop', 'naturalWidth')
       .should('be.greaterThan', 0);
 
-    cy.getById('to-chain-img')
+    cy.getById('cyd-to-chain-img')
       .should('be.visible')
       .and('have.prop', 'naturalWidth')
       .should('be.greaterThan', 0);
@@ -70,7 +70,7 @@ describe('To check if bridge summary screen is rendered fine', ()=>{
     cy.get('.close-popup')
       .click();
 
-    cy.get('#sdkContainer')
+    cy.get('#cyd-sdkContainer')
       .should('not.exist');
   })
 
@@ -90,7 +90,7 @@ describe('To check whether exchange button is disabled and enabled fine', () => 
     cy.intercept({method: 'GET', url: '**/swap/evm/chains', times: 1}).as('swapChainsCheck');
     cy.intercept({method: 'GET', url: '**/swap/evm/chains/**', times: 1}).as('swapTokensCheck');
 
-    cy.getById("addPopup").click();
+    cy.getById("cyd-addPopup").click();
 
     cy.wait('@fetchPortfolioBalances', { timeout: 50000 });
     cy.wait('@swapChainsCheck', { timeout: 50000 });
@@ -98,19 +98,19 @@ describe('To check whether exchange button is disabled and enabled fine', () => 
 
     cy.contains('tr', 'ETH').find('.exchange-token-button').eq(0).click()
 
-    cy.getById('bp-amount-value').type('10');
+    cy.getById('cyd-bp-amount-value').type('10');
     cy.intercept('POST', '**/v1/bridge/sdk/quote').as('getBridgeQuote');
 
     cy.getByClass('bridge-input-submit').click();
 
-    cy.get('#bridge-submit-blue-button')
+    cy.get('#cyd-bridge-submit-button')
       .should('be.disabled');
 
     cy.wait('@getBridgeQuote', {timeout: 50000})
       .its('response.statusCode')
       .should('eq', 201);
 
-    cy.get('#bridge-submit-blue-button')
+    cy.get('#cyd-bridge-submit-button')
       .should('not.be.disabled');
   })
 });

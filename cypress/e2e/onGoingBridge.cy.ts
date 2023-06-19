@@ -13,37 +13,37 @@ describe('To check if any going brige is present and render the respective scree
     cy.intercept('GET', '**/portfolio/balances**').as('fetchPortfolioBalances');
     cy.intercept('GET', '**/swap/evm/chains').as('swapChainsCheck');
 
-    cy.getById("addPopup").click();
+    cy.getById("cyd-addPopup").click();
 
     cy.wait('@fetchPortfolioBalances', { timeout: 50000 });
     cy.wait('@swapChainsCheck', { timeout: 50000 });
 
     cy.contains('tr', 'Matic Token').find('.exchange-token-button').eq(0).click()
 
-    cy.getById('bp-amount-value').type('10');
+    cy.getById('cyd-bp-amount-value').type('10');
     cy.getByClass('bridge-input-submit').click();
 
-    cy.getById('switch-chain-screen').should('exist');
+    cy.getById('cyd-switch-chain-screen').should('exist');
     cy.intercept('POST', '**/v1/bridge/sdk/quote').as('getBridgeQuote');
 
     cy.getByClass('switch-chain-button').click();
 
-    cy.getById('bridge-summary-screen').should('exist');
+    cy.getById('cyd-bridge-summary-screen').should('exist');
 
     cy.wait('@getBridgeQuote', {timeout: 50000})
       .its('response.statusCode')
       .should('eq', 201);
 
-    cy.getById('bridge-submit-blue-button')
+    cy.getById('cyd-bridge-submit-button')
       .should('not.be.disabled');
 
-    cy.getById('bridge-submit-blue-button')
+    cy.getById('cyd-bridge-submit-button')
       .click()
 
     cy.intercept('**/v1/bridge/sdk/quote/**/deposit').as('depositCall');
     cy.intercept('**v1/prices/gas/**').as('getGasPrice');
 
-    cy.getById('bridge-loading-screen').should('exist');
+    cy.getById('cyd-bridge-loading-screen').should('exist');
 
     cy.wait('@getGasPrice', { timeout: 50000 });
     cy.wait('@depositCall', { timeout: 50000 });
@@ -51,7 +51,7 @@ describe('To check if any going brige is present and render the respective scree
     // cy.get(".maximize-onclick").click({force: true});
     cy.getByClass('close-popup').click({force: true});
 
-    cy.getById('sdkContainer')
+    cy.getById('cyd-sdkContainer')
       .should('not.exist');
 
     // cy.reload()
@@ -63,7 +63,7 @@ describe('To check if any going brige is present and render the respective scree
     // cy.getById("requiredTokenBalance").type('0');
     // cy.getById("showInfoScreenFalse").check();
     // cy.getById("appId").type("CYPRESS_TEST")
-    cy.getById("addPopup").click();
+    cy.getById("cyd-addPopup").click();
 
     const interceptAndWait = () => {
       cy.intercept('**/v1/activities/status/bridge/**').as('statusCheck')
@@ -79,8 +79,8 @@ describe('To check if any going brige is present and render the respective scree
 
     interceptAndWait();
 
-    cy.getById('bridge-success-screen').should('exist');
-    cy.getById('bp-switch-container').should('exist');
-    cy.getById('bp-switch-container').click();
+    cy.getById('cyd-bridge-success-screen').should('exist');
+    cy.getById('cyd-bp-switch-container').should('exist');
+    cy.getById('cyd-bp-switch-container').click();
   })
 })
