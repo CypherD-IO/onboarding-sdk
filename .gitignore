@@ -5,7 +5,7 @@
 /cypress/screenshots/
 /cypress/videos/
 .idea/*
-
+/dist/
 .DS_Store
 coverage
 *.log
