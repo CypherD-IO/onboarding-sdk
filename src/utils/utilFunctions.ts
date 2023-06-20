@@ -12,7 +12,7 @@ export const requiredUsdValue = (requiredTokenDetail: any, exchangingTokenDetail
 }
 
 export const updateUsdValue = (event: any) => {
-    const tokenValueElement = document.querySelector("#bp-token-value");
+    const tokenValueElement = document.querySelector("#cyd-bp-token-value");
     const price = parseFloat(globalThis.exchangingTokenDetail.price);
     const newValue = (parseFloat(event.target.value) / price).toFixed(6);
     if (tokenValueElement) tokenValueElement.innerHTML = newValue.toString();
@@ -20,7 +20,7 @@ export const updateUsdValue = (event: any) => {
 
 export const minimizeWindow = () => {
   event?.stopPropagation();
-  const sdkContainer: any = document.getElementById("sdkContainer");
+  const sdkContainer: any = document.getElementById("cyd-sdkContainer");
   if (sdkContainer) {
     sdkContainer.style.backgroundColor = "transparent";
     sdkContainer.style.backdropFilter = "none";
@@ -33,7 +33,7 @@ export const minimizeWindow = () => {
 }
 
 export const maximizeWindow = () => {
-  const sdkContainer: any = document.getElementById("sdkContainer");
+  const sdkContainer: any = document.getElementById("cyd-sdkContainer");
   if(sdkContainer && sdkContainer.style.zoom === "0.4"){
     sdkContainer.style.backgroundColor = "rgba(0,0,0,0.4)";
     sdkContainer.style.backdropFilter = "blur(5px)";

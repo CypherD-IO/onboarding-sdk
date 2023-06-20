@@ -11,55 +11,55 @@ describe('To check if bridge input screen is rendered fine', () => {
     cy.intercept('GET', '**/portfolio/balances**').as('fetchPortfolioBalances');
     cy.intercept('GET', '**/swap/evm/chains').as('swapChainsCheck');
 
-    cy.getById("addPopup").click();
+    cy.getById("cyd-addPopup").click();
 
     cy.wait('@fetchPortfolioBalances', { timeout: 50000 });
     cy.wait('@swapChainsCheck', { timeout: 50000 });
 
-    cy.getByClass('exchange-token-button').eq(0).click()
+    cy.getByClass('cyd-exchange-token-button').eq(0).click()
   })
 
   it('should render bridge input when exchange clicked', () => {
-    cy.getById('bridge-input-screen').should('exist');
+    cy.getById('cyd-bridge-input-screen').should('exist');
 
     // it should show a error toast when empty value is submitted
-    cy.getByClass('bridge-input-submit').click();
+    cy.getByClass('cyd-bridge-input-submit').click();
     cy.getById('swal2-html-container').should('contain', 'Please Enter a value greater than the minimum amount ( $10.00 ).');
 
     cy.wait(5500);
 
     // it should show error toast when value bellow $10 is submitted
-    cy.getById('bp-amount-value').type('2');
-    cy.getByClass('bridge-input-submit').click();
+    cy.getById('cyd-bp-amount-value').type('2');
+    cy.getByClass('cyd-bridge-input-submit').click();
     cy.getById('swal2-html-container').should('contain', 'Please Enter a value greater than the minimum amount ( $10.00 ).');
 
     cy.wait(5500);
 
     // it should show error toast when value greater than balance is submitted
-    cy.getById('bp-amount-value').type('{selectall}{backspace}')
-    cy.getById('bp-amount-value').type('999999999');
-    cy.getByClass('bridge-input-submit').click();
+    cy.getById('cyd-bp-amount-value').type('{selectall}{backspace}')
+    cy.getById('cyd-bp-amount-value').type('999999999');
+    cy.getByClass('cyd-bridge-input-submit').click();
     cy.getById('swal2-html-container').should('contain', 'Value entered is greater than your balance');
 
     cy.wait(5500);
 
     // check if Max button works
-    cy.getById('bp-amount-value').type('{selectall}{backspace}')
-    cy.getByClass('bp-max-button').click();
-    cy.getById('bp-amount-value').should('not.have.value', '');
+    cy.getById('cyd-bp-amount-value').type('{selectall}{backspace}')
+    cy.getByClass('cyd-bp-max-button').click();
+    cy.getById('cyd-bp-amount-value').should('not.have.value', '');
   });
 
     // check if back button works
   it('should go back to portfolio balance screen', () => {
-    cy.getByClass('back-button').click();
-    cy.getById('portfolio-balance-screen').should('exist');
+    cy.getByClass('cyd-back-button').click();
+    cy.getById('cyd-portfolio-balance-screen').should('exist');
     });
 
   it('should check whether close popup works correctly' , ()=>{
-    cy.get('.close-popup')
+    cy.get('.cyd-close-popup')
       .click();
 
-    cy.get('#sdkContainer')
+    cy.get('#cyd-sdkContainer')
       .should('not.exist');
     })
 });

@@ -3,7 +3,7 @@ export const noBalanceCSS = `
   z-index: 2147483647;
 }
 
-#sdkContainer {
+#cyd-sdkContainer {
   display: flex;
   flex-direction: column;
   position: fixed;
@@ -17,12 +17,12 @@ export const noBalanceCSS = `
   color: black;
 }
 
-.blurredBackdrop {
+.cyd-blurredBackdrop {
   background-color: rgba(0,0,0,0.4);
   backdrop-filter: blur(5px);
 }
 
-#popupBackground {
+#cyd-popup-background {
   display: flex;
   flex-direction: column;
   position: relative;
@@ -32,13 +32,7 @@ export const noBalanceCSS = `
   height: 100%;
 }
 
-#icon-flex-box {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
-#tokens-available-flex-box {
+.cyd-tokens-available-flex-box {
   height: 100%;
   overflow: scroll;
   border-radius: 10px;
@@ -49,36 +43,13 @@ export const noBalanceCSS = `
   text-align: center
 }
 
-#token-detail-1 {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  height: 40px;
-  padding: 10px;
-}
-
-#token-detail-0 {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  height: 40px;
-  background-color: #f5f5f5;
-  padding: 10px;
-}
-
-table {
+#cyd-portfolio-balance-table {
   border-collapse: collapse;
 }
 
-tr{
+.cyd-portfolio-token-detail{
   height: 75px;
 }
-
-// tr:nth-child(odd) {
-//   background-color: #f5f5f5;
-// }
 
 #cyd-chain{
   display: flex;
@@ -92,7 +63,7 @@ tr{
   align-items: center;
 }
 
-.blue-button{
+.cyd-blue-button{
   background-color: #2081E2;
   border: none;
   color: white;
@@ -100,22 +71,12 @@ tr{
   float: right;
 }
 
-.disabled-button {
+.cyd-disabled-button {
   background-color: gray;
   color: black;
 }
 
-// #bridge-popup-css {
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: space-between;
-//   align-items: center;
-//   margin: auto;
-//   width: 30%;
-//   background-color: #fefefe;
-// }
-
-#bp-amount-input {
+#cyd-bp-amount-input {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -123,7 +84,21 @@ tr{
   align-items: stretch;
 }
 
-#bp-token-value-flex-box {
+#cyd-bp-token-value-flex-box {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#cyd-bp-balance-detail-usd {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#cyd-bp-balance-detail-token {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -131,28 +106,7 @@ tr{
 }
 
 
-#bp-balance-detail {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-#bp-balance-detail-usd {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-}
-
-#bp-balance-detail-token {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
-
-
-#bp-switch-container {
+#cyd-bp-switch-container {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -160,23 +114,7 @@ tr{
   align-items: center;
 }
 
-#bp-switch-chain-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100px;
-}
-
-#bp-summary-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-left: -20px;
-  margin-right: -20px;
-}
-
-.bp-summary-row {
+.cyd-bp-summary-row {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -191,11 +129,11 @@ tr{
   --link-hover: rgb(24, 94, 82);
 }
 
-.toggle-switch {
+.cyd-toggle-switch {
   position: relative;
 }
 
-label {
+.cyd-label {
   position: absolute;
   width: 75px;
   height: 30px;
@@ -204,12 +142,12 @@ label {
   cursor: pointer;
 }
 
-.toggle-input {
+.cyd-toggle-input {
   position: absolute;
   display: none;
 }
 
-.slider {
+.cyd-slider {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -218,11 +156,11 @@ label {
   transition: 0.3s;
 }
 
-.toggle-input:checked ~ .slider {
+.cyd-toggle-input:checked ~ .cyd-slider {
   background-color: var(--light);
 }
 
-.slider::before {
+.cyd-slider::before {
   content: "";
   position: absolute;
   top: 3px;
@@ -236,7 +174,7 @@ label {
   transform: rotate(-30deg);
 }
 
-.toggle-input:checked ~ .slider::before {
+.cyd-toggle-input:checked ~ .cyd-slider::before {
   transform: translateX(42px);
   background-color: var(--dark);
   box-shadow: none;

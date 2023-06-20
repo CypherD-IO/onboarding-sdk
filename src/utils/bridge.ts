@@ -30,9 +30,9 @@ export const onGetQuote = async () => {
       const response = post(`v1/swap/sdk/evm/chains/${exchangingTokenDetail.chainDetails.chain_id}/quote`, JSON.stringify(payload)).then(async function(data)
       {
         globalThis.swapQuoteData = {...data};
-        const bridgeSubmitButton: any = document.getElementById("bridge-submit-blue-button");
-        document.getElementById("token-received")!.textContent = parseFloat(data.toToken.amount).toFixed(6) + ' ' + requiredTokenDetail.symbol;
-        document.getElementById("usd-received")!.textContent = '$ ' + parseFloat(data.value).toFixed(2);
+        const bridgeSubmitButton: any = document.getElementById("cyd-bridge-submit-button");
+        document.getElementById("cyd-token-received")!.textContent = parseFloat(data.toToken.amount).toFixed(6) + ' ' + requiredTokenDetail.symbol;
+        document.getElementById("cyd-usd-received")!.textContent = '$ ' + parseFloat(data.value).toFixed(2);
         if (!data.isError) {
           if (!isNativeToken(exchangingTokenDetail?.contractAddress)) {
             const allowanceResp: any = await checkAllowance({
@@ -58,14 +58,14 @@ export const onGetQuote = async () => {
                 };
                 if(await getSwapAllowanceApproval()) {
                   bridgeSubmitButton!.disabled = false;
-                  bridgeSubmitButton!.classList.remove("disabled-button");
+                  bridgeSubmitButton!.classList.remove("cyd-disabled-button");
                 }
               } else {
                 globalThis.allowanceData = {
                   isAllowance: false
                 };
                 bridgeSubmitButton!.disabled = false;
-                bridgeSubmitButton!.classList.remove("disabled-button");
+                bridgeSubmitButton!.classList.remove("cyd-disabled-button");
               }
             } else {
               globalThis.toastMixin.fire({
@@ -79,7 +79,7 @@ export const onGetQuote = async () => {
               isAllowance: false
             };
             bridgeSubmitButton!.disabled = false;
-            bridgeSubmitButton!.classList.remove("disabled-button");
+            bridgeSubmitButton!.classList.remove("cyd-disabled-button");
           }
         } else {
           if (data.error?.errors) {
@@ -122,12 +122,12 @@ export const onGetQuote = async () => {
             icon: 'error'
           });
         } else {
-          const bridgeSubmitButton = document.getElementById("bridge-submit-blue-button");
+          const bridgeSubmitButton = document.getElementById("cyd-bridge-submit-button");
           globalThis.bridgeQuote = data;
-          document.getElementById("token-received")!.textContent = data.transferAmount.toFixed(6) + ' ' + requiredTokenDetail.symbol;
-          document.getElementById("usd-received")!.textContent = '$ ' + data.usdValue.toFixed(2);
+          document.getElementById("cyd-token-received")!.textContent = data.transferAmount.toFixed(6) + ' ' + requiredTokenDetail.symbol;
+          document.getElementById("cyd-usd-received")!.textContent = '$ ' + data.usdValue.toFixed(2);
           bridgeSubmitButton!.disabled = false;
-          bridgeSubmitButton!.classList.remove("disabled-button");
+          bridgeSubmitButton!.classList.remove("cyd-disabled-button");
         }
       });
   }

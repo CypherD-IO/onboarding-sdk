@@ -7,34 +7,34 @@ declare let globalThis: any;
 
 export const clickHandler = (event: any) => {
   const classList = event.target.classList;
-  if (classList.contains("close-popup")) {
+  if (classList.contains("cyd-close-popup")) {
     let params = event.target.getAttribute('params');
     params = JSON.parse(params);
     const triggerCallback = _.get(params, "triggerCallback");
     triggerCallback ? closePopup(true) : closePopup(false);
-  } if (classList.contains("back-button")) {
+  } if (classList.contains("cyd-back-button")) {
     globalThis.previousPage();
-  } if (classList.contains("toggle-input")) {
+  } if (classList.contains("cyd-toggle-input")) {
     switchTheme();
-  } if (classList.contains("chat-support")) {
+  } if (classList.contains("cyd-chat-support")) {
     openChat();
-  } if (classList.contains("info-screen-continue")) {
+  } if (classList.contains("cyd-info-screen-continue")) {
     portfolioBalance();
-  } if (classList.contains("exchange-token-button")) {
+  } if (classList.contains("cyd-exchange-token-button")) {
     let params = event.target.getAttribute('params');
     params = JSON.parse(params);
     triggerBridgePopup(params.exchangingTokenDetail);
-  } if (classList.contains("bp-max-button") || event.target.closest(".bp-max-button")) {
+  } if (classList.contains("cyd-bp-max-button") || event.target.closest(".cyd-bp-max-button")) {
     onMax();
-  } if (classList.contains("bridge-submit-blue-button")) {
+  } if (classList.contains("cyd-bridge-submit-button")) {
     onBridgeClick();
-  } if (classList.contains("bridge-input-submit")) {
+  } if (classList.contains("cyd-bridge-input-submit")) {
     bridgeSubmitConditionCheck();
-  } if (classList.contains("maximize-onclick") || event.target.closest(".maximize-onclick")) {
+  } if (classList.contains("cyd-maximize-onclick") || event.target.closest(".cyd-maximize-onclick")) {
     maximizeWindow();
-  } if (classList.contains("minimize-button") || event.target.closest(".minimize-button")) {
+  } if (classList.contains("cyd-minimize-button") || event.target.closest(".cyd-minimize-button")) {
     minimizeWindow();
-  } if (classList.contains("switch-chain-button")) {
+  } if (classList.contains("cyd-switch-chain-button")) {
     let params = event.target.getAttribute('params');
     params = JSON.parse(params);
     const chainId = _.get(params, "chainId");

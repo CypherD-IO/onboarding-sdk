@@ -69,7 +69,7 @@ export const triggerBridgePopup = (exchangingTokenDetail: any) => {
 }
 
 export const closePopup = (triggerCallback = false) => {
-  const sdkContainer = document.getElementById("sdkContainer");
+  const sdkContainer = document.getElementById("cyd-sdkContainer");
   sdkContainer?.remove();
   if (triggerCallback) globalThis.cypherWalletDetails.callBack(true);
 }
@@ -91,8 +91,8 @@ export const onMax = async () => {
   if (isNativeToken(contractAddress)) {
     if (reserve && (actualBalance * price - reserve)) {
       const usdValueAfterReduction = (actualBalance * price - reserve);
-      document.getElementById("bp-amount-value")!.value = usdValueAfterReduction.toFixed(2).toString();
-      document.getElementById("bp-token-value")!.textContent = (usdValueAfterReduction / price).toFixed(6).toString();
+      document.getElementById("cyd-bp-amount-value")!.value = usdValueAfterReduction.toFixed(2).toString();
+      document.getElementById("cyd-bp-token-value")!.textContent = (usdValueAfterReduction / price).toFixed(6).toString();
     } else {
       console.log({ titleText: 'Insufficient funds for gas' });
       toastMixin.fire({
@@ -102,8 +102,8 @@ export const onMax = async () => {
       });
     }
   } else {
-    document.getElementById("bp-amount-value")!.value = (actualBalance * price).toFixed(2).toString();
-    document.getElementById("bp-token-value")!.textContent = (parseFloat(actualBalance) / price).toFixed(6).toString();
+    document.getElementById("cyd-bp-amount-value")!.value = (actualBalance * price).toFixed(2).toString();
+    document.getElementById("cyd-bp-token-value")!.textContent = (parseFloat(actualBalance) / price).toFixed(6).toString();
   }
 }
 
@@ -154,7 +154,7 @@ export const onBridgeClick = async () => {
 }
 
 export const bridgeSubmitConditionCheck = async () => {
-  const usdValueEntered = document.querySelector("#bp-amount-value")?.value;
+  const usdValueEntered = document.querySelector("#cyd-bp-amount-value")?.value;
   const amountRequired = requiredUsdValue(globalThis.requiredTokenDetail, globalThis.exchangingTokenDetail);
   if (parseFloat(usdValueEntered) >= Math.max(MINIMUM_BRIDGE_AMOUNT, amountRequired)) {
     await bridgeSubmit ();

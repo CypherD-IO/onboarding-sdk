@@ -12,14 +12,14 @@ describe('To test if portfolio screen is rendered conditionaly', () => {
     cy.intercept('GET', '**/portfolio/balances**').as('fetchPortfolioBalances');
     cy.intercept('GET', '**/swap/evm/chains').as('swapChainsCheck');
 
-    cy.getById("addPopup").click();
+    cy.getById("cyd-addPopup").click();
 
-    cy.getById("portfolio-loading-screen").should("not.exist");
+    cy.getById("cyd-portfolio-loading-screen").should("not.exist");
 
     cy.wait('@fetchPortfolioBalances', { timeout: 10000 });
     cy.wait('@swapChainsCheck', { timeout: 10000 });
 
-    cy.getById('empty-wallet-screen').should('exist');
+    cy.getById('cyd-empty-wallet-screen').should('exist');
   });
 
   it('should work fine for empty wallet when showInfoScreen is FALSE', () => {
@@ -32,14 +32,14 @@ describe('To test if portfolio screen is rendered conditionaly', () => {
     cy.intercept('GET', '**/portfolio/balances**').as('fetchPortfolioBalances');
     cy.intercept('GET', '**/swap/evm/chains').as('swapChainsCheck');
 
-    cy.getById("addPopup").click();
+    cy.getById("cyd-addPopup").click();
 
-    cy.getById("portfolio-loading-screen").should("exist");
+    cy.getById("cyd-portfolio-loading-screen").should("exist");
 
     cy.wait('@fetchPortfolioBalances', { timeout: 50000 });
     cy.wait('@swapChainsCheck', { timeout: 50000 });
 
-    cy.getById('empty-wallet-screen').should('exist');
+    cy.getById('cyd-empty-wallet-screen').should('exist');
   });
 
   it('should work fine fetching balances and showing portfolio balances', () => {
@@ -52,40 +52,40 @@ describe('To test if portfolio screen is rendered conditionaly', () => {
     cy.intercept('GET', '**/portfolio/balances**').as('fetchPortfolioBalances');
     cy.intercept('GET', '**/swap/evm/chains').as('swapChainsCheck');
 
-    cy.getById("addPopup").click();
+    cy.getById("cyd-addPopup").click();
 
-    cy.getById("portfolio-loading-screen").should("exist");
+    cy.getById("cyd-portfolio-loading-screen").should("exist");
 
     cy.wait('@fetchPortfolioBalances', { timeout: 50000 });
     cy.wait('@swapChainsCheck', { timeout: 50000 });
 
-    cy.getById('portfolio-balance-screen').should('exist');
+    cy.getById('cyd-portfolio-balance-screen').should('exist');
 
     // images of required token and chain must be loaded
-    cy.getById('required-token-img')
+    cy.getById('cyd-required-token-img')
       .should('be.visible')
       .and('have.prop', 'naturalWidth')
       .should('be.greaterThan', 0);
 
-    cy.getById('required-chain-img')
+    cy.getById('cyd-required-chain-img')
       .should('be.visible')
       .and('have.prop', 'naturalWidth')
       .should('be.greaterThan', 0);
 
     // the number of token listed should be >= 1
-    cy.getById('portfolio-balance-table')
+    cy.getById('cyd-portfolio-balance-table')
       .find('tr')
       .should('have.length.gte', 1);
 
     // every token balance listing should have token image and chain image
-    cy.getByClass('portfolio-token-detail')
-      .getById('td-token-icon')
+    cy.getByClass('cyd-portfolio-token-detail')
+      .getById('cyd-td-token-icon')
       .should('be.visible')
       .and('have.prop', 'naturalWidth')
       .should('be.greaterThan', 0);
 
-    cy.getByClass('portfolio-token-detail')
-      .getById('td-chain-icon')
+    cy.getByClass('cyd-portfolio-token-detail')
+      .getById('cyd-td-chain-icon')
       .should('be.visible')
       .and('have.prop', 'naturalWidth')
       .should('be.greaterThan', 0);
@@ -102,16 +102,16 @@ describe('To test if portfolio screen is rendered conditionaly', () => {
     cy.intercept('GET', '**/portfolio/balances**').as('fetchPortfolioBalances');
     cy.intercept('GET', '**/swap/evm/chains').as('swapChainsCheck');
 
-    cy.getById("addPopup").click();
+    cy.getById("cyd-addPopup").click();
 
-    cy.getById("portfolio-loading-screen").should("exist");
+    cy.getById("cyd-portfolio-loading-screen").should("exist");
 
     cy.wait('@fetchPortfolioBalances', { timeout: 50000 });
     cy.wait('@swapChainsCheck', { timeout: 50000 });
-    cy.get('.close-popup')
+    cy.get('.cyd-close-popup')
       .click();
 
-    cy.get('#sdkContainer')
+    cy.get('#cyd-sdkContainer')
       .should('not.exist');
   })
 });

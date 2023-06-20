@@ -13,11 +13,11 @@ declare let globalThis: any;
 
 export const bridgeSubmit = async () => {
   const chainId = globalThis.exchangingTokenDetail.chainDetails.chain_id;
-  const usdValueEntered = document.querySelector("#bp-amount-value")?.value;
-  const tokenValueEntered = document.querySelector("#bp-token-value")?.textContent;
-  const usdBalance = document.querySelector("#bp-balance-detail-usd-value");
+  const usdValueEntered = document.querySelector("#cyd-bp-amount-value")?.value;
+  const tokenValueEntered = document.querySelector("#cyd-bp-token-value")?.textContent;
+  const usdBalance = document.querySelector("#cyd-bp-balance-detail-usd-value");
   const numericUsdBalance = parseFloat(usdBalance!.textContent!.slice(1));
-  const tokenBalance = document.querySelector("#bp-balance-detail-token-value")?.textContent;
+  const tokenBalance = document.querySelector("#cyd-bp-balance-detail-token-value")?.textContent;
   globalThis.bridgeInputDetails = { usdValueEntered, tokenValueEntered, numericUsdBalance, tokenBalance };
   if (numericUsdBalance >= parseFloat(usdValueEntered)) {
     globalThis.currentChainId = await fetchCurrentNetwork();
@@ -100,25 +100,25 @@ export const isBridgeOngoing = async () => {
             window.localStorage.removeItem(EXPIRATION_KEY);
             const {popupBackground, sdkContainer, sheet} = createContainer();
             bridgeSuccess(!(await checkNetwork(globalThis.requiredTokenDetail.chainDetails.chain_id)), popupBackground);
-            sdkContainer.classList.add('blurredBackdrop');
+            sdkContainer.classList.add('cyd-blurredBackdrop');
             appendContainerToBody(popupBackground, sdkContainer, sheet);
           } else if (data?.activityStatus?.status === ACTIVITY_STATUS.FAILED) {
             window.localStorage.removeItem(ONONGOING_BRIDGE_DATA);
             window.localStorage.removeItem(EXPIRATION_KEY);
             const {popupBackground, sdkContainer, sheet} = createContainer();
             bridgeFailed(popupBackground);
-            sdkContainer.classList.add('blurredBackdrop');
+            sdkContainer.classList.add('cyd-blurredBackdrop');
             appendContainerToBody(popupBackground, sdkContainer, sheet);
           } else {
             const {popupBackground, sdkContainer, sheet} = createContainer();
             bridgeLoading(popupBackground);
-            sdkContainer.classList.add('blurredBackdrop');
+            sdkContainer.classList.add('cyd-blurredBackdrop');
             appendContainerToBody(popupBackground, sdkContainer, sheet);
             minimizeWindow();
             const interval = setInterval(() => {
               const status = get(`v1/activities/status/bridge/${globalThis.bridgeQuote.quoteUuid}`).then(
                 async function (data) {
-                  const popupBackground = document.getElementById("popupBackground");
+                  const popupBackground = document.getElementById("cyd-popup-background");
                   if(popupBackground) {
                     if (data?.activityStatus?.status === ACTIVITY_STATUS.COMPLETED) {
                       window.localStorage.removeItem(ONONGOING_BRIDGE_DATA);

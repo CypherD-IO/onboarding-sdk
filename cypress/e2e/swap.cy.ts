@@ -15,37 +15,37 @@ describe('To check if swap condition is addressed and success is rendered fine',
     cy.intercept('GET', '**/swap/evm/chains/**').as('swapTokensCheck');
     cy.intercept('GET', '**/swap/evm/chains/**').as('swapTokensCheck');
 
-    cy.getById("addPopup").click();
+    cy.getById("cyd-addPopup").click();
 
     cy.wait('@fetchPortfolioBalances', { timeout: 50000 });
     cy.wait('@swapChainsCheck', { timeout: 50000 });
     cy.wait('@swapTokensCheck', { timeout: 50000 });
 
-    cy.contains('tr', 'Matic Token').find('.exchange-token-button').eq(0).click()
+    cy.contains('tr', 'Matic Token').find('.cyd-exchange-token-button').eq(0).click()
 
     cy.wait('@swapTokensCheck', { timeout: 50000 });
-    cy.getById('bp-amount-value').type('10');
-    cy.getByClass('bridge-input-submit').click();
+    cy.getById('cyd-bp-amount-value').type('10');
+    cy.getByClass('cyd-bridge-input-submit').click();
 
     cy.intercept('POST', '**v1/swap/sdk/evm/chains/**/quote').as('getSwapQuote');
 
-    cy.getById('switch-chain-screen').should('exist');
-    cy.getByClass('switch-chain-button').click();
+    cy.getById('cyd-switch-chain-screen').should('exist');
+    cy.getByClass('cyd-switch-chain-button').click();
 
-    cy.getById('bridge-summary-screen').should('exist');
+    cy.getById('cyd-bridge-summary-screen').should('exist');
 
     cy.wait('@getSwapQuote', {timeout: 50000})
       .its('response.statusCode')
       .should('eq', 201);
 
-    cy.getById('bridge-submit-blue-button')
+    cy.getById('cyd-bridge-submit-button')
       .should('not.be.disabled');
 
-    // cy.getById('bridge-submit-blue-button')
+    // cy.getById('cyd-bridge-submit-button')
     //   .click()
 
-    // cy.getById('bridge-success-screen').should('exist');
-    // cy.getById('bp-switch-container').should('not.exist');
+    // cy.getById('cyd-bridge-success-screen').should('exist');
+    // cy.getById('cyd-bp-switch-container').should('not.exist');
     // cy.contains('OK').click();
   })
 });
