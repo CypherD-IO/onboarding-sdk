@@ -10,6 +10,9 @@ export const addTailwindScript = () => {
             primaryText: 'var(--theme-primaryText)',
             borderColor: 'var(--theme-borderColor)',
             stripedTableBg: 'var(--theme-stripedTableBg)'
+            grayBg: 'var(--theme-grayBg)',
+            infoBlue: 'var(--theme-infoBlue)',
+            appBg: 'var(--theme-appBg)',
           }
         }
       }

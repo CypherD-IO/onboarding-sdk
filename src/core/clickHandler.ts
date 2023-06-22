@@ -39,6 +39,13 @@ export const clickHandler = (event: any) => {
     params = JSON.parse(params);
     const chainId = _.get(params, "chainId");
     const triggerCallback = _.get(params, "triggerCallback");
-    triggerCallback ?  navigateAfterSwitch(chainId, false) : navigateAfterSwitch(chainId);
+    triggerCallback ? navigateAfterSwitch(chainId, false) : navigateAfterSwitch(chainId);
+  } if (classList.contains("cyd-dropdown-button") || event.target.closest(".cyd-dropdown-button")) {
+    document.getElementById("cyd-dropdown-option-list")?.classList.toggle("hidden");
+  } if (classList.contains("cyd-dropdown-option") || event.target.closest("cyd-dropdown-option")) {
+    let params = event.target.getAttribute('params');
+    params = JSON.parse(params);
+    document.getElementById("cyd-dropdown-selected-option")!.innerText = params.value;
+    document.getElementById("cyd-dropdown-option-list")?.classList.toggle("hidden");
   }
 }

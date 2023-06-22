@@ -1,7 +1,9 @@
-import { onBlurInput, onFocusInput, updateUsdValue } from ".";
+import { onBlurInput, onFocusInput } from ".";
 import { clickHandler, inputHandler } from "../core";
 import { noBalanceCSS } from "../cssContents";
 import { addTailwindScript } from "../scriptContents";
+
+declare let globalThis: any;
 
 export const createContainer = () => {
   const popupBackground = document.createElement("div");
@@ -19,9 +21,13 @@ export const createContainer = () => {
 }
 
 export const appendContainerToBody = (popupBackground: HTMLDivElement, sdkContainer: HTMLDivElement, sheet: HTMLStyleElement) => {
-  sdkContainer.appendChild(popupBackground);
+  if(globalThis.cypherWalletDetails.parentComponentId) {
+    document.getElementById(globalThis.cypherWalletDetails.parentComponentId)?.appendChild(popupBackground);
+  } else {
+    sdkContainer.appendChild(popupBackground);
+    globalThis.document.body.appendChild(sdkContainer);
+  }
   sheet.innerHTML = noBalanceCSS;
-  globalThis.document.body.appendChild(sdkContainer);
   globalThis.document.body.appendChild(sheet);
   // const range = document.createRange();
   // range.setStart(globalThis.document.body, 0);

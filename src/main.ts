@@ -19,7 +19,7 @@ import "./input.css";
 import { Colors } from "./constants/colors";
 import { appendContainerToBody, createContainer } from "./utils/container";
 import { isBridgeOngoing } from "./core/bridge";
-import { emptyWallet, infoScreen, portfolioBalance, portfolioLoading } from "./screens";
+import { emptyWallet, exchangeWidget, infoScreen, portfolioBalance, portfolioLoading } from "./screens";
 import { switchTheme } from "./core";
 
 declare let globalThis: any;
@@ -55,9 +55,10 @@ export const Cypher = async ({
   appId = defaultAppId,
   theme = defaultTheme,
   showInfoScreen = false,
+  parentComponentId = '',
   production = true
 }: DappDetails): Promise<void> => {
-  if (document.getElementById('cyd-popup-background') !== null) {
+  if (document.getElementById('popupBackground') !== null) {
     return;
   }
 
@@ -97,7 +98,8 @@ export const Cypher = async ({
     provider,
     appId,
     isTestnet,
-    showInfoScreen
+    showInfoScreen,
+    parentComponentId
   };
 
   globalThis.Colors = Colors;
@@ -109,48 +111,61 @@ try{
   const fetchPortfolio = await isBridgeOngoing();
   if (!fetchPortfolio) {
     const {popupBackground, sdkContainer, sheet} = createContainer();
-    if (!showInfoScreen){
-      portfolioLoading(popupBackground);
-      sdkContainer.classList.add('cyd-blurredBackdrop');
-    }
-    appendContainerToBody(popupBackground, sdkContainer, sheet);
-    await fetchTokenData(walletAddress.toLowerCase());
-    const tokenHoldings = store.getState().portfolioStore;
-    globalThis.tokenHoldings = tokenHoldings;
-    const requiredTokenDetail = await fetchRequiredTokenDetails(
-      fromChainId,
-      requiredToken
-    );
-    globalThis.requiredTokenDetail = { ...requiredTokenDetail };
-    const haveEnoughBalance = await hasSufficientBalance(
-      fromChainId,
-      requiredToken,
-      requiredTokenBalance
-    );
-    if (
-      requiredTokenBalance === 0 ||
-      !haveEnoughBalance
-    ) {
-      sdkContainer.classList.add('cyd-blurredBackdrop');
-      const bridgeableTokensList: any = [];
-      // only verified tokens and tokens with balance >= $10 is shown
-      _.get(tokenHoldings, ["tokenPortfolio", "totalHoldings"])?.map((tokenDetail: any) => {
-        if (tokenDetail.actualBalance * tokenDetail.price >= MINIMUM_BALANCE_AMOUNT && tokenDetail.isVerified && (tokenDetail.contractAddress !== requiredTokenDetail.contractAddress)) {
-          bridgeableTokensList.push(tokenDetail);
-        }
-      });
-      globalThis.bridgeableTokensList = bridgeableTokensList;
-      if (showInfoScreen && bridgeableTokensList.length > 0) {
-        infoScreen();
-      } else if (!showInfoScreen && bridgeableTokensList.length > 0) {
-        portfolioBalance();
-      } else {
-        emptyWallet();
-      }
+    if (parentComponentId) {
+      exchangeWidget(popupBackground);
+      appendContainerToBody(popupBackground, sdkContainer, sheet);
+      await fetchTokenData(walletAddress.toLowerCase());
+      const tokenHoldings = store.getState().portfolioStore;
+      globalThis.tokenHoldings = tokenHoldings;
+      const requiredTokenDetail = await fetchRequiredTokenDetails(
+        fromChainId,
+        requiredToken
+      );
+      globalThis.requiredTokenDetail = { ...requiredTokenDetail };
     } else {
-      sdkContainer.remove();
-      console.log("Hurray!!, you have enough Balance. Continue using the dapp.");
-      callBack(true);
+      if (!showInfoScreen){
+        portfolioLoading(popupBackground);
+        sdkContainer.classList.add('cyd-blurredBackdrop');
+      }
+      appendContainerToBody(popupBackground, sdkContainer, sheet);
+      await fetchTokenData(walletAddress.toLowerCase());
+      const tokenHoldings = store.getState().portfolioStore;
+      globalThis.tokenHoldings = tokenHoldings;
+      const requiredTokenDetail = await fetchRequiredTokenDetails(
+        fromChainId,
+        requiredToken
+      );
+      globalThis.requiredTokenDetail = { ...requiredTokenDetail };
+      const haveEnoughBalance = await hasSufficientBalance(
+        fromChainId,
+        requiredToken,
+        requiredTokenBalance
+      );
+      if (
+        requiredTokenBalance === 0 ||
+        !haveEnoughBalance
+      ) {
+        sdkContainer.classList.add('cyd-blurredBackdrop');
+        const bridgeableTokensList: any = [];
+        // only verified tokens and tokens with balance >= $10 is shown
+        _.get(tokenHoldings, ["tokenPortfolio", "totalHoldings"])?.map((tokenDetail: any) => {
+          if (tokenDetail.actualBalance * tokenDetail.price >= MINIMUM_BALANCE_AMOUNT && tokenDetail.isVerified && (tokenDetail.contractAddress !== requiredTokenDetail.contractAddress)) {
+            bridgeableTokensList.push(tokenDetail);
+          }
+        });
+        globalThis.bridgeableTokensList = bridgeableTokensList;
+        if (showInfoScreen && bridgeableTokensList.length > 0) {
+          infoScreen();
+        } else if (!showInfoScreen && bridgeableTokensList.length > 0) {
+          portfolioBalance();
+        } else {
+          emptyWallet();
+        }
+      } else {
+        sdkContainer.remove();
+        console.log("Hurray!!, you have enough Balance. Continue using the dapp.");
+        callBack(true);
+      }
     }
   }
   globalThis.toastMixin = globalThis.Cypher.Swal.mixin({
