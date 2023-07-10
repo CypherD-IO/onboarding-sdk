@@ -8,11 +8,13 @@ export const addTailwindScript = () => {
             primaryBg: 'var(--theme-primaryBg)',
             secondaryBg: 'var(--theme-secondaryBg)',
             primaryText: 'var(--theme-primaryText)',
+            disabledText: "var(--theme-disabledText)",
             borderColor: 'var(--theme-borderColor)',
-            stripedTableBg: 'var(--theme-stripedTableBg)'
+            stripedTableBg: 'var(--theme-stripedTableBg)',
             grayBg: 'var(--theme-grayBg)',
             infoBlue: 'var(--theme-infoBlue)',
             appBg: 'var(--theme-appBg)',
+            soapstoneBg: 'var(--theme-soapStoneIcon)',
           }
         }
       }
