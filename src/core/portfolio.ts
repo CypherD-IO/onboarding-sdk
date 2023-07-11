@@ -1,5 +1,5 @@
 import { get } from 'lodash';
-import { CHAIN_ETH, CHAIN_POLYGON, CHAIN_BSC, CHAIN_AVALANCHE, CHAIN_FTM, CHAIN_ARBITRUM, CHAIN_OPTIMISM, CHAIN_EVMOS, CHAIN_COSMOS, CHAIN_JUNO, CHAIN_OSMOSIS, CHAIN_STARGAZE, CHAIN_ETH_GOERLI, CHAIN_POLYGON_MUMBAI, BACKEND_NAME_TO_CHAIN_ID_HEX } from '../constants/server';
+import { CHAIN_ETH, CHAIN_POLYGON, CHAIN_BSC, CHAIN_AVALANCHE, CHAIN_FTM, CHAIN_ARBITRUM, CHAIN_OPTIMISM, CHAIN_EVMOS, CHAIN_ETH_GOERLI, CHAIN_POLYGON_MUMBAI, BACKEND_NAME_TO_CHAIN_ID_HEX } from '../constants/server';
 import { WalletHoldings, Holding, ChainHoldings } from '../interface';
 import { isTokenSwapSupported, swapContractAddressCheck } from '../utils';
 
@@ -42,7 +42,7 @@ export const getPortfolioModel = async (holdings: any) => {
     }
   } = globalThis;
 
-  const response = await fetch( `${globalThis.ARCH_HOST}/v1/swap/evm/chains`, {
+  const response = await fetch(`${globalThis.ARCH_HOST}/v1/swap/evm/chains`, {
     method: 'GET',
   });
   const responseData = await response.json();
@@ -57,9 +57,9 @@ export const getPortfolioModel = async (holdings: any) => {
   let swapSupportedRequiredTokensList = [];
 
   if (swapSupport) {
-    const responseRequiredTokenList = await fetch( `${globalThis.ARCH_HOST}/v1/swap/evm/chains/` + parseInt(fromChainId, 16) + `/tokens`, {
+    const responseRequiredTokenList = await fetch(`${globalThis.ARCH_HOST}/v1/swap/evm/chains/` + parseInt(fromChainId, 16) + `/tokens`, {
       method: 'GET',
-    } );
+    });
     const responseJSONRequiredTokenList = await responseRequiredTokenList.json();
     swapSupportedRequiredTokensList = responseJSONRequiredTokenList?.tokens;
   }
@@ -131,18 +131,6 @@ export const getPortfolioModel = async (holdings: any) => {
         case CHAIN_EVMOS.backendName:
           tokenHolding.chainDetails = CHAIN_EVMOS;
           break;
-        case CHAIN_COSMOS.backendName:
-          tokenHolding.chainDetails = CHAIN_COSMOS;
-          break;
-        case CHAIN_OSMOSIS.backendName:
-          tokenHolding.chainDetails = CHAIN_OSMOSIS;
-          break;
-        case CHAIN_JUNO.backendName:
-          tokenHolding.chainDetails = CHAIN_JUNO;
-          break;
-        case CHAIN_STARGAZE.backendName:
-          tokenHolding.chainDetails = CHAIN_STARGAZE;
-          break;
       }
       tokenHoldings.push(tokenHolding);
       totalHoldings.push(tokenHolding);
@@ -169,7 +157,7 @@ export const getPortfolioModel = async (holdings: any) => {
         break;
       case CHAIN_ETH_GOERLI.backendName:
         ethGoerliHoldings = chainHoldings;
-      break;
+        break;
       case CHAIN_POLYGON_MUMBAI.backendName:
         polyonMumbaiHoldings = chainHoldings;
         break;
@@ -193,18 +181,6 @@ export const getPortfolioModel = async (holdings: any) => {
         break;
       case CHAIN_EVMOS.backendName:
         evmosHoldings = chainHoldings;
-        break;
-      case CHAIN_COSMOS.backendName:
-        cosmosHoldings = chainHoldings;
-        break;
-      case CHAIN_OSMOSIS.backendName:
-        osmosisHoldings = chainHoldings;
-        break;
-      case CHAIN_JUNO.backendName:
-        junoHoldings = chainHoldings;
-        break;
-      case CHAIN_STARGAZE.backendName:
-        stargazeHoldings = chainHoldings;
         break;
     }
   }

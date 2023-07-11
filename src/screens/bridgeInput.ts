@@ -19,7 +19,7 @@ export const bridgeInput = (parentElement = document.getElementById("cyd-popup-b
     }
   } = globalThis;
   const bridgeInputHTML = `
-    <div class="bg-primaryBg rounded-[30px] z-50 flex flex-col justify-between items-center m-auto w-[90%] lg:w-[30%]" id="cyd-bridge-input-screen">
+    <div class="bg-primaryBg rounded-[30px] z-50 flex flex-col justify-between items-center m-auto w-[90%] md:w-[65%] lg:w-[55%] xl:w-[40%]" id="cyd-bridge-input-screen">
       <div class="bg-primaryBg rounded-t-[30px] p-5 flex flex-col justify-center items-center w-full h-full">
         <div class="flex justify-between w-full mt-[5px]">
           <img src="https://public.cypherd.io/icons/back_arrow.svg" class="cyd-back-button cursor-pointer"/>
@@ -44,7 +44,7 @@ export const bridgeInput = (parentElement = document.getElementById("cyd-popup-b
         <div class="flex my-[3]">
           <p class="text-[14px] text-primaryText">Min amount: $${Math.max(10, requiredUsdValue(requiredTokenDetail, globalThis.exchangingTokenDetail)).toFixed(2)}</p>
         </div>
-        <div class="bg-primaryBg border border-[#E4E4E4] p-2 flex rounded-2xl w-[90%] lg:w-[75%] mt-6">
+        <div class="bg-primaryBg border border-borderColor p-2 flex rounded-2xl w-[90%] lg:w-[75%] mt-6">
           <img src="${logoUrl}" alt="${name} logo"
           class="h-[45px] w-[45px] lg:h-[55px] lg:w-[55px] rounded-full">
           <div class="w-full ml-3 flex flex-col h-[100%]">
@@ -70,6 +70,6 @@ export const bridgeInput = (parentElement = document.getElementById("cyd-popup-b
   `;
 
   globalThis.previousPage = previousPage;
-  if(parentElement) parentElement.innerHTML = bridgeInputHTML;
+  if (parentElement) parentElement.innerHTML = bridgeInputHTML;
   // addInputEventListner();
 }

@@ -5,20 +5,20 @@ import { __capitalize } from "../utils";
 
 declare let globalThis: any;
 
-export const portfolioBalance = ( bridgeableTokensList = globalThis.bridgeableTokensList, parentElement = document.getElementById("cyd-popup-background")) => {
+export const portfolioBalance = (bridgeableTokensList = globalThis.bridgeableTokensList, parentElement = document.getElementById("cyd-popup-background")) => {
   const {
     requiredTokenDetail
   } = globalThis;
 
   const tokensAvailableList = bridgeableTokensList.map((tokenDetail: any) => (
-      `
+    `
         <tr class='odd:bg-stripedTableBg h-[75px] cyd-portfolio-token-detail'>
           <td class='pl-[10px] pr-[5px]'>
-            <div class="relative w-[32px] h-[32px] rounded-full lg:w-[38px] lg:h-[38px] overflow-visible">
-              <img id='cyd-td-token-icon' onerror="this.src='https://public.cypherd.io/icons/logos/' +  '${coinColors[Math.floor(Math.random() * coinColors.length)]}.png'" src="${_.get(tokenDetail, ['logoUrl'])}" alt="${_.get(tokenDetail, ['name'])} logo" class="object-cover w-full h-full" />
+            <div class="relative w-[32px] h-[32px] lg:w-[38px] lg:h-[38px] overflow-visible">
+              <img id='cyd-td-token-icon' onerror="this.src='https://public.cypherd.io/icons/logos/' +  '${coinColors[Math.floor(Math.random() * coinColors.length)]}.png'" src="${_.get(tokenDetail, ['logoUrl'])}" alt="${_.get(tokenDetail, ['name'])} logo" class="object-cover w-full h-full rounded-full" />
               <div class="absolute bottom-[-3px] right-[-5px]">
-                <div class="rounded-full w-[16px] h-[16px] lg:w-[20px] lg:h-[20px] overflow-visible bg-white p-[1px]">
-                  <img id='cyd-td-chain-icon' src="https://public.cypherd.io/icons/logos/${_.get(tokenDetail, ['chainDetails', 'backendName'], '').toLowerCase()}.png" alt="${_.get(tokenDetail, ['chainDetails', 'backendName'], '').toLowerCase()} logo" class="object-cover w-full h-full" />
+                <div class="w-[16px] h-[16px] lg:w-[20px] lg:h-[20px] overflow-visible bg-white p-[1px] rounded-full">
+                  <img id='cyd-td-chain-icon' src="https://public.cypherd.io/icons/logos/${_.get(tokenDetail, ['chainDetails', 'backendName'], '').toLowerCase()}.png" alt="${_.get(tokenDetail, ['chainDetails', 'backendName'], '').toLowerCase()} logo" class="object-cover w-full h-full rounded-full" />
                 </div>
               </div>
             </div>
@@ -36,7 +36,7 @@ export const portfolioBalance = ( bridgeableTokensList = globalThis.bridgeableTo
             <p class='text-[10px] lg:text-[14px] text-primaryText'>${Number(_.get(tokenDetail, ['actualBalance'])).toFixed(5)}</p>
           </td>
           <td class='pr-2'>
-            <button params='` + JSON.stringify({exchangingTokenDetail: _.omit(tokenDetail, ['about'])}) + `'class='cyd-exchange-token-button cyd-blue-button text-[10px] lg:text-[14px] text-primaryText p-1.5 lg:p-3'>Exchange</button>
+            <button params='` + JSON.stringify({ exchangingTokenDetail: _.omit(tokenDetail, ['about']) }) + `'class='cyd-exchange-token-button cyd-blue-button text-[10px] lg:text-[14px] text-primaryText p-1.5 lg:p-3'>Exchange</button>
           </td>
         </tr>
       `

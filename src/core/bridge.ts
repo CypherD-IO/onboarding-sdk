@@ -1,4 +1,4 @@
-import { ACTIVITY_STATUS, EXPIRATION_KEY, ONONGOING_BRIDGE_DATA } from "../constants/server";
+import { ACTIVITY_STATUS, EXPIRATION_KEY, ONGOING_BRIDGE_DATA } from "../constants/server";
 import { appendContainerToBody, createContainer } from "../utils/container";
 import { get } from "../utils/fetch";
 import { checkNetwork, fetchCurrentNetwork } from "./network";
@@ -15,9 +15,8 @@ export const bridgeSubmit = async () => {
   const chainId = globalThis.exchangingTokenDetail.chainDetails.chain_id;
   const usdValueEntered = document.querySelector("#cyd-bp-amount-value")?.value;
   const tokenValueEntered = document.querySelector("#cyd-bp-token-value")?.textContent;
-  const usdBalance = document.querySelector("#cyd-bp-balance-detail-usd-value");
-  const numericUsdBalance = parseFloat(usdBalance!.textContent!.slice(1));
-  const tokenBalance = document.querySelector("#cyd-bp-balance-detail-token-value")?.textContent;
+  const numericUsdBalance = parseFloat((globalThis.exchangingTokenDetail.actualBalance * globalThis.exchangingTokenDetail.price).toFixed(2));
+  const tokenBalance = parseFloat(globalThis.exchangingTokenDetail.actualBalance).toFixed(6);
   globalThis.bridgeInputDetails = { usdValueEntered, tokenValueEntered, numericUsdBalance, tokenBalance };
   if (numericUsdBalance >= parseFloat(usdValueEntered)) {
     globalThis.currentChainId = await fetchCurrentNetwork();
@@ -59,14 +58,14 @@ export const bridge = async () => {
     toAddress: step1TargetWallet,
     chain: backendName,
     contractDecimal: contractDecimals,
-    isBridge : true,
+    isBridge: true,
   });
 
-  return new Promise((resolve)=>{
+  return new Promise((resolve) => {
     if (!resp.isError && resp.hash) {
-      const bridgeResponse = onDepositFund(resp?.hash).then(function(response: any) {
-          resolve(response);
-        }
+      const bridgeResponse = onDepositFund(resp?.hash).then(function (response: any) {
+        resolve(response);
+      }
       );
     } else {
       globalThis.toastMixin.fire({
@@ -75,7 +74,7 @@ export const bridge = async () => {
         icon: 'error'
       });
       console.log({ titleText: resp?.error?.message.toString() });
-      setTimeout(()=>{closePopup()}, 5000);
+      setTimeout(() => { closePopup() }, 5000);
     }
   });
 }
@@ -83,7 +82,7 @@ export const bridge = async () => {
 export const isBridgeOngoing = async () => {
   checkExpiry();
   let bridgeUuid;
-  let bridgeData = window.localStorage.getItem(ONONGOING_BRIDGE_DATA);
+  let bridgeData = window.localStorage.getItem(ONGOING_BRIDGE_DATA);
   if (bridgeData) {
     bridgeData = await JSON.parse(bridgeData);
     bridgeUuid = _.get(bridgeData, ['bridgeQuoteData', 'quoteUuid']);
@@ -96,21 +95,21 @@ export const isBridgeOngoing = async () => {
       get(`v1/activities/status/bridge/${bridgeUuid}`).then(
         async function (data) {
           if (data?.activityStatus?.status === ACTIVITY_STATUS.COMPLETED) {
-            window.localStorage.removeItem(ONONGOING_BRIDGE_DATA);
+            window.localStorage.removeItem(ONGOING_BRIDGE_DATA);
             window.localStorage.removeItem(EXPIRATION_KEY);
-            const {popupBackground, sdkContainer, sheet} = createContainer();
+            const { popupBackground, sdkContainer, sheet } = createContainer();
             bridgeSuccess(!(await checkNetwork(globalThis.requiredTokenDetail.chainDetails.chain_id)), popupBackground);
             sdkContainer.classList.add('cyd-blurredBackdrop');
             appendContainerToBody(popupBackground, sdkContainer, sheet);
           } else if (data?.activityStatus?.status === ACTIVITY_STATUS.FAILED) {
-            window.localStorage.removeItem(ONONGOING_BRIDGE_DATA);
+            window.localStorage.removeItem(ONGOING_BRIDGE_DATA);
             window.localStorage.removeItem(EXPIRATION_KEY);
-            const {popupBackground, sdkContainer, sheet} = createContainer();
+            const { popupBackground, sdkContainer, sheet } = createContainer();
             bridgeFailed(popupBackground);
             sdkContainer.classList.add('cyd-blurredBackdrop');
             appendContainerToBody(popupBackground, sdkContainer, sheet);
           } else {
-            const {popupBackground, sdkContainer, sheet} = createContainer();
+            const { popupBackground, sdkContainer, sheet } = createContainer();
             bridgeLoading(popupBackground);
             sdkContainer.classList.add('cyd-blurredBackdrop');
             appendContainerToBody(popupBackground, sdkContainer, sheet);
@@ -119,15 +118,15 @@ export const isBridgeOngoing = async () => {
               const status = get(`v1/activities/status/bridge/${globalThis.bridgeQuote.quoteUuid}`).then(
                 async function (data) {
                   const popupBackground = document.getElementById("cyd-popup-background");
-                  if(popupBackground) {
+                  if (popupBackground) {
                     if (data?.activityStatus?.status === ACTIVITY_STATUS.COMPLETED) {
-                      window.localStorage.removeItem(ONONGOING_BRIDGE_DATA);
+                      window.localStorage.removeItem(ONGOING_BRIDGE_DATA);
                       window.localStorage.removeItem(EXPIRATION_KEY);
                       maximizeWindow();
                       bridgeSuccess(!(await checkNetwork(globalThis.requiredTokenDetail.chainDetails.chain_id)));
                       clearInterval(interval);
                     } else if (data?.activityStatus?.status === ACTIVITY_STATUS.FAILED) {
-                      window.localStorage.removeItem(ONONGOING_BRIDGE_DATA);
+                      window.localStorage.removeItem(ONGOING_BRIDGE_DATA);
                       window.localStorage.removeItem(EXPIRATION_KEY);
                       maximizeWindow();
                       bridgeFailed();

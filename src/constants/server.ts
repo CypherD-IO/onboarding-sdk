@@ -13,10 +13,6 @@ export enum ChainBackendNames {
   OPTIMISM = 'OPTIMISM',
   BSC = 'BSC',
   EVMOS = 'EVMOS',
-  COSMOS = 'COSMOS',
-  OSMOSIS = 'OSMOSIS',
-  JUNO = 'JUNO',
-  STARGAZE = 'STARGAZE'
 }
 
 export const CHAIN_ETH_GOERLI: Chain = {
@@ -121,42 +117,6 @@ export const CHAIN_ARBITRUM: Chain = {
   chainIdNumber: 42161
 };
 
-export const CHAIN_COSMOS: Chain = {
-  chainName: 'cosmos',
-  name: 'Cosmos',
-  symbol: 'COSMOS',
-  id: 7,
-  backendName: ChainBackendNames.COSMOS,
-  chain_id: '0x0',
-  native_token_address: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
-  chainIdNumber: 0,
-  coinGeckoId: 'cosmos'
-};
-
-export const CHAIN_OSMOSIS: Chain = {
-  chainName: 'osmosis',
-  name: 'Osmosis',
-  symbol: 'OSMO',
-  id: 8,
-  backendName: ChainBackendNames.OSMOSIS,
-  chain_id: '0x1',
-  native_token_address: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
-  chainIdNumber: 0,
-  coinGeckoId: 'osmosis'
-};
-
-export const CHAIN_JUNO: Chain = {
-  chainName: 'juno',
-  name: 'Juno',
-  symbol: 'JUNO',
-  id: 9,
-  backendName: ChainBackendNames.JUNO,
-  chain_id: 'juno-1',
-  native_token_address: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
-  chainIdNumber: 0,
-  coinGeckoId: 'juno-network'
-};
-
 export const CHAIN_OPTIMISM: Chain = {
   chainName: 'ethereum',
   name: 'Optimism',
@@ -166,18 +126,6 @@ export const CHAIN_OPTIMISM: Chain = {
   chain_id: '0xa',
   native_token_address: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
   chainIdNumber: 10
-};
-
-export const CHAIN_STARGAZE: Chain = {
-  chainName: 'stargaze',
-  name: 'Stargaze',
-  symbol: 'STARS',
-  id: 12,
-  backendName: ChainBackendNames.STARGAZE,
-  chain_id: 'stargaze-1',
-  native_token_address: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
-  chainIdNumber: 0,
-  coinGeckoId: 'stargaze'
 };
 
 export type NetworkInterface = {
@@ -311,6 +259,19 @@ export const addChainData: Record<string, NetworkInterface> = {
   },
 };
 
+export const CHAIN_BACKEND_NAME_TO_CHAIN_DETAIL = {
+  ETH: CHAIN_ETH,
+  ETH_GOERLI: CHAIN_ETH_GOERLI,
+  POLYGON_MUMBAI: CHAIN_POLYGON_MUMBAI,
+  POLYGON: CHAIN_POLYGON,
+  AVALANCHE: CHAIN_AVALANCHE,
+  FANTOM: CHAIN_FTM,
+  ARBITRUM: CHAIN_ARBITRUM,
+  OPTIMISM: CHAIN_OPTIMISM,
+  BSC: CHAIN_BSC,
+  EVMOS: CHAIN_EVMOS,
+}
+
 export const CONTRACT_DECIMAL_TO_ETHER_UNITS: any = {
   6: 'picoether',
   9: 'gwei',
@@ -331,7 +292,6 @@ export const EVM_CHAINS_NATIVE_TOKEN_MAP = new Map([
 ]);
 
 export const SUPPORTED_CHAINID_LIST_HEX = ['0x1', '0x89', '0x38', '0xa86a', '0xfa', '0x2329', '0xa4b1', '0xa', '0x13881', '0x5'];
-
 
 export const CHAIN_ID_HEX_TO_ENUM_MAPPING = new Map([
   ['0x1', ChainBackendNames.ETH],
@@ -449,7 +409,7 @@ export const contractABI = [
   },
 ];
 
-export const ONONGOING_BRIDGE_DATA = 'ongoing-bridge-data';
+export const ONGOING_BRIDGE_DATA = 'ongoing-bridge-data';
 export const EXPIRATION_KEY = 'key_expiry';
 export const EXPIRATION_DURATION = 24 * 60 * 60 * 1000;
 // minimum bridge amount is $10

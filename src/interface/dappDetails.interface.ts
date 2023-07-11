@@ -11,4 +11,5 @@ export interface DappDetails {
   connector?: any;
   provider?: any;
   production?: boolean;
+  parentComponentId?: string;
 }
