@@ -409,7 +409,7 @@ export const contractABI = [
   },
 ];
 
-export const ONONGOING_BRIDGE_DATA = 'ongoing-bridge-data';
+export const ONGOING_BRIDGE_DATA = 'ongoing-bridge-data';
 export const EXPIRATION_KEY = 'key_expiry';
 export const EXPIRATION_DURATION = 24 * 60 * 60 * 1000;
 // minimum bridge amount is $10

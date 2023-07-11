@@ -41,11 +41,11 @@ export const clickHandler = (event: any) => {
     const triggerCallback = _.get(params, "triggerCallback");
     triggerCallback ? navigateAfterSwitch(chainId, false) : navigateAfterSwitch(chainId);
   } if (classList.contains("cyd-dropdown-button") || event.target.closest(".cyd-dropdown-button")) {
-    let params = event.target.getAttribute('params');
+    let params = event.target.getAttribute('params') ?? event.target.closest(".cyd-dropdown-button").getAttribute('params');
     params = JSON.parse(params);
     if (!params.disabled) document.getElementById(params.dropdownId)?.classList.toggle("hidden");
   } if (classList.contains("cyd-dropdown-option") || event.target.closest(".cyd-dropdown-option")) {
-    let params = event.target.getAttribute('params');
+    let params = event.target.getAttribute('params') ?? event.target.closest(".cyd-dropdown-option").getAttribute('params');
     params = JSON.parse(params);
     if (!params.disabledOption) onClickDropdownOption(params);
   }

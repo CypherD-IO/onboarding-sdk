@@ -1,4 +1,4 @@
-import { ACTIVITY_STATUS, EXPIRATION_KEY, ONONGOING_BRIDGE_DATA } from "../constants/server";
+import { ACTIVITY_STATUS, EXPIRATION_KEY, ONGOING_BRIDGE_DATA } from "../constants/server";
 import { appendContainerToBody, createContainer } from "../utils/container";
 import { get } from "../utils/fetch";
 import { checkNetwork, fetchCurrentNetwork } from "./network";
@@ -82,7 +82,7 @@ export const bridge = async () => {
 export const isBridgeOngoing = async () => {
   checkExpiry();
   let bridgeUuid;
-  let bridgeData = window.localStorage.getItem(ONONGOING_BRIDGE_DATA);
+  let bridgeData = window.localStorage.getItem(ONGOING_BRIDGE_DATA);
   if (bridgeData) {
     bridgeData = await JSON.parse(bridgeData);
     bridgeUuid = _.get(bridgeData, ['bridgeQuoteData', 'quoteUuid']);
@@ -95,14 +95,14 @@ export const isBridgeOngoing = async () => {
       get(`v1/activities/status/bridge/${bridgeUuid}`).then(
         async function (data) {
           if (data?.activityStatus?.status === ACTIVITY_STATUS.COMPLETED) {
-            window.localStorage.removeItem(ONONGOING_BRIDGE_DATA);
+            window.localStorage.removeItem(ONGOING_BRIDGE_DATA);
             window.localStorage.removeItem(EXPIRATION_KEY);
             const { popupBackground, sdkContainer, sheet } = createContainer();
             bridgeSuccess(!(await checkNetwork(globalThis.requiredTokenDetail.chainDetails.chain_id)), popupBackground);
             sdkContainer.classList.add('cyd-blurredBackdrop');
             appendContainerToBody(popupBackground, sdkContainer, sheet);
           } else if (data?.activityStatus?.status === ACTIVITY_STATUS.FAILED) {
-            window.localStorage.removeItem(ONONGOING_BRIDGE_DATA);
+            window.localStorage.removeItem(ONGOING_BRIDGE_DATA);
             window.localStorage.removeItem(EXPIRATION_KEY);
             const { popupBackground, sdkContainer, sheet } = createContainer();
             bridgeFailed(popupBackground);
@@ -120,13 +120,13 @@ export const isBridgeOngoing = async () => {
                   const popupBackground = document.getElementById("cyd-popup-background");
                   if (popupBackground) {
                     if (data?.activityStatus?.status === ACTIVITY_STATUS.COMPLETED) {
-                      window.localStorage.removeItem(ONONGOING_BRIDGE_DATA);
+                      window.localStorage.removeItem(ONGOING_BRIDGE_DATA);
                       window.localStorage.removeItem(EXPIRATION_KEY);
                       maximizeWindow();
                       bridgeSuccess(!(await checkNetwork(globalThis.requiredTokenDetail.chainDetails.chain_id)));
                       clearInterval(interval);
                     } else if (data?.activityStatus?.status === ACTIVITY_STATUS.FAILED) {
-                      window.localStorage.removeItem(ONONGOING_BRIDGE_DATA);
+                      window.localStorage.removeItem(ONGOING_BRIDGE_DATA);
                       window.localStorage.removeItem(EXPIRATION_KEY);
                       maximizeWindow();
                       bridgeFailed();

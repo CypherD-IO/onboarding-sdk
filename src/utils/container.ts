@@ -33,9 +33,9 @@ export const appendContainerToBody = (popupBackground: HTMLDivElement, sdkContai
   }
   sheet.innerHTML = noBalanceCSS;
   globalThis.document.body.appendChild(sheet);
-  const range = document.createRange();
-  range.setStart(globalThis.document.body, 0);
-  globalThis.document.body.appendChild(
-    range.createContextualFragment(addTailwindScript())
-  );
+  // const range = document.createRange();
+  // range.setStart(globalThis.document.body, 0);
+  // globalThis.document.body.appendChild(
+  //   range.createContextualFragment(addTailwindScript())
+  // );
 }

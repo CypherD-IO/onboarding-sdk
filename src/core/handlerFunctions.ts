@@ -1,5 +1,5 @@
 import { getOptionImage, getOptionName, isNativeToken, maximizeWindow, minimizeWindow, onGetQuote, requiredUsdValue } from "../utils";
-import { ACTIVITY_STATUS, EXPIRATION_KEY, gasFeeReservation, MINIMUM_BRIDGE_AMOUNT, ONONGOING_BRIDGE_DATA } from "../constants/server";
+import { ACTIVITY_STATUS, EXPIRATION_KEY, gasFeeReservation, MINIMUM_BRIDGE_AMOUNT, ONGOING_BRIDGE_DATA } from "../constants/server";
 import { bridgeInput } from "../screens/bridgeInput";
 import { get } from "../utils/fetch";
 import { isSwap, isTokenSwapSupported, swapContractAddressCheck } from "../utils";
@@ -128,20 +128,20 @@ export const onBridgeClick = async () => {
   } else {
     const bridgeResult = bridge().then(async function (response: any) {
       if (globalThis.cypherWalletDetails.production ? response?.message === 'success' : response?.message) {
-        window.localStorage.setItem(ONONGOING_BRIDGE_DATA, JSON.stringify({ bridgeQuoteData: bridgeQuote, swapQuoteData: swapQuoteData, requiredTokenDetail: requiredTokenDetail, exchangingTokenDetail: exchangingTokenDetail, cypherWalletUrl: cypherWalletUrl }));
+        window.localStorage.setItem(ONGOING_BRIDGE_DATA, JSON.stringify({ bridgeQuoteData: bridgeQuote, swapQuoteData: swapQuoteData, requiredTokenDetail: requiredTokenDetail, exchangingTokenDetail: exchangingTokenDetail, cypherWalletUrl: cypherWalletUrl }));
         setLocalStorageExpiry();
         minimizeWindow();
         const interval = setInterval(() => {
           const status = get(`v1/activities/status/bridge/${bridgeQuote.quoteUuid}`).then(
             async function (data) {
               if (data?.activityStatus?.status === ACTIVITY_STATUS.COMPLETED) {
-                window.localStorage.removeItem(ONONGOING_BRIDGE_DATA);
+                window.localStorage.removeItem(ONGOING_BRIDGE_DATA);
                 window.localStorage.removeItem(EXPIRATION_KEY);
                 maximizeWindow();
                 bridgeSuccess(!(await checkNetwork(chain_id)));
                 clearInterval(interval);
               } else if (data?.activityStatus?.status === ACTIVITY_STATUS.FAILED) {
-                window.localStorage.removeItem(ONONGOING_BRIDGE_DATA);
+                window.localStorage.removeItem(ONGOING_BRIDGE_DATA);
                 window.localStorage.removeItem(EXPIRATION_KEY);
                 maximizeWindow();
                 bridgeFailed();
