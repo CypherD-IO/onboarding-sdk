@@ -15,24 +15,20 @@ export const bridgeLoading = (parentElement = document.getElementById("cyd-popup
     parentElement.innerHTML = globalThis.cypherWalletDetails.parentComponentId ?
       `
       <div id="cyd-bridge-loading-screen" class="cyd-maximize-onclick flex flex-col rounded-[30px] bg-primaryBg pt-[25px] w-full">
-        <div id="cyd-bridge-loading-screen" class="cyd-maximize-onclick flex flex-col rounded-[30px] bg-primaryBg pt-[25px] w-full">
-          ${bridgeLoadingHTML}
-          ${footer()}
-        </div>
+        ${bridgeLoadingHTML}
+        ${footer()}
       </div>
     ` :
       `
       <div id="cyd-bridge-loading-screen" class="cyd-maximize-onclick flex flex-col rounded-[30px] bg-primaryBg pt-[25px] w-[90%] lg:w-[30%]">
-        <div id="cyd-bridge-loading-screen" class="cyd-maximize-onclick flex flex-col rounded-[30px] bg-primaryBg pt-[25px] w-full">
-          <div class="flex flex-row justify-end items-center w-full px-[20px]">
-            <div class="cyd-minimize-button flex flex-row justify-center items-center px-[5px] py-[5px] mr-[15px] cursor-pointer">
-              <img src="https://public.cypherd.io/icons/minimize_icon.png" class="cursor-pointer w-[20px] h-[3px]">
-            </div>
-            <img src="https://public.cypherd.io/icons/close_icon.svg" class="cyd-close-popup cursor-pointer">
+        <div class="flex flex-row justify-end items-center w-full px-[20px]">
+          <div class="cyd-minimize-button flex flex-row justify-center items-center px-[5px] py-[5px] mr-[15px] cursor-pointer">
+            <img src="https://public.cypherd.io/icons/minimize_icon.png" class="cursor-pointer w-[20px] h-[3px]">
           </div>
-          ${bridgeLoadingHTML}
-          ${footer()}
+          <img src="https://public.cypherd.io/icons/close_icon.svg" class="cyd-close-popup cursor-pointer">
         </div>
+        ${bridgeLoadingHTML}
+        ${footer()}
       </div>
     `
       ;
