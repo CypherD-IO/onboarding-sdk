@@ -17,7 +17,7 @@ describe('To check maximise and minimise functionality in portfolio loading scre
 
     cy.getByClass('cyd-minimize-button').trigger("click");
 
-    cy.getById('cyd-sdkContainer')
+    cy.getById('cyd-sdk-container')
       .should('have.css', 'background-color', 'rgba(0, 0, 0, 0)')
       .and('have.css', 'backdrop-filter', 'none')
       .and('have.css', 'zoom', '0.4')
@@ -33,26 +33,26 @@ describe('To check maximise and minimise functionality in portfolio loading scre
         expect(left).to.be.closeTo(1500, 1);
       })
 
-    cy.get(".cyd-maximize-onclick").click({force: true});
+    cy.get(".cyd-maximize-onclick").click({ force: true });
 
 
-    cy.get("#cyd-sdkContainer")
-        .should("have.css", "zoom", "1")
-        .should(($element) => {
-          const height = $element.height();
-          const width = $element.width();
-          const top = parseFloat($element.css('top'));
-          const left = parseFloat($element.css('left'));
+    cy.get("#cyd-sdk-container")
+      .should("have.css", "zoom", "1")
+      .should(($element) => {
+        const height = $element.height();
+        const width = $element.width();
+        const top = parseFloat($element.css('top'));
+        const left = parseFloat($element.css('left'));
 
-          expect(height).to.be.closeTo(660, 1);
-          expect(width).to.be.closeTo(1000, 1);
-          expect(top).to.be.closeTo(0, 1);
-          expect(left).to.be.closeTo(0, 1);
-        });
+        expect(height).to.be.closeTo(660, 1);
+        expect(width).to.be.closeTo(1000, 1);
+        expect(top).to.be.closeTo(0, 1);
+        expect(left).to.be.closeTo(0, 1);
+      });
 
-    cy.get("#cyd-sdkContainer")
-        .should("have.css", "backgroundColor", "rgba(0, 0, 0, 0.4)")
-        .and("have.css", "backdropFilter", "blur(5px)");
+    cy.get("#cyd-sdk-container")
+      .should("have.css", "backgroundColor", "rgba(0, 0, 0, 0.4)")
+      .and("have.css", "backdropFilter", "blur(5px)");
 
     cy.wait('@fetchPortfolioBalances', { timeout: 50000 });
     cy.wait('@swapChainsCheck', { timeout: 50000 });

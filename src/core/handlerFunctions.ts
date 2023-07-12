@@ -70,7 +70,7 @@ export const triggerBridgePopup = (exchangingTokenDetail: any) => {
 }
 
 export const closePopup = (triggerCallback = false) => {
-  const sdkContainer = document.getElementById("cyd-sdkContainer");
+  const sdkContainer = document.getElementById("cyd-sdk-container");
   sdkContainer?.remove();
   if (triggerCallback) globalThis.cypherWalletDetails.callBack(true);
 }
@@ -189,7 +189,7 @@ export const onClickDropdownOption = (params: any) => {
     globalThis.cydChoosenFromChain = params.value;
     globalThis.exchangingTokenDetail = _.get(globalThis.bridgeableTokensListChainWise, [params.value, 0]);
     document.getElementById("cyd-from-token-dropdown")!.innerHTML = tokenDropdown(_.get(globalThis.bridgeableTokensListChainWise, [params.value]), "cyd-from-token-dropdown-option");
-    document.getElementById('cyd-choosen-token-usd-balance')!.innerHTML = '$' + (_.get(globalThis.bridgeableTokensListChainWise, [params.value, 0, 'actualBalance']) * _.get(globalThis.bridgeableTokensListChainWise, [params.value.toUpperCase(), 0, 'price'])).toFixed(2);
+    document.getElementById('cyd-choosen-token-usd-balance')!.innerHTML = '$ ' + (_.get(globalThis.bridgeableTokensListChainWise, [params.value, 0, 'actualBalance']) * _.get(globalThis.bridgeableTokensListChainWise, [params.value.toUpperCase(), 0, 'price'])).toFixed(2);
     document.getElementById('cyd-choosen-token-balance')!.innerHTML = (_.get(globalThis.bridgeableTokensListChainWise, [params.value, 0, 'actualBalance'])).toFixed(4);
     document.getElementById('cyd-choosen-token-name')!.innerHTML = _.get(globalThis.bridgeableTokensListChainWise, [params.value, 0, 'name']);
     document.getElementById('cyd-choosen-token-logo')!.src = _.get(globalThis.bridgeableTokensListChainWise, [params.value, 0, 'logoUrl']);
@@ -197,7 +197,7 @@ export const onClickDropdownOption = (params: any) => {
     document.getElementById('cyd-bp-choosen-token-symbol')!.innerHTML = _.get(globalThis.bridgeableTokensListChainWise, [params.value, 0, 'symbol']);
   } else if (params.dropdownId === "cyd-from-token-dropdown-option") {
     globalThis.exchangingTokenDetail = params.value;
-    document.getElementById('cyd-choosen-token-usd-balance')!.innerHTML = '$' + (_.get(params.value, ['actualBalance']) * _.get(params.value, ['price'])).toFixed(2);
+    document.getElementById('cyd-choosen-token-usd-balance')!.innerHTML = '$ ' + (_.get(params.value, ['actualBalance']) * _.get(params.value, ['price'])).toFixed(2);
     document.getElementById('cyd-choosen-token-balance')!.innerHTML = (_.get(params.value, ['actualBalance'])).toFixed(4);
     document.getElementById('cyd-choosen-token-name')!.innerHTML = _.get(params.value, ['name']);
     document.getElementById('cyd-choosen-token-logo')!.src = _.get(params.value, ['logoUrl']);

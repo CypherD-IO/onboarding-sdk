@@ -18,7 +18,7 @@ export const createContainer = () => {
   }
 
   const sdkContainer = document.createElement("div");
-  sdkContainer.id = "cyd-sdkContainer";
+  sdkContainer.id = "cyd-sdk-container";
 
   const sheet = document.createElement("style");
   return { popupBackground, sdkContainer, sheet };

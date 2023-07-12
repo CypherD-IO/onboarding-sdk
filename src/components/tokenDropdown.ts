@@ -14,9 +14,10 @@ export const tokenDropdown = (options: any, id: string, disabled = false) => {
           <img src="https://public.cypherd.io/assets/dapps/backArrow.png" alt="down_arrow" class="h-[10px] w-[6px] md:h-[12px] md:w-[8px] -rotate-90">
         </div>
       </div>
-      <div id="${id}" class="absolute left-0 w-full text-[16px] p-[5px] mt-1 bg-primaryBg text-primaryText rounded-[15px] shadow-lg z-10 max-h-[300px] overflow-y-auto border border-borderColor hidden">` +
+      <div id="${id}" class="absolute left-0 w-full text-[16px] px
+      -[5px] pb-[10px] mt-1 bg-primaryBg text-primaryText rounded-[15px] shadow-lg z-10 max-h-[300px] overflow-y-auto border border-borderColor hidden">` +
     options.map((option: string) => (
-      `<div class='cyd-dropdown-option flex justify-between items-center rounded-[15px] p-[2px] md:p-[5px] mt-[10px] hover:bg-soapstoneBg'>
+      `<div params='` + JSON.stringify({ value: option, dropdownId: id, disabledOption: false }) + `' class='cyd-dropdown-option flex justify-between items-center rounded-[15px] p-[2px] md:p-[5px] mt-[10px] hover:bg-soapstoneBg'>
                   <div class="flex flex-row items-center justify-center w-90%">
                     <img src=${_.get(option, ['logoUrl'])} class='h-5 w-5 md:h-6 md:w-6 mx-[5px] md:mx-[20px] rounded-full w-4/12' />
                     <div class='text-[14px] md:text-[16px] text-primaryText w-8/12'>

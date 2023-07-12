@@ -3,7 +3,7 @@ export const noBalanceCSS = `
   z-index: 2147483647;
 }
 
-#cyd-sdkContainer {
+#cyd-sdk-container {
   display: flex;
   flex-direction: column;
   position: fixed;

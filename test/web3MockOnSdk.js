@@ -45926,8 +45926,6 @@ let ethereum = new ethereum_1.EthereumProvider((fn) => {
     const response = yield (0, util_1.handleWeb3)(msgJSON.payload);
     window.postMessage(JSON.stringify(Object.assign({ id: msgJSON.payload.id, type: msgJSON.type }, response)));
 }));
-alert(ethereum);
-alert(window);
 // ethereumInit(ethereum, (message) => { window.ReactNativeWebView.postMessage(message) });
 window.ethereum = ethereum;
 

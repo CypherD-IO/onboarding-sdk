@@ -91,7 +91,7 @@ describe('To test if portfolio screen is rendered conditionaly', () => {
       .should('be.greaterThan', 0);
   });
 
-  it('should check whether close popup works correctly' , ()=>{
+  it('should check whether close popup works correctly', () => {
 
     cy.getById("address").type('0xfe1d0f3a779a3968c5728940cbc6416867ab527b');
     cy.getById("targetChainIdHex").type('0x2329');
@@ -111,7 +111,7 @@ describe('To test if portfolio screen is rendered conditionaly', () => {
     cy.get('.cyd-close-popup')
       .click();
 
-    cy.get('#cyd-sdkContainer')
+    cy.get('#cyd-sdk-container')
       .should('not.exist');
   })
 });

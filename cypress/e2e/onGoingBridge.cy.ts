@@ -30,7 +30,7 @@ describe('To check if any going brige is present and render the respective scree
 
     cy.getById('cyd-bridge-summary-screen').should('exist');
 
-    cy.wait('@getBridgeQuote', {timeout: 50000})
+    cy.wait('@getBridgeQuote', { timeout: 50000 })
       .its('response.statusCode')
       .should('eq', 201);
 
@@ -49,9 +49,9 @@ describe('To check if any going brige is present and render the respective scree
     cy.wait('@depositCall', { timeout: 50000 });
 
     // cy.get(".cyd-maximize-onclick").click({force: true});
-    cy.getByClass('cyd-close-popup').click({force: true});
+    cy.getByClass('cyd-close-popup').click({ force: true });
 
-    cy.getById('cyd-sdkContainer')
+    cy.getById('cyd-sdk-container')
       .should('not.exist');
 
     // cy.reload()
@@ -68,7 +68,7 @@ describe('To check if any going brige is present and render the respective scree
     const interceptAndWait = () => {
       cy.intercept('**/v1/activities/status/bridge/**').as('statusCheck')
 
-      cy.wait('@statusCheck', {timeout: 50000}).then((interception) => {
+      cy.wait('@statusCheck', { timeout: 50000 }).then((interception) => {
         const response = interception.response;
         cy.log('response : ', response);
         if (response.body.activityStatus.status !== 'COMPLETED') {

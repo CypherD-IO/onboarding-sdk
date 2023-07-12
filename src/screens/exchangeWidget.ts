@@ -21,12 +21,12 @@ export const exchangeWidget = (parentElement = document.getElementById("cyd-popu
   bridgableChainList = [...bridgableChainSet];
 
   const exchangeWidgetHTML = `
-    <div class="bg-primaryBg rounded-[30px] h-full w-full" id="exchange-widget">
-      <div class='m-[15px] md:m-[35px] md:mb-[50px] flex flex-col items-center justify-center font-nunito bg-primaryBg h-full'>
+    <div class="bg-primaryBg rounded-[30px]" id="cyd-exchange-widget">
+      <div class='m-[15px] md:m-[35px] md:mb-[50px] flex flex-col items-center justify-center font-nunito bg-primaryBg'>
         <div class='py-3 bg-grayBg rounded-xl w-full flex flex-col items-center justify-center relative'>
           <div class='w-[90%] sm:w-[70%] md:m-[10px]'>
             <div class='text-center text-primaryText font-extrabold mb-2 text-[16px] md:text-[18px]'> FROM</div>
-            <div class='mt-1 md:mt-2'>
+            <div id="cyd-from-chain-dropdown" class='mt-1 md:mt-2'>
               ${chainDropdown(bridgableChainList, 'cyd-from-chain-dropdown-option')}
             </div>
 
@@ -41,11 +41,11 @@ export const exchangeWidget = (parentElement = document.getElementById("cyd-popu
           <div class='w-[90%] sm:w-[70%]'>
             <div class='text-center font-extrabold text-[16px] md:text-[18px] text-primaryText'> TO</div>
 
-            <div class='mt-3'>
+            <div class='mt-3' id="cyd-to-chain-dropdown">
               ${chainDropdown([globalThis.requiredTokenDetail.chainDetails.backendName.toLowerCase()], "cyd-to-chain-dropdown-option", true)}
             </div>
 
-            <div class='mt-5'>
+            <div class='mt-5' id="cyd-to-token-dropdown">
               ${tokenDropdown([globalThis.requiredTokenDetail], "cyd-to-token-dropdown-option", true)}
             </div>
 
