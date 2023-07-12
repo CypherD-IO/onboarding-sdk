@@ -3,7 +3,7 @@ import { ACTIVITY_STATUS, EXPIRATION_KEY, gasFeeReservation, MINIMUM_BRIDGE_AMOU
 import { bridgeInput } from "../screens/bridgeInput";
 import { get } from "../utils/fetch";
 import { isSwap, isTokenSwapSupported, swapContractAddressCheck } from "../utils";
-import { bridgeFailed, bridgeLoading, bridgeSuccess, bridgeSummary } from "../screens";
+import { bridgeFailed, bridgeLoading, bridgeSuccess, bridgeSummary, exchangeWidget } from "../screens";
 import _ from "lodash";
 import { setLocalStorageExpiry } from "../utils/localStorage";
 import { bridge, bridgeSubmit, checkNetwork, swap, switchNetwork } from ".";
@@ -179,6 +179,8 @@ export const navigateAfterSwitch = async (chainId: string, doNavigateAfterSwitch
   if (doNavigateAfterSwitch) {
     await onGetQuote();
     bridgeSummary();
+  } else {
+    if (globalThis.cypherWalletDetails.parentComponentId) exchangeWidget();
   }
 }
 
