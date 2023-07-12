@@ -72,6 +72,15 @@
     <br />
     <br />
 
+    <p>Parent Component Id :</p>
+    <input
+      type="text"
+      id="parentComponentId"
+      placeholder="( only for widget ) Enter the id of the parent component :"
+    />
+    <br />
+    <br />
+
     <p>Show Info Screen :</p>
     <input
       type="radio"
@@ -118,7 +127,8 @@
             document.querySelector('input[name="showInfoScreen"]:checked')
               .value === "true",
           appId: document.getElementById("appId").value,
-          // parentComponentId: "cyd-widget",
+          parentComponentId:
+            document.getElementById("parentComponentId").value ?? "",
           production: false,
         });
       }

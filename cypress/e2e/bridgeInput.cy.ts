@@ -49,17 +49,17 @@ describe('To check if bridge input screen is rendered fine', () => {
     cy.getById('cyd-bp-amount-value').should('not.have.value', '');
   });
 
-    // check if back button works
+  // check if back button works
   it('should go back to portfolio balance screen', () => {
     cy.getByClass('cyd-back-button').click();
     cy.getById('cyd-portfolio-balance-screen').should('exist');
-    });
+  });
 
-  it('should check whether close popup works correctly' , ()=>{
+  it('should check whether close popup works correctly', () => {
     cy.get('.cyd-close-popup')
       .click();
 
-    cy.get('#cyd-sdkContainer')
+    cy.get('#cyd-sdk-container')
       .should('not.exist');
-    })
+  })
 });

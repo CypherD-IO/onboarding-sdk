@@ -28,7 +28,7 @@ describe('To check if the bridge loading screen is rendered fine', () => {
 
     cy.getById('cyd-bridge-summary-screen').should('exist');
 
-    cy.wait('@getBridgeQuote', {timeout: 50000})
+    cy.wait('@getBridgeQuote', { timeout: 50000 })
       .its('response.statusCode')
       .should('eq', 201);
 
@@ -46,7 +46,7 @@ describe('To check if the bridge loading screen is rendered fine', () => {
     cy.wait('@getGasPrice', { timeout: 50000 });
     cy.wait('@depositCall', { timeout: 50000 });
 
-    cy.getById('cyd-sdkContainer')
+    cy.getById('cyd-sdk-container')
       .should('have.css', 'background-color', 'rgba(0, 0, 0, 0)')
       .and('have.css', 'backdrop-filter', 'none')
       .and('have.css', 'zoom', '0.4')
@@ -62,27 +62,27 @@ describe('To check if the bridge loading screen is rendered fine', () => {
         expect(left).to.be.closeTo(1500, 1);
       })
 
-    cy.get(".cyd-maximize-onclick").click({force: true});
+    cy.get(".cyd-maximize-onclick").click({ force: true });
 
 
-    cy.get("#cyd-sdkContainer")
-        .should("have.css", "zoom", "1")
-        .should(($element) => {
-          const height = $element.height();
-          const width = $element.width();
-          const top = parseFloat($element.css('top'));
-          const left = parseFloat($element.css('left'));
+    cy.get("#cyd-sdk-container")
+      .should("have.css", "zoom", "1")
+      .should(($element) => {
+        const height = $element.height();
+        const width = $element.width();
+        const top = parseFloat($element.css('top'));
+        const left = parseFloat($element.css('left'));
 
-          expect(height).to.be.closeTo(660, 1);
-          expect(width).to.be.closeTo(1000, 1);
-          expect(top).to.be.closeTo(0, 1);
-          expect(left).to.be.closeTo(0, 1);
-        });
+        expect(height).to.be.closeTo(660, 1);
+        expect(width).to.be.closeTo(1000, 1);
+        expect(top).to.be.closeTo(0, 1);
+        expect(left).to.be.closeTo(0, 1);
+      });
 
     const interceptAndWait = () => {
       cy.intercept('**/v1/activities/status/bridge/**').as('statusCheck')
 
-      cy.wait('@statusCheck', {timeout: 50000}).then((interception) => {
+      cy.wait('@statusCheck', { timeout: 50000 }).then((interception) => {
         const response = interception.response;
         if (response.body.activityStatus.status !== 'COMPLETED') {
           interceptAndWait();

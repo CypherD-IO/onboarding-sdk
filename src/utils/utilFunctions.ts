@@ -21,7 +21,7 @@ export const updateUsdValue = (event: any) => {
 
 export const minimizeWindow = () => {
   event?.stopPropagation();
-  const sdkContainer: any = document.getElementById("cyd-sdkContainer");
+  const sdkContainer: any = document.getElementById("cyd-sdk-container");
   if (sdkContainer) {
     sdkContainer.style.backgroundColor = "transparent";
     sdkContainer.style.backdropFilter = "none";
@@ -34,7 +34,7 @@ export const minimizeWindow = () => {
 }
 
 export const maximizeWindow = () => {
-  const sdkContainer: any = document.getElementById("cyd-sdkContainer");
+  const sdkContainer: any = document.getElementById("cyd-sdk-container");
   if (sdkContainer && sdkContainer.style.zoom === "0.4") {
     sdkContainer.style.backgroundColor = "rgba(0,0,0,0.4)";
     sdkContainer.style.backdropFilter = "blur(5px)";
