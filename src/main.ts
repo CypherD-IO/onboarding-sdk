@@ -98,7 +98,9 @@ export const Cypher = async ({
     appId,
     isTestnet,
     showInfoScreen,
-    parentComponentId
+    parentComponentId,
+    theme,
+    production
   };
 
   globalThis.Colors = Colors;

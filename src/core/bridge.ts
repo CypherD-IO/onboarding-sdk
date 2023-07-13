@@ -91,6 +91,7 @@ export const isBridgeOngoing = async () => {
     globalThis.requiredTokenDetail = _.get(bridgeData, 'requiredTokenDetail');
     globalThis.exchangingTokenDetail = _.get(bridgeData, 'exchangingTokenDetail');
     globalThis.cypherWalletUrl = _.get(bridgeData, 'cypherWalletUrl');
+    globalThis.cypherWalletDetails = _.get(bridgeData, 'cypherWalletDetails');
     if (bridgeUuid) {
       get(`v1/activities/status/bridge/${bridgeUuid}`).then(
         async function (data) {
