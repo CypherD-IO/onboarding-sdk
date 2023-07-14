@@ -8,6 +8,7 @@ import _ from "lodash";
 import { setLocalStorageExpiry } from "../utils/localStorage";
 import { bridge, bridgeSubmit, checkNetwork, swap, switchNetwork } from ".";
 import { tokenDropdown } from "../components";
+import { Cypher } from "../main";
 
 declare let globalThis: any;
 
@@ -72,7 +73,32 @@ export const triggerBridgePopup = (exchangingTokenDetail: any) => {
 export const closePopup = (triggerCallback = false) => {
   const sdkContainer = document.getElementById("cyd-sdk-container");
   sdkContainer?.remove();
-  if (triggerCallback) globalThis.cypherWalletDetails.callBack(true);
+  if (triggerCallback && globalThis.cypherWalletDetails.callBack) globalThis.cypherWalletDetails.callBack(true);
+  if (globalThis.cypherWalletDetails.parentComponentId) {
+    removeWidget();
+    Cypher(
+      {
+        address: globalThis.cypherWalletDetails.address,
+        targetChainIdHex: globalThis.cypherWalletDetails.fromChainId,
+        requiredTokenContractAddress: globalThis.cypherWalletDetails.fromTokenContractAddress,
+        requiredTokenBalance: globalThis.cypherWalletDetails.fromTokenRequiredBalance,
+        isTestnet: globalThis.cypherWalletDetails.isTestnet,
+        callBack: globalThis.cypherWalletDetails.callBack,
+        connector: globalThis.cypherWalletDetails.connector,
+        provider: globalThis.cypherWalletDetails.provider,
+        appId: globalThis.cypherWalletDetails.appId,
+        theme: globalThis.cypherWalletDetails.theme,
+        showInfoScreen: globalThis.cypherWalletDetails.showInfoScreen,
+        parentComponentId: globalThis.cypherWalletDetails.parentComponentId,
+        production: globalThis.cypherWalletDetails.production
+      }
+    );
+  }
+}
+
+export const removeWidget = () => {
+  const widget = document.getElementById("cyd-popup-background");
+  widget?.remove();
 }
 
 export const onMax = async () => {
@@ -110,6 +136,7 @@ export const onMax = async () => {
 
 export const onBridgeClick = async () => {
   const {
+    cypherWalletDetails,
     bridgeQuote,
     swapQuoteData,
     requiredTokenDetail,
@@ -128,7 +155,7 @@ export const onBridgeClick = async () => {
   } else {
     const bridgeResult = bridge().then(async function (response: any) {
       if (globalThis.cypherWalletDetails.production ? response?.message === 'success' : response?.message) {
-        window.localStorage.setItem(ONGOING_BRIDGE_DATA, JSON.stringify({ bridgeQuoteData: bridgeQuote, swapQuoteData: swapQuoteData, requiredTokenDetail: requiredTokenDetail, exchangingTokenDetail: exchangingTokenDetail, cypherWalletUrl: cypherWalletUrl }));
+        window.localStorage.setItem(ONGOING_BRIDGE_DATA, JSON.stringify({ bridgeQuoteData: bridgeQuote, swapQuoteData, requiredTokenDetail, exchangingTokenDetail, cypherWalletUrl, cypherWalletDetails }));
         setLocalStorageExpiry();
         minimizeWindow();
         const interval = setInterval(() => {
@@ -180,7 +207,26 @@ export const navigateAfterSwitch = async (chainId: string, doNavigateAfterSwitch
     await onGetQuote();
     bridgeSummary();
   } else {
-    if (globalThis.cypherWalletDetails.parentComponentId) exchangeWidget();
+    if (globalThis.cypherWalletDetails.parentComponentId) {
+      removeWidget();
+      Cypher(
+        {
+          address: globalThis.cypherWalletDetails.address,
+          targetChainIdHex: globalThis.cypherWalletDetails.fromChainId,
+          requiredTokenContractAddress: globalThis.cypherWalletDetails.fromTokenContractAddress,
+          requiredTokenBalance: globalThis.cypherWalletDetails.fromTokenRequiredBalance,
+          isTestnet: globalThis.cypherWalletDetails.isTestnet,
+          callBack: globalThis.cypherWalletDetails.callBack,
+          connector: globalThis.cypherWalletDetails.connector,
+          provider: globalThis.cypherWalletDetails.provider,
+          appId: globalThis.cypherWalletDetails.appId,
+          theme: globalThis.cypherWalletDetails.theme,
+          showInfoScreen: globalThis.cypherWalletDetails.showInfoScreen,
+          parentComponentId: globalThis.cypherWalletDetails.parentComponentId,
+          production: globalThis.cypherWalletDetails.production
+        }
+      );
+    }
   }
 }
 
