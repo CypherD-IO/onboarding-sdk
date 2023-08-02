@@ -16,7 +16,7 @@ export const switchChain = (parentElement = document.getElementById("cyd-popup-b
     currentChainId
   } = globalThis;
   const switchChainHTML = `
-      <div class=" bg-primaryBg] rounded-t-[30px] p-2 md:p-5 flex flex-col justify-start items-center w-full">
+      <div class=" bg-primaryBg rounded-t-[30px] p-2 md:p-5 flex flex-col justify-start items-center w-full">
         <div class="flex justify-between w-full px-[20px] mt-[20px]">
           <img src="https://public.cypherd.io/icons/back_arrow.svg" class="cyd-back-button cursor-pointer"/>
           <img src="https://public.cypherd.io/icons/close_icon.svg" class="cyd-close-popup cursor-pointer">
