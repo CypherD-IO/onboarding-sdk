@@ -130,7 +130,11 @@ export const Cypher = async ({
           }
         });
         globalThis.bridgeableTokensList = bridgeableTokensList;
-        exchangeWidget(popupBackground);
+        if (bridgeableTokensList.length > 0) {
+          exchangeWidget(popupBackground);
+        } else {
+          emptyWallet();
+        }
       } else {
         if (!showInfoScreen) {
           portfolioLoading(popupBackground);
