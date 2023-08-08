@@ -10,15 +10,15 @@ export const emptyWallet = (
   const { requiredTokenDetail } = globalThis;
 
   const emptyWalletHTML = `
-    <div class=" bg-primaryBg rounded-t-[30px] p-2 cyd-md:p-5 flex flex-col justify-start items-center w-full overflow-auto">
-      <div class="my-[20px] px-10 cyd-lg:px-0 text-center">
-        <span class="text-[23px] text-primaryText font-semibold float-left">You need</span>
+    <div class=" cyd-bg-primaryBg cyd-rounded-t-[30px] cyd-p-2 md:cyd-p-5 cyd-flex cyd-flex-col cyd-justify-start cyd-items-center cyd-w-full cyd-overflow-auto">
+      <div class="cyd-my-[20px] cyd-px-10 lg:cyd-px-0 cyd-text-center">
+        <span class="cyd-text-[23px] cyd-text-primaryText cyd-font-semibold cyd-float-left">You need</span>
         <img
           src="${_.get(requiredTokenDetail, ["logoUrl"])}"
           alt="${_.get(requiredTokenDetail, ["name"])} logo"
-          class="w-[32px] h-[32px] mx-[8px] float-left rounded-full"
+          class="cyd-w-[32px] cyd-h-[32px] cyd-mx-[8px] cyd-float-left cyd-rounded-full"
         />
-        <span class="text-[23px] text-primaryText font-semibold float-left">
+        <span class="cyd-text-[23px] cyd-text-primaryText cyd-font-semibold cyd-float-left">
           ${_.get(requiredTokenDetail, ["symbol"]).toUpperCase()} in
         </span>
         <img
@@ -30,9 +30,9 @@ export const emptyWallet = (
             "chainDetails",
             "backendName",
           ]).toLowerCase()} logo"
-          class="w-[32px] h-[32px] mx-[8px] float-left rounded-full"
+          class="cyd-w-[32px] cyd-h-[32px] cyd-mx-[8px] cyd-float-left cyd-rounded-full"
         />
-        <span class="text-[23px] text-primaryText font-semibold">
+        <span class="cyd-text-[23px] cyd-text-primaryText cyd-font-semibold">
           ${__capitalize(
             _.get(requiredTokenDetail, [
               "chainDetails",
@@ -41,9 +41,9 @@ export const emptyWallet = (
           )} chain to use this dApp
         </span>
       </div>
-      <div class='w-[100%] flex flex-col justify-center items-center'>
-        <p class='text-[16px] text-primaryText font-semibold mb-[20px]'>Insufficient funds to perform this action!</p>
-        <img src="https://public.cypherd.io/icons/emptyWallet.png" class="h-[200px] w-[100px] cyd-lg:h-[300px] cyd-lg:w-[200px]">
+      <div class="cyd-w-[100%] cyd-flex cyd-flex-col cyd-justify-center cyd-items-center">
+        <p class="cyd-text-[16px] cyd-text-primaryText cyd-font-semibold cyd-mb-[20px]">Insufficient funds to perform this action!</p>
+        <img src="https://public.cypherd.io/icons/emptyWallet.png" class="cyd-h-[200px] cyd-w-[100px] lg:cyd-h-[300px] lg:cyd-w-[200px]">
       </div>
     </div>
     ${footer()}
@@ -51,14 +51,14 @@ export const emptyWallet = (
 
   if (parentElement) {
     parentElement.innerHTML = globalThis.cypherWalletDetails.parentComponentId
-      ? ` <div class="rounded-[30px] z-50 m-auto bg-primaryBg w-full justify-between items-center" id="cyd-empty-wallet-screen">
+      ? ` <div class="cyd-rounded-[30px] cyd-z-50 cyd-m-auto cyd-bg-primaryBg cyd-w-full cyd-justify-between cyd-items-center" id="cyd-empty-wallet-screen">
           ${emptyWalletHTML}
         </div>
       `
       : `
-        <div class="rounded-[30px] z-50 m-auto bg-primaryBg w-[90%] cyd-md:w-[70%] cyd-lg:w-[50%] justify-between items-center" id="cyd-empty-wallet-screen">
-          <div class="flex flex-row justify-end w-[95%] mt-[20px] bg-primaryBg">
-            <img src="https://public.cypherd.io/icons/close_icon.svg" class="cyd-close-popup cursor-pointer">
+        <div class="cyd-rounded-[30px] cyd-z-50 cyd-m-auto cyd-bg-primaryBg cyd-w-[90%] md:cyd-w-[70%] lg:cyd-w-[50%] cyd-justify-between cyd-items-center" id="cyd-empty-wallet-screen">
+          <div class="cyd-flex cyd-flex-row cyd-justify-end cyd-w-[95%] cyd-mt-[20px] cyd-bg-primaryBg">
+            <img src="https://public.cypherd.io/icons/close_icon.svg" class="cyd-close-popup cyd-cursor-pointer">
           </div>
           ${emptyWalletHTML}
         </div>

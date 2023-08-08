@@ -7,6 +7,7 @@
         theme: {
           extend: {
             colors: {
+              testBg: "blue",
               primaryBg: "var(--theme-primaryBg)",
               secondaryBg: "var(--theme-secondaryBg)",
               primaryText: "var(--theme-primaryText)",
@@ -19,10 +20,10 @@
               soapstoneBg: "var(--theme-soapStoneIcon)",
             },
             screens: {
-              "cyd-sm": "640px", // Small screens
-              "cyd-md": "768px", // Medium screens
-              "cyd-lg": "1024px", // Large screens
-              // "cyd-xl": "1280px", // Extra-large screens
+              sm: "640px", // Small screens
+              md: "768px", // Medium screens
+              lg: "1024px", // Large screens
+              xl: "1280px", // Extra-large screens
             },
           },
         },
@@ -109,7 +110,7 @@
     <button id="cyd-addPopup" onclick="test()">Add Popup</button>
     <div
       id="test-container"
-      class="@container h-[400px] w-[400px] md:w-[700px] md:h-[700px] bg-red-500 p-[30px]"
+      class="@container h-[900px] w-[700px] md:w-[500px] md:h-[900px] bg-red-500"
     ></div>
     <script>
       function test() {
