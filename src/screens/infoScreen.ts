@@ -10,42 +10,42 @@ export const infoScreen = (
 
   const infoScreenHTML = `
     <div
-      class="rounded-[30px] z-50 m-auto bg-primaryBg w-[90%] cyd-lg:w-[40%] justify-between items-center overflow-auto"
+      class="cyd-rounded-[30px] cyd-z-50 cyd-m-auto cyd-bg-primaryBg cyd-w-[90%] lg:cyd-w-[40%] cyd-justify-between cyd-items-center cyd-overflow-auto"
       id="cyd-bridge-info-screen"
     >
-      <div class="bg-primaryBg] rounded-t-[30px] p-5 flex flex-col justify-start items-center w-full">
-        <div class="flex justify-end w-full">
-          <img src="https://public.cypherd.io/icons/close_icon.svg" class="cyd-close-popup cursor-pointer">
+      <div class="cyd-bg-primaryBg] cyd-rounded-t-[30px] cyd-p-5 cyd-flex cyd-flex-col cyd-justify-start cyd-items-center cyd-w-full">
+        <div class="cyd-flex cyd-justify-end cyd-w-full">
+          <img src="https://public.cypherd.io/icons/close_icon.svg" class="cyd-close-popup cyd-cursor-pointer">
         </div>
         <div>
-          <h2 class="font-semibold text-[28px] my-5 text-primaryText text-center">
+          <h2 class="cyd-font-semibold cyd-text-[28px] cyd-my-5 cyd-text-primaryText cyd-text-center">
             You need to bridge first
           </h2>
         </div>
-        <div class="flex items-start justify-evenly w-[95%] my-5">
-          <div class="flex flex-col justify-center items-center w-[100px]">
-            <img src="https://public.cypherd.io/assets/dapps/unknownToken.png" class="w-[42px] h-[42px]" alt="">
-            <p class="text-[#929292] font-normal text-[16px] text-center mt-2 mb-1">Any Token</p>
-            <p class="text-primaryText font-semibold text-[18px] text-center">Any Chain</p>
+        <div class="cyd-flex cyd-items-start cyd-justify-evenly cyd-w-[95%] cyd-my-5">
+          <div class="cyd-flex cyd-flex-col cyd-justify-center cyd-items-center cyd-w-[100px]">
+            <img src="https://public.cypherd.io/assets/dapps/unknownToken.png" class="cyd-w-[42px] cyd-h-[42px]" alt="">
+            <p class="cyd-text-[#929292] cyd-font-normal cyd-text-[16px] cyd-text-center cyd-mt-2 cyd-mb-1">Any Token</p>
+            <p class="cyd-text-primaryText cyd-font-semibold cyd-text-[18px] cyd-text-center">Any Chain</p>
           </div>
           <div>
-            <img src="https://public.cypherd.io/icons/logos/switch_network.png" alt="switch icon" class="w-[100px] h-[100px]">
+            <img src="https://public.cypherd.io/icons/logos/switch_network.png" alt="switch icon" class="cyd-w-[100px] cyd-h-[100px]">
           </div>
-          <div class="flex flex-col justify-center items-center w-[100px]">
+          <div class="cyd-flex cyd-flex-col cyd-justify-center cyd-items-center cyd-w-[100px]">
             <img src="${_.get(requiredTokenDetail, ["logoUrl"])}"
-              class="w-[42px] h-[42px]"
+              class="cyd-w-[42px] cyd-h-[42px]"
               alt="${_.get(requiredTokenDetail, ["name"])}"
               id="cyd-required-token-img"
             >
-            <p class="text-[#929292] font-normal text-[16px] text-center mt-2 mb-">
+            <p class="cyd-text-[#929292] cyd-font-normal cyd-text-[16px] cyd-text-center cyd-mt-2 cyd-mb-">
               ${_.get(requiredTokenDetail, ["symbol"])}
             </p>
-            <p class="text-primaryText font-semibold text-[18px] text-center">
+            <p class="cyd-text-primaryText cyd-font-semibold cyd-text-[18px] cyd-text-center">
               ${_.get(requiredTokenDetail, ["chainDetails", "backendName"])}
             </p>
           </div>
         </div>
-        <p class="text-[20px] text-primaryText text-center mt-[10px]">
+        <p class="cyd-text-[20px] cyd-text-primaryText cyd-text-center cyd-mt-[10px]">
           You dont have enough ${_.get(requiredTokenDetail, [
             "symbol",
           ])} in ${_.get(requiredTokenDetail, [
@@ -54,8 +54,8 @@ export const infoScreen = (
   ])} chain to use this dApp
         </p>
       </div>
-      <div class="bg-primaryBg py-5 w-full flex items-center justify-center rounded-b-[30px]">
-        <button class="cyd-info-screen-continue bg-[#2081E2] py-4 w-[60%] rounded-lg text-white text-[16px] font-semibold">
+      <div class="cyd-bg-primaryBg cyd-py-5 cyd-w-full cyd-flex cyd-items-center cyd-justify-center cyd-rounded-b-[30px]">
+        <button class="cyd-info-screen-continue cyd-bg-[#2081E2] cyd-py-4 cyd-w-[60%] cyd-rounded-lg cyd-text-white cyd-text-[16px] cyd-font-semibold">
           Continue
         </button>
       </div>

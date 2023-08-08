@@ -377,5 +377,5 @@ export const onClickDropdownOption = (params: any) => {
   } else if (params.dropdownId === "cyd-to-token-dropdown-option") {
     globalThis.requiredTokenDetail = params.value;
   }
-  document.getElementById(params.dropdownId)?.classList.toggle("hidden");
+  document.getElementById(params.dropdownId)?.classList.toggle("cyd-hidden");
 };

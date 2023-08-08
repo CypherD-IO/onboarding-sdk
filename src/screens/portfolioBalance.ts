@@ -15,18 +15,18 @@ export const portfolioBalance = (
     .map(
       (tokenDetail: any) =>
         `
-        <tr class='odd:bg-stripedTableBg h-[75px] cyd-portfolio-token-detail'>
-          <td class='pl-[10px] pr-[5px]'>
-            <div class="relative w-[32px] h-[32px] cyd-lg:w-[38px] cyd-lg:h-[38px] overflow-visible">
-              <img id='cyd-td-token-icon' onerror="this.src='https://public.cypherd.io/icons/logos/' +  '${
+        <tr class="cyd-odd:bg-stripedTableBg cyd-h-[75px] cyd-portfolio-token-detail">
+          <td class="cyd-pl-[10px] cyd-pr-[5px]">
+            <div class="cyd-relative cyd-w-[32px] cyd-h-[32px] lg:cyd-w-[38px] lg:cyd-h-[38px] cyd-overflow-visible">
+              <img id="cyd-td-token-icon" onerror="this.src="https://public.cypherd.io/icons/logos/" +  "${
                 coinColors[Math.floor(Math.random() * coinColors.length)]
-              }.png'" src="${_.get(tokenDetail, ["logoUrl"])}" alt="${_.get(
+              }.png"" src="${_.get(tokenDetail, ["logoUrl"])}" alt="${_.get(
           tokenDetail,
           ["name"]
-        )} logo" class="object-cover w-full h-full rounded-full" />
-              <div class="absolute bottom-[-3px] right-[-5px]">
-                <div class="w-[16px] h-[16px] cyd-lg:w-[20px] cyd-lg:h-[20px] overflow-visible bg-white p-[1px] rounded-full">
-                  <img id='cyd-td-chain-icon' src="https://public.cypherd.io/icons/logos/${_.get(
+        )} logo" class="cyd-object-cover cyd-w-full cyd-h-full cyd-rounded-full" />
+              <div class="cyd-absolute cyd-bottom-[-3px] cyd-right-[-5px]">
+                <div class="cyd-w-[16px] cyd-h-[16px] lg:cyd-w-[20px] lg:cyd-h-[20px] cyd-overflow-visible cyd-bg-white cyd-p-[1px] cyd-rounded-full">
+                  <img id="cyd-td-chain-icon" src="https://public.cypherd.io/icons/logos/${_.get(
                     tokenDetail,
                     ["chainDetails", "backendName"],
                     ""
@@ -34,18 +34,18 @@ export const portfolioBalance = (
           tokenDetail,
           ["chainDetails", "backendName"],
           ""
-        ).toLowerCase()} logo" class="object-cover w-full h-full rounded-full" />
+        ).toLowerCase()} logo" class="cyd-object-cover cyd-w-full cyd-h-full cyd-rounded-full" />
                 </div>
               </div>
             </div>
           </td>
           <td>
-            <div class="text-left">
-              <p class="text-[14px] cyd-lg:text-[16px] text-primaryText font-bold mb-[4px]">${_.get(
+            <div class="cyd-text-left">
+              <p class="cyd-text-[14px] lg:cyd-text-[16px] cyd-text-primaryText cyd-font-bold cyd-mb-[4px]">${_.get(
                 tokenDetail,
                 ["name"]
               )}</h1>
-              <p class="text-[10px] cyd-lg:text-[12px] text-primaryText">${_.get(
+              <p class="cyd-text-[10px] lg:cyd-text-[12px] cyd-text-primaryText">${_.get(
                 tokenDetail,
                 ["chainDetails", "backendName"],
                 ""
@@ -53,22 +53,22 @@ export const portfolioBalance = (
             </div>
           </td>
           <td>
-            <p class='text-[10px] cyd-lg:text-[14px] text-primaryText font-semibold'>$ ${(
+            <p class="cyd-text-[10px] lg:cyd-text-[14px] cyd-text-primaryText cyd-font-semibold">$ ${(
               _.get(tokenDetail, ["actualBalance"]) *
               _.get(tokenDetail, ["price"])
             ).toFixed(2)}</p>
           </td>
           <td>
-            <p class='text-[10px] cyd-lg:text-[14px] text-primaryText'>${Number(
+            <p class="cyd-text-[10px] lg:cyd-text-[14px] cyd-text-primaryText">${Number(
               _.get(tokenDetail, ["actualBalance"])
             ).toFixed(5)}</p>
           </td>
-          <td class='pr-2'>
+          <td class="cyd-pr-2">
             <button params='` +
         JSON.stringify({
           exchangingTokenDetail: _.omit(tokenDetail, ["about"]),
         }) +
-        `'class='cyd-exchange-token-button cyd-blue-button text-[10px] cyd-lg:text-[14px] text-primaryText p-1.5 cyd-lg:p-3'>Exchange</button>
+        `'class="cyd-exchange-token-button cyd-blue-button cyd-text-[10px] lg:cyd-text-[14px] cyd-text-primaryText cyd-p-1.5 lg:cyd-p-3">Exchange</button>
           </td>
         </tr>
       `
@@ -76,12 +76,12 @@ export const portfolioBalance = (
     .join(" ");
 
   const tokenListContainer = `
-    <div class='w-[100%] max-h-[60%] flex flex-col justify-center items-center'>
-      <p class='text-[16px] text-primaryText font-semibold mb-[20px] px-10 cyd-lg:px-0 text-center'>
+    <div class="cyd-w-[100%] cyd-max-h-[60%] cyd-flex cyd-flex-col cyd-justify-center cyd-items-center">
+      <p class="cyd-text-[16px] cyd-text-primaryText cyd-font-semibold cyd-mb-[20px] cyd-px-10 lg:cyd-px-0 cyd-text-center">
         You can exchange with below tokens in your wallet
       </p>
-      <div class='cyd-tokens-available-flex-box w-[90%] cyd-lg:w-[80%] mt-2 cyd-lg:mt-0'>
-        <table class='w-[100%]' id="cyd-portfolio-balance-table">
+      <div class="cyd-tokens-available-flex-box cyd-w-[90%] lg:cyd-w-[80%] cyd-mt-2 lg:cyd-mt-0">
+        <table class="cyd-w-[100%]" id="cyd-portfolio-balance-table">
           ${tokensAvailableList}
         </table>
       </div>
@@ -91,20 +91,20 @@ export const portfolioBalance = (
   const portfolioBalanceHTML = `
     <div
       id="cyd-portfolio-balance-screen"
-      class="flex flex-col items-center cyd-maximize-onclick justify-between max-h-[85%] rounded-[30px] bg-primaryBg w-11/12 cyd-lg:w-3/5 overflow-auto"
+      class="cyd-flex cyd-flex-col cyd-items-center cyd-maximize-onclick cyd-justify-between cyd-max-h-[85%] cyd-rounded-[30px] cyd-bg-primaryBg cyd-w-11/12 lg:cyd-w-3/5 cyd-overflow-auto"
     >
-      <div class="flex flex-row justify-end w-[95%] mt-[20px] mx-[30px] bg-primaryBg">
-        <img src="https://public.cypherd.io/icons/close_icon.svg" class="cyd-close-popup cursor-pointer">
+      <div class="cyd-flex cyd-flex-row cyd-justify-end cyd-w-[95%] cyd-mt-[20px] cyd-mx-[30px] cyd-bg-primaryBg">
+        <img src="https://public.cypherd.io/icons/close_icon.svg" class="cyd-close-popup cyd-cursor-pointer">
       </div>
-      <div class="my-[20px] px-10 cyd-lg:px-0 text-center ">
-        <span class="text-[23px] text-primaryText font-semibold float-left">You need</span>
+      <div class="cyd-my-[20px] cyd-px-10 lg:cyd-px-0 cyd-text-center ">
+        <span class="cyd-text-[23px] cyd-text-primaryText cyd-font-semibold cyd-float-left">You need</span>
         <img
           src="${_.get(requiredTokenDetail, ["logoUrl"])}"
           alt="${_.get(requiredTokenDetail, ["name"])} logo"
           id="cyd-required-token-img"
-          class="w-[32px] h-[32px] mx-[8px] float-left rounded-full"
+          class="cyd-w-[32px] cyd-h-[32px] cyd-mx-[8px] cyd-float-left cyd-rounded-full"
         />
-        <span class="text-[23px] text-primaryText font-semibold float-left">
+        <span class="cyd-text-[23px] cyd-text-primaryText cyd-font-semibold cyd-float-left">
           ${_.get(requiredTokenDetail, ["symbol"]).toUpperCase()} in
         </span>
         <img
@@ -117,9 +117,9 @@ export const portfolioBalance = (
             "backendName",
           ]).toLowerCase()} logo"
           id="cyd-required-chain-img"
-          class="w-[32px] h-[32px] mx-[8px] float-left rounded-full"
+          class="cyd-w-[32px] cyd-h-[32px] cyd-mx-[8px] cyd-float-left cyd-rounded-full"
         />
-        <span class="text-[23px] text-primaryText font-semibold">
+        <span class="cyd-text-[23px] cyd-text-primaryText cyd-font-semibold">
           ${__capitalize(
             _.get(requiredTokenDetail, [
               "chainDetails",

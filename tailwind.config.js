@@ -2,6 +2,7 @@
 import Colors from "./src/constants/colors";
 module.exports = {
   content: ["./src/**/*.{html,js,ts}", "./src/htmlContents/*.ts"],
+  prefix: "cyd-",
   // theme: {
   //   colors : {
   //     primaryBg : Colors.primaryBg,
@@ -22,25 +23,13 @@ module.exports = {
         appBg: "var(--theme-appBg)",
         soapstoneBg: "var(--theme-soapStoneIcon)",
       },
-      screens: {
-        "cyd-sm": "640px", // Small screens
-        "cyd-md": "768px", // Medium screens
-        "cyd-lg": "1024px", // Large screens
-        //  "cyd-xl": "1280px", // Extra-large screens
-      },
-      containers: {
-        // sm: "640px", // Small screens
-        md: "800px", // Medium screens
-        // lg: "1024px", // Large screens
-        // xl: "1280px", // Extra-large screens
-      },
     },
-    // screens: {
-    //   sm: "640px", // Small screens
-    //   md: "768px", // Medium screens
-    //   lg: "1024px", // Large screens
-    //   xl: "1280px", // Extra-large screens
-    // },
+    screens: {
+      sm: "640px", // Small screens
+      md: "768px", // Medium screens
+      lg: "1024px", // Large screens
+      xl: "1280px", // Extra-large screens
+    },
   },
   plugins: [require("@tailwindcss/container-queries")],
 };

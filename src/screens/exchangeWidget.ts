@@ -26,19 +26,19 @@ export const exchangeWidget = (
   bridgableChainList = [...bridgableChainSet];
 
   const exchangeWidgetHTML = `
-    <div class="bg-primaryBg rounded-[30px] overflow-auto" id="cyd-exchange-widget">
-      <div class='m-[15px] cyd-md:m-[35px] cyd-md:mb-[50px] flex flex-col items-center justify-center font-nunito bg-primaryBg'>
-        <div class='py-3 bg-grayBg rounded-xl w-full flex flex-col items-center justify-center relative'>
-          <div class='w-[90%] sm:w-[70%] cyd-md:m-[10px]'>
-            <div class='text-center text-primaryText font-extrabold mb-2 text-[16px] cyd-md:text-[18px]'> FROM</div>
-            <div id="cyd-from-chain-dropdown" class='mt-1 cyd-md:mt-2'>
+    <div class="cyd-bg-primaryBg cyd-rounded-[30px] cyd-overflow-auto" id="cyd-exchange-widget">
+      <div class="cyd-m-[15px] md:cyd-m-[15px] md:cyd-mb-[20px] cyd-flex cyd-flex-col cyd-items-center cyd-justify-center cyd-font-nunito cyd-bg-primaryBg">
+        <div class="cyd-py-3 cyd-bg-grayBg cyd-rounded-xl cyd-w-full cyd-flex cyd-flex-col cyd-items-center cyd-justify-center cyd-relative">
+          <div class="cyd-w-[90%] cyd-sm:w-[70%] md:cyd-m-[10px]">
+            <div class="cyd-text-center cyd-text-primaryText cyd-font-extrabold cyd-mb-2 cyd-text-[16px]"> FROM</div>
+            <div id="cyd-from-chain-dropdown" class="cyd-mt-1 md:cyd-mt-2">
               ${chainDropdown(
                 bridgableChainList,
                 "cyd-from-chain-dropdown-option"
               )}
             </div>
 
-            <div id="cyd-from-token-dropdown" class='mt-5'>
+            <div id="cyd-from-token-dropdown" class="cyd-mt-5">
               ${tokenDropdown(
                 _.get(globalThis.bridgeableTokensListChainWise, [
                   globalThis.cydChoosenFromChain.toUpperCase(),
@@ -48,13 +48,13 @@ export const exchangeWidget = (
             </div>
           </div>
 
-          <div class='bg-[#DDDDDD] h-0.5 w-10/12 my-3'>
+          <div class="cyd-bg-[#DDDDDD] cyd-h-0.5 cyd-w-10/12 cyd-my-3">
           </div>
 
-          <div class='w-[90%] sm:w-[70%]'>
-            <div class='text-center font-extrabold text-[16px] cyd-md:text-[18px] text-primaryText'> TO</div>
+          <div class="cyd-w-[90%] cyd-sm:w-[70%]">
+            <div class="cyd-text-center cyd-font-extrabold cyd-text-[16px] cyd-text-primaryText"> TO</div>
 
-            <div class='mt-3' id="cyd-to-chain-dropdown">
+            <div class="cyd-mt-3" id="cyd-to-chain-dropdown">
               ${chainDropdown(
                 [
                   globalThis.requiredTokenDetail.chainDetails.backendName.toLowerCase(),
@@ -64,7 +64,7 @@ export const exchangeWidget = (
               )}
             </div>
 
-            <div class='mt-5' id="cyd-to-token-dropdown">
+            <div class="cyd-mt-5" id="cyd-to-token-dropdown">
               ${tokenDropdown(
                 [globalThis.requiredTokenDetail],
                 "cyd-to-token-dropdown-option",
@@ -72,7 +72,7 @@ export const exchangeWidget = (
               )}
             </div>
 
-            <div id='cyd-choosen-token' class='font-extrabold text-primaryText text-[14px] cyd-md:text-[18px] text-center mt-3 mb-1'>
+            <div id="cyd-choosen-token" class="cyd-font-extrabold cyd-text-primaryText cyd-text-[14px] cyd-text-center cyd-mt-3 cyd-mb-1">
               ${_.get(globalThis.bridgeableTokensListChainWise, [
                 globalThis.cydChoosenFromChain.toUpperCase(),
                 0,
@@ -80,25 +80,25 @@ export const exchangeWidget = (
               ])}
             </div>
             <div
-              class='flex justify-center items-center w-full'>
+              class="cyd-flex cyd-justify-center cyd-items-center cyd-w-full">
               <div
-                class='cyd-bp-max-button text-black flex items-center justify-center w-6 h-6 cyd-md:w-10 cyd-md:h-10 rounded-full bg-white text-[8px] cyd-md:text-[14px] font-semibold cursor-pointer cursor-pointer'
+                class="cyd--bp-max-button cyd-text-black cyd-flex cyd-items-center cyd-justify-center cyd-w-6 cyd-h-6 md:cyd-w-10 md:cyd-h-10 cyd-rounded-full cyd-bg-white cyd-text-[8px] md:cyd-text-[14px] cyd-font-semibold cyd-cursor-pointer cyd-cursor-pointer"
               >
                 Max
               </div>
-              <div class='flex justify-center w-[70%] cyd-md:w-[55%]'>
+              <div class="cyd-flex cyd-justify-center cyd-w-[70%]">
                 <input
                   id="cyd-bp-amount-value"
-                  class='bg-grayBg w-full text-center text-[42px] cyd-md:text-[58px] font-bold h-[5rem] focus:outline-none text-primaryText placeholder:text-secondaryText'
-                  placeholder='0.00'
-                  type='number'
+                  class="cyd-bg-grayBg cyd-w-full cyd-text-center cyd-text-[42px] cyd-font-bold cyd-h-[5rem] focus:cyd-outline-none cyd-text-primaryText cyd-placeholder:text-secondaryText"
+                  placeholder="0.00"
+                  type="number"
                 />
               </div>
-              <div class="text-[14px] cyd-md:text-[24px] text-primaryText font-semibold text-center">
+              <div class="cyd-text-[14px] cyd-text-primaryText cyd-font-semibold cyd-text-center">
                 USD
               </div>
             </div>
-            <div class='flex flex-row justify-center text-[14px] cyd-md:text-[18px] text-primaryText font-regular text-center'>
+            <div class="cyd-flex cyd-flex-row cyd-justify-center cyd-text-[14px] cyd-text-primaryText cyd-font-regular cyd-text-center">
               ≈ &nbsp;
               <p id="cyd-bp-token-value">00</p> &nbsp;
               <p id="cyd-bp-choosen-token-symbol">${_.get(
@@ -106,17 +106,17 @@ export const exchangeWidget = (
                 [globalThis.cydChoosenFromChain.toUpperCase(), 0, "symbol"]
               )}</p>
             </div>
-            <div class='flex flex-row justify-center text-lg text-primaryText font-regular text-center my-4 cyd-md:mb-8'>
-              <div class="bg-primaryBg border border-borderColor p-2 flex items-center rounded-[10px] w-full h-[50px] sm:h-[60px] cyd-md:h-[70px] cyd-md:w-[70%]">
+            <div class="cyd-flex cyd-flex-row cyd-justify-center cyd-text-lg cyd-text-primaryText cyd-font-regular cyd-text-center cyd-my-4 md:cyd-mb-8">
+              <div class="cyd-bg-primaryBg cyd-border cyd-border-borderColor cyd-p-2 cyd-flex cyd-items-center cyd-rounded-[10px] cyd-w-[90%] cyd-h-[60px]">
                 <img id="cyd-choosen-token-logo" src="${_.get(
                   globalThis.bridgeableTokensListChainWise,
                   [globalThis.cydChoosenFromChain.toUpperCase(), 0, "logoUrl"]
                 )}"
-                  class="h-[25px] w-[25px] cyd-md:h-[35px] cyd-md:w-[35px] rounded-full">
-                <div class="w-full ml-3 flex flex-col">
-                  <div id="cyd-bp-balance-detail-usd" class="flex justify-between">
-                    <p class="text-primaryText text-[10px] sm:text-[12px] cyd-md:text-[14px] font-semibold">YOUR BALANCE : </p>
-                    <p class="text-primaryText text-[12px] cyd-md:text-[18px] font-semibold" id="cyd-choosen-token-usd-balance">$ ${(
+                  class="cyd-h-[25px] cyd-w-[25px] cyd-rounded-full">
+                <div class="cyd-w-full cyd-ml-3 cyd-flex cyd-flex-col">
+                  <div id="cyd-bp-balance-detail-usd" class="cyd-flex cyd-justify-between">
+                    <p class="cyd-text-primaryText cyd-text-[10px] cyd-sm:text-[12px] cyd-font-semibold">YOUR BALANCE : </p>
+                    <p class="cyd-text-primaryText cyd-text-[12px] cyd-font-semibold" id="cyd-choosen-token-usd-balance">$ ${(
                       _.get(globalThis.bridgeableTokensListChainWise, [
                         globalThis.cydChoosenFromChain.toUpperCase(),
                         0,
@@ -129,12 +129,12 @@ export const exchangeWidget = (
                       ])
                     ).toFixed(2)}</p>
                   </div>
-                  <div id="cyd-bp-balance-detail-token" class="flex justify-between h-[25px]">
-                    <p id='cyd-choosen-token-name' class="text-[#929292] text-[10px] sm:text-[12px] cyd-md:text-[14px] font-normal">${_.get(
+                  <div id="cyd-bp-balance-detail-token" class="cyd-flex cyd-justify-between cyd-h-[25px]">
+                    <p id="cyd-choosen-token-name" class="cyd-text-[#929292] cyd-text-[10px] cyd-sm:text-[12px] cyd-font-normal">${_.get(
                       globalThis.bridgeableTokensListChainWise,
                       [globalThis.cydChoosenFromChain.toUpperCase(), 0, "name"]
                     )}</p>
-                    <p class="text-[#929292] text-[12px] cyd-md:text-[16px] font-normal" id="cyd-choosen-token-balance">${_.get(
+                    <p class="cyd-text-[#929292] cyd-text-[12px] cyd-font-normal" id="cyd-choosen-token-balance">${_.get(
                       globalThis.bridgeableTokensListChainWise,
                       [
                         globalThis.cydChoosenFromChain.toUpperCase(),
@@ -148,8 +148,8 @@ export const exchangeWidget = (
             </div>
           </div>
 
-          <div class='w-1/2 absolute -bottom-6 cyd-md:-bottom-8 cursor-pointer rounded-xl flex items-center justify-center hover:scale-105 transform:ease-in-out duration-200 bg-appBg'>
-            <button class="cyd-bridge-input-submit text-black w-full h-[20px] cyd-md:h-full flex items-center justify-center p-5 ">
+          <div class="cyd-w-1/2 cyd-absolute cyd--bottom-6 md:cyd--bottom-6 cyd-cursor-pointer cyd-rounded-xl cyd-flex cyd-items-center cyd-justify-center hover:cyd-scale-105 cyd-transform:ease-in-out cyd-duration-200 cyd-bg-appBg">
+            <button class="cyd-bridge-input-submit cyd-text-black cyd-w-full cyd-h-[20px] cyd-flex cyd-items-center cyd-justify-center cyd-p-5 ">
               Get Quote
             </button>
           </div>
