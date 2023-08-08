@@ -26,10 +26,9 @@ export const noBalanceCSS = `
   display: flex;
   flex-direction: column;
   position: relative;
-  justify-content: center;
-  align-items: center;
   width: 100%;
   height: 100%;
+  overflow: auto;
 }
 
 .cyd-tokens-available-flex-box {
