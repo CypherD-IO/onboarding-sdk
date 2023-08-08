@@ -2,11 +2,11 @@ declare let globalThis: any;
 
 export const footer = () => {
   const footerHTML = `
-    <div class="flex flex-row justify-between items-center w-[100%] py-[7px] md:py-[14px] lg:py-[25px] px-[20px] bg-[#3C4143] rounded-b-[30px] mt-[35px]">
-        <a id="cyd-site-redirect" class="flex flex-row items-center flex-wrap text-[12px] md:text-[14px] text-white" href=${globalThis.cypherWalletUrl} target="_blank">
+    <div class="flex flex-row justify-between items-center w-[100%] py-[7px] cyd-md:py-[14px] cyd-lg:py-[25px] px-[20px] bg-[#3C4143] rounded-b-[30px] mt-[35px]">
+        <a id="cyd-site-redirect" class="flex flex-row items-center flex-wrap text-[12px] cyd-md:text-[14px] text-white" href=${globalThis.cypherWalletUrl} target="_blank">
           <div class="mr-[5px]">Powered by</div>
           <div class="flex flex-row items-center">
-          <img src="https://public.cypherd.io/icons/logos/cypher.png" class="w-[14px] md:w-[18px] mx-[3px] md:mr-[5px]" alt="Cypher logo" resizeMode="contain">
+          <img src="https://public.cypherd.io/icons/logos/cypher.png" class="w-[14px] cyd-md:w-[18px] mx-[3px] cyd-md:mr-[5px]" alt="Cypher logo" resizeMode="contain">
           Cypher Wallet
           </div>
         </a>
@@ -27,4 +27,4 @@ export const footer = () => {
   `;
 
   return footerHTML;
-}
+};
