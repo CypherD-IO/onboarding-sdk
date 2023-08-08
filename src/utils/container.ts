@@ -23,11 +23,12 @@ export const createContainer = () => {
   });
 
   if (globalThis.cypherWalletDetails.parentComponentId) {
-    popupBackground.classList.add("max-w-[824px]");
-    popupBackground.classList.add("max-h-[707px]");
+    popupBackground.classList.add("cyd-max-w-[824px]");
+    popupBackground.classList.add("cyd-max-h-[807px]");
+    popupBackground.classList.add("cyd-p-[20px]");
   } else {
-    popupBackground.classList.add("justify-center");
-    popupBackground.classList.add("items-center");
+    popupBackground.classList.add("cyd-justify-center");
+    popupBackground.classList.add("cyd-items-center");
   }
 
   const sdkContainer = document.createElement("div");
