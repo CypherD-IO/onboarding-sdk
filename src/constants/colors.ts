@@ -10,10 +10,6 @@ export const Colors = {
     "--theme-infoBlue": "#F2FAFE",
     "--theme-appBg": "#F7C645",
     "--theme-soapStoneIcon": "#FFFCF3",
-    "--cyd-xl": "500px",
-    "--cyd-lg": "300px",
-    "--cyd-md": "200px",
-    "--cyd-sm": "100px",
   },
   dark: {
     "--theme-primaryBg": "#161619",
@@ -26,9 +22,5 @@ export const Colors = {
     "--theme-infoBlue": "#232834",
     "--theme-appBg": "#F7C645",
     "--theme-soapStoneIcon": "#232834",
-    "--cyd-xl": "500px",
-    "--cyd-lg": "300px",
-    "--cyd-md": "200px",
-    "--cyd-sm": "100px",
   },
 };

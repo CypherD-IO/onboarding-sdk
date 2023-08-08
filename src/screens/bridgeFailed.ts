@@ -2,8 +2,10 @@ import { footer } from "../components";
 
 declare let globalThis: any;
 
-export const bridgeFailed = (parentElement = document.getElementById("cyd-popup-background")) => {
-  const bridgeFailedHTML = `<div class="cyd-maximize-onclick rounded-[30px] pt-[30px] w-[35%] justify-evenly bg-primaryBg">
+export const bridgeFailed = (
+  parentElement = document.getElementById("cyd-popup-background")
+) => {
+  const bridgeFailedHTML = `<div class="cyd-maximize-onclick rounded-[30px] pt-[30px] w-[35%] justify-evenly bg-primaryBg overflow-auto">
       <div class="flex justify-end w-full mt-[5px] px-[20px]">
         <img src="https://public.cypherd.io/icons/close_icon.svg" class="cursor-pointer cyd-close-popup">
       </div>
@@ -16,4 +18,4 @@ export const bridgeFailed = (parentElement = document.getElementById("cyd-popup-
     </div>`;
 
   if (parentElement) parentElement.innerHTML = bridgeFailedHTML;
-}
+};

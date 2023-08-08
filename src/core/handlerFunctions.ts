@@ -41,13 +41,7 @@ export const switchTheme = (theme = "") => {
     globalThis.theme = globalThis.theme === "light" ? "dark" : "light";
   }
   const root = document.documentElement;
-  Object.keys({
-    ...globalThis.Colors[globalThis.theme],
-    "--cyd-sm": "100px",
-    "--cyd-md": "200px",
-    "--cyd-lg": "300px",
-    "--cyd-xl": "500px",
-  }).forEach((cssVar, index) => {
+  Object.keys(globalThis.Colors[globalThis.theme]).forEach((cssVar, index) => {
     root.style.setProperty(cssVar, globalThis.Colors[globalThis.theme][cssVar]);
   });
 };

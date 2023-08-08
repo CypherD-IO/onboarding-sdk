@@ -3,14 +3,14 @@ import { footer } from "../components/footer";
 
 declare let globalThis: any;
 
-export const infoScreen = (parentElement = document.getElementById("cyd-popup-background")) => {
-  const {
-    requiredTokenDetail
-  } = globalThis;
+export const infoScreen = (
+  parentElement = document.getElementById("cyd-popup-background")
+) => {
+  const { requiredTokenDetail } = globalThis;
 
   const infoScreenHTML = `
     <div
-      class="rounded-[30px] z-50 m-auto bg-primaryBg w-[90%] lg:w-[40%] justify-between items-center"
+      class="rounded-[30px] z-50 m-auto bg-primaryBg w-[90%] cyd-lg:w-[40%] justify-between items-center overflow-auto"
       id="cyd-bridge-info-screen"
     >
       <div class="bg-primaryBg] rounded-t-[30px] p-5 flex flex-col justify-start items-center w-full">
@@ -32,21 +32,26 @@ export const infoScreen = (parentElement = document.getElementById("cyd-popup-ba
             <img src="https://public.cypherd.io/icons/logos/switch_network.png" alt="switch icon" class="w-[100px] h-[100px]">
           </div>
           <div class="flex flex-col justify-center items-center w-[100px]">
-            <img src="${_.get(requiredTokenDetail, ['logoUrl'])}"
+            <img src="${_.get(requiredTokenDetail, ["logoUrl"])}"
               class="w-[42px] h-[42px]"
-              alt="${_.get(requiredTokenDetail, ['name'])}"
+              alt="${_.get(requiredTokenDetail, ["name"])}"
               id="cyd-required-token-img"
             >
             <p class="text-[#929292] font-normal text-[16px] text-center mt-2 mb-">
-              ${_.get(requiredTokenDetail, ['symbol'])}
+              ${_.get(requiredTokenDetail, ["symbol"])}
             </p>
             <p class="text-primaryText font-semibold text-[18px] text-center">
-              ${_.get(requiredTokenDetail, ['chainDetails', 'backendName'])}
+              ${_.get(requiredTokenDetail, ["chainDetails", "backendName"])}
             </p>
           </div>
         </div>
         <p class="text-[20px] text-primaryText text-center mt-[10px]">
-          You dont have enough ${_.get(requiredTokenDetail, ['symbol'])} in ${_.get(requiredTokenDetail, ['chainDetails', 'backendName'])} chain to use this dApp
+          You dont have enough ${_.get(requiredTokenDetail, [
+            "symbol",
+          ])} in ${_.get(requiredTokenDetail, [
+    "chainDetails",
+    "backendName",
+  ])} chain to use this dApp
         </p>
       </div>
       <div class="bg-primaryBg py-5 w-full flex items-center justify-center rounded-b-[30px]">
@@ -59,4 +64,3 @@ export const infoScreen = (parentElement = document.getElementById("cyd-popup-ba
 
   if (parentElement) parentElement.innerHTML = infoScreenHTML;
 };
-

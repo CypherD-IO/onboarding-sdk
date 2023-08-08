@@ -23,10 +23,16 @@ module.exports = {
         soapstoneBg: "var(--theme-soapStoneIcon)",
       },
       screens: {
-        sm: "var(--cyd-sm)", // Small screens
-        md: "var(--cyd-md)", // Medium screens
-        lg: "var(--cyd-lg)", // Large screens
-        xl: "var(--cyd-xl)", // Extra-large screens
+        "cyd-sm": "640px", // Small screens
+        "cyd-md": "768px", // Medium screens
+        "cyd-lg": "1024px", // Large screens
+        //  "cyd-xl": "1280px", // Extra-large screens
+      },
+      containers: {
+        // sm: "640px", // Small screens
+        md: "800px", // Medium screens
+        // lg: "1024px", // Large screens
+        // xl: "1280px", // Extra-large screens
       },
     },
     // screens: {
@@ -36,5 +42,5 @@ module.exports = {
     //   xl: "1280px", // Extra-large screens
     // },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/container-queries")],
 };

@@ -19,13 +19,14 @@
               soapstoneBg: "var(--theme-soapStoneIcon)",
             },
             screens: {
-              sm: "100px", // Small screens
-              md: "200px", // Medium screens
-              lg: "300px", // Large screens
-              xl: "500px", // Extra-large screens
+              "cyd-sm": "640px", // Small screens
+              "cyd-md": "768px", // Medium screens
+              "cyd-lg": "1024px", // Large screens
+              // "cyd-xl": "1280px", // Extra-large screens
             },
           },
         },
+        plugins: [require("@tailwindcss/container-queries")],
       };
     </script>
     <script
@@ -36,7 +37,12 @@
       type="text/javascript"
       src="../dist/esbuild/onboardingsdk.js"
     ></script>
+    <!-- <script
+      type="text/javascript"
+      src="https://public-dev.cypherd.io/sdk/onboardingsdk.js"
+    ></script> -->
     <!-- <link rel="stylesheet" href="../dist/output.css"> -->
+    <link rel="stylesheet" href="../dist/esbuild/onboardingsdk.css" />
     <meta
       name="viewport"
       content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
@@ -101,6 +107,10 @@
     <br />
 
     <button id="cyd-addPopup" onclick="test()">Add Popup</button>
+    <div
+      id="test-container"
+      class="@container h-[400px] w-[400px] md:w-[700px] md:h-[700px] bg-red-500 p-[30px]"
+    ></div>
     <script>
       function test() {
         window.Cypher({
@@ -116,6 +126,7 @@
             document.querySelector('input[name="showInfoScreen"]:checked')
               ?.value === "true",
           appId: document.getElementById("appId")?.value,
+          parentComponentId: "test-container",
           production: false,
         });
       }
