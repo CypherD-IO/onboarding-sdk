@@ -24,6 +24,7 @@ import { appendContainerToBody, createContainer } from "./utils/container";
 import { isBridgeOngoing } from "./core/bridge";
 import {
   emptyWallet,
+  emptyWalletSDK,
   exchangeWidget,
   infoScreen,
   portfolioBalance,
@@ -159,10 +160,10 @@ export const Cypher = async ({
           (tokenDetail: any) => {
             if (
               tokenDetail.actualBalance * tokenDetail.price >=
-                MINIMUM_BALANCE_AMOUNT &&
+              MINIMUM_BALANCE_AMOUNT &&
               tokenDetail.isVerified &&
               tokenDetail.contractAddress !==
-                requiredTokenDetail.contractAddress
+              requiredTokenDetail.contractAddress
             ) {
               bridgeableTokensList.push(tokenDetail);
             }
@@ -172,7 +173,7 @@ export const Cypher = async ({
         if (bridgeableTokensList.length > 0) {
           exchangeWidget(popupBackground);
         } else {
-          emptyWallet();
+          emptyWalletSDK();
         }
       } else {
         if (!showInfoScreen) {
@@ -201,10 +202,10 @@ export const Cypher = async ({
             (tokenDetail: any) => {
               if (
                 tokenDetail.actualBalance * tokenDetail.price >=
-                  MINIMUM_BALANCE_AMOUNT &&
+                MINIMUM_BALANCE_AMOUNT &&
                 tokenDetail.isVerified &&
                 tokenDetail.contractAddress !==
-                  requiredTokenDetail.contractAddress
+                requiredTokenDetail.contractAddress
               ) {
                 bridgeableTokensList.push(tokenDetail);
               }
