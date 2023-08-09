@@ -8,4 +8,5 @@ export * from './bridgeSuccess';
 export * from './bridgeFailed';
 export * from './infoScreen';
 export * from './emptyWallet';
+export * from './emptyWalletSDK';
 export * from './exchangeWidget';
