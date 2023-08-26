@@ -1,22 +1,22 @@
 #popup {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 20px;
-    border: 2px solid black;
-    /* background-color: white; */
-    display: block; /* Changed from "none" to "block" */
-  }
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  padding: 20px !important;
+  border: 2px solid black !important;
+  /* background-color: white; */
+  display: block !important; /* Changed from "none" to "block" */
+}
 
-  #popup h2 {
-    margin-top: 0;
-  }
+#popup h2 {
+  margin-top: 0 !important;
+}
 
-  #popup p {
-    margin-bottom: 0;
-  }
+#popup p {
+  margin-bottom: 0 !important;
+}
 
-  #closePopup {
-    margin-top: 10px;
-  }
+#closePopup {
+  margin-top: 10px !important;
+}
