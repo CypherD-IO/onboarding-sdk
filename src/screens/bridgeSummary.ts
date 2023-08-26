@@ -20,7 +20,7 @@ export const bridgeSummary = (
         <h2 class="cyd-text-[25px] cyd-text-primaryText cyd-font-bold">Summary</h2>
       </div>
 
-      <div class="cyd-relative cyd-w-[85%] md:cyd-w-[65%]">
+      <div class="cyd-relative cyd-w-[85%]">
         <div class="cyd-flex cyd-flex-col cyd-items-center cyd-border-[1px] cyd-border-borderColor cyd-rounded-t-[10px]">
           <div class="cyd-bp-summary-row cyd-exchange-row cyd-py-[15px] cyd-px-[10px] cyd-bg-secondaryBg cyd-rounded-t-[10px]">
             <p class="cyd-w-[20%] cyd-text-[12px] md:cyd-text-[14px] cyd-text-primaryText cyd-font-semibold">You Send</p>

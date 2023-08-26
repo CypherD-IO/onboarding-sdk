@@ -3,6 +3,11 @@ import Colors from "./src/constants/colors";
 module.exports = {
   content: ["./src/**/*.{html,js,ts}", "./src/htmlContents/*.ts"],
   prefix: "cyd-",
+  important: true,
+  corePlugins: {
+    preflight: false,
+    container: true,
+  },
   // theme: {
   //   colors : {
   //     primaryBg : Colors.primaryBg,
@@ -31,5 +36,5 @@ module.exports = {
       xl: "1280px", // Extra-large screens
     },
   },
-  plugins: [require("@tailwindcss/container-queries")],
+  // plugins: [require("@tailwindcss/container-queries")],
 };
