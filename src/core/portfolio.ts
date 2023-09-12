@@ -1,5 +1,5 @@
 import { get } from 'lodash';
-import { CHAIN_ETH, CHAIN_POLYGON, CHAIN_BSC, CHAIN_AVALANCHE, CHAIN_FTM, CHAIN_ARBITRUM, CHAIN_OPTIMISM, CHAIN_EVMOS, CHAIN_ETH_GOERLI, CHAIN_POLYGON_MUMBAI, BACKEND_NAME_TO_CHAIN_ID_HEX } from '../constants/server';
+import { CHAIN_ETH, CHAIN_POLYGON, CHAIN_BSC, CHAIN_AVALANCHE, CHAIN_FTM, CHAIN_ARBITRUM, CHAIN_OPTIMISM, CHAIN_EVMOS, CHAIN_ETH_GOERLI, CHAIN_POLYGON_MUMBAI, BACKEND_NAME_TO_CHAIN_ID_HEX, CHAIN_BASE, CHAIN_POLYGON_ZKEVM, CHAIN_ZKSYNC_ERA } from '../constants/server';
 import { WalletHoldings, Holding, ChainHoldings } from '../interface';
 import { isTokenSwapSupported, swapContractAddressCheck } from '../utils';
 
@@ -27,12 +27,11 @@ export const getPortfolioModel = async (holdings: any) => {
   let arbitrumHoldings;
   let optimismHoldings;
   let evmosHoldings;
-  let cosmosHoldings;
-  let junoHoldings;
-  let stargazeHoldings;
-  let osmosisHoldings;
   let ethGoerliHoldings;
   let polyonMumbaiHoldings;
+  let baseHoldings;
+  let zkevmHoldings;
+  let eraHoldings;
   let swapSupport = true;
 
   const {
@@ -131,6 +130,15 @@ export const getPortfolioModel = async (holdings: any) => {
         case CHAIN_EVMOS.backendName:
           tokenHolding.chainDetails = CHAIN_EVMOS;
           break;
+        case CHAIN_BASE.backendName:
+          tokenHolding.chainDetails = CHAIN_BASE;
+          break;
+        case CHAIN_POLYGON_ZKEVM.backendName:
+          tokenHolding.chainDetails = CHAIN_POLYGON_ZKEVM;
+          break;
+        case CHAIN_ZKSYNC_ERA.backendName:
+          tokenHolding.chainDetails = CHAIN_ZKSYNC_ERA;
+          break;
       }
       tokenHoldings.push(tokenHolding);
       totalHoldings.push(tokenHolding);
@@ -182,6 +190,15 @@ export const getPortfolioModel = async (holdings: any) => {
       case CHAIN_EVMOS.backendName:
         evmosHoldings = chainHoldings;
         break;
+      case CHAIN_BASE.backendName:
+        baseHoldings = chainHoldings;
+        break;
+      case CHAIN_POLYGON_ZKEVM.backendName:
+        zkevmHoldings = chainHoldings;
+        break;
+      case CHAIN_ZKSYNC_ERA.backendName:
+        eraHoldings = chainHoldings;
+        break
     }
   }
 
@@ -199,12 +216,11 @@ export const getPortfolioModel = async (holdings: any) => {
     fantom: ftmHoldings,
     arbitrum: arbitrumHoldings,
     evmos: evmosHoldings,
-    cosmos: cosmosHoldings,
-    osmosis: osmosisHoldings,
-    juno: junoHoldings,
-    stargaze: stargazeHoldings,
     ethGoerli: ethGoerliHoldings,
     polygonMumbai: polyonMumbaiHoldings,
+    base: baseHoldings,
+    zkevm: zkevmHoldings,
+    zksyncEra: eraHoldings
   };
   return portfolio;
 };

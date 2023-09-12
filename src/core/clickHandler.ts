@@ -17,9 +17,6 @@ declare let globalThis: any;
 
 export const clickHandler = (event: any) => {
   const classList = event.target.classList;
-  console.log(event.target);
-  console.log(event.target.closest(".cyd-dropdown-option"));
-  console.log("classList", classList);
   if (classList.contains("cyd-close-popup")) {
     let params = event.target.getAttribute("params");
     params = JSON.parse(params);

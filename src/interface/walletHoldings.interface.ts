@@ -12,11 +12,10 @@ export interface WalletHoldings {
   arbitrum: ChainHoldings | undefined;
   optimism: ChainHoldings | undefined;
   evmos: ChainHoldings | undefined;
-  cosmos: ChainHoldings | undefined
-  osmosis: ChainHoldings | undefined
-  juno: ChainHoldings | undefined
-  stargaze: ChainHoldings | undefined
   ethGoerli: ChainHoldings | undefined
-  polygonMumbai: ChainHoldings | undefined
+  polygonMumbai: ChainHoldings | undefined;
+  base: ChainHoldings | undefined
+  zkevm: ChainHoldings | undefined
+  zksyncEra: ChainHoldings | undefined
   totalHoldings: Holding[];
 }
