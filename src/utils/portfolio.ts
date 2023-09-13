@@ -2,7 +2,8 @@ import _ from 'lodash';
 import {
   CHAIN_ID_HEX_TO_ENUM_MAPPING,
   EVM_CHAINS_NATIVE_TOKEN_MAP,
-  CHAIN_ID_HEX_TO_CDN_IMAGE_CHAIN_NAME
+  CHAIN_ID_HEX_TO_CDN_IMAGE_CHAIN_NAME,
+  ChainBackendNames
 } from '../constants/server';
 import { getPortfolioModel } from '../core/portfolio';
 import store, { PORTFOLIO_EMPTY, PORTFOLIO_NOT_EMPTY, setPortfolioStore } from '../store';
@@ -52,38 +53,51 @@ export const fetchRequiredTokenData = async (chainId: string, tokenContractAddre
 declare let globalThis: any;
 export const fetchTokenData = async (address: any) => {
 
+  const PORTFOLIO_CHAINS: ChainBackendNames[] = [
+    ChainBackendNames.ETH,
+    ChainBackendNames.POLYGON,
+    ChainBackendNames.BSC,
+    ChainBackendNames.AVALANCHE,
+    ChainBackendNames.FANTOM,
+    ChainBackendNames.OPTIMISM,
+    ChainBackendNames.ARBITRUM,
+    ChainBackendNames.EVMOS,
+    ChainBackendNames.ZKSYNC_ERA,
+    ChainBackendNames.BASE,
+    ChainBackendNames.POLYGON_ZKEVM,
+  ];
+
   const portfolioUrl = `v1/portfolio/balances?`;
-  let params: any = [{
+  const params: any = [{
     key: 'address[]',
     value: [address]
   }];
 
+  PORTFOLIO_CHAINS.forEach(chain => {
+    params.push({
+      key: 'chains[]',
+      value: [chain]
+    })
+  })
+
   if (globalThis.cypherWalletDetails?.isTestnet) {
-    params = [
-      {
-        key: 'address[]',
-        value: [address]
-      },
-      {
-        key: 'chains[]',
-        value: ['ETH_GOERLI'],
-      },
-      {
-        key: 'chains[]',
-        value: ['POLYGON_MUMBAI'],
-      }
-    ];
+    params.push({
+      key: 'chains[]',
+      value: ['ETH_GOERLI'],
+    })
+    params.push({
+      key: 'chains[]',
+      value: ['POLYGON_MUMBAI'],
+    });
   }
-
   const response = await get(portfolioUrl, params);
-  const portfolio = await getPortfolioModel(response.chain_portfolios);
-
+    const portfolio = await getPortfolioModel(response.chain_portfolios);
   if (portfolio && (portfolio.totalUnverifiedBalance > 0 || portfolio.totalBalance > 0)) {
     store.dispatch(setPortfolioStore({ tokenPortfolio: portfolio, portfolioState: PORTFOLIO_NOT_EMPTY, }));
   } else {
     store.dispatch(setPortfolioStore({ tokenPortfolio: portfolio, portfolioState: PORTFOLIO_EMPTY, }));
   }
-  return portfolio;
+    return portfolio;
 };
 
 export const hasSufficientBalance = async (chainId: string, tokenContractAddress: string, balanceRequired: number) => {

@@ -18,19 +18,18 @@ export const portfolioBalance = (
         <tr class="cyd-odd:bg-stripedTableBg cyd-h-[75px] cyd-portfolio-token-detail">
           <td class="cyd-pl-[10px] cyd-pr-[5px]">
             <div class="cyd-relative cyd-w-[32px] cyd-h-[32px] lg:cyd-w-[38px] lg:cyd-h-[38px] cyd-overflow-visible">
-              <img id="cyd-td-token-icon" onerror="this.src="https://public.cypherd.io/icons/logos/" +  "${
-                coinColors[Math.floor(Math.random() * coinColors.length)]
-              }.png"" src="${_.get(tokenDetail, ["logoUrl"])}" alt="${_.get(
+              <img id="cyd-td-token-icon" onerror="this.src="https://public.cypherd.io/icons/logos/" +  "${coinColors[Math.floor(Math.random() * coinColors.length)]
+        }.png"" src="${_.get(tokenDetail, ["logoUrl"])}" alt="${_.get(
           tokenDetail,
           ["name"]
         )} logo" class="cyd-object-cover cyd-w-full cyd-h-full cyd-rounded-full" />
               <div class="cyd-absolute cyd-bottom-[-3px] cyd-right-[-5px]">
                 <div class="cyd-w-[16px] cyd-h-[16px] lg:cyd-w-[20px] lg:cyd-h-[20px] cyd-overflow-visible cyd-bg-white cyd-p-[1px] cyd-rounded-full">
                   <img id="cyd-td-chain-icon" src="https://public.cypherd.io/icons/logos/${_.get(
-                    tokenDetail,
-                    ["chainDetails", "backendName"],
-                    ""
-                  ).toLowerCase()}.png" alt="${_.get(
+          tokenDetail,
+          ["chainDetails", "backendName"],
+          ""
+        ).toLowerCase()}.png" alt="${_.get(
           tokenDetail,
           ["chainDetails", "backendName"],
           ""
@@ -42,26 +41,26 @@ export const portfolioBalance = (
           <td>
             <div class="cyd-text-left">
               <p class="cyd-text-[14px] lg:cyd-text-[16px] cyd-text-primaryText cyd-font-bold cyd-mb-[4px]">${_.get(
-                tokenDetail,
-                ["name"]
-              )}</h1>
+          tokenDetail,
+          ["name"]
+        )}</h1>
               <p class="cyd-text-[10px] lg:cyd-text-[12px] cyd-text-primaryText">${_.get(
-                tokenDetail,
-                ["chainDetails", "backendName"],
-                ""
-              )}</p>
+          tokenDetail,
+          ["chainDetails", "backendName"],
+          ""
+        )}</p>
             </div>
           </td>
           <td>
             <p class="cyd-text-[10px] lg:cyd-text-[14px] cyd-text-primaryText cyd-font-semibold">$ ${(
-              _.get(tokenDetail, ["actualBalance"]) *
-              _.get(tokenDetail, ["price"])
-            ).toFixed(2)}</p>
+          _.get(tokenDetail, ["actualBalance"]) *
+          _.get(tokenDetail, ["price"])
+        ).toFixed(2)}</p>
           </td>
           <td>
             <p class="cyd-text-[10px] lg:cyd-text-[14px] cyd-text-primaryText">${Number(
-              _.get(tokenDetail, ["actualBalance"])
-            ).toFixed(5)}</p>
+          _.get(tokenDetail, ["actualBalance"])
+        ).toFixed(5)}</p>
           </td>
           <td class="cyd-pr-2">
             <button params='` +
@@ -109,23 +108,23 @@ export const portfolioBalance = (
         </span>
         <img
           src="https://public.cypherd.io/icons/logos/${_.get(
-            requiredTokenDetail,
-            ["chainDetails", "backendName"]
-          ).toLowerCase()}.png"
+    requiredTokenDetail,
+    ["chainDetails", "backendName"]
+  ).toLowerCase()}.png"
           alt="${_.get(requiredTokenDetail, [
-            "chainDetails",
-            "backendName",
-          ]).toLowerCase()} logo"
+    "chainDetails",
+    "backendName",
+  ]).toLowerCase()} logo"
           id="cyd-required-chain-img"
           class="cyd-w-[32px] cyd-h-[32px] cyd-mx-[8px] cyd-float-left cyd-rounded-full"
         />
         <span class="cyd-text-[23px] cyd-text-primaryText cyd-font-semibold">
           ${__capitalize(
-            _.get(requiredTokenDetail, [
-              "chainDetails",
-              "backendName",
-            ]).toLowerCase()
-          )} chain to use this dApp
+    _.get(requiredTokenDetail, [
+      "chainDetails",
+      "backendName",
+    ]).toLowerCase()
+  )} chain to use this dApp
         </span>
       </div>
       ${tokenListContainer}
