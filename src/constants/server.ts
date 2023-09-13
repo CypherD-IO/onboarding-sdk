@@ -13,6 +13,9 @@ export enum ChainBackendNames {
   OPTIMISM = 'OPTIMISM',
   BSC = 'BSC',
   EVMOS = 'EVMOS',
+  ZKSYNC_ERA = 'ZKSYNC_ERA',
+  BASE = 'BASE',
+  POLYGON_ZKEVM = 'POLYGON_ZKEVM'
 }
 
 export const CHAIN_ETH_GOERLI: Chain = {
@@ -127,6 +130,43 @@ export const CHAIN_OPTIMISM: Chain = {
   native_token_address: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
   chainIdNumber: 10
 };
+
+export const CHAIN_ZKSYNC_ERA: Chain = {
+  chainName: 'ethereum',
+  name: 'zkSync Era',
+  symbol: 'ETH',
+  id: 14,
+  backendName: ChainBackendNames.ZKSYNC_ERA,
+  chain_id: '0x144',
+  native_token_address: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
+  secondaryAddress: '',
+  chainIdNumber: 324,
+};
+
+export const CHAIN_BASE: Chain = {
+  chainName: 'ethereum',
+  name: 'Base',
+  symbol: 'ETH',
+  id: 15,
+  backendName: ChainBackendNames.BASE,
+  chain_id: '0x2105',
+  native_token_address: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
+  secondaryAddress: '',
+  chainIdNumber: 8453,
+};
+
+export const CHAIN_POLYGON_ZKEVM: Chain = {
+  chainName: 'ethereum',
+  name: 'Polygon zkEVM',
+  symbol: 'ETH',
+  id: 16,
+  backendName: ChainBackendNames.POLYGON_ZKEVM,
+  chain_id: '0x44d',
+  native_token_address: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
+  secondaryAddress: '',
+  chainIdNumber: 1101,
+};
+
 
 export type NetworkInterface = {
   [key: string]: any;
@@ -257,6 +297,39 @@ export const addChainData: Record<string, NetworkInterface> = {
     rpcUrls: ['https://eth.bd.evmos.org:8545'],
     blockExplorerUrls: ['https://evm.evmos.org'],
   },
+  ZKSYNC_ERA: {
+    chainId: '0x144',
+    chainName: 'ZkSync Era',
+    nativeCurrency: {
+      name: 'Ether',
+      symbol: 'ETH',
+      decimals: 18,
+    },
+    rpcUrls: ['https://mainnet.era.zksync.io'],
+    blockExplorerUrls: ['https://explorer.zksync.io'],
+  },
+  BASE: {
+    chainId: '0x2105',
+    chainName: 'base',
+    nativeCurrency: {
+      name: 'Ether',
+      symbol: 'ETH',
+      decimals: 18,
+    },
+    rpcUrls: ['https://developer-access-mainnet.base.org'],
+    blockExplorerUrls: ['https://basescan.org'],
+  },
+  POLYGON_ZKEVM: {
+    chainId: '0x44d',
+    chainName: 'Polygon zkEVM',
+    nativeCurrency: {
+      name: 'Ether',
+      symbol: 'ETH',
+      decimals: 18,
+    },
+    rpcUrls: ['https://zkevm-rpc.com'],
+    blockExplorerUrls: ['https://zkevm.polygonscan.com'],
+  },
 };
 
 export const CHAIN_BACKEND_NAME_TO_CHAIN_DETAIL = {
@@ -268,6 +341,9 @@ export const CHAIN_BACKEND_NAME_TO_CHAIN_DETAIL = {
   FANTOM: CHAIN_FTM,
   ARBITRUM: CHAIN_ARBITRUM,
   OPTIMISM: CHAIN_OPTIMISM,
+  ZKSYNC_ERA: CHAIN_ZKSYNC_ERA,
+  BASE: CHAIN_BASE,
+  POLYGON_ZKEVM: CHAIN_POLYGON_ZKEVM,
   BSC: CHAIN_BSC,
   EVMOS: CHAIN_EVMOS,
 }
@@ -286,12 +362,15 @@ export const EVM_CHAINS_NATIVE_TOKEN_MAP = new Map([
   ['OPTIMISM', '0xdeaddeaddeaddeaddeaddeaddeaddeaddead0000'],
   ['POLYGON', '0x0000000000000000000000000000000000001010'],
   ['AVALANCHE', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'],
+  ['POLYGON_ZKEVM', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'],
+  ['BASE', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'],
+  ['ZKSYNC_ERA', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'],
   ['BSC', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'],
   ['FANTOM', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'],
   ['EVMOS', '0x93581991f68dbae1ea105233b67f7fa0d6bdee7b'], // representation didnt work 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee so used ethereum address
 ]);
 
-export const SUPPORTED_CHAINID_LIST_HEX = ['0x1', '0x89', '0x38', '0xa86a', '0xfa', '0x2329', '0xa4b1', '0xa', '0x13881', '0x5'];
+export const SUPPORTED_CHAINID_LIST_HEX = ['0x1', '0x89', '0x38', '0xa86a', '0xfa', '0x2329', '0xa4b1', '0xa', '0x13881', '0x5', '0x44d', '0x2105', '0x144'];
 
 export const CHAIN_ID_HEX_TO_ENUM_MAPPING = new Map([
   ['0x1', ChainBackendNames.ETH],
@@ -304,6 +383,9 @@ export const CHAIN_ID_HEX_TO_ENUM_MAPPING = new Map([
   ['0x2329', ChainBackendNames.EVMOS],
   ['0xa4b1', ChainBackendNames.ARBITRUM],
   ['0xa', ChainBackendNames.OPTIMISM],
+  ['0x44d', ChainBackendNames.POLYGON_ZKEVM],
+  ['0x2105', ChainBackendNames.BASE],
+  ['0x144', ChainBackendNames.ZKSYNC_ERA]
 ]);
 
 export const BACKEND_NAME_TO_CHAIN_ID_HEX = new Map([
@@ -317,6 +399,9 @@ export const BACKEND_NAME_TO_CHAIN_ID_HEX = new Map([
   [ChainBackendNames.EVMOS, '0x2329'],
   [ChainBackendNames.ARBITRUM, '0xa4b1'],
   [ChainBackendNames.OPTIMISM, '0xa'],
+  [ ChainBackendNames.POLYGON_ZKEVM, '0x44d'],
+  [ChainBackendNames.BASE, '0x2105'],
+  [ChainBackendNames.ZKSYNC_ERA, '0x144']
 ]);
 
 export const CHAIN_ID_HEX_TO_CDN_IMAGE_CHAIN_NAME = new Map([
@@ -329,7 +414,7 @@ export const CHAIN_ID_HEX_TO_CDN_IMAGE_CHAIN_NAME = new Map([
   ['0xfa', 'fantom'],
   ['0x2329', 'evmos'],
   ['0xa4b1', 'arbitrum'],
-  ['0xa', 'optimism'],
+  ['0xa', 'optimism']
 ]);
 
 export const CHAIN_ID_HEX_TO_NATIVE_TOKEN_NAME = new Map([
@@ -343,6 +428,9 @@ export const CHAIN_ID_HEX_TO_NATIVE_TOKEN_NAME = new Map([
   ['0x2329', 'EVMOS'],
   ['0xa4b1', 'Arbitrum ETH'],
   ['0xa', 'Optimism ETH'],
+  ['0x44d', 'Polygon zkEVM Ether'],
+  ['0x2105', 'Base Ether'],
+  ['0x144', 'zkSync Era Ether']
 ]);
 
 export const gasFeeReservation = {
