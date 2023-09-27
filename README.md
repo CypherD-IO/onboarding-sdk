@@ -1,5 +1,5 @@
 # Onboarding SDK ⚡
- SDK from CypherWallet for DAPP Developers to easliy onboard thier new users with necessary tokens
+ SDK from CypherWallet for DAPP Developers to easily onboard their new users with necessary tokens
 
 
 
