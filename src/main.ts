@@ -31,6 +31,7 @@ import {
   portfolioLoading,
 } from "./screens";
 import { switchTheme } from "./core";
+import { bridgeSuspended } from "./screens/bridgeSuspended";
 
 declare let globalThis: any;
 declare let tailwind: any;
@@ -160,21 +161,22 @@ export const Cypher = async ({
           (tokenDetail: any) => {
             if (
               tokenDetail.actualBalance * tokenDetail.price >=
-              MINIMUM_BALANCE_AMOUNT &&
+                MINIMUM_BALANCE_AMOUNT &&
               tokenDetail.isVerified &&
               tokenDetail.contractAddress !==
-              requiredTokenDetail.contractAddress
+                requiredTokenDetail.contractAddress
             ) {
               bridgeableTokensList.push(tokenDetail);
             }
           }
         );
         globalThis.bridgeableTokensList = bridgeableTokensList;
-        if (bridgeableTokensList.length > 0) {
-          exchangeWidget(popupBackground);
-        } else {
-          emptyWalletSDK();
-        }
+        bridgeSuspended();
+        // if (bridgeableTokensList.length > 0) {
+        //   exchangeWidget(popupBackground);
+        // } else {
+        //   emptyWalletSDK();
+        // }
       } else {
         if (!showInfoScreen) {
           portfolioLoading(popupBackground);
@@ -202,23 +204,24 @@ export const Cypher = async ({
             (tokenDetail: any) => {
               if (
                 tokenDetail.actualBalance * tokenDetail.price >=
-                MINIMUM_BALANCE_AMOUNT &&
+                  MINIMUM_BALANCE_AMOUNT &&
                 tokenDetail.isVerified &&
                 tokenDetail.contractAddress !==
-                requiredTokenDetail.contractAddress
+                  requiredTokenDetail.contractAddress
               ) {
                 bridgeableTokensList.push(tokenDetail);
               }
             }
           );
           globalThis.bridgeableTokensList = bridgeableTokensList;
-          if (showInfoScreen && bridgeableTokensList.length > 0) {
-            infoScreen();
-          } else if (!showInfoScreen && bridgeableTokensList.length > 0) {
-            portfolioBalance();
-          } else {
-            emptyWallet();
-          }
+          bridgeSuspended();
+          // if (showInfoScreen && bridgeableTokensList.length > 0) {
+          //   infoScreen();
+          // } else if (!showInfoScreen && bridgeableTokensList.length > 0) {
+          //   portfolioBalance();
+          // } else {
+          //   emptyWallet();
+          // }
         } else {
           sdkContainer.remove();
           console.log(
