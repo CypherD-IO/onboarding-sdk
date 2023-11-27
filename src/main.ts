@@ -1,4 +1,4 @@
-import store from "./store";
+import store from './store';
 import {
   fetchRequiredTokenDetails,
   fetchTokenData,
@@ -8,20 +8,20 @@ import {
   post,
   request,
   noop,
-} from "./utils";
-import _ from "lodash";
+} from './utils';
+import _ from 'lodash';
 import {
   MINIMUM_BALANCE_AMOUNT,
   SUPPORTED_CHAINID_LIST_HEX,
-} from "./constants/server";
-import Swal from "sweetalert2";
-import web3 from "web3";
-import { ethers } from "ethers";
-import { DappDetails } from "./interface";
-import "./input.css";
-import { Colors } from "./constants/colors";
-import { appendContainerToBody, createContainer } from "./utils/container";
-import { isBridgeOngoing } from "./core/bridge";
+} from './constants/server';
+import Swal from 'sweetalert2';
+import web3 from 'web3';
+import { ethers } from 'ethers';
+import { DappDetails } from './interface';
+import './input.css';
+import { Colors } from './constants/colors';
+import { appendContainerToBody, createContainer } from './utils/container';
+import { isBridgeOngoing } from './core/bridge';
 import {
   emptyWallet,
   emptyWalletSDK,
@@ -29,28 +29,28 @@ import {
   infoScreen,
   portfolioBalance,
   portfolioLoading,
-} from "./screens";
-import { switchTheme } from "./core";
-import { bridgeSuspended } from "./screens/bridgeSuspended";
+} from './screens';
+import { switchTheme } from './core';
+import { bridgeSuspended } from './screens/bridgeSuspended';
 
 declare let globalThis: any;
 declare let tailwind: any;
 
-const defaultAppId = "123";
-const defaultTheme = "dark";
+const defaultAppId = '123';
+const defaultTheme = 'dark';
 
 export const loadTailwind = (): Promise<void> => {
   return new Promise((resolve, reject) => {
-    const tailwind = document.createElement("script");
-    tailwind.src = "https://cdn.tailwindcss.com";
-    tailwind.type = "application/javascript";
+    const tailwind = document.createElement('script');
+    tailwind.src = 'https://cdn.tailwindcss.com';
+    tailwind.type = 'application/javascript';
     tailwind.onload = () => {
       resolve();
     };
     tailwind.onerror = (error) => {
       reject(error);
     };
-    document.getElementsByTagName("head")[0].appendChild(tailwind);
+    document.getElementsByTagName('head')[0].appendChild(tailwind);
     // const tailwindConfig = document.createElement("script");
     // tailwindConfig.type = "application/javascript";
     // tailwindConfig.text = `${tailwind}.config = {
@@ -87,17 +87,22 @@ export const Cypher = async ({
   appId = defaultAppId,
   theme = defaultTheme,
   showInfoScreen = false,
-  parentComponentId = "",
+  parentComponentId = '',
   production = true,
 }: DappDetails): Promise<void> => {
-  if (document.getElementById("cyd-popup-background") !== null) {
-    return;
+  if (document.getElementById('cyd-popup-background') !== null) {
+    if (parentComponentId !== '') {
+      const popupDiv = document.getElementById('cyd-popup-background');
+      popupDiv?.parentNode?.removeChild(popupDiv);
+    } else {
+      return;
+    }
   }
 
   if (production) {
-    globalThis.ARCH_HOST = "https://arch.cypherd.io";
+    globalThis.ARCH_HOST = 'https://arch.cypherd.io';
   } else {
-    globalThis.ARCH_HOST = "https://arch-dev.cypherd.io";
+    globalThis.ARCH_HOST = 'https://arch-dev.cypherd.io';
   }
 
   const walletAddress = address.toLowerCase();
@@ -105,18 +110,18 @@ export const Cypher = async ({
 
   //chainId is a required field
   if (!SUPPORTED_CHAINID_LIST_HEX.includes(fromChainId)) {
-    console.log(fromChainId + "not supported");
+    console.log(fromChainId + 'not supported');
     return;
   }
 
   //Testnet validation
-  if (isTestnet && !["0x5", "0x13881"].includes(fromChainId)) {
-    console.log(fromChainId + "not supported for testnet operations");
+  if (isTestnet && !['0x5', '0x13881'].includes(fromChainId)) {
+    console.log(fromChainId + 'not supported for testnet operations');
     return;
   }
 
   //intialize fromTokenContractAddress for native token
-  if (requiredToken === undefined || requiredToken === "") {
+  if (requiredToken === undefined || requiredToken === '') {
     requiredToken = getNativeTokenAddressForHexChainId(fromChainId);
   }
 
@@ -157,7 +162,7 @@ export const Cypher = async ({
         );
         globalThis.requiredTokenDetail = { ...requiredTokenDetail };
         const bridgeableTokensList: any = [];
-        _.get(tokenHoldings, ["tokenPortfolio", "totalHoldings"])?.map(
+        _.get(tokenHoldings, ['tokenPortfolio', 'totalHoldings'])?.map(
           (tokenDetail: any) => {
             if (
               tokenDetail.actualBalance * tokenDetail.price >=
@@ -171,16 +176,16 @@ export const Cypher = async ({
           }
         );
         globalThis.bridgeableTokensList = bridgeableTokensList;
-        bridgeSuspended();
-        // if (bridgeableTokensList.length > 0) {
-        //   exchangeWidget(popupBackground);
-        // } else {
-        //   emptyWalletSDK();
-        // }
+        // bridgeSuspended(); //enable this to suspend bridge
+        if (bridgeableTokensList.length > 0) {
+          exchangeWidget(popupBackground);
+        } else {
+          emptyWalletSDK();
+        }
       } else {
         if (!showInfoScreen) {
           portfolioLoading(popupBackground);
-          sdkContainer.classList.add("cyd-blurredBackdrop");
+          sdkContainer.classList.add('cyd-blurredBackdrop');
         }
         appendContainerToBody(popupBackground, sdkContainer, sheet);
         await fetchTokenData(walletAddress.toLowerCase());
@@ -197,10 +202,10 @@ export const Cypher = async ({
           requiredTokenBalance
         );
         if (requiredTokenBalance === 0 || !haveEnoughBalance) {
-          sdkContainer.classList.add("cyd-blurredBackdrop");
+          sdkContainer.classList.add('cyd-blurredBackdrop');
           const bridgeableTokensList: any = [];
           // only verified tokens and tokens with balance >= $10 is shown
-          _.get(tokenHoldings, ["tokenPortfolio", "totalHoldings"])?.map(
+          _.get(tokenHoldings, ['tokenPortfolio', 'totalHoldings'])?.map(
             (tokenDetail: any) => {
               if (
                 tokenDetail.actualBalance * tokenDetail.price >=
@@ -214,18 +219,18 @@ export const Cypher = async ({
             }
           );
           globalThis.bridgeableTokensList = bridgeableTokensList;
-          bridgeSuspended();
-          // if (showInfoScreen && bridgeableTokensList.length > 0) {
-          //   infoScreen();
-          // } else if (!showInfoScreen && bridgeableTokensList.length > 0) {
-          //   portfolioBalance();
-          // } else {
-          //   emptyWallet();
-          // }
+          // bridgeSuspended(); //enable this to suspend bridge
+          if (showInfoScreen && bridgeableTokensList.length > 0) {
+            infoScreen();
+          } else if (!showInfoScreen && bridgeableTokensList.length > 0) {
+            portfolioBalance();
+          } else {
+            emptyWallet();
+          }
         } else {
           sdkContainer.remove();
           console.log(
-            "Hurray!!, you have enough Balance. Continue using the dapp."
+            'Hurray!!, you have enough Balance. Continue using the dapp.'
           );
           callBack(true);
         }
@@ -233,23 +238,23 @@ export const Cypher = async ({
     }
     globalThis.toastMixin = globalThis.Cypher.Swal.mixin({
       toast: true,
-      icon: "success",
-      title: "General Title",
-      position: "top",
+      icon: 'success',
+      title: 'General Title',
+      position: 'top',
       showConfirmButton: false,
       timer: 5000,
       timerProgressBar: true,
       didOpen: (toast: any) => {
-        toast.addEventListener("mouseenter", globalThis.Cypher.Swal.stopTimer);
+        toast.addEventListener('mouseenter', globalThis.Cypher.Swal.stopTimer);
         toast.addEventListener(
-          "mouseleave",
+          'mouseleave',
           globalThis.Cypher.Swal.resumeTimer
         );
       },
     });
     return;
   } catch (error) {
-    console.error("Failed to load Tailwind CSS:", error);
+    console.error('Failed to load Tailwind CSS:', error);
     return;
   }
 };
@@ -261,5 +266,5 @@ Cypher.get = get;
 Cypher.post = post;
 Cypher.request = request;
 Cypher.Colors = Colors.light;
-Cypher.theme = "dark";
-globalThis.cypherWalletUrl = "https://www.cypherwallet.io";
+Cypher.theme = 'dark';
+globalThis.cypherWalletUrl = 'https://www.cypherwallet.io';
