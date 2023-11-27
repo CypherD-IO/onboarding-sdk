@@ -7,27 +7,27 @@
         theme: {
           extend: {
             colors: {
-              testBg: "blue",
-              primaryBg: "var(--theme-primaryBg)",
-              secondaryBg: "var(--theme-secondaryBg)",
-              primaryText: "var(--theme-primaryText)",
-              disabledText: "var(--theme-disabledText)",
-              borderColor: "var(--theme-borderColor)",
-              stripedTableBg: "var(--theme-stripedTableBg)",
-              grayBg: "var(--theme-grayBg)",
-              infoBlue: "var(--theme-infoBlue)",
-              appBg: "var(--theme-appBg)",
-              soapstoneBg: "var(--theme-soapStoneIcon)",
+              testBg: 'blue',
+              primaryBg: 'var(--theme-primaryBg)',
+              secondaryBg: 'var(--theme-secondaryBg)',
+              primaryText: 'var(--theme-primaryText)',
+              disabledText: 'var(--theme-disabledText)',
+              borderColor: 'var(--theme-borderColor)',
+              stripedTableBg: 'var(--theme-stripedTableBg)',
+              grayBg: 'var(--theme-grayBg)',
+              infoBlue: 'var(--theme-infoBlue)',
+              appBg: 'var(--theme-appBg)',
+              soapstoneBg: 'var(--theme-soapStoneIcon)',
             },
             screens: {
-              sm: "640px", // Small screens
-              md: "768px", // Medium screens
-              lg: "1024px", // Large screens
-              xl: "1280px", // Extra-large screens
+              sm: '640px', // Small screens
+              md: '768px', // Medium screens
+              lg: '1024px', // Large screens
+              xl: '1280px', // Extra-large screens
             },
           },
         },
-        plugins: [require("@tailwindcss/container-queries")],
+        plugins: [require('@tailwindcss/container-queries')],
       };
     </script>
     <script
@@ -108,26 +108,49 @@
     <br />
 
     <button id="cyd-addPopup" onclick="test()">Add Popup</button>
+    <button id="cyd-addPopup" onclick="test1()">Add Popup1</button>
     <div
       id="test-container"
       class="@container h-[900px] w-[700px] md:w-[500px] md:h-[900px] bg-red-500"
     ></div>
+    <div
+      id="test1-container"
+      class="@container ml-[1200px] h-[900px] w-[700px] md:w-[500px] md:h-[900px] bg-blue-500"
+    ></div>
     <script>
-      function test() {
+      function test1() {
         window.Cypher({
-          address: document.getElementById("address")?.value,
-          targetChainIdHex: document.getElementById("targetChainIdHex")?.value,
+          address: document.getElementById('address')?.value,
+          targetChainIdHex: document.getElementById('targetChainIdHex')?.value,
           requiredTokenContractAddress: document.getElementById(
-            "requiredTokenContractAddress"
+            'requiredTokenContractAddress'
           )?.value,
           requiredTokenBalance: parseFloat(
-            document.getElementById("requiredTokenBalance")?.value
+            document.getElementById('requiredTokenBalance')?.value
           ),
           showInfoScreen:
             document.querySelector('input[name="showInfoScreen"]:checked')
-              ?.value === "true",
-          appId: document.getElementById("appId")?.value,
-          parentComponentId: "test-container",
+              ?.value === 'true',
+          appId: document.getElementById('appId')?.value,
+          parentComponentId: 'test1-container',
+          production: false,
+        });
+      }
+      function test() {
+        window.Cypher({
+          address: document.getElementById('address')?.value,
+          targetChainIdHex: document.getElementById('targetChainIdHex')?.value,
+          requiredTokenContractAddress: document.getElementById(
+            'requiredTokenContractAddress'
+          )?.value,
+          requiredTokenBalance: parseFloat(
+            document.getElementById('requiredTokenBalance')?.value
+          ),
+          showInfoScreen:
+            document.querySelector('input[name="showInfoScreen"]:checked')
+              ?.value === 'true',
+          appId: document.getElementById('appId')?.value,
+          parentComponentId: 'test-container',
           production: false,
         });
       }
